@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.caprusit.ems.dao.ISecurityDAO;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.service.SecurityServiceImpl;
-import com.caprusit.ems.service.ValidationServiceImpl;
 
 public class UploadExcelFileUtility {
 
@@ -22,7 +21,7 @@ public class UploadExcelFileUtility {
 	private ISecurityDAO securityDAO;
 
 	private Logger logger = Logger.getLogger(SecurityServiceImpl.class);
-
+	
 	int firstCellNum, lastCellNum, count, exceptionRowNumber = -1, exceptionColNumber = -1;
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -127,12 +126,13 @@ public class UploadExcelFileUtility {
 			logger.error("exception e : " + e);
 			logger.info("exception cause: " + e.getCause());
 			logger.info("exception line numbers: row: " + (exceptionRowNumber + 1));
-			e.printStackTrace();
+			/*e.printStackTrace();*/
 			return JsonUtility.convertToJson(String.valueOf(exceptionRowNumber + 1));
 		}
 		
 		return JsonUtility.convertToJson("0.0");
 
 	}
+
 
 }

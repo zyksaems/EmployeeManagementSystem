@@ -38,6 +38,7 @@
       </ul>
       <div>
 	<a href="/EmployeeManagementSystem/changePassword.do">change password</a>
+<!-- 	   <a href="" ng-click="getChange()">Change Password</a>-->
 	</div>
       <li><button ng-click="logout()">Sign-out</button></li>
      </nav>
@@ -80,9 +81,6 @@
         <p>{{adminStatus}}</p>
 <!-- <center>SingleUser<input type="RADIO" name="userChoice" id="navRadio01" onclick="window.location='file:///D:/Testings/SingleUserTest.html'"> &nbsp; &nbsp;
  Through Excel<input type="RADIO" name="userChoice" id="navRadio01" onclick="window.location='file:///D:/Testings/ThroughExcelTest.html'"> -->
-</div>
-<div>
-<a href="/EmployeeManagementSystem/changePassword.do">change password</a>
 </div>
 <div id="footer">
 Copyright © caprusit.com

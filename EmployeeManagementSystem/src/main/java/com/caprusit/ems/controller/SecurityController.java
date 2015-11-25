@@ -1,5 +1,6 @@
 package com.caprusit.ems.controller;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -85,9 +86,14 @@ public class SecurityController {
 
 		logger.info("inside uploadEmployeeDetailsExcelFile()");
 		Iterator<String> itr = request.getFileNames();
-		@SuppressWarnings("unused")
 		MultipartFile file = request.getFile(itr.next());
-		String result = new String();
+		String result="";
+		try {
+			result = securityService.uploadEmployeeDetailsExcelFile(file.getInputStream(),file.getOriginalFilename());
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		};
 		logger.info("result : " + result);
 		return result;
 	}
@@ -98,12 +104,13 @@ public class SecurityController {
 		return "ForgotPassword";
 	}
 
+	
 	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.POST)
-	public @ResponseBody Integer forgotPassword(@RequestParam("id") Integer adminId,
+	public @ResponseBody String forgotPassword(@RequestParam("id") Integer adminId,
 			@RequestParam("email") String emailId) {
 		logger.info("in admin forgot password:  id: " + adminId + "    email: " + emailId);
-		int status = securityService.forgotPassword(adminId, emailId);
-		return status;
+		return securityService.forgotPassword(adminId, emailId);
+		 
 	}
 
 	/*
@@ -135,13 +142,13 @@ public class SecurityController {
 			logger.info("both pwd matching");
 			Admin admin1 = new Admin();
 			admin1.setPassword(newPassword);
-			// If both pasword matched, then will call changePassword() method
+			// If both password matched, then will call changePassword() method
 			String statusMsg = securityService.changePassword(admin1);
 			logger.info(statusMsg);
 			return getJsonArray(statusMsg);
 		}
 		/**
-		 * If both pasword not matched, then it returns the corresponding
+		 * If both password not matched, then it returns the corresponding
 		 * response to jsp page
 		 */
 		else {
@@ -170,7 +177,6 @@ public class SecurityController {
 
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.GET)
 	public String getChangepasspage() {
-
 		return "ChangePassword";
 	}
 

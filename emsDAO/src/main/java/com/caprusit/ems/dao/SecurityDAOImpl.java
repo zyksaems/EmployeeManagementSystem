@@ -49,10 +49,12 @@ public class SecurityDAOImpl implements ISecurityDAO {
 
 	}
 
-	public String forgotPassword(int adminId, String emailId) {
+	@SuppressWarnings("unchecked")
+	public List<Object> forgotPassword(int adminId) {
 		String password = null;
+		List<Object> mailIdList=null;
 
-		String verifyEmailId = "select emailId from com.caprusit.ems.domain.Employee where employeeId=:adminId";
+		String verifyEmailId = "select firstName,emailId,lastName from com.caprusit.ems.domain.Employee where employeeId=:adminId";
 
 		String getPassword = "select password from com.caprusit.ems.domain.Admin where adminId=:adminId";
 
@@ -67,40 +69,34 @@ public class SecurityDAOImpl implements ISecurityDAO {
 			// Set query parameters
 			query.setParameter("adminId", adminId);
 			// execute the query
-			@SuppressWarnings("unchecked")
-			List<String> mailIdList = query.list();
-			int count = mailIdList.size();
-			logger.info("mailId List:" + mailIdList);
-			if (count > 0 && mailIdList.get(0).equals(emailId)) {
-				// Create a Query object
-				query = session.createQuery(getPassword);
-				// Set query parameters
-				query.setParameter("adminId", adminId);
-				// execute the query
-				password = (String) query.uniqueResult();
-				logger.info("Password is:" + password);
 
-				if (password != null) {
-					tx.commit();
-				}
-			} else if (count > 0 && !mailIdList.get(0).equals(emailId)) {
-				return "Invalid";
-			}
+			mailIdList= query.list();
+			
+					// Create a Query object
+					query = session.createQuery(getPassword);
+					// Set query parameters
+					query.setParameter("adminId", adminId);
+					// execute the query
+					password = (String) query.uniqueResult();
+					logger.info("Password is:" + password);
+					mailIdList.add(password);
+					
 		} catch (Exception e) {
-			logger.error("Exception Occured while forgot Password "+e);
+			e.printStackTrace();
+			logger.error("Exception Occured while forgot Password " + e);
 			tx.rollback();
 		}
-		return password;
+		return mailIdList;
 	}
 
-	public String changePassword(Admin admin) {		
+	public String changePassword(Admin admin) {
 		Session session = sessionFactory.openSession();
 		String hql = "update com.caprusit.ems.domain.Admin as a set a.password=:pwd where a.adminId=:adminId";
 		Query query = session.createQuery(hql);
 		query.setParameter("pwd", admin.getPassword());
 		query.setParameter("adminId", admin.getAdminId());
 		query.executeUpdate();
-		return "password has been successfully changed";	 
+		return "password has been successfully changed";
 	}
 
 	public List<String> getOldPassword(Admin admin) {
@@ -110,7 +106,7 @@ public class SecurityDAOImpl implements ISecurityDAO {
 		query.setParameter("adminId", admin.getAdminId());
 		@SuppressWarnings("unchecked")
 		List<String> pwd = query.list();
-		logger.info("get Old Password   :    "+pwd.get(0));
+		logger.info("get Old Password   :    " + pwd.get(0));
 		return pwd;
 	}
 
@@ -121,6 +117,7 @@ public class SecurityDAOImpl implements ISecurityDAO {
 			session.saveOrUpdate(emp);
 			ts.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e);
 			return 0;
 		}

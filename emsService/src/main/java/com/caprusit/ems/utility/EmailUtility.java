@@ -26,7 +26,7 @@ public class EmailUtility {
 		this.props = props;
 	}
 
-	public  void sendMail(String mailId, String info) {
+	public  void sendMail(String mailId, String password,String name) {
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, mailPassword);
@@ -39,7 +39,7 @@ public class EmailUtility {
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailId));
 			message.setSubject("Forgot Password ");
-			message.setText("Dear Rudra Prakash" + "\n\n U r new Password is  " + info);
+			message.setText("Dear "+name + ",\n\n \t Your  Password  is  " + password+" \n\nRegards,\nCaprusIT Team.");
 			// Transmit the mail
 			Transport.send(message);
 			System.out.println("Sent");

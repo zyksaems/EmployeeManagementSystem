@@ -8,7 +8,7 @@ import com.caprusit.ems.domain.Employee;
 public interface ISecurityDAO {
 	public String login(Admin admin);
 
-	public String forgotPassword(int adminId, String emailId);
+	public List<Object> forgotPassword(int adminId);
 
 	public String changePassword(Admin admin);
 

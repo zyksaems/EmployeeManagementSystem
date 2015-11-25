@@ -64,41 +64,46 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 		return (extensionName == allowedFileExtension)? true: false ;
 		
 	};
-	/*function to upload file*/
-	$scope.uploadFile=function (){		
-		if(file != null){
-		   if(checkFileExtension(getFileExtension(file))){
-		
-		      var formData=new FormData();
-	          formData.append("file",file);
-	          console.log("file:  "+file);
-	          $http.post('/EmployeeManagementSystem/uploadEmployeeDetailsExcelFile.do', formData, {
-	                transformRequest: function(data, headersGetterFunction) {
-	                    return data;
-	                },
-	                headers: { 'Content-Type': undefined }
-	                }).success(function(data, status) {                       
-	                    console.log("Success ... " + data);
-	                    if(data == "00")
-	                	    $scope.fileUploadSuccessMsg="uploaded success fully";
-	                    else
-	                	    $scope.fileUploadSuccessMsg="In excel file RowNumber:"+data.charAt(0)+" column Number:"+data.charAt(1)+" DOB is wrong";
-	                }).error(function(data, status) {
-	                    console.log("Error ... " + status);
-	                    $scope.fileUploadSuccessMsg="Problem ocuured!";
-	            });
-		   }
-		   else{
-			   $scope.fileUploadSuccessMsg="Please select Excel file ";
-			   $scope.excelFilePath="";
-		   }
-		}
-		else{
-			$scope.fileUploadSuccessMsg="Please select file ";
-		}
-		 
-		
-	};
+	 /*function to upload file*/
+	 $scope.uploadFile=function (){ 
+	  if(file != null){
+	     if(checkFileExtension(getFileExtension(file))){
+	  
+	        var formData=new FormData();
+	           formData.append("file",file);
+	           console.log("file:  "+file);
+	           $http.post('/EmployeeManagementSystem/uploadEmployeeDetailsExcelFile.do', formData, {
+	                 transformRequest: function(data, headersGetterFunction) {
+	                     return data;
+	                 },
+	                 headers: { 'Content-Type': undefined }
+	                 }).success(function(data, status) {                       
+	                     console.log("Success ... response: " + data);
+	                     var resArray=data.split('.');
+	                     console.log("array length : "+resArray.length);
+	                     if(resArray.length == 2 && resArray[0]=="0" && resArray[1]== "0")
+	                      $scope.fileUploadSuccessMsg="uploaded success fully";
+	                     else if (resArray.length == 2)                       
+	                      $scope.fileUploadSuccessMsg="In excel file Row Number:"+resArray[0]+" Column Number:"+resArray[1]+"  DOB is wrong";      
+	                     else
+	                      $scope.fileUploadSuccessMsg="In excel file Row Number: "+data+" contains invalid data";
+	                     
+	                 }).error(function(data, status) {
+	                     console.log("Error ... data: " +data+" status: "+status);
+	                     $scope.fileUploadSuccessMsg="Problem ocuured!";
+	             });
+	     }
+	     else{
+	      $scope.fileUploadSuccessMsg="file Extension must be ."+allowedFileExtension1+" or ."+allowedFileExtension2;
+	      $scope.excelFilePath="";
+	     }
+	  }
+	  else{
+	   $scope.fileUploadSuccessMsg="Please select file ";
+	  }
+	   
+	  
+	 };
 	/*function to set employee default details*/
 	function employeeDefaultDetails(){
 		
