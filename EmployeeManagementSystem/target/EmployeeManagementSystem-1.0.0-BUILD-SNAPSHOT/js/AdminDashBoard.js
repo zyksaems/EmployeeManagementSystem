@@ -146,6 +146,23 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 		
 	};
 	
+	/*function to show View User division */
+	$scope.viewUser=function(){
+		console.log("in viewUser()");
+		$scope.viewUserDetails= !$scope.viewUserDetails;
+		console.log("show view user div: "+$scope.viewUserDetails);
+		var response = $http.get('/EmployeeManagementSystem/getAllEmployee.do');
+		response.success(function(data, status, headers, config) {
+			$scope.allEmpData = data;
+			
+		});
+		response.error(function(data, status, headers, config) {
+			alert("failure message: " + JSON.stringify({
+				data : data
+			}));
+		});
+	};
+	
 	/*function to logout button*/
 	$scope.logout=function(){
 		

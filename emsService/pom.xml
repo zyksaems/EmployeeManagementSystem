@@ -45,12 +45,21 @@
 		</dependency>
 
 		<!-- Apache POI for Reading MS Ofiice files -->
- 	 <dependency>
-  	 <groupId>org.apache.poi</groupId>
-  	 <artifactId>poi-ooxml</artifactId>
-   	<version>3.10-Final</version>
-	  </dependency>
- 
+ 	
+
+
+	 <!-- <dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi-ooxml</artifactId>
+		<version>3.13</version>
+	</dependency> -->
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi-ooxml</artifactId>
+		<version>3.9</version>
+	</dependency>
+	
+
   
   <!-- jar file for file upload (apache commons file upload) -->
   	 <dependency>

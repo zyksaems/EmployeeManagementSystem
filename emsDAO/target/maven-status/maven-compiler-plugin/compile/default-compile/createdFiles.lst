@@ -4,7 +4,9 @@ com\caprusit\ems\dao\SecurityDAOImpl.class
 com\caprusit\ems\domain\EmployeeData.class
 com\caprusit\ems\dao\ValidationDAOImpl.class
 com\caprusit\ems\domain\Admin.class
+com\caprusit\ems\dao\IManageUserDAO.class
 com\caprusit\ems\domain\User.class
+com\caprusit\ems\dao\ManageUserDAOImpl.class
 com\caprusit\ems\dao\IAttendanceDAO.class
 com\caprusit\ems\domain\DayType.class
 com\caprusit\ems\dao\ISecurityDAO.class
