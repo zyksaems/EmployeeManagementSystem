@@ -27,7 +27,8 @@ app
 
 					$scope.getPassword = function() {
 						console.log("int id: " + parseInt($scope.username));
-						console.log("condn:"+flag1 == true && $scope.email.length >=emailLength);
+						console.log("AdminId:"+flag1 == true);
+						console.log("Email:"+ $scope.email.length >=emailLength);
 						if (flag1 == true && $scope.email.length >=emailLength) {
 
 							$http(
@@ -43,9 +44,7 @@ app
 													config) {
 												console.log("response status:"+data);
 												$scope.hide = true;
-												$scope.msg = (data == 1) ? "We sent password to your email successfully. check your email "
-														: "please give correct email ID";
-												$scope.msg = (data == -1)  ? "Invalid Admin Id": $scope.msg;
+												$scope.msg =data;
 											})
 									.error(
 											function(data, status, headers,

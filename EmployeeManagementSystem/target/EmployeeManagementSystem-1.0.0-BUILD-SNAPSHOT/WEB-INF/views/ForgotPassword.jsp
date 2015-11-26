@@ -31,15 +31,14 @@
          </p>
                    <p ><font color="red">{{valid}}</font></p>
             <p>
-            <input type="submit" id="btn" 
-              ng-disabled="myForm.email.$dirty && myForm.email.$invalid">
+            <input type="submit"  id="btn" ng-disabled="myForm.email.$dirty && myForm.email.$invalid">
               </p>
 
             </form>
 
              </div>
-           <div id="div5">
-                    <a href="/EmployeeManagementSystem/adminLogin.do" >BACK TO  Admin LOGIN</a>
+           <div id="div5" >
+                    <a href="/EmployeeManagementSystem/adminLogin.do" >Back TO  Admin LOGIN</a>
            </div>
          
 </div>
