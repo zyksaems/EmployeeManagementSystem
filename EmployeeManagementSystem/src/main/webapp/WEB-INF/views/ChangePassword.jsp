@@ -39,17 +39,12 @@
 			    <br> <input type="password" ng-model="npwd"><br>
 			    <br> <input type="password" ng-model="rpwd">
 			    <p><font color="red">{{valid}}</font></p>
-			     <p>
-		     <% if(request.getAttribute("status") != null) 
-			    {
-			    %>
-			    <font color="green"><%= request.getAttribute("status") %></font> 
-			    <% 
-			    }
-			    %>
-			    </p>
 			    <button ng-click="getChange()">Save</button>
-		  </div>
+     	  <br><br>     
+           </div>   
+             <div id="div5">
+                    <a href="/EmployeeManagementSystem/adminLogout.do" >logout</a>    
+    </div>
 	 </div>
 	
 </body>

@@ -171,4 +171,10 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 		
 	};
 	
+	$scope.getChange=function(){
+		  
+		  console.log("in  getChange()");
+		  $window.location.href = '/EmployeeManagementSystem/changePasswordPage.do';
+		  
+		 };
 });//end app.controlller

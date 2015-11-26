@@ -13,20 +13,26 @@ import javax.mail.internet.MimeMessage;
 import com.cipher.decryption.Decryption;
 
 public class EmailUtility {
-	private  Properties props ;
-	private String mailPassword,username;
+	private Properties props;
+	private String mailPassword, username;
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public void setMailPassword(String mailPassword) {
 		this.mailPassword = Decryption.decrypt(mailPassword);
 	}
+
 	public void setProps(Properties props) {
 		this.props = props;
 	}
 
-	public  void sendMail(String mailId, String password,String name) {
+	/*
+	 * sendMail() method takes mailId, password and recipient name as parameter
+	 * and send a mail to given mail Id with password information
+	 */
+	public void sendMail(String mailId, String password, String name) {
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, mailPassword);
@@ -39,7 +45,7 @@ public class EmailUtility {
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailId));
 			message.setSubject("Forgot Password ");
-			message.setText("Dear "+name + ",\n\n \t Your  Password  is  " + password+" \n\nRegards,\nCaprusIT Team.");
+			message.setText("Dear " + name + ",\n\n \t Your  Password  is  " + password + " \n\nRegards,\nCaprusIT Team.");
 			// Transmit the mail
 			Transport.send(message);
 			System.out.println("Sent");

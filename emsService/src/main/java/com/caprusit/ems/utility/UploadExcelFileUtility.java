@@ -76,7 +76,6 @@ public class UploadExcelFileUtility {
 										exceptionColNumber = cell.getColumnIndex();
 										logger.info("exceprion row number: " + exceptionRowNumber
 												+ " exceptionn column number: " + exceptionColNumber);
-										// exception.printStackTrace();
 										return JsonUtility.convertToJson(
 												(exceptionRowNumber + 1) + "." + (exceptionColNumber + 1));
 									}
@@ -113,8 +112,6 @@ public class UploadExcelFileUtility {
 							securityDAO.saveEmployee(employee);
 						
 					}
-					/* workbook.close(); */
-
 				}
 			}
 		} catch (HibernateException e) {
@@ -126,13 +123,8 @@ public class UploadExcelFileUtility {
 			logger.error("exception e : " + e);
 			logger.info("exception cause: " + e.getCause());
 			logger.info("exception line numbers: row: " + (exceptionRowNumber + 1));
-			/*e.printStackTrace();*/
 			return JsonUtility.convertToJson(String.valueOf(exceptionRowNumber + 1));
 		}
-		
 		return JsonUtility.convertToJson("0.0");
-
 	}
-
-
 }

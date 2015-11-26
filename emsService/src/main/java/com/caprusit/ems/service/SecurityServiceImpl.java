@@ -47,38 +47,34 @@ public class SecurityServiceImpl implements ISecurityService {
 	public String forgotPassword(int adminId, String emailId) {
 		String result = "";
 		List<Object> mailInfo = securityDAO.forgotPassword(adminId);
-			logger.info("value Returned from DAO(securityDAO.forgotPassword(adminId, emailId)):" + mailInfo
-					+ "mailinfo size:" + mailInfo.size());
-			Object[] data = (Object[]) mailInfo.get(0);
-			logger.info("Object arrray:data []" + data);
-			if (data != null) {
-				logger.info("length og array:" + data.length);
-				if (data[1].equals(emailId)) {
-					result = "Password sent to  your mail, please check your mail";
-					emailUtility.sendMail(emailId, (String)mailInfo.get(1),(String)data[0]+" "+(String)data[2]);
-					/*logger.info("mail formatt:   mailId:"+emailId+"      name:"+(String)data[0]+"   "+(String)data[2]+"  password:"+(String)mailInfo.get(1));*/
-					logger.info("mail seimt to mail id");
-				} else {
-					result = "You entered wrong EmailId";
-					logger.info("not correct mail");
-				}
-				
+		Object[] data = (Object[]) mailInfo.get(0);
+		if (data != null) {
+			if (data[1].equals(emailId)) {
+				emailUtility.sendMail(emailId, (String) mailInfo.get(1), (String) data[0] + " " + (String) data[2]);
+				result = "Password sent to  your mail, please check your mail";
+				logger.info("Mail sent successfully to your  mail id");
 			} else {
-				logger.info("incorrecct username");
-				result = "You entered wrong AdminID";
+				result = "You entered wrong EmailId";
+				logger.info("Incorrect EmalId");
 			}
+		} else {
+			result = "You entered wrong AdminID";
+			logger.info("Incorrect AdminId");
+		}
 		return JsonUtility.convertToJson(result);
 	}
 
 	public String changePassword(Admin admin) {
-		String msg = securityDAO.changePassword(admin);
-		return msg;
-	}
+		  String msg=securityDAO.changePassword(admin);
+		  return msg;
+		 }
 
-	public List<String> getOldPassword(Admin admin) {
-		List<String> oldPwd = securityDAO.getOldPassword(admin);
-		return oldPwd;
-	}
+
+		 public  List<String> getOldPassword(Admin admin) {
+		  logger.info("in  SecurityServiceImpl getOldPassword()  "+admin);
+		   List<String> oldPwd=securityDAO.getOldPassword(admin);
+		  return oldPwd;
+		 }
 
 	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream, String fileName) {
 
@@ -102,5 +98,4 @@ public class SecurityServiceImpl implements ISecurityService {
 		}
 		return excelFileUtility.saveExcelFileData(workbook);
 	}
-
 }

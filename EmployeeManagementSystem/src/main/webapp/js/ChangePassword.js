@@ -14,7 +14,7 @@ app.controller('myctrl',function($scope,$http){
 						$scope.valid="";
 							$http({
 							method : 'POST',
-							url : 'changePassword.do?cpwd='+$scope.cpwd+'&&npwd='+$scope.npwd
+							url :'changePasswordHome.do?cpwd='+$scope.cpwd+'&&npwd='+$scope.npwd
 	            
 	            
 					}).success(function(data, status, headers, config) {

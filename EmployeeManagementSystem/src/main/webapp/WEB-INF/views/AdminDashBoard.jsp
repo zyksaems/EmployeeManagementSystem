@@ -48,14 +48,12 @@ th {
     <li>Single User</li>
      <nav id="nav1">
       <ul>
-      <li><a href="">daily</a></li><br>
-      <li><a href="">weekly</a></li><br>
-      <li><a href="">monthly</a></li><br>
-      <li><a href="">yearly</a></li><br>
+      <li><a href="">Daily</a></li><br>
+      <li><a href="">Weekly</a></li><br>
+      <li><a href="">Monthly</a></li><br>
+      <li><a href="">Annually</a></li><br>
       </ul>
-      <div>
-      <a href="/EmployeeManagementSystem/changePassword.do"><span style="color:#9acd32"><h3>change password</h3></span></a>
-      </div>
+      <li><button ng-click="getChange()">Change Password</button></li><br><br>
       <li><button ng-click="logout()">Sign-out</button></li>
      </nav>
    </nav>  

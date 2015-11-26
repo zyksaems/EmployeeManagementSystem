@@ -87,13 +87,14 @@ public class SecurityController {
 		logger.info("inside uploadEmployeeDetailsExcelFile()");
 		Iterator<String> itr = request.getFileNames();
 		MultipartFile file = request.getFile(itr.next());
-		String result="";
+		String result = "";
 		try {
-			result = securityService.uploadEmployeeDetailsExcelFile(file.getInputStream(),file.getOriginalFilename());
+			result = securityService.uploadEmployeeDetailsExcelFile(file.getInputStream(), file.getOriginalFilename());
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
-		};
+		}
+		;
 		logger.info("result : " + result);
 		return result;
 	}
@@ -104,80 +105,82 @@ public class SecurityController {
 		return "ForgotPassword";
 	}
 
-	
+	/*
+	 * forgotPassword() method takes adminId and emailId as parameter and after
+	 * validating both input , it returns success message such as Email Sent
+	 * Successfully or error message such as You entered incorrect adminId or
+	 * EmailId on the browser.
+	 */
 	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.POST)
 	public @ResponseBody String forgotPassword(@RequestParam("id") Integer adminId,
 			@RequestParam("email") String emailId) {
 		logger.info("in admin forgot password:  id: " + adminId + "    email: " + emailId);
 		return securityService.forgotPassword(adminId, emailId);
-		 
+
 	}
 
 	/*
-	 * changePassword() method implementation This method takes current password
-	 * and new password as parameter and after checking all the conditions it
-	 * returns either a successful or an error message to the browser
-	 */
-	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
-	public @ResponseBody String changePassword(HttpServletRequest request, @RequestParam("cpwd") String oldPassword,
-			@RequestParam("npwd") String newPassword) {
+	  * changePassword() method implementation This method takes current password
+	  * and new password as parameter and after checking all the conditions it
+	  * returns either a successful or an error message to the browser
+	  */
+	 @RequestMapping(value = "/changePasswordHome", method = RequestMethod.POST)
+	 public @ResponseBody String changePassword(HttpServletRequest request, @RequestParam("cpwd") String oldPassword,
+	   @RequestParam("npwd") String newPassword) {
+	          logger.info("inside changePassword( )controller");
+	  Integer adminId = (Integer) request.getSession().getAttribute("adminId"); 
+	  logger.info("In change Password:" + adminId);
+	  logger.info(oldPassword + "   " + newPassword);
 
-		int adminId = (Integer) request.getAttribute("adminId");
-		logger.info("In change Password:" + adminId);
-		logger.info(oldPassword + "   " + newPassword);
+	  String targetView = "/WEB-INF/views/ChangePassword.jsp";
+	  String status = "";
 
-		String targetView = "/WEB-INF/views/ChangePassword.jsp";
-		String status = "";
+	  Admin admin = new Admin();
+	  admin.setAdminId(adminId);
+	  admin.setPassword(oldPassword);
+	  logger.info(admin);
+	  List<String> oldPwd = securityService.getOldPassword(admin);
+	  logger.info("oldPwd " + oldPwd);
+	  logger.info(oldPwd.get(0));
 
-		Admin admin = new Admin();
-		admin.setAdminId(adminId);
-		admin.setPassword(oldPassword);
-		logger.info(admin);
-		List<String> oldPwd = securityService.getOldPassword(admin);
-		logger.info("oldPwd " + oldPwd);
-		logger.info(oldPwd.get(0));
+	  // condition to match for old password and user given password
+	  if (oldPwd.get(0).equals(oldPassword)) {
+	   logger.info("both pwd matching");
+	   Admin admin1 = new Admin();
+	   admin1.setPassword(newPassword);
+	   admin1.setAdminId(admin.getAdminId());
+	   // If both pasword matched, then will call changePassword() method
+	   String statusMsg = securityService.changePassword(admin1);
+	   logger.info(statusMsg);
+	   return getJsonArray(statusMsg);
+	  }
+	  
+	  else {
+	   status = "current-password is not matched with  old-password ";
+	   logger.info(status);
+	   ModelAndView modelAndView = new ModelAndView(targetView, "status", status);
+	   logger.info(" modelAndView  " + modelAndView);
+	   return getJsonArray(status);
+	  }
 
-		// condition to match for old password and user given password
-		if (oldPwd.get(0).equals(oldPassword)) {
-			logger.info("both pwd matching");
-			Admin admin1 = new Admin();
-			admin1.setPassword(newPassword);
-			// If both password matched, then will call changePassword() method
-			String statusMsg = securityService.changePassword(admin1);
-			logger.info(statusMsg);
-			return getJsonArray(statusMsg);
-		}
-		/**
-		 * If both password not matched, then it returns the corresponding
-		 * response to jsp page
-		 */
-		else {
-			status = "current-password is not matched with  old-password ";
-			logger.info(status);
-			ModelAndView modelAndView = new ModelAndView(targetView, "status", status);
-			logger.info(" modelAndView  " + modelAndView);
-			return getJsonArray(status);
-		}
+	 }
+	 @RequestMapping(value = "/changePasswordPage", method = RequestMethod.GET)
+	 public String changePasswordPage(HttpServletRequest request) {
+	  logger.info("inside ChangePassword page");
+	  return "ChangePassword";
+	 }
 
-	}
+	 /**
+	  * getJsonArray() used to convert Object to String, so that we will send
+	  * this String to other layer
+	  * 
+	  * @param obj
+	  * @return  jsonObj
+	  */
 
-	/**
-	 * getJsonArray() used to convert Object to String, so that we will send
-	 * this String to other layer
-	 * 
-	 * @param obj
-	 * @return
-	 */
+	 private String getJsonArray(Object obj) {
+	  Gson gson = new Gson();
+	  return gson.toJson(obj);
 
-	private String getJsonArray(Object obj) {
-		Gson gson = new Gson();
-		return gson.toJson(obj);
-
-	}
-
-	@RequestMapping(value = "/changePassword.do", method = RequestMethod.GET)
-	public String getChangepasspage() {
-		return "ChangePassword";
-	}
-
+	 }
 }
