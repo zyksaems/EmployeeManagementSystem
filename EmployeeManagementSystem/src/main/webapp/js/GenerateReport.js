@@ -125,7 +125,7 @@ app1.controller('myctrl',function($scope,$http){
 		{
 		
 		$http({
-            method : 'GET',
+            method : 'POST',
             url : 'getAllEmployees.do'
            
     }).success(function(data, status, headers, config) {
@@ -144,23 +144,6 @@ app1.controller('myctrl',function($scope,$http){
 		}
    };/* getAttendance */
    
-   /* autocomplete to get employee ids or names */
-  /* $scope.getCheck=function()
-	{
-		$http({
-	           method : 'GET',
-	             url : 'AutoCompleteId?s='+$scope.id
-	                  
-	     }).success(function(data, status, headers, config) {
-	    	 $scope.employeeIds = data;
-	    	
-  }).error(function(data, status, headers, config) {
- 	 $scope.result ="there is id like this" ;
- 	 });
-		
-	
-	}
-   */
    
 	$scope.getDis=function()
 	{

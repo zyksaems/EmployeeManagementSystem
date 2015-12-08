@@ -5,12 +5,11 @@ import java.util.List;
 
 public interface IReportGenerationDAO {
 
-	/*List<Object> getEmployeeReport(int employeeId,int attendanceId);*/
 	List<Object> getEmployeeReport(int employeeId, Date attendanceDate);
 
 	List<Object> getAllEmployeeReport(int employeeId, Date fromDate, Date toDate);
-	
-	public List<Object>  getEmployees(int employeeId);
+
+	public List<Object> getEmployees(int employeeId);
 
 	List<Object> getAllEmployees();
 

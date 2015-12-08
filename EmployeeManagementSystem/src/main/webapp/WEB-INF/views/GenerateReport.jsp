@@ -14,7 +14,12 @@
 <script src="js/GenerateReport.js"></script>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<% String str=(String)session.getAttribute("EmployeeName");%>
+<% Integer id=(Integer)session.getAttribute("employeeId");%>
+
+<% String name=(String)session.getAttribute("EmployeeName");%>
+
+<% String designation=(String)session.getAttribute("designation");%>
+
 </head>
 <body ng-app="myapp" ng-controller="myctrl" >
 
@@ -48,11 +53,11 @@ Report type:
 <div ng-hide="hide1">
 <ul>
 <li>
-Employee Id:<i ng-model="p1"></i></li>
+Employee Id:<i ng-model="p1"></i></li><%=id %>
 <li>
-Employee Name<i ng-model="p2"></i></li><%=str %>
+Employee Name<i ng-model="p2"></i></li><%=name %>
 <li>
-Employee Designation<i ng-model="p3"></i></li>
+Employee Designation<i ng-model="p3"></i></li><%= designation%>
 </ul>
 <hr>
 </div>
@@ -87,18 +92,18 @@ Employee Designation<i ng-model="p3"></i></li>
           <table class="table table-striped table-condensed table-hover" border='2'>
                 <thead>
                     <tr>
-                      <th>EmpId</th>
+                      <th>Employee Id</th>
                         <th >Date</th>
                         <th >StartTime</th>
                         <th >EndTime</th>
-                        <th >WorkHours</th>
-                        <th >DayIndicator</th>
+                        <th >Working Hours</th>
+                        <th >Day Indicator</th>
                     </tr>
                 </thead>
                 
                 <tbody>
                     <tr ng-repeat="at1 in ats1">
-                       <td>{{at1.employeeId}}</td>
+                       <td><align=center>{{at1.employeeId}}</align></td>
                         <td>{{at1.attendanceDate}}</td>
                         <td>{{at1.startTime}}</td>
                         <td>{{at1.endTime}}</td>
