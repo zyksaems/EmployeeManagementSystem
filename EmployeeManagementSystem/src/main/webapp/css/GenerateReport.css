@@ -1,0 +1,53 @@
+<style>
+P{
+
+}
+h1 {
+ padding: 0px 0px 0px 70px;
+  margin:-1px;
+}
+
+h2 {
+     margin:1px;
+}
+
+table, td, th {
+ 
+    border: 1px solid green;
+}
+input{
+width:200px; 
+height:14px;
+font-size: 15px;
+border-radius: 0px;
+
+}
+td{
+height: 30px;
+}
+
+th {
+   height: 40px;
+    background-color: green;
+    color: white;
+}
+body{
+ padding: 15px 15px 15px 15px;
+   font-family:  Georgia, serif;
+  background-color:#f0f8ff;
+}
+#btn{
+width:10%; 
+height:20%;
+font-size:100%;
+float:center;
+border-radius: 0px;
+}
+#d1{
+width: 635px;
+    height: 80px;
+    padding: 0px 0px 0px 340px;
+    border: 1px solid #757575;
+     color:#6495ed;
+}
+</style>
