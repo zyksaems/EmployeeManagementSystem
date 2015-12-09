@@ -40,7 +40,11 @@
 			    <br> <input type="password" ng-model="rpwd">
 			    <p><font color="red">{{valid}}</font></p>
 			    <button ng-click="getChange()">Save</button>
-		  </div>
+     	  <br><br>     
+           </div>   
+             <div id="div5">
+                    <a href="/EmployeeManagementSystem/adminLogout.do" >logout</a>    
+    </div>
 	 </div>
 	
 </body>

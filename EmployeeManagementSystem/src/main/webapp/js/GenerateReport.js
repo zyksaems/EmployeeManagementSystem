@@ -106,7 +106,6 @@ app1.controller('myctrl',function($scope,$http){
     	 });
 			}/* from date and to date */
 			
-			
 			}/* not null */
 		else
 			{
@@ -120,7 +119,6 @@ app1.controller('myctrl',function($scope,$http){
 	}
 	
 	/* when select ALL it will select the records of all employee based on conditions */
-	
 	else
 		{
 		
@@ -144,6 +142,20 @@ app1.controller('myctrl',function($scope,$http){
 		}
    };/* getAttendance */
    
+   /* autocomplete to get employee ids or names */
+  /* $scope.getCheck=function()
+	{
+		$http({
+	           method : 'GET',
+	             url : 'AutoCompleteId?s='+$scope.id
+	                  
+	     }).success(function(data, status, headers, config) {
+	    	 $scope.employeeIds = data;
+  }).error(function(data, status, headers, config) {
+ 	 $scope.result ="there is id like this" ;
+ 	 });
+	}
+   */
    
 	$scope.getDis=function()
 	{

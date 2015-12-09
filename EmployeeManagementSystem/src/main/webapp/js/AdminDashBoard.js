@@ -101,8 +101,6 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 	  else{
 	   $scope.fileUploadSuccessMsg="Please select file ";
 	  }
-	   
-	  
 	 };
 	/*function to set employee default details*/
 	function employeeDefaultDetails(){

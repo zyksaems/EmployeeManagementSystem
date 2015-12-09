@@ -60,6 +60,10 @@ th {
  </div>
 </div>
 
+ <div id="" aling="left">
+         <a href="/EmployeeManagementSystem/generateReportHome.do" >GenerateReport</a>    
+    </div>
+
 <div id="section" ng-show="showAddEmployeeMainDiv">
          <div id="importEmployeeDataDiv">
               <p id="AddEmpText" >Add Employee(s)</p>              
@@ -122,10 +126,6 @@ th {
 			<td> {{emp.deptId}} </td>
 		</tr> 
 		</table> 
-	
-	
-	</div>
-        
 	</div>
 
 	<div id="footer">

@@ -25,9 +25,9 @@ var app = angular.module('myApp', []);
 		defaultValues();
 
 		/* function calls to get Employee Ids  */
-		/*getAllEmpIds();
+		getAllEmpIds();
 		getLoggedInEmpIds();
-		getLoggedOutEmpIds();*/
+		getLoggedOutEmpIds();
 		
 
 		/* function to get all employeeIds from jsp as array */

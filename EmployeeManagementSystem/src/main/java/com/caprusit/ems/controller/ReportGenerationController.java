@@ -23,25 +23,9 @@ public class ReportGenerationController {
 	private Logger logger = Logger.getLogger(ReportGenerationController.class);
 
 	@RequestMapping(value = "/generateReportHome", method = RequestMethod.GET)
-	public String getForgotPasswordPage(HttpServletRequest request) {
+	public String getReportGenerationPage(HttpServletRequest request) {
 		logger.info("inside generateReportHome()");
 		return "GenerateReport";
-	}
-
-	@RequestMapping(value = "/generateReportPage", method = RequestMethod.POST)
-	public @ResponseBody List<Object> getAllEmployeeReport(@RequestParam("employeeId") int employeeId,
-			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
-		logger.info("inside ReportGenerationController getAllEmployeeReport()");
-		return reportGenerationService.getAllEmployeeReport(employeeId, new Date(Long.valueOf(fromDate)),
-				new Date(Long.valueOf(toDate)));
-	}
-
-	@RequestMapping(value = "/generateReport", method = RequestMethod.POST)
-	public @ResponseBody List<Object> getEmployeeReport(@RequestParam("employeeId") int employeeId,
-			@RequestParam("attendanceDate") String attendanceDate) {
-		logger.info("inside ReportGenerationController getEmployeeReport()");
-		
-		return reportGenerationService.getEmployeeReport(employeeId, new Date(Long.valueOf(attendanceDate)));
 	}
 
 	@RequestMapping(value = "/getAllEmployeeReport", method = RequestMethod.POST)
@@ -49,7 +33,52 @@ public class ReportGenerationController {
 			HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getAllEmployee()");
 
+		List<Object> empData = reportGenerationService.login(employeeId);
+		if (empData != null) {
+			Object[] data = (Object[]) empData.get(0);
+			if (data != null && data.length > 0) {
+				request.getSession().setAttribute("employeeId", employeeId);
+				request.getSession().setAttribute("EmployeeName", (String) data[0] + " " + (String) data[1]);
+				request.getSession().setAttribute("designation", (String) data[2]);
+			}
+		}
 		return reportGenerationService.getEmployees(employeeId);
+	}
+
+	@RequestMapping(value = "/generateReport", method = RequestMethod.POST)
+	public @ResponseBody List<Object> getEmployeeReport(@RequestParam("employeeId") int employeeId,
+			@RequestParam("attendanceDate") String attendanceDate, HttpServletRequest request) {
+		logger.info("inside ReportGenerationController getEmployeeReport()");
+
+		List<Object> empData = reportGenerationService.login(employeeId);
+		if (empData != null) {
+			Object[] data = (Object[]) empData.get(0);
+			if (data != null && data.length > 0) {
+				request.getSession().setAttribute("employeeId", employeeId);
+				request.getSession().setAttribute("EmployeeName", (String) data[0] + " " + (String) data[1]);
+				request.getSession().setAttribute("designation", (String) data[2]);
+			}
+		}
+		return reportGenerationService.getEmployeeReport(employeeId, new Date(Long.valueOf(attendanceDate)));
+	}
+
+	@RequestMapping(value = "/generateReportPage", method = RequestMethod.POST)
+	public @ResponseBody List<Object> getAllEmployeeReport(@RequestParam("employeeId") int employeeId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			HttpServletRequest request) {
+		logger.info("inside ReportGenerationController getAllEmployeeReport()");
+
+		List<Object> empData = reportGenerationService.login(employeeId);
+		if (empData != null) {
+			Object[] data = (Object[]) empData.get(0);
+			if (data != null && data.length > 0) {
+				request.getSession().setAttribute("employeeId", employeeId);
+				request.getSession().setAttribute("EmployeeName", (String) data[0] + " " + (String) data[1]);
+				request.getSession().setAttribute("designation", (String) data[2]);
+			}
+		}
+		return reportGenerationService.getAllEmployeeReport(employeeId, new Date(Long.valueOf(fromDate)),
+				new Date(Long.valueOf(toDate)));
 	}
 
 	@RequestMapping(value = "/getAllEmployees", method = RequestMethod.POST)
@@ -57,4 +86,10 @@ public class ReportGenerationController {
 		logger.info("inside ReportGenerationController getAllEmployees()");
 		return reportGenerationService.getAllEmployees();
 	}
+	
+	/*@RequestMapping(value = "/getAllEmployeesReport", method = RequestMethod.GET)
+	public @ResponseBody List<Object> getAllEmployeesReport(@RequestParam("attendanceDate") String attendanceDate) {
+		logger.info("inside ReportGenerationController getAllEmployeesReport()");
+		return reportGenerationService.getAllEmployeesReport(new Date(Long.valueOf(attendanceDate)));
+	}*/
 }

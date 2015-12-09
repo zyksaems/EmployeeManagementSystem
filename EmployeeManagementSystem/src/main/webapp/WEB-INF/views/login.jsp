@@ -53,12 +53,12 @@
 			<Button id="AdminButton" ng-click="AdminButton()">Admin
 				sign-in</Button>
 		</div>
-		all empIds:
+		<!-- all empIds:
 		<p>{{jsondata}}</p>
 		Loggedin empIds :
 		<p>{{loggedInIds}}</p>
 		LoggedOut empIds :
-		<p>{{jsonLoggedOut}}</p>
+		<p>{{jsonLoggedOut}}</p> -->
 	</div>
 </div>
 	
