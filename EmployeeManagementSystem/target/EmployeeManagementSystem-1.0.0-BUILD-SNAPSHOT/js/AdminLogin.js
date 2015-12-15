@@ -106,7 +106,6 @@ app.controller("MyController", function($scope,$http,$window){
 		     $scope.validationMsg2="password can't be Emptly";
 		 	
 	  }
-			
 		
 	}
 

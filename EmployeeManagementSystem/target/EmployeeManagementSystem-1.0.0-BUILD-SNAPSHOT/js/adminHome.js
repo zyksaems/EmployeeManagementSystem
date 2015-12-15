@@ -49,7 +49,6 @@ app.controller('AdminController', function($scope, $http, $window) {
 
 	};
 		
-	
 	/*function for file_change()*/
 	$scope.file_changed = function(element) {		
 		file=element.files[0];

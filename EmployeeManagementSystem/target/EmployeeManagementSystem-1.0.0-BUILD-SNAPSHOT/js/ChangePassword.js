@@ -5,7 +5,6 @@ app.controller('myctrl',function($scope,$http){
 	$scope.getChange= function(){
 		if($scope.cpwd!=null && $scope.npwd!=null && $scope.rpwd!=null)
 			{
-			
 			if($scope.cpwd!=$scope.npwd)
 			{
 					if($scope.npwd==$scope.rpwd )

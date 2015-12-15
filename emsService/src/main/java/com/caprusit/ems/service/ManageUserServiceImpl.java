@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.caprusit.ems.dao.IManageUserDAO;
+import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.service.IManageUserService;
 import com.google.gson.Gson;
 
@@ -22,7 +23,7 @@ public class ManageUserServiceImpl implements IManageUserService{
 public String getEmployees() {
 		
 		logger.info("inside ManageUserServiceImpl getEmployees()");
-		List<Object> employeeList = manageUserDAO.getEmployees();
+		List<Employee> employeeList = manageUserDAO.getEmployees();
 		return convertToJson(employeeList);
 	}
 
@@ -32,5 +33,10 @@ public static String convertToJson(Object obj) {
 		return gson.toJson(obj);
 
 	}
+
+public List<Employee> getAllEmployee() {
+	List<Employee> employeeList = manageUserDAO.getEmployees();
+	return employeeList;
+}
 
 }

@@ -3,7 +3,6 @@ app
 		.controller(
 				'myctrl',
 				function($scope, $http) {
-
 					/* default values and variable declarations */
 					var adminIdLength = 6;
 					var emailLength = 10;

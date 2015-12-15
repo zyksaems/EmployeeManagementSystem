@@ -14,6 +14,7 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 		
 		$scope.showAddEmployeeMainDiv=false;	
 		$scope.showExcelDiv = false;
+		$scope.showExcel = false;
 		$scope.showManuallyEnterDiv=false;
 		$scope.fileUploadSuccessMsg="";
 	}
@@ -101,8 +102,6 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 	  else{
 	   $scope.fileUploadSuccessMsg="Please select file ";
 	  }
-	   
-	  
 	 };
 	/*function to set employee default details*/
 	function employeeDefaultDetails(){
@@ -154,6 +153,22 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 		var response = $http.get('/EmployeeManagementSystem/getAllEmployee.do');
 		response.success(function(data, status, headers, config) {
 			$scope.allEmpData = data;
+			
+		});
+		response.error(function(data, status, headers, config) {
+			alert("failure message: " + JSON.stringify({
+				data : data
+			}));
+		});
+	};
+	
+	/*function to show Employee Details in Excel file format */
+	$scope.showExcel=function(){
+		console.log("in showExcel()");
+		$scope.showExcel= !$scope.showExcel;
+		console.log("show Excel div: "+$scope.showExcel);
+		var response = $http.get('/EmployeeManagementSystem/getExcel.do');
+		response.success(function(data, status, headers, config) {
 			
 		});
 		response.error(function(data, status, headers, config) {

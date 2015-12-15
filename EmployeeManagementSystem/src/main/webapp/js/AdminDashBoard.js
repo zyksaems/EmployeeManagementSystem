@@ -1,7 +1,7 @@
 
 /*this file name: AdminDashBoard.js */
 
-var app = angular.module('AdminDashBoard', []);
+var app = angular.module('AdminDashBoard', ['ngAnimate', 'ui.bootstrap']);
 
 app.controller('AdminDashBoardController', function($scope, $http, $window) {
 	
@@ -9,11 +9,12 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 	var file=null;
 	var allowedFileExtension="xl";
 	
-	/*fonction to set default values*/
+	/*function to set default values*/
 	function setDefaultValues(){
 		
 		$scope.showAddEmployeeMainDiv=false;	
 		$scope.showExcelDiv = false;
+		$scope.showExcel = false;
 		$scope.showManuallyEnterDiv=false;
 		$scope.fileUploadSuccessMsg="";
 	}
@@ -152,7 +153,8 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 		var response = $http.get('/EmployeeManagementSystem/getAllEmployee.do');
 		response.success(function(data, status, headers, config) {
 			$scope.allEmpData = data;
-			
+			$scope.totalItems=data.length;
+				
 		});
 		response.error(function(data, status, headers, config) {
 			alert("failure message: " + JSON.stringify({
@@ -160,6 +162,34 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 			}));
 		});
 	};
+	
+	/*function to show Employee Details in Excel file format */
+	$scope.showExcel=function(){
+		console.log("in showExcel()");
+		$scope.showExcel= !$scope.showExcel;
+		console.log("show Excel div: "+$scope.showExcel);
+		$window.location.href="/EmployeeManagementSystem/getExcel.do";
+		/*var response = $http.get('/EmployeeManagementSystem/getExcel.do');
+		response.success(function(data, status, headers, config) {
+			$scope.allEmp = data;
+		});
+		response.error(function(data, status, headers, config) {
+			alert("failure message: " + JSON.stringify({
+				data : data
+			}));
+		});*/
+	};
+	
+	/*function for sorting in   Pagination  */
+	 /*$scope.users = []; //declare an empty array
+	    $http.get("").success(function(response){ 
+	        $scope.allEmpData = response;  //ajax request to fetch data into $scope.data
+	    });*/
+	    $scope.sort = function(keyname){
+	        $scope.sortKey = keyname;   //set the sortKey to the param passed
+	        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	    };
+	
 	
 	/*function to logout button*/
 	$scope.logout=function(){
@@ -175,4 +205,18 @@ app.controller('AdminDashBoardController', function($scope, $http, $window) {
 		  $window.location.href = '/EmployeeManagementSystem/changePasswordPage.do';
 		  
 		 };
+		 
+		 
+		 /*  Pagination */
+		 $scope.totalItems =[];
+		 $scope.viewby = 5;
+		   $scope.currentPage = 1;
+		   $scope.itemsPerPage = $scope.viewby;
+		   $scope.maxSize = 1; //Number of pager buttons to show
+		   
+		   $scope.setItemsPerPage = function(num) {
+			      $scope.itemsPerPage = num;
+			      $scope.currentPage = 1; //reset to first page
+			    };		   
+		   
 });//end app.controlller

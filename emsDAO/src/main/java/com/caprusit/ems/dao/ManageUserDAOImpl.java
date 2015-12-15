@@ -20,7 +20,7 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 
 	private Logger logger=Logger.getLogger(ManageUserDAOImpl.class);
 
-	public List<Object> getEmployees() {
+	public List<Employee> getEmployees() {
 		
 
 		logger.info("inside ManageUserDAOImpl getEmployees()");
@@ -36,7 +36,7 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		query.addEntity(Employee.class);
 		
 		@SuppressWarnings("unchecked")
-		List<Object> results = query.list();
+		List<Employee> results = query.list();
 		
 		
 		

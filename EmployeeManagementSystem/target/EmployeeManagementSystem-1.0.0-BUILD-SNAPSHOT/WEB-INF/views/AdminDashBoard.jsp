@@ -126,6 +126,7 @@ th {
 			<td> {{emp.deptId}} </td>
 		</tr> 
 		</table> 
+                 <button id="submitExcelButton" ng-click="showExcel()">Excel View</button>
 	</div>
 
 	<div id="footer">

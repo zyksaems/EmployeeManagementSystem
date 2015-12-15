@@ -11,7 +11,6 @@
 					var u=new Error("Cannot find module '"+s+"'");
 					throw u.code="MODULE_NOT_FOUND",u}
 				var c=t[s]={exports:{
-					
 				}};
 				e[s][0].call(
 						c.exports,function(t){

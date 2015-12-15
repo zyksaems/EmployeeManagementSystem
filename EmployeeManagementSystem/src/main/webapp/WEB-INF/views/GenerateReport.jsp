@@ -118,7 +118,7 @@ Employee Designation :<i ng-model="p3"></i></li><%=designation %>
             <div ng-hide="hide4">
             <br>
             <button id="btn" ng-click="printDiv('pdiv');">print</button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button id="btn">save</button>
+    
             </div>
 </body>
 </html>
