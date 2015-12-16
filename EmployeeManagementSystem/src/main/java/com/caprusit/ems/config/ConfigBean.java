@@ -22,7 +22,7 @@ public class ConfigBean extends WebMvcConfigurerAdapter {
 	    public ResourceBundleViewResolver resourceBundleViewResolver() {  
 		ResourceBundleViewResolver resolver = new ResourceBundleViewResolver();
 		resolver.setOrder(1);
-		resolver.setBasename("excelView");
+		resolver.setBasename("properties/excelView");
 	
 	        return resolver;  
 	    }
