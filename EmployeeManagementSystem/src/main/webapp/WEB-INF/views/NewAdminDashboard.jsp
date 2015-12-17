@@ -53,9 +53,9 @@
   
   </div>
   <!-- for showing admin login modal -->
-<script type="text/ng-template" id="AdminLogin.html">
+ <script type="text/ng-template" id="AdminLogin.html">
      <div style="background-color: #858585">
-       <div class="modal-header AdminLoginHeader">
+       <div class="modal-header AdminLoginHeader" ng-show="!showDiv">
           <div class="row"> 
             <div class="col-sm-2"></div>
             <div class="col-sm-8">
@@ -73,7 +73,7 @@
               <form role="form">
                   <div class="form-group">
                      <!-- <label for="email">Admin ID:</label> -->
-                     <input type="text" maxlength="6" class="form-control" placeholder="Please Enter AdminId" 
+                     <input type="text" maxlength="15" class="form-control" placeholder="Please Enter AdminId" 
                         uib-popover="{{userNamePropoverMsg}}" popover-is-open="enableUsernamePropover" ng-change="AdminIdValidation()" ng-model="Admin.userName">
                   </div>
                   <div class="form-group">
@@ -87,7 +87,7 @@
                               <input type="checkbox" ng-model="showPassword" ng-click="showAdminPassword()">Show password
                          </div>
                          <div class="col-sm-6 te">
-                              <a href="#_forgotPassword" class="forgotPassword text-right" ng-click="AdminForgotPassword()">Forgot password?</a>
+                              <a href="#_forgotPassword" class="forgotPassword text-right" ng-click="adminForgotPassword()">Forgot password?</a>
                          </div>
                      </div>
                   </div>
@@ -114,8 +114,13 @@
                 <button class="btn btn-sm btn-danger" ng-click="closeModal()">cancel</button>                                             
            </div> -->
         </div>
+        
+           <div class="modal-footer AdminLoginFooter" ng-show="showDiv">                      
+                <button class="btn btn-sm btn-danger" ng-click="closeModal()">cancel</button>                                             
+           </div>
+         
 </div>
-    </script>
+     </script>
   
   <!-- Top menu -->
   <div class="row" > 
@@ -184,7 +189,7 @@
        
         <uib-accordion-group class="panel-heading panelBG " heading="View Attendance" ><!-- is-open="!showInitialAccordion" -->
             <div ><a href="" class="linkColor" ng-click="showPie()">Daily Attendance</a></div>
-            <div ><a href="" class="linkColor" ng-click="showLine()">Weekly Attendance</a></div>
+            <div ><a href="" class="linkColor" ng-click="">Weekly Attendance</a></div>
         </uib-accordion-group>
         <uib-accordion-group class="panel-heading panelBG " heading="Productivity" ><!-- is-open="!showInitialAccordion" -->
             <div ><a href="" class="linkColor" ng-click="showLine()">Weekly Productivity</a></div>
@@ -194,7 +199,7 @@
                               
                               
         <uib-accordion-group class="panel-heading panelBG " heading="Settings" ><!-- is-open="!showInitialAccordion" -->
-            <div><a href="" class="linkColor">Change Password</a> </div><br> 
+            <div><a href="" class="linkColor" ng-click="adminChangePassword()">Change Password</a> </div><br> 
             <div ><a href="" class="linkColor" ng-click="logOut()">Logout</a></div>
         </uib-accordion-group>
      </uib-accordion>
@@ -203,7 +208,7 @@
   <!--Middle container   -->
    <div class="col-sm-10 " >
     <!-- Tables for Report contents -->
-   <div ng-show="false">
+<!--    <div ng-show="false">
   <div class="row"> Daily Report </div>
    <div class="row">
    <div><input type="text" class="form-control" ng-model="searchBox"> </div>
@@ -237,7 +242,7 @@
   </div>
   </div>
   
-  </div>
+  </div> -->
   
   
  <!--  Division for Adding single and multiple employees through excel file -->
@@ -292,28 +297,25 @@
 <div class="row">
   <div class="col-sm-9">
      
-     <div  id="canvas-holder" style="margin-top:5%">
+     <div  id="canvas-holder" style="margin-top:%">
     
-           <div class="row pageHeading" style="margin-bottom: 2%">Daily Report</div>
+           <div class="row pageHeading alert alert-info" style="margin-bottom: 2%">Daily Attendance</div>
 		   <canvas id="pieChart" width="400" height="400" ng-click="clickOnPie($event)" style="margin-left: 25%"></canvas>
 			
     </div>
     
-    
-    
-    <div style="width: 100% ;margin-left: 5%;margin-top:5%;" id="line-holder">
-            <div class="row pageHeading" >Weekly Productivity</div>
+    <div style="width: 100% ;" id="bar-holder">
+			<div class="row  pageHeading alert alert-info">Monthly Productivity</div>
+			<canvas id="barChart" height="auto" width="auto" style="margin-left: 5%"></canvas>
+		 	  
+    </div> 
+      <div style="width: 100%" ; id="line-holder">
+            <div class="row pageHeading alert alert-info" >Weekly Productivity</div>
 			<div>
-				<canvas id="canvas" height="450" width="600"></canvas>
+				<canvas id="canvas" height="auto" width="auto" style="margin-left: 5%"></canvas>
 			</div>
 			 
 		</div>
-		
-		<div style="width: 100% ;margin-left: 5%;margin-top:5%;" id="bar-holder">
-			<div class="row pageHeading">Monthly Productivity</div>
-			<canvas id="barChart" height="450" width="600"></canvas>
-		 	  
-    </div> 
   </div>
   <div class="col-sm-3" >
   
@@ -326,11 +328,25 @@
 
 </div>
 
+ <!--  Division for Adding single and multiple employees through excel file -->
+ 
+  <div ng-show="showAdminChangePasswordDiv">
+  
+    <div><h1>This is change password </h1></div>
+  
+  
+  </div>
+ 
+
  <!-- END   ---- Division for Adding single and multiple employees through excel file  ----- END  -->
+ 
+ 
+ 
+ 
 
 <div ng-show="showTableDetails">
 
-<div class="alert alert-info pageHeading">
+<div class="alert alert-info pageHeading" >
   <span ng-model="listName">{{listName}}</span>
   </div>
   
@@ -369,14 +385,14 @@
         </td>
         <td>
           <a href="#" ng-click="sortType = 'itime'; sortReverse = !sortReverse">
-          In-time 
+          In-Time 
             <span ng-show="sortType == 'itime' && !sortReverse" ></span>
             <span ng-show="sortType == 'itime' && sortReverse" ></span>
           </a>
         </td>
         <td>
           <a href="#" ng-click="sortType = 'otime'; sortReverse = !sortReverse">
-          Out-time
+          Out-Time
             <span ng-show="sortType == 'otime' && !sortReverse" ></span>
             <span ng-show="sortType == 'otime' && sortReverse" ></span>
           </a>
@@ -409,7 +425,10 @@
 </div>
 
  </div>
-  </div>
+  </div>  <!--  END of Admin DashBoard Division -->
+  
+  
+  
   <!--footer Part  -->
   <!-- <div class="row" style=" margin-top: 300px;">
     <div  style=" background-color: #333333; max-height: 50px; " >  class=" navbar-fixed-bottom"

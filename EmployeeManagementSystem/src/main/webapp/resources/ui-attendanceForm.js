@@ -3,6 +3,19 @@
 var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 	app.controller('ValidController', function($scope, $http,$window,$uibModal, $log) {
 		
+		/*setting values for hiding all divisions*/
+		
+		
+		$scope.showAdminDashBoard=false;
+		
+		/*divisions inside Admin dash board*/
+		
+		$scope.showAddEmployeeMainDiv=false;
+		$scope.showCharts=false;
+		$scope.showAdminChangePasswordDiv=false;
+		$scope.showTableDetails=false;
+		
+		
 		  /*for accordion*/
 		  $scope.oneAtATime = true;
           
@@ -63,10 +76,10 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		/*creating variables for employee intime/out time functionality*/
 
 		var employeeIdLength = 6;
-		var json = [{empId:111111}];
+		var json = [];
 		var jsonLoggedIn = [];
 		var jsonLoggedOut = [];
-		var EmployeeName="hhhhhhh";
+		var EmployeeName="";
 		var loginSuccess=1;
 		var logoutSuccess=2;
 		var status=10;
@@ -507,6 +520,9 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			   }
 				console.log("Index after search:="+foundIndex);
 				console.log("employee details: new ="+ empDetails[foundIndex].firstName);
+				if(presentiesList[i].endTime==undefined){
+					presentiesList[i].endTime="still working";
+				}
 				var detailsObject= { employee_id: empDetails[foundIndex].employeeId, 
 						           first_name: empDetails[foundIndex].firstName, 
 						           last_name : empDetails[foundIndex].lastName,
@@ -543,14 +559,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			}
 			
 		/*	printing abseties klist on consile*/
-		for(var i=0;i<allAbsentEmpData.length;i++){
-			console.log("  absent "+i+"  details: "+allAbsentEmpData[i].employee_id);
-			
-		}
-		for(var i=0;i<allAbsentEmpData.length;i++){
-			console.log("  absent "+i+"  details: "+allAbsentEmpData[i].employee_id);
-			
-		}
+	
 		
 	   /*	printing abseties klist on consile*/
 			
@@ -570,15 +579,17 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 				   
 		    	        if(activePoints[0].label=='Present'){
 		    	        	$("#showChart").hide();
-		    	        	$scope.showTableDetails=true;	
-		    	        	$scope.listName="Present Employees";
-		    	        	$scope.persons=todayAttendancePieDetails;				   
+		    	        	
+		    	        	$scope.showTableDetails=true;
+		    	        	$scope.listName="Present Employees"
+		    	        	$scope.persons=todayAttendancePieDetails;
+		    	        	
 		   		
 		   			    }
-		   			    if(activePoints[0].label=='Aubsent'){
+		   			    if(activePoints[0].label=='Absent'){
 		   			 	$("#showChart").hide();
 	    	        	$scope.showTableDetails=true;
-	    	        	$scope.listName="Absent Employees";
+	    	        	$scope.listName="Absent Employees"
 		   			    	$scope.persons=allAbsentEmpData;	
 		   			    	
 		   			    }			   
@@ -593,16 +604,15 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			
 			$scope.showTableDetails=false;	
 			$scope.showTable=false;
-			$("#showChart").show();
-		
-			$("#canvas-holder").show();
-			$("#pieLegend").show();
-			
-    		$("#bar-holder").hide();
+			$("#bar-holder").hide();
     		$("#barLegend").hide();
-    		
     		$("#line-holder").hide();
     		$("#lineLegend").hide();
+    		
+    		$("#showChart").show();
+		    $("#canvas-holder").show();
+			$("#pieLegend").show();
+			
     		var pieData = [
     						{
     							value:numberOfPresetiesForPie,
@@ -615,7 +625,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
     							value: numberOfAbsentiesForPie,
     							color: "#FF3366",
     							highlight: "#FF6666",
-    							label: "Aubsent",
+    							label: "Absent",
     							name:"a"
     						}
     					   ];
@@ -636,18 +646,20 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		
 		/*for display Bar chart*/
 		$scope.showBar=function(){
-			
+		    
+			$scope.showTableDetails=false;	
 			$scope.showTable=false;
-			$scope.showCharts=true;
-			
 			$("#canvas-holder").hide();
 			$("#pieLegend").hide();
-			
+			$("#line-holder").hide();
+    		$("#lineLegend").hide();
+    		
+    		$scope.showCharts=true;
+			$("#showChart").show();
     		$("#bar-holder").show();
     		$("#barLegend").show();
     		
-    		$("#line-holder").hide();
-    		$("#lineLegend").hide();
+    		
     		var barChartData = {
     				labels : ["January","February","March","April","May","June","July","Aug","Sep","Oct","Nov","Des"],
     				datasets : [
@@ -659,7 +671,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
     						highlightStroke: "#005f80",
     						data:[100,150,250,90,40,140,170,120,120,200,150,170]
     					},
-    					{   label:"aubsent",
+    					{   label:"absent",
     						fillColor : "#b30000",
     						strokeColor : "#800000",
     						highlightFill : "#cc0000",
@@ -682,8 +694,9 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		
 		/*for display Line chart*/
 		$scope.showLine=function(){
+			$scope.showTableDetails=false;	
 			$scope.showTable=false;
-			$scope.showCharts=true;
+			
 			
 			$("#canvas-holder").hide();
 			$("#pieLegend").hide();
@@ -691,6 +704,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
     		$("#bar-holder").hide();
     		$("#barLegend").hide();
     		
+    		$scope.showCharts=true;
+    		$("#showChart").show();
     		$("#line-holder").show();
     		$("#lineLegend").show();
     		
@@ -709,7 +724,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 						data : [70,80,85,65,55,90,0]
 					},
 					{
-						label: "Aubsent",
+						label: "Absent",
 						fillColor : "rgb(255,179,179)",
 						strokeColor:"rgb(230,0,0)",
 						pointColor : "#b30000",
@@ -734,6 +749,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 
 			
 		}
+		
 		
 		/*functionality for adding single employee or multiple employees through excel file*/
 		
@@ -982,8 +998,17 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			
 		};
 		
+		/*function for admin change password*/
+		$scope.adminChangePassword=function(){
+			
+			$scope.showAdminChangePasswordDiv=!$scope.showAdminChangePasswordDiv;
+		}
 		
-		
+	  /*	function for showing and hiding divisions*/
+		function showOrHideRemainingDivisions(){
+			
+			
+		}
 
 	});// end of main controlller --
 	
@@ -1017,7 +1042,9 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 
 			updateLater();
 		}
-	});
+	});// END of controller to display Date and Time
+	
+	
 	
 	/*this controlller is for showing admin login page as modal*/
 	angular.module('ui.ems.app').controller('AdminLoginController', function ($scope,$http, $uibModalInstance) {
@@ -1026,6 +1053,13 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		 var passwordFlag;	
 		 var adminIdLength=6;
 		 var passwordLength=4;
+		 
+		 $scope.showDiv=false;
+		 
+		 $scope.adminForgotPassword=function(){
+			 console.log(" forgot password : ");
+			 $scope.showDiv=!$scope.showDiv;
+		 }
 		 
 		 /* function to set default values */
 		 function setDefaultValues(){

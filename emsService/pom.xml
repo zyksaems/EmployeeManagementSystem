@@ -22,11 +22,11 @@
 			<scope>test</scope>
 		</dependency>
 
-	<!--  Mail jar file -->
+		<!-- Mail jar file -->
 		<dependency>
-		<groupId>javax.mail</groupId>
-		<artifactId>mail</artifactId>
-		<version>1.4.7</version>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 		<!-- EMS dao jar file -->
 		<dependency>
@@ -43,14 +43,14 @@
 			<version>2.2.2</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- Spring Web-MVC -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>4.2.1.RELEASE</version>
 		</dependency>
-		
+
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -71,35 +71,33 @@
 		</dependency>
 
 		<!-- Apache POI for Reading MS Ofiice files -->
- 	
 
 
-	 <!-- <dependency>
-		<groupId>org.apache.poi</groupId>
-		<artifactId>poi-ooxml</artifactId>
-		<version>3.13</version>
-	</dependency> -->
-	
-	<dependency>
-		<groupId>org.apache.poi</groupId>
-		<artifactId>poi-ooxml</artifactId>
-		<version>3.9</version>
-	</dependency>
-	
 
-  
-  <!-- jar file for file upload (apache commons file upload) -->
-  	 <dependency>
- 	  <groupId>commons-fileupload</groupId>
-  	 	<artifactId>commons-fileupload</artifactId>
-   		<version>1.3</version>
-  		</dependency>
-  		
-<!--  Cipher jar -->
-<dependency>
-<groupId>encrypt.decrypt.cipher</groupId>
-  <artifactId>cipher</artifactId>
-  <version>1.1.1</version>
-</dependency>
+		<!-- <dependency> <groupId>org.apache.poi</groupId> <artifactId>poi-ooxml</artifactId> 
+			<version>3.13</version> </dependency> -->
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+		</dependency>
+
+
+
+		<!-- jar file for file upload (apache commons file upload) -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3</version>
+		</dependency>
+
+		<!-- Cipher jar -->
+		<!-- <dependency>
+			<groupId>encrypt.decypt.cipher</groupId>
+			<artifactId>cipher</artifactId>
+			<version>1.1.1</version>
+		</dependency> -->
+		
 	</dependencies>
 </project>

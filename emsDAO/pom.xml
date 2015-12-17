@@ -32,12 +32,13 @@
 		</dependency>
 
 		<!-- ojdbc jar file -->
-		<dependency>
-			<groupId>oracle.jdbc.driver</groupId>
-			<artifactId>ojdbc14</artifactId>
-			<version>10.2.0</version>
-		</dependency>
 
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.2.0</version>
+		</dependency>
+		
 		<!-- hibernate jar file -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
