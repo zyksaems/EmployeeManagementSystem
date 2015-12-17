@@ -10,9 +10,9 @@ public interface ISecurityDAO {
 
 	public List<Object> forgotPassword(int adminId);
 
-	public String changePassword(Admin admin);
-
 	public List<String> getOldPassword(Admin admin);
+
+	public int changePassword(Admin admin);
 
 	public int saveEmployee(Employee emp);
 }

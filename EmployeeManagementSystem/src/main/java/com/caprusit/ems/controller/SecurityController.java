@@ -2,7 +2,6 @@ package com.caprusit.ems.controller;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,8 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Admin;
 import com.caprusit.ems.service.ISecurityService;
+import com.caprusit.ems.utility.JsonUtility;
 import com.google.gson.Gson;
 
 @Controller
@@ -124,51 +125,28 @@ public class SecurityController {
 	  * and new password as parameter and after checking all the conditions it
 	  * returns either a successful or an error message to the browser
 	  */
-	 @RequestMapping(value = "/changePasswordHome", method = RequestMethod.POST)
-	 public @ResponseBody String changePassword(HttpServletRequest request, @RequestParam("cpwd") String oldPassword,
-	   @RequestParam("npwd") String newPassword) {
-	          logger.info("inside changePassword( )controller");
-	  Integer adminId = (Integer) request.getSession().getAttribute("adminId"); 
-	  logger.info("In change Password:" + adminId);
-	  logger.info(oldPassword + "   " + newPassword);
+	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
+	public @ResponseBody String changePassword(HttpServletRequest request, @RequestParam("cpwd") String oldPassword,
+			@RequestParam("npwd") String newPassword) {
+         if(!HttpSessionUtility.verifySession(request)){
+        	 logger.info("session expired!");
+        	 return JsonUtility.convertToJson("sessionExpired!");
+         }
+         else{
+		    int adminId = (Integer) request.getSession(false).getAttribute("adminId");
+		    logger.info("In change Password:" + adminId);
+		    logger.info("old password: "+oldPassword + "   new password:" + newPassword);
+		    Admin admin = new Admin();
+		    admin.setAdminId(adminId);
+		    admin.setPassword(oldPassword);
+		    logger.info(admin);
+		    int res=securityService.changePassword(admin,newPassword);		
+		    logger.info("res for change password: "+res);
+		    return JsonUtility.convertToJson(res);
+         }
 
-	  String targetView = "/WEB-INF/views/ChangePassword.jsp";
-	  String status = "";
-
-	  Admin admin = new Admin();
-	  admin.setAdminId(adminId);
-	  admin.setPassword(oldPassword);
-	  logger.info(admin);
-	  List<String> oldPwd = securityService.getOldPassword(admin);
-	  logger.info("oldPwd " + oldPwd);
-	  logger.info(oldPwd.get(0));
-
-	  // condition to match for old password and user given password
-	  if (oldPwd.get(0).equals(oldPassword)) {
-	   logger.info("both pwd matching");
-	   Admin admin1 = new Admin();
-	   admin1.setPassword(newPassword);
-	   admin1.setAdminId(admin.getAdminId());
-	   // If both pasword matched, then will call changePassword() method
-	   String statusMsg = securityService.changePassword(admin1);
-	   logger.info(statusMsg);
-	   return getJsonArray(statusMsg);
-	  }
-	  
-	  else {
-	   status = "current-password is not matched with  old-password ";
-	   logger.info(status);
-	   ModelAndView modelAndView = new ModelAndView(targetView, "status", status);
-	   logger.info(" modelAndView  " + modelAndView);
-	   return getJsonArray(status);
-	  }
-
-	 }
-	 @RequestMapping(value = "/changePasswordPage", method = RequestMethod.GET)
-	 public String changePasswordPage(HttpServletRequest request) {
-	  logger.info("inside ChangePassword page");
-	  return "ChangePassword";
-	 }
+	}
+	
 
 	 /**
 	  * getJsonArray() used to convert Object to String, so that we will send

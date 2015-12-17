@@ -82,25 +82,16 @@ public class SecurityDAOImpl implements ISecurityDAO {
 		return mailIdList;
 	}
 
-	public String changePassword(Admin admin) {  
-		  try {
-		   Session session = sessionFactory.openSession();
-		   logger.info(admin.getAdminId());
-		   String hql = "update com.caprusit.ems.domain.Admin as a set a.password=:pwd where a.adminId=:adminId";
-		   Query query = session.createQuery(hql);
-		   
-		   query.setParameter("pwd", admin.getPassword());
-		   query.setParameter("adminId", admin.getAdminId());
+	public int changePassword(Admin admin) {		
+		Session session = sessionFactory.openSession();
+		String hql = "update com.caprusit.ems.domain.Admin as a set a.password=:pwd where a.adminId=:adminId";
+		Query query = session.createQuery(hql);
+		query.setParameter("pwd", admin.getPassword());
+		query.setParameter("adminId", admin.getAdminId());
+		query.executeUpdate();
+		return 1;	 
+	}
 
-		   int count=query.executeUpdate();
-		      logger.info("tx committed");
-		  } catch (Exception e) {
-		   logger.error(e);
-		   return "password cannot be changed"; 
-		  }
-		  return "password has been successfully changed"; 
-		  
-		 }
 
 		 public List<String> getOldPassword(Admin admin) {
 		  Session session = sessionFactory.openSession();

@@ -8,12 +8,14 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		
 		$scope.showAdminDashBoard=false;
 		
+		
 		/*divisions inside Admin dash board*/
 		
 		$scope.showAddEmployeeMainDiv=false;
 		$scope.showCharts=false;
 		$scope.showAdminChangePasswordDiv=false;
 		$scope.showTableDetails=false;
+		/*$scope.showAddNewAdminDiv=false;*/
 		
 		
 		  /*for accordion*/
@@ -999,16 +1001,79 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		};
 		
 		/*function for admin change password*/
-		$scope.adminChangePassword=function(){
+		$scope.adminChangePasswordDivEnable=function(){
 			
 			$scope.showAdminChangePasswordDiv=!$scope.showAdminChangePasswordDiv;
 		}
+		
+		$scope.changeAdminPassword=function(){
+			
+			if($scope.cpwd!=null && $scope.npwd!=null && $scope.rpwd!=null)
+			{			
+				if($scope.cpwd!=$scope.npwd)
+				{
+					if($scope.npwd==$scope.rpwd )
+					{
+		               console.log(" ok -changing password");
+						$scope.changePasswordSuccessMsg="";
+							$http({
+							method : 'POST',
+							url : 'changePassword.do?cpwd='+$scope.cpwd+'&&npwd='+$scope.npwd	            	            
+						   }).success(function(data, status, headers, config) {	     
+								//$scope.hide=true;
+							   console.log("data returned from change password:"+data);
+							   if(data == "sessionExpired!"){
+
+                                    console.log(" session expired -- login again--");
+							   }
+							   else if(data == 1){
+								   console.log(" password changed  -- login again--");
+							   }
+							   else{
+								  $scope.changePasswordSuccessMsg=(data == 0)? "Your Current password is wrong":"problem occured try again!" ;
+								  console.log("password change response:"+data);
+								  $scope.cpwd="";
+								  $scope.npwd='';
+								  $scope.rpwd='';
+						      }
+								//$scope.msg=request.getParametersByName("status") ;	    	    	
+		                   }).error(function(data, status, headers, config) {
+		    	              $scope.hide=true;
+		    	              $scope.msg1="Some internal problem occured try again.";
+		    	   
+		                  });
+				}
+			    else{
+				  $scope.changePasswordSuccessMsg="new password and confirm password must Match";
+			    }
+		     }
+			 else{
+				$scope.changePasswordSuccessMsg="current password and new password should not be same";
+			}
+		 }
+		else
+		{
+			$scope.changePasswordSuccessMsg="fields should not be empty";
+		}
+		}
+		
+		
+	  /* END -----  function for admin change password    --- END */
 		
 	  /*	function for showing and hiding divisions*/
 		function showOrHideRemainingDivisions(){
 			
 			
 		}
+		
+		/*function for adding new Administrator*/
+		
+		/*$scope.addNewAdministratorDivEnable=function(){
+			
+			
+		}*/
+		
+		/*  END--- function for adding new Administrator ---- END*/
 
 	});// end of main controlller --
 	

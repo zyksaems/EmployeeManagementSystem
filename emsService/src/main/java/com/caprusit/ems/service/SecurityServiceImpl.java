@@ -64,17 +64,22 @@ public class SecurityServiceImpl implements ISecurityService {
 		return JsonUtility.convertToJson(result);
 	}
 
-	public String changePassword(Admin admin) {
-		  String msg=securityDAO.changePassword(admin);
-		  return msg;
-		 }
+	public int changePassword(Admin admin,String newPassword) {
 
-
-		 public  List<String> getOldPassword(Admin admin) {
-		  logger.info("in  SecurityServiceImpl getOldPassword()  "+admin);
-		   List<String> oldPwd=securityDAO.getOldPassword(admin);
-		  return oldPwd;
-		 }
+		List<String> oldPaswordList=securityDAO.getOldPassword(admin);
+        if(oldPaswordList != null && oldPaswordList.size() > 0){
+        	if(oldPaswordList.get(0).equals(admin.getPassword())){
+        		admin.setPassword(newPassword);
+        		return securityDAO.changePassword(admin);
+        	}
+        	else{
+        		return 0;
+        	}
+        }
+        else
+        	return -1;
+		
+	}
 
 	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream, String fileName) {
 

@@ -12,7 +12,8 @@
     <link href="./resources/AdminDashboard.css" rel="stylesheet">
     <link href="./resources/AdminLogin.css" rel="stylesheet">
     <link href="./resources/AttendanceForm.css" rel="stylesheet">
-     <link href="./resources/alert.css" rel="stylesheet">
+    <link href="./resources/alert.css" rel="stylesheet">
+    <link href="./resources/Admin_changePassword.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="images/faviconlogo.png"/>
     
     
@@ -223,7 +224,8 @@
                               
                               
         <uib-accordion-group class="panel-heading panelBG " heading="Settings" ><!-- is-open="!showInitialAccordion" -->
-            <div><a href="" class="linkColor" ng-click="adminChangePassword()">Change Password</a> </div><br> 
+            <div><a href="" class="linkColor" ng-click="adminChangePasswordDivEnable()">Change Password</a> </div><br> 
+            <!-- <div><a href="" class="linkColor" ng-click="addNewAdministratorDivEnable()">Add Administrator</a> </div><br>  -->
             <div ><a href="" class="linkColor" ng-click="logOut()">Logout</a></div>
         </uib-accordion-group>
      </uib-accordion>
@@ -313,6 +315,63 @@
    
    
    <!-- END ------ Division for Adding single and multiple employees through excel file ------ END  -->
+   
+   <!--  Division for Adding new Administrator -->
+   
+   <!-- <div ng-show="showAddNewAdminDiv">
+   
+        <div class="row">
+             
+              <div class="form">
+        
+        
+        </div>
+        
+        </div>
+   
+   </div> -->
+   
+   
+   <!-- END ------ Division for Adding new Administrator ------ END  -->
+   
+   <!--  Division for changing adminstrator password -->
+   
+   <div class="row" id="changePasswordMainDiv" ng-show="showAdminChangePasswordDiv"> <!-- ng-show="showChangePasswodDiv" -->
+	 
+	     <div class="col-sm-3"> </div>
+=	    
+	     <div class="col-sm-3  changePasswordMainDiv" >
+	         <div class="row" id="changePassImgDiv">
+		      	<img src="http://s11.postimg.org/89jw5zva7/editicon.png" width="90" height="120">		        
+			     <p class="changePassText">Change your password</p>
+	         </div>
+	         
+	         <form  role="form">
+               <div class="form-group">
+                    <label for="email">Current Password:</label>
+                    <input type="password" class="form-control"  ng-model="cpwd">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">New Password:</label>
+                    <input type="password" class="form-control" ng-model="npwd">
+                </div>
+                <div class="form-group">
+                  <label for="pwd">Confirm Password:</label>
+                  <input type="password" class="form-control" ng-model="rpwd" >
+               </div>
+                <button type="submit" class="btn btn-primary"  ng-click="changeAdminPassword()">save Password</button>
+             </form>
+		     <div class="row"><p class="changePasswordSuccessMsg"> {{changePasswordSuccessMsg}}</p></div>
+		    
+		  
+		  </div>
+		  <div class="col-sm-6"> </div>
+		      	
+	    
+ 
+	 </div><!-- Change password division close-->
+	 
+	  <!-- END ------ Division for changing adminstrator password ------ END  -->
 	
 	
 <!--Div for pie charts  -->
@@ -351,18 +410,6 @@
 </div>
 
 </div>
-
- <!--  Division for Adding single and multiple employees through excel file -->
- 
-  <div ng-show="showAdminChangePasswordDiv">
-  
-    <div><h1>This is change password </h1></div>
-  
-  
-  </div>
- 
-
- <!-- END   ---- Division for Adding single and multiple employees through excel file  ----- END  -->
  
  
  
