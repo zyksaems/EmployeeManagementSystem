@@ -53,9 +53,9 @@
   
   </div>
   <!-- for showing admin login modal -->
- <script type="text/ng-template" id="AdminLogin.html">
+  <script type="text/ng-template" id="AdminLogin.html"> 
      <div style="background-color: #858585">
-       <div class="modal-header AdminLoginHeader" ng-show="!showDiv">
+       <div class="modal-header AdminLoginHeader" ng-show="!showforgotPasswordDiv">
           <div class="row"> 
             <div class="col-sm-2"></div>
             <div class="col-sm-8">
@@ -87,7 +87,7 @@
                               <input type="checkbox" ng-model="showPassword" ng-click="showAdminPassword()">Show password
                          </div>
                          <div class="col-sm-6 te">
-                              <a href="#_forgotPassword" class="forgotPassword text-right" ng-click="adminForgotPassword()">Forgot password?</a>
+                              <a href="" class="forgotPassword text-right" ng-click="adminForgotPassword()">Forgot password?</a>
                          </div>
                      </div>
                   </div>
@@ -115,9 +115,33 @@
            </div> -->
         </div>
         
-           <div class="modal-footer AdminLoginFooter" ng-show="showDiv">                      
-                <button class="btn btn-sm btn-danger" ng-click="closeModal()">cancel</button>                                             
-           </div>
+
+          <div class="jumbotron"	 ng-show="showforgotPasswordDiv">
+			<form role="form" ng-submit="my.getPassword()" novalidate>
+				<div id="div2">
+					<img
+						src="http://s30.postimg.org/5mqz3osvl/Forgot_Password_icon.png"
+						width="90" height="120">
+				</div>
+				<div class="form-group" ng-class="{'has-error' : !email}">
+					<h2>Forgot your password?</h2>
+					<b>please enter your email and we'll send reset password page
+						link to your email.you can reset your password.</b><br /><br />
+					<div class="col-xs-8">
+					<label class='control-label'>ENTER EMAIL ADDRESS</label>
+					<input type="email" ng-model="email" class="form-control"
+						placeholder="enter your email address"
+						uib-tooltip="please enter valid email address"
+						tooltip-placement="bottom" tooltip-trigger="mouseenter"
+						tooltip-enable="!email"
+						ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+						required /></div><br />
+					<br /><br />
+					<button type="submit" class="btn btn-primary" ng-disabled="!email" ng-click=""submitDetails()>submit</button>
+					<br /> <a href="#">back to login</a>
+				</div>
+			</form>
+		</div>
          
 </div>
      </script>

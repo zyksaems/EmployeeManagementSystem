@@ -93,11 +93,12 @@
 		</dependency>
 
 		<!-- Cipher jar -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>encrypt.decypt.cipher</groupId>
 			<artifactId>cipher</artifactId>
 			<version>1.1.1</version>
-		</dependency> -->
+		</dependency>
+		 
 		
 	</dependencies>
 </project>

@@ -985,7 +985,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			
 			console.log("redirecting to generate ");
 			
-			$window.location.href="/EmployeeManagementSystem//generateReportHome.do";
+			$window.location.href="/EmployeeManagementSystem/generateReportHome.do";
 		}
 		
 		
@@ -1054,11 +1054,11 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		 var adminIdLength=6;
 		 var passwordLength=4;
 		 
-		 $scope.showDiv=false;
+		 $scope.showforgotPasswordDiv=false;
 		 
 		 $scope.adminForgotPassword=function(){
 			 console.log(" forgot password : ");
-			 $scope.showDiv=!$scope.showDiv;
+			 $scope.showforgotPasswordDiv=!$scope.showforgotPasswordDiv;
 		 }
 		 
 		 /* function to set default values */
@@ -1172,20 +1172,26 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 					data : data
 				}));
 			});
-
-			 /* console.log("login clicked!");
-			 console.log("Admin uname:"+$scope.Admin.userName);
-	   	     console.log("admin password: "+$scope.Admin.password);
-	   	     $scope.adminLoginValidationMsg="wrong username"; */
-	   	    // $scope.showAdminHome=true;
-	   	 // $uibModalInstance.close( $scope.showAdminHome);
-	   	//$uibModalInstance.close(true);
-	   	     console.log("adminhome status: "+$scope.showAdminHome);
 			
 		};//admonLogin()--close
 		
+		/*function to close modal*/
 		$scope.closeModal=function(){
 			
 			$uibModalInstance.dismiss('cancel');
 		}
+		
+	/*	function for Admin forgot Password */
+		
+		$scope.submitDetails=function(){
+			
+			console.log("email entered: "+$scope.email);
+			
+			
+		}
+		
+		
+	/*  END ---	function for forgot Password ------END ---*/
+		
+		
  });//ModalInstanceCtrl--close
