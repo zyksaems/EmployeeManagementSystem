@@ -1,5 +1,6 @@
 package com.caprusit.ems.dao;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,11 +11,14 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.caprusit.ems.domain.Attendance;
+import com.caprusit.ems.domain.Employee;
 
 @Repository
 public class ReportGenerationDAOImpl implements IReportGenerationDAO {
@@ -208,5 +212,49 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		List<Object> result = crit.list();
 		logger.info("List Size:" + result.size());
 		return result;
+	}
+	
+    @SuppressWarnings("unchecked")
+	public List<Attendance> getTodayAttendance() {
+		
+        logger.info("in ReportGenerationDAOImpl--getDailyReport()");
+        
+        Session session=sessionFactory.openSession();
+        
+        Criteria toDayReportCriteria=session.createCriteria(Attendance.class);
+        
+    
+        Criterion dateCriterion=Restrictions.eq("attendanceDate",(Calendar.getInstance().getTime()));
+        
+        toDayReportCriteria.add(dateCriterion);
+        
+        List<Attendance> list=toDayReportCriteria.list();
+        
+        logger.info("list size: "+list.size());
+        logger.info("list l: "+list);
+        
+        session.close();
+        
+		return list;
+	}
+    
+    @SuppressWarnings("unchecked")
+	public int getNumberOfEmployees(){
+		
+		 Session session=sessionFactory.openSession();
+		 
+		 Criteria noOfEmployeeCriteria=session.createCriteria(Employee.class);	        		    
+	     
+	     Projection countProjection=Projections.count("employeeId");
+	     
+	     noOfEmployeeCriteria.setProjection(countProjection);
+	     
+	     List<Object> noOfEmployeeList=noOfEmployeeCriteria.list();
+	     
+	     logger.info("total number of employees: "+noOfEmployeeList + "class = "+noOfEmployeeList.get(0).getClass());
+	     		 
+		 return ((Long)noOfEmployeeList.get(0)).intValue();
+		
+		
 	}
 }

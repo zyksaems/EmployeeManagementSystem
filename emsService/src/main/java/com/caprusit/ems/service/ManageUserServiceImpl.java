@@ -15,6 +15,7 @@ public class ManageUserServiceImpl implements IManageUserService{
 
 	@Autowired
 	private IManageUserDAO manageUserDAO;
+	private List<Employee> users;
 	
 	private  Logger logger = Logger.getLogger(ManageUserServiceImpl.class);
 	
@@ -37,6 +38,39 @@ public static String convertToJson(Object obj) {
 public List<Employee> getAllEmployee() {
 	List<Employee> employeeList = manageUserDAO.getEmployees();
 	return employeeList;
+}
+
+
+public List<Employee> findAllUsers() {
+
+	System.out.println("Inside Userservice findAllUsers()");
+	List<Employee> allEmpData = manageUserDAO.getEmployees();
+	users=allEmpData;
+	System.out.println(allEmpData.toString());
+	return allEmpData;
+}
+
+
+public Employee findById(int id) {
+	for(Employee user : users){
+		if(user.getEmployeeId() == id){
+			System.out.println("In UserService fingById()");
+			Employee oneUser=manageUserDAO.findById(id);
+			System.out.println("oneUser="+oneUser);
+			return oneUser;
+		}
+	}
+	return null;
+}
+
+public void updateUser(Employee user) {
+	System.out.println("In updatUser() all users="+users);
+	System.out.println("provided user="+user);
+	int index = users.indexOf(user);
+	System.out.println("index of user= "+index );
+	//users.set(index, user);
+	
+	manageUserDAO.updateUser(user);		
 }
 
 }

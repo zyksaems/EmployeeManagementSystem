@@ -61,9 +61,9 @@
 		<option title="" value="">--Select Report Type--</option>
 		<option value="none">Total Records</option>
 		<option value="day">Day</option>
-		<option value="week">Week</option>
+		<!-- <option value="week">Week</option>
 		<option value="month">Month</option>
-		<option value="annual">Annual</option>
+		<option value="annual">Annual</option> -->
 		<option value="dates">Select From and To Date</option>
 	</select>&nbsp;
 	<p ng-hide="hide11">From Date</p>

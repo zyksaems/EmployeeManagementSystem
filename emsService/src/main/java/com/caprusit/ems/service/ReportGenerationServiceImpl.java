@@ -1,19 +1,28 @@
 package com.caprusit.ems.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.dao.IReportGenerationDAO;
 import com.caprusit.ems.domain.Attendance;
+import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.utility.JsonUtility;
 
 @Service
 public class ReportGenerationServiceImpl implements IReportGenerationService {
 	@Autowired
 	private IReportGenerationDAO reportGenerationDAO;
+	
+	@Autowired
+	private IManageUserDAO manageUserDAO;
+	
 	private Logger logger = Logger.getLogger(ReportGenerationServiceImpl.class);
 
 	public List<Integer> getAutoCompleteInfo(int employeeId) {
@@ -108,5 +117,27 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		List<Attendance> empData = reportGenerationDAO.getEmployeesReport(fromDate, toDate);
 
 		return empData;
+	}
+
+	public String getTodayReport() {
+
+        List<Attendance> todayPresentiesList = reportGenerationDAO.getTodayAttendance();
+
+		List<Employee> employeeDetailsList=manageUserDAO.getEmployees();
+		
+		logger.info("employee details list: "+employeeDetailsList);
+		
+		int totalNoOfEmployees=reportGenerationDAO.getNumberOfEmployees();
+		
+		Map<String,Object>  toDayReportMap=new HashMap<String,Object>();
+		toDayReportMap.put("noOfPresenties",todayPresentiesList.size());
+		toDayReportMap.put("totalEmployees", totalNoOfEmployees);
+		toDayReportMap.put("presentiesList",todayPresentiesList);
+		toDayReportMap.put("employeeDetails",employeeDetailsList);
+		
+		logger.info("final String after adding :"+JsonUtility.convertToJson(toDayReportMap));
+		
+		return JsonUtility.convertToJson(toDayReportMap);
+		
 	}
 }

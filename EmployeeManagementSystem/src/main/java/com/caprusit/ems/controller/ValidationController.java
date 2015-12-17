@@ -39,5 +39,21 @@ public class ValidationController {
 		return validationservice.getLoggedOutEmployeeIds();
 
 	}
+	
+	@RequestMapping(value="/getRoleIds",method=RequestMethod.POST)
+	public @ResponseBody String getRoleIds(){
+		
+		logger.info("inside validationController getRoleIds()");			
+		return validationservice.getRoleIds();
+		
+	}
+	
+	@RequestMapping(value="/getDeptIds",method=RequestMethod.POST)
+	public @ResponseBody String getDeptIds(){
+		
+		logger.info("inside validationController getDeptIds()");			
+		return validationservice.getDeptIds();
+		
+	}
 
 }

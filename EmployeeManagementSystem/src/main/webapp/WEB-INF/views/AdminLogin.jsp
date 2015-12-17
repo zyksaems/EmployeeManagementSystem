@@ -8,20 +8,6 @@
 <script src="js/AdminLogin.js"></script>
 <link rel="stylesheet" href="css/AdminLogin.css">
 <title>Admin Login</title>
-<script>
-
-<!-- function DisableBackButton()
-{
-	window.history.forward()
-	}
-	DisableBackButton();
-	window.onload=DisableBackButton;
-	window.onpageshow=function(evt)
-	{
-		if(evt.persisted)DisableBackButton()
-	}
-	window.onunload=function(){void (-1)}
-</script> -->
 </head>
 
 <!--form body  -->

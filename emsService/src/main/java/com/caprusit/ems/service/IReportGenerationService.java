@@ -32,5 +32,7 @@ public interface IReportGenerationService {
 	List<Object> getReportByNameDates(int employeeId, Date fromDate, Date toDate);
 
 	List<String> getAutoCompleteInfo(String employeeId);
+	
+	String getTodayReport();
 
 }

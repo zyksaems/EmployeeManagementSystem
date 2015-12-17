@@ -237,5 +237,15 @@ public class ReportGenerationController {
 		return JsonUtility.convertToJson(reportGenerationService.getEmployeesReport(new Date(Long.valueOf(fromDate)),
 				new Date(Long.valueOf(toDate))));
 	}
+	
+	@RequestMapping(value="/getTodayReport",method=RequestMethod.GET)
+	public @ResponseBody String getDayWiseReport(){
+		
+		logger.info("in ReportGenerationController--getDayWiseReport()");
+		
+		String repotrDetails=reportGenerationService.getTodayReport();
+		
+		return repotrDetails;
+	}
 
 }

@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.caprusit.ems.domain.Attendance;
+import com.caprusit.ems.domain.Department;
 import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.domain.Role;
 
 @Repository
 public class ValidationDAOImpl implements ValidationDAO {
@@ -25,10 +27,11 @@ public class ValidationDAOImpl implements ValidationDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	private Logger logger = Logger.getLogger(ValidationDAOImpl.class);
-
+	private Logger logger=Logger.getLogger(ValidationDAOImpl.class);
+	
+	@SuppressWarnings("unchecked")
 	public List<Object> getAllEmploeeIds() {
-
+		
 		logger.info("inside ValidationDAOImpl getAllEmploeeIds()");
 
 		Session session = sessionFactory.openSession();
@@ -46,10 +49,9 @@ public class ValidationDAOImpl implements ValidationDAO {
 
 		allEmployeeIdsCriteria.setProjection(validationProjectionList);
 
-		@SuppressWarnings("unchecked")
 		List<Object> allEmpData = allEmployeeIdsCriteria.list();
-
-		logger.info("inside ValidationDAOImpl getAllEmploeeIds(): all emploee ids size: " + allEmpData.size());
+		
+		logger.info("inside ValidationDAOImpl getAllEmploeeIds(): all emploee ids size: "+allEmpData.size());
 
 		session.close();
 
@@ -57,51 +59,98 @@ public class ValidationDAOImpl implements ValidationDAO {
 
 	}
 
+	
 	public List<Object> getLoggedInEmployeeIds() {
+		
 		logger.info("inside ValidationDAOImpl getLoggedInEmployeeIds()");
+
+		/*to get logged-in employee IDs we have to pass 2 */
 		return executeCriteria(2);
+		
+
 	}
 
 	public List<Object> getLoggedOutEmoloyeeIds() {
+		
 		logger.info("inside ValidationDAOImpl getLoggedOutEmoloyeeIds()");
+		/*to get logged-out emploee IDs we have to pass 1 */
+		
 		return executeCriteria(1);
 	}
-
-	private Date getTodayDate() {
+	
+	private Date getTodayDate(){
+		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
+
 		return cal.getTime();
+				
 	}
-
-	private List<Object> executeCriteria(int type) {
-
+	
+	@SuppressWarnings("unchecked")
+	private List<Object> executeCriteria(int type){
+		
 		Session session = sessionFactory.openSession();
 
 		Criteria employeeIdsCriteria = session.createCriteria(Attendance.class);
 
 		Projection employeeIdsProjection = Projections.property("employeeId");
 
-		Date today = getTodayDate();
-
+		Date today= getTodayDate();
+		
 		Criterion criterion_toady = Restrictions.eq("attendanceDate", today);
-		double workingHours = 0;
-		Criterion criterion_workingHours = (type == 1) ? Restrictions.gt("workingHours", workingHours)
-				: Restrictions.eq("workingHours", workingHours);
-
-		Criterion conditon = Restrictions.and(criterion_toady, criterion_workingHours);
+		double workingHours=0;
+		Criterion criterion_workingHours = (type == 1) ? Restrictions.gt("workingHours",workingHours): Restrictions.eq("workingHours",workingHours);
+		
+		Criterion conditon=Restrictions.and(criterion_toady,criterion_workingHours);
 		ProjectionList employeeIdsProjectionList = Projections.projectionList();
 		employeeIdsProjectionList.add(employeeIdsProjection);
 
 		employeeIdsCriteria.setProjection(employeeIdsProjectionList);
 		employeeIdsCriteria.add(conditon);
 
-		@SuppressWarnings("unchecked")
 		List<Object> loggedInList = employeeIdsCriteria.list();
+		
 		session.close();
+
 		return loggedInList;
+		
 	}
 
+
+	@SuppressWarnings("unchecked")
+	public List<Object> getRoleIds() {
+		
+		Session session = sessionFactory.openSession();
+		
+		Criteria roleIdCriteria=session.createCriteria(Role.class);
+		
+		List<Object> roleIdList=roleIdCriteria.list();
+		
+		logger.info("role IDs list in dao : "+roleIdList);
+
+		session.close();
+		
+		return roleIdList;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<Object> getDeptIds() {
+		
+        Session session = sessionFactory.openSession();
+		
+		Criteria deptIdCriteria=session.createCriteria(Department.class);
+		
+		List<Object> deptIdList=deptIdCriteria.list();
+		
+		logger.info("dept IDs list in dao : "+deptIdList);
+
+		session.close();
+		
+		return deptIdList;
+	}
 }

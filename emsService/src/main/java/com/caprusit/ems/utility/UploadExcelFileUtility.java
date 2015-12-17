@@ -11,17 +11,17 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.caprusit.ems.dao.ISecurityDAO;
+import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.service.SecurityServiceImpl;
 
 public class UploadExcelFileUtility {
 
 	@Autowired
-	private ISecurityDAO securityDAO;
+	private IManageUserDAO manageUserDAO;
 
 	private Logger logger = Logger.getLogger(SecurityServiceImpl.class);
-	
+
 	int firstCellNum, lastCellNum, count, exceptionRowNumber = -1, exceptionColNumber = -1;
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -76,6 +76,7 @@ public class UploadExcelFileUtility {
 										exceptionColNumber = cell.getColumnIndex();
 										logger.info("exceprion row number: " + exceptionRowNumber
 												+ " exceptionn column number: " + exceptionColNumber);
+										// exception.printStackTrace();
 										return JsonUtility.convertToJson(
 												(exceptionRowNumber + 1) + "." + (exceptionColNumber + 1));
 									}
@@ -109,9 +110,11 @@ public class UploadExcelFileUtility {
 						}
 						System.out.println("employee object: " + employee);
 						if (count > 0)
-							securityDAO.saveEmployee(employee);
+							manageUserDAO.saveEmployee(employee);
 						
 					}
+					/* workbook.close(); */
+
 				}
 			}
 		} catch (HibernateException e) {
@@ -123,8 +126,12 @@ public class UploadExcelFileUtility {
 			logger.error("exception e : " + e);
 			logger.info("exception cause: " + e.getCause());
 			logger.info("exception line numbers: row: " + (exceptionRowNumber + 1));
+			/*e.printStackTrace();*/
 			return JsonUtility.convertToJson(String.valueOf(exceptionRowNumber + 1));
 		}
+		
 		return JsonUtility.convertToJson("0.0");
+
 	}
+
 }

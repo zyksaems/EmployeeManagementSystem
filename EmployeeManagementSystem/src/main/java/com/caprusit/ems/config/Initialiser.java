@@ -1,35 +1,34 @@
 package com.caprusit.ems.config;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration;
+import javax.servlet.Filter;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class Initialiser implements WebApplicationInitializer {
+import com.caprusit.ems.config.ConfigBean;
+import com.caprusit.ems.config.EmployeeFilter;
+import com.caprusit.ems.config.ParentConfigBean;
 
-	@Override
-	public void onStartup(ServletContext servletContext) {
-		// Create the 'root' Spring application context
-		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		rootContext.register(ConfigBean.class);
-		rootContext.setServletContext(servletContext);
-
-		// Manage the lifecycle of the root application context
-		servletContext.addListener(new ContextLoaderListener(rootContext));
-
-		// Create the dispatcher servlet's Spring application context
-		AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-		dispatcherContext.register(ParentConfigBean.class);
-
-		// Register and map the dispatcher servlet
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher",
-				new DispatcherServlet(dispatcherContext));
-		dispatcher.setLoadOnStartup(1);
-		dispatcher.addMapping("*.do");
-		
+public class Initialiser extends AbstractAnnotationConfigDispatcherServletInitializer {
+	 
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class[] { ConfigBean.class,ParentConfigBean.class};
+    }
+  
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return null;
+    }
+  
+    @Override
+    protected String[] getServletMappings() {
+        return new String[] {"/"};
+    }
+    
+    @Override
+    protected Filter[] getServletFilters() {
+    	Filter [] singleton = { new EmployeeFilter() };
+    	return singleton;
 	}
-
+ 
 }

@@ -100,6 +100,8 @@ app
 											 * id)
 											 */
 											if ($scope.sel1 == "none") {
+												total=0;
+									            selected=0;
 												userservice
 														.getAttendanceSingle(
 																$scope.id)
@@ -162,6 +164,8 @@ app
 											 * (search type is id)
 											 */
 											else if ($scope.sel1 == "day") {
+												total=0;
+									            selected=0;
 												userservice
 														.getAttendanceSingleDay(
 																$scope.id,
@@ -229,6 +233,8 @@ app
 											 * is id)
 											 */
 											else if ($scope.sel1 == "dates") {
+												total=0;
+									            selected=0;
 												userservice
 														.getAttendanceSingleDates(
 																$scope.id,
@@ -301,6 +307,8 @@ app
 											 * employee (search type is name)
 											 */
 											if ($scope.sel1 == "none") {
+												total=0;
+									            selected=0;
 												userservice
 														.getAttendanceSingleByName(
 																$scope.id)
@@ -365,6 +373,8 @@ app
 											 * (search type is name)
 											 */
 											else if ($scope.sel1 == "day") {
+												total=0;
+									            selected=0;
 												userservice
 														.getAttendanceSingleDayByName(
 																$scope.id,
@@ -432,6 +442,8 @@ app
 											 * employee (search type is name)
 											 */
 											else if ($scope.sel1 == "dates") {
+												total=0;
+									            selected=0;
 												userservice
 														.getAttendanceSingleDatesByName(
 																$scope.id,
@@ -519,6 +531,8 @@ app
 									 * select all records of all employees
 									 */
 									if ($scope.sel1 == "none") {
+										total=0;
+							            selected=0;
 										userservice
 												.getAttendanceAll()
 												.then(
@@ -581,6 +595,8 @@ app
 									 * particular day records of all employees
 									 */
 									else if ($scope.sel1 == "day") {
+										total=0;
+							            selected=0;
 										userservice
 												.getAttendanceAllDay(
 														$scope.from.getTime())
@@ -644,6 +660,8 @@ app
 									 * date of all employees
 									 */
 									else if ($scope.sel1 == "dates") {
+										total=0;
+							            selected=0;
 										userservice
 												.getAttendanceAllDates(
 														$scope.from.getTime(),

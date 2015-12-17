@@ -13,14 +13,19 @@ import com.caprusit.ems.utility.JsonUtility;
 
 @Service
 public class ValidationServiceImpl implements ValidationService {
+	
 	@Autowired
 	private ValidationDAO validationDAO;
-	private Logger logger = Logger.getLogger(ValidationServiceImpl.class);
+
+	private  Logger logger = Logger.getLogger(ValidationServiceImpl.class);
 
 	public String getAllEmployeeIds() {
+
 		logger.info("inside ValidationServiceImpl getAllEmployeeIds()");
 		List<Object> allEmpData = validationDAO.getAllEmploeeIds();
+
 		List<EmployeeData> listOfAllEmpIds = new ArrayList<EmployeeData>();
+
 		for (Object data : allEmpData) {
 
 			Object[] array = (Object[]) data;
@@ -28,8 +33,11 @@ public class ValidationServiceImpl implements ValidationService {
 			emp.setEmpId((Integer) array[0]);
 			emp.setEmpName((String) array[1] + " " + (String) array[2]);
 			listOfAllEmpIds.add(emp);
+
 		}
+
 		return JsonUtility.convertToJson(listOfAllEmpIds);
+
 	}
 
 	public String getLoggedInEmoloyeeIds() {
@@ -43,11 +51,36 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	public String getLoggedOutEmployeeIds() {
+
 		logger.info("inside ValidationServiceImpl getLoggedOutEmployeeIds()");
+
 		List<Object> loggedOutList = validationDAO.getLoggedOutEmoloyeeIds();
 		logger.info("list size logged out emp" + loggedOutList.size());
+
 		return JsonUtility.convertToJson(loggedOutList);
+		
 	}
+
+	public String getRoleIds() {
+		
+		logger.info("inside ValidationServiceImpl getRoleIds()");
+
+		List<Object> roleIdsList = validationDAO.getRoleIds();
+		logger.info("list size  of role Ids list" + roleIdsList.size());
+
+		return JsonUtility.convertToJson(roleIdsList);
+	}
+
+	public String getDeptIds() {
+		logger.info("inside ValidationServiceImpl getDeptIds()");
+
+		List<Object> deptIdsList = validationDAO.getDeptIds();
+		logger.info("list size of dept IDs list:" + deptIdsList.size());
+
+		return JsonUtility.convertToJson(deptIdsList);
+	}
+
+
 
 	
 }

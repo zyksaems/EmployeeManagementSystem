@@ -24,10 +24,17 @@ public class ManageUserController {
 	
 	private Logger logger=Logger.getLogger(ManageUserController.class);
 	
-	@RequestMapping(value="/getAllEmployee",method=RequestMethod.GET)
+	/*@RequestMapping(value="/getAllEmployee",method=RequestMethod.GET)
 	public @ResponseBody String getAllEmployee(){
 		logger.info("inside ManageUserController getAllEmployee()");	
 		return manageUserService.getEmployees();
+	}
+	*/
+
+	@RequestMapping(value="/getAllEmployee",method=RequestMethod.GET)
+	public  String getAllEmployee(){
+		logger.info("inside ManageUserController getAllEmployee()");	
+		return "UserManagement2";
 	}
 	
 	

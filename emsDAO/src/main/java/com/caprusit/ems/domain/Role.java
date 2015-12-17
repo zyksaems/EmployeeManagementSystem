@@ -2,25 +2,45 @@ package com.caprusit.ems.domain;
 
 import java.io.Serializable;
 
-public class Role implements Serializable{
-	private static final long serialVersionUID = 1L;
-	private int rollId;
-	private String rollType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ROLE_TABLE")
+public class Role implements Serializable {
+
+	/**
+	 * 
 	
-	public int getRollId() {
-		return rollId;
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	private int roleId;
+	private String roleType;
+
+	public int getRoleId() {
+		return roleId;
 	}
-	public void setRollId(int rollId) {
-		this.rollId = rollId;
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
-	public String getRollType() {
-		return rollType;
+
+	public String getRoleType() {
+		return roleType;
 	}
-	public void setRollType(String rollType) {
-		this.rollType = rollType;
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
+
 	@Override
 	public String toString() {
-		return "Role [rollId=" + rollId + ", rollType=" + rollType + "]";
+		return "Role [roleId=" + roleId + ", roleType=" + roleType + "]";
 	}
+
+
 }
+

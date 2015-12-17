@@ -13,7 +13,6 @@ import com.caprusit.ems.domain.LoginTest;
 import com.caprusit.ems.service.IAttendanceService;
 
 @Controller
-@RequestMapping(value="/log")
 public class AttendanceController {
 	
 	@Autowired
@@ -21,7 +20,7 @@ public class AttendanceController {
 	
 	private static Logger logger=Logger.getLogger(AttendanceController.class);
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="/log",method = RequestMethod.GET)
 	public String init(ModelMap modelMap) {
 
 		logger.info("inside attendance controlller init()");
@@ -30,7 +29,7 @@ public class AttendanceController {
 		
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value="/login",method = RequestMethod.POST)
 	public @ResponseBody Integer login(@RequestBody LoginTest test) {
 		
 		logger.info("inside attendance controller login()");

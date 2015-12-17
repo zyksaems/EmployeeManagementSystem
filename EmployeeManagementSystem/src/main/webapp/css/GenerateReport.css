@@ -82,7 +82,7 @@ width: auto;
 }
 #fixed {
     position: fixed;
-    right: 0;
+    right: 25px;
     top:85px;
     width: 135px;
     height:30px;
