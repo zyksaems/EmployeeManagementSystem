@@ -122,6 +122,17 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 
 	}
 	
+    public int updateEmployee(Employee emp){
+		
+		Session session = sessionFactory.openSession();
+		Transaction ts = session.beginTransaction();
+		session.update(emp);
+		ts.commit();
+
+		session.close();
+		return 1;
+	}
+	
 }
 
 

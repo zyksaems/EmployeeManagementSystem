@@ -1,0 +1,34 @@
+
+
+ .editTextBoxMedium{
+   
+        width: 80px;
+        
+   } 
+   .editTextBoxSmall{
+   
+        width: 35px;
+        
+   } 
+   .editTextBoxLarge{
+   
+        width: 250px;
+        
+   } 
+   
+   .editTextBoxDesignation{
+   
+       width: 60px;
+   }
+   
+   .editTextBoxDOB{
+   
+        width: 100px;
+   }
+   
+   .editOrUpdateEmployeeDivision{
+   
+        font-family: verdana;
+        border-radius: 5px;
+   
+   }

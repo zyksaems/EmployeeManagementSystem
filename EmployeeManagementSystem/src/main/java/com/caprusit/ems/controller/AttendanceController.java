@@ -38,6 +38,16 @@ public class AttendanceController {
 		
 
 	}
+	
+	@RequestMapping(value="/login",method = RequestMethod.GET)
+	public String loginPage(ModelMap modelMap) {
+
+		logger.info("inside attendance controlller init()");
+		
+		return "NewAdminDashboard";
+		
+	}
+
 
 	
 }

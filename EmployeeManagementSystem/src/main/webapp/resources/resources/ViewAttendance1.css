@@ -1,0 +1,72 @@
+/*css for header div  */
+#headerDiv{
+	
+	width: 100%;
+	height: 10%;
+	position: absolute;
+	background-color: #1E90FF;
+	font-size: 1cm;
+	text-align: center;
+	color: white
+    
+}
+/*css for left menu  */
+#leftMenu{
+	
+	width:20%;
+	height: 80%;
+	background-color: #696969;
+	position:absolute;
+    top: 10%;
+    
+  }
+/*css for top menu  */
+#topMenu{
+	
+	width: 80%;
+	height: 10%;
+	position: absolute;
+	background-color: #696969;
+	top: 10%;
+	left: 20%;
+	 
+}
+#chartDiv{
+	
+	width: 80%;
+	height: 70%;
+	position: absolute;
+	top: 20%;
+	left: 20%;
+	
+}
+/*css for text Box Lable   */
+.textboxLable{
+
+	color: white;
+	font-size: larger;
+	font-weight: bold;
+	
+}
+
+/*css for textBox, option and date */
+.textBox{
+	
+	width: 100%;
+	height: 150%;
+	border-radius: 30px; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

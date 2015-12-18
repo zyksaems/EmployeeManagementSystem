@@ -1,0 +1,36 @@
+
+ /* This file name :  AdminLogin.css */
+ 
+     
+    .adminLoginValidationMsg{
+        text-align: center;
+        font-size: 18px;
+        color:red;
+        font-family: verdana;
+    }
+   
+    .AdminLoginBody{
+         background-color:#e2e2d4;
+         border-radius: 30px 30px 30px 30px;   
+    }
+    .AdminLoginHeader{
+            
+       
+        background-color: #754714;
+        opacity:0.9;
+    }
+    .AdminLoginFormHeading{
+          text-align: center;
+          font-family: verdana;
+          color: white ;
+    }
+    .AdminLoginFooter{
+        background-color:   #e5ffff;
+    }
+    .forgotPassword{
+     color: #800000;
+     font-family: Verdana;
+    }
+    
+ 
+  

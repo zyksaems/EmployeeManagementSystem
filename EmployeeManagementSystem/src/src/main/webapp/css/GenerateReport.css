@@ -1,0 +1,101 @@
+<style>
+h1 {
+  margin:-10px;
+}
+
+h2 {
+     margin:-3px;
+}
+
+table, td, th {
+ 
+    border: 1px solid green;
+}
+input{
+width:205px; 
+height:24px;
+font-size: 15px;
+border-radius: 0px;
+
+}
+select{
+	height:24px;
+}
+td{
+height: 30px;
+}
+
+th {
+   height: 40px;
+    background-color: green;
+    color: white;
+}
+body{
+ padding: 5px 40px 0px 40px;
+   font-family:  Georgia, serif;
+  background-color:#f0f8ff;
+}
+#d1{
+width: auto;
+    height: auto;
+    padding-top:-5px;
+    text-align:center;
+     color:#6495ed;
+}
+#searchcriteria{
+	width: auto;
+    height: 25px;
+    padding: 0px 0px 0px 10px;
+     background-color:#6495ed;
+     color:white;
+}
+#nameofemp{
+	width:185px;
+    height: auto;
+    float:left;
+    position:relative;
+}
+#nameofemp1{
+	width: 300px;
+    height: auto;
+    position:relative;
+    float:left;
+    margin-left: -40px;
+}
+#resultperpage{
+    height: auto;
+    float:right;
+    position:relative;
+}
+#ul1{
+    list-style-type: none;	
+}
+#main{
+	width: auto;
+    height: auto;
+    padding-top:20px;
+    padding-bottom:5px;
+    padding-left:20px;
+    padding-right:20px;
+     background-color:WhiteSmoke;
+     
+}
+#fixed {
+    position: fixed;
+    right: 25px;
+    top:85px;
+    width: 135px;
+    height:30px;
+    border: 3px solid #bebebe;
+}
+#production{
+	width: auto;
+	height: auto;
+	padding-left:10px;
+	padding-right: 5px;
+	
+}
+#printbtn{
+	text-align: center;
+}
+</style>

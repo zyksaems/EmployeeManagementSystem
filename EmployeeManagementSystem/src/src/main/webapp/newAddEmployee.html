@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html  ng-app="myapp">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<script src="./resources/angular.js"></script>
+    <script src="./resources/ui-bootstrap-tpls-0.14.3.min.js"></script>
+    <script src="./resources/angular-animate.js"></script><!-- https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-animate.min.js -->
+    
+    
+     
+    <link href="./resources/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="shortcut icon" type="image/x-icon" href="images/faviconlogo.png"/>
+    
+    <!--for data tables  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+    <script src="./resources/jquery.dataTables.min.js"></script>
+    <script src="./resources/angular-datatables.min.js"></script>
+    <script src="./resources/angular-datatables.bootstrap.min.js"></script>
+    <script src="./resources/test.js"></script>
+    <script src="./resources/bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="./resources/datatables.bootstrap.min.css">
+    
+ 
+</head>
+<body ng-controller="myController">
+
+<div class="container-fluid " >
+
+
+<h2 class="jumbotron text-center ">Add Employee</h2>
+
+<div class="col-lg-10">
+<form class="form-horizontal" role="form">
+ <div class="col-lg-6"> 
+  
+    <!-- for First name -->
+   <div ng-switch on="showFirstName">
+    <div class="form-group has-success has-feedback" ng-switch-when="1" >
+      <label class="col-sm-4 control-label" for="inputSuccess">Employee ID</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="inputSuccess" ng-model="firstName">
+        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+      </div>
+    </div>
+    <div class="form-group has-error has-feedback" ng-switch-when="2" >
+      <label class="col-sm-4 control-label" for="inputError">Employee ID</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="inputError" ng-model="firstName">
+        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+      </div>
+     </div>
+    <div class="form-group"  ng-switch-when="3" >
+      <label class="col-sm-4 control-label">Employee ID</label>
+      <div class="col-sm-8">
+        <input class="form-control"  type="text" placeholder="Enter First Name" ng-model="firstName" >
+      </div>
+    </div>
+    
+    </div> <!--  end of First Name -->
+  
+  <!-- for DOB -->
+  <div ng-switch on="showDob"> 
+   <div class="form-group has-success has-feedback" ng-switch-when="1" >
+      <label class="col-sm-4 control-label" for="inputSuccess">Date Of Birth</label>
+      <div class="col-sm-8">
+        <input type="date" class="form-control" id="inputSuccess" ng-model="dob">
+        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+      </div>
+    </div>
+    
+   <div class="form-group"  ng-switch-when="3" >
+      <label class="col-sm-4 control-label">Date Of Birth</label>
+      <div class="col-sm-8">
+        <input class="form-control"  type="date" placeholder="Enter DOB" ng-model="dob">
+      </div>
+    </div>
+ </div><!-- End of Dob -->
+   
+<!--  for EmployeeID   -->
+     <div ng-switch on="showEmpId">
+    
+    <div class="form-group has-success has-feedback" ng-switch-when="1" >
+      <label class="col-sm-4 control-label" for="inputSuccess">Employee ID</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="inputSuccess" ng-model="empId">
+        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+      </div>
+    </div>
+    <div class="form-group has-error has-feedback" ng-switch-when="2" >
+      <label class="col-sm-4 control-label" for="inputError">Employee ID</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="inputError" ng-model="empId">
+        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+      </div>
+     </div>
+    <div class="form-group"  ng-switch-when="3" >
+      <label class="col-sm-4 control-label">Employee ID</label>
+      <div class="col-sm-8">
+        <input class="form-control"  type="text" placeholder="Enter Employee Id" ng-model="empId" >
+      </div>
+    </div>
+    
+    </div>
+<!-- End of EmployeeID -->   
+
+<!-- for Role ID -->
+     <div ng-switch on="showRole">
+
+     <div class="form-group" ng-switch-when="3">
+        <label class="col-sm-4 control-label"></label>
+        <div class="col-sm-8">
+          <select id="selectRole" class="form-control" ng-model="role" >
+            <option>Role</option>
+          </select>
+        </div>
+     </div>
+<!-- end of role id -->
+   
+
+  
+</div>
+<div class="col-lg-6" >
+
+   
+     
+     
+</div>
+</form>
+</div><!-- close col-10 -->
+
+<div class="col-lg-2">
+
+</div><!-- col-2 -->
+
+</div>
+
+</body>
+</html>
