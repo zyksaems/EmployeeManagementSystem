@@ -1,8 +1,5 @@
 package com.caprusit.ems.controller;
 
-import java.io.IOException;
-import java.util.Iterator;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Admin;
@@ -32,17 +26,11 @@ public class SecurityController {
 
 	private Logger logger = Logger.getLogger(SecurityController.class);
 
-	@RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
-	public String adminLogin() {
-		return "AdminLogin";
-	}
 
-	@RequestMapping(value = "/adminHome", method = RequestMethod.POST)
+	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
 	public @ResponseBody Integer adminLogin(@RequestBody Admin admin, HttpServletRequest request) {
 
 		logger.info("in admin security controller");
-		logger.info("admin username: " + admin.getAdminId() + " password: " + admin.getPassword());
-
 		int status = securityService.login(admin);
 		if (status == 1)
 			request.getSession().setAttribute("adminId", admin.getAdminId());
@@ -112,7 +100,7 @@ public class SecurityController {
 		    int adminId = (Integer) request.getSession(false).getAttribute("adminId");
 		    logger.info("In change Password:" + adminId);
 		    logger.info("old password: "+oldPassword + "   new password:" + newPassword);
-		    Admin admin = new Admin();
+		    Admin admin=new Admin();
 		    admin.setAdminId(adminId);
 		    admin.setPassword(oldPassword);
 		    logger.info(admin);
@@ -120,6 +108,7 @@ public class SecurityController {
 		    logger.info("res for change password: "+res);
 		    return JsonUtility.convertToJson(res);
          }
+     
 
 	}
 	

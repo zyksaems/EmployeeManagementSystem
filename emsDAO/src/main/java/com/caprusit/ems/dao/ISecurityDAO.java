@@ -2,17 +2,14 @@ package com.caprusit.ems.dao;
 
 import java.util.List;
 
-import com.caprusit.ems.domain.Admin;
-import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.domain.EncryptedAdmin;
 
 public interface ISecurityDAO {
-	public String login(Admin admin);
+	
+	public List<Object> getAdminCurrentPassword(EncryptedAdmin encryptedAdmin);
 
 	public List<Object> forgotPassword(int adminId);
 
-	public List<String> getOldPassword(Admin admin);
-
-	public int changePassword(Admin admin);
-
-	public int saveEmployee(Employee emp);
+	public int changePassword(EncryptedAdmin encryptedAdmin);
+	
 }

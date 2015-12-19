@@ -1375,9 +1375,12 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		
 		$scope.changeAdminPassword=function(){
 			
-			if($scope.cpwd!=null && $scope.npwd!=null && $scope.rpwd!=null)
-			{			
-				if($scope.cpwd!=$scope.npwd)
+			if($scope.cpwd!=null  && $scope.npwd!=null && $scope.rpwd!=null)
+			{
+				if($scope.cpwd.length < 3 || $scope.npwd.length < 3 || $scope.rpwd.length < 3 ){
+					$scope.changePasswordSuccessMsg="Please fill all fields with minimum 3 characters";
+				}
+				else if($scope.cpwd!=$scope.npwd)
 				{
 					if($scope.npwd==$scope.rpwd )
 					{
@@ -1393,6 +1396,9 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 								   $scope.errorOrSuccessMessageOnPage="Your Session Expired.. Please login again";								   
 								   $scope.showAdminDashBoard=false;
 								   $scope.showAdminLoginButton=true;
+								   $scope.cpwd="";
+								   $scope.npwd='';
+								   $scope.rpwd='';
                                    console.log(" session expired -- login again--");
 							   }
 							   else if(data == 1){
@@ -1400,6 +1406,9 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 								   $scope.showAdminChangePasswordDiv=false;
 								   $scope.showAdminDashBoard=false;
 								   $scope.showAdminLoginButton=true;
+								   $scope.cpwd="";
+								   $scope.npwd='';
+								   $scope.rpwd='';
 								   console.log(" password changed  -- login again--");
 							   }
 							   else{
@@ -1590,7 +1599,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		$scope.AdminLogin=function(){
 			
 			var adminObj={adminId:$scope.Admin.userName,password:$scope.Admin.password};
-			var adminLogin = $http.post('/EmployeeManagementSystem/adminHome.do',adminObj);
+			var adminLogin = $http.post('/EmployeeManagementSystem/adminLogin.do',adminObj);
 			adminLogin.success(function(data, status, headers, config) {
 				if(data == 1){
 					console.log("successfully logged in");

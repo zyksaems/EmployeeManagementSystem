@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import com.caprusit.ems.dao.ISecurityDAO;
 import com.caprusit.ems.domain.Admin;
+import com.caprusit.ems.domain.EncryptedAdmin;
 import com.caprusit.ems.utility.EmailUtility;
+import com.caprusit.ems.utility.EncryptionUtility;
 import com.caprusit.ems.utility.JsonUtility;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
 
@@ -32,11 +34,15 @@ public class SecurityServiceImpl implements ISecurityService {
 
 	public int login(Admin admin) {
 
-		String adminPass = securityDAO.login(admin);
-
-		int status = (adminPass.equals("notValid")) ? -1 : 0;
-
-		status = (adminPass.equals(admin.getPassword())) ? 1 : status;
+		String adminCurrentPassword=null;
+		int status=-1;
+		List<Object> adminPasswordList = securityDAO.getAdminCurrentPassword(new EncryptedAdmin(admin.getAdminId()));
+ 
+		if(adminPasswordList != null && adminPasswordList.size() > 0){
+			
+			adminCurrentPassword=EncryptionUtility.decryptPassword(admin.getPassword(), (byte[])adminPasswordList.get(0));
+			status = (adminCurrentPassword != null) ? 1 : 0;
+		}
 
 		logger.info("login status for admin: " + status);
 
@@ -66,15 +72,19 @@ public class SecurityServiceImpl implements ISecurityService {
 
 	public int changePassword(Admin admin,String newPassword) {
 
-		List<String> oldPaswordList=securityDAO.getOldPassword(admin);
+		List<Object> oldPaswordList=securityDAO.getAdminCurrentPassword(new EncryptedAdmin(admin.getAdminId()));
         if(oldPaswordList != null && oldPaswordList.size() > 0){
-        	if(oldPaswordList.get(0).equals(admin.getPassword())){
-        		admin.setPassword(newPassword);
-        		return securityDAO.changePassword(admin);
+        	String oldPassword=EncryptionUtility.decryptPassword(admin.getPassword(),(byte [])oldPaswordList.get(0));
+        	if(oldPassword != null){       		
+        		EncryptedAdmin encryptedAdmin=new EncryptedAdmin();
+        		encryptedAdmin.setAdminId(admin.getAdminId());
+        		encryptedAdmin.setPassword(EncryptionUtility.encryptString(newPassword));
+        		return securityDAO.changePassword(encryptedAdmin);
         	}
         	else{
         		return 0;
         	}
+        	
         }
         else
         	return -1;
