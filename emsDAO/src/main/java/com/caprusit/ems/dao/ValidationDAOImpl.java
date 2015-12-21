@@ -29,6 +29,9 @@ public class ValidationDAOImpl implements ValidationDAO {
 
 	private Logger logger=Logger.getLogger(ValidationDAOImpl.class);
 	
+	/**
+	 * This method returns all employee ids along with first name and last name
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Object> getAllEmploeeIds() {
 		
@@ -59,7 +62,9 @@ public class ValidationDAOImpl implements ValidationDAO {
 
 	}
 
-	
+	/**
+	 * This method returns employee ids who are logged-in into application
+	 */
 	public List<Object> getLoggedInEmployeeIds() {
 		
 		logger.info("inside ValidationDAOImpl getLoggedInEmployeeIds()");
@@ -70,6 +75,9 @@ public class ValidationDAOImpl implements ValidationDAO {
 
 	}
 
+	/**
+	 * This method returns employee ids who are logged-out from application
+	 */
 	public List<Object> getLoggedOutEmoloyeeIds() {
 		
 		logger.info("inside ValidationDAOImpl getLoggedOutEmoloyeeIds()");
@@ -89,6 +97,7 @@ public class ValidationDAOImpl implements ValidationDAO {
 		return cal.getTime();
 				
 	}
+	
 	
 	@SuppressWarnings("unchecked")
 	private List<Object> executeCriteria(int type){
@@ -120,7 +129,10 @@ public class ValidationDAOImpl implements ValidationDAO {
 		
 	}
 
-
+	/**
+	 * This method returns all role ids and role name
+	 */
+	
 	@SuppressWarnings("unchecked")
 	public List<Object> getRoleIds() {
 		
@@ -138,6 +150,9 @@ public class ValidationDAOImpl implements ValidationDAO {
 	}
 
 
+	/**
+	 * This method returns all department ids and department names
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Object> getDeptIds() {
 		

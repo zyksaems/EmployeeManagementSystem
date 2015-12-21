@@ -22,46 +22,37 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 	private SessionFactory sessionFactory;
 
 	private Logger logger=Logger.getLogger(ManageUserDAOImpl.class);
+	
 
+	/**
+	 * This method reads all employee details
+	 * Returns as List of Employee
+	 */
 	public List<Employee> getEmployees() {
-		
-
 		logger.info("inside ManageUserDAOImpl getEmployees()");
 		Session session = sessionFactory.openSession();
-		
-		/*String sql="select e.employeeid,e.firstname,e.lastname,e.dob,e.mobileno,e.emailid,e.designation,r.roletype,e.status,d.deptname"
-				+ " from employee_table e ,role_table r,department_table d"
-				+ "where e.roleid=r.roleid and e.deptid=d.deptid";*/
-		
-		
 		String sql = "SELECT * FROM EMPLOYEE_TABLE";
 		SQLQuery query = session.createSQLQuery(sql);
 		query.addEntity(Employee.class);
-		
 		@SuppressWarnings("unchecked")
-		List<Employee> results = query.list();
-		
-		
-		
+		List<Employee> results = query.list();		
 		session.close();
 		return results;
 	}
+	
 	public Employee findById(int id) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		Employee result = null;
 		try {
-
 			String hql = "From Employee u where u.employeeId=:id";
 			Query query = session.createQuery(hql);
-
 			query.setParameter("id", id);
 			System.out.println("Searching id= " + id);
 			List<Employee> results = query.list();
 			result = results.get(0);
 			System.out.println("Object of id =" + result);
 			tx.commit();
-
 		} catch (Exception e) {
 			tx.commit();
 			e.printStackTrace();
@@ -69,66 +60,28 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		session.close();
 		return result;
 	}
-
-	public void updateUser(Employee user) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		
-		try{
-		String hql="update Employee  set firstName=:firstname,"
-				+ "lastName=:lastname,"
-				+ "dob=:dob,"
-				+ "mobileNo=:mobileno,"
-				+ "designation=:designation,"
-				+ "rollId=:rollid,"
-				+ "status=:status,"
-				+ "deptId=:deptid"
-				+ " where employeeId=:id";
-		
-		Query query=session.createQuery(hql);
-		
-		query.setParameter("firstname", user.getFirstName());
-		query.setParameter("lastname", user.getLastName());
-		query.setParameter("dob", user.getDob());
-		query.setParameter("mobileno", user.getMobileNo());
-		query.setParameter("designation", user.getDesignation());
-		query.setParameter("rollid",user.getRollId());
-		query.setParameter("status",user.getStatus());
-		query.setParameter("deptid", user.getDeptId());
-		query.setParameter("id",user.getEmployeeId());
-		
-		int result = query.executeUpdate();
-		
-		System.out.println("Row affected "+result);
-		tx.commit();
-		}catch(Exception e){
-			tx.rollback();
-			e.printStackTrace();
-		}
-		session.close();
-
-		
-	}
 	
+	/**
+	 * This method is to save employee object into database
+	 */
 	public int saveEmployee(Employee emp) throws HibernateException {
 
 		Session session = sessionFactory.openSession();
 		Transaction ts = session.beginTransaction();
 		session.saveOrUpdate(emp);
 		ts.commit();
-
 		session.close();
 		return 1;
 
 	}
-	
-    public int updateEmployee(Employee emp){
-		
+	/**
+	 * This method updates employee details in database
+	 */
+    public int updateEmployee(Employee emp){		
 		Session session = sessionFactory.openSession();
 		Transaction ts = session.beginTransaction();
 		session.update(emp);
 		ts.commit();
-
 		session.close();
 		return 1;
 	}

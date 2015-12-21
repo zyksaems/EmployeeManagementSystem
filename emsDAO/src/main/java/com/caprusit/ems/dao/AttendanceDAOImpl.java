@@ -20,6 +20,9 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 	private SessionFactory factory;
 	private Logger logger= Logger.getLogger(AttendanceDAOImpl .class);
 	
+	/**
+	 * This method saves Attendance class object into database
+	 * */
 	public int inTime(Attendance attendance) {
 		Session session = factory.openSession();
 		Transaction ts = session.beginTransaction();
@@ -28,6 +31,10 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 		session.close();
 		return 1;
 	}
+	
+	/**
+	 * This method updates out time and working hours of employee into database
+	 * */
 	public int outTime(User user) {
 		Session session = factory.openSession();
 		Query updateEndTime = session.createQuery(
@@ -54,6 +61,10 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 		return res + res2;
 	}
 
+	/**
+	 * This method is to set today date with 00:00:00 time
+	 * 
+	 */
 	private Date getTodayDate() {
 
 		Calendar cal = Calendar.getInstance();

@@ -10,7 +10,7 @@ public interface IManageUserDAO {
 	/* public List<Employee> getEmployees() ; */
 	public Employee findById(int id);
 
-	public void updateUser(Employee user);
+	/*public void updateUser(Employee user);*/
 
 	int saveEmployee(Employee employee);
 
