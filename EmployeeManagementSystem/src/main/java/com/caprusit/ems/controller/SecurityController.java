@@ -16,7 +16,6 @@ import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Admin;
 import com.caprusit.ems.service.ISecurityService;
 import com.caprusit.ems.utility.JsonUtility;
-import com.google.gson.Gson;
 
 @Controller
 public class SecurityController {
@@ -26,9 +25,14 @@ public class SecurityController {
 
 	private Logger logger = Logger.getLogger(SecurityController.class);
 
-
+	/*This method is for admin login functionality 
+	 * Takes admin object as request body
+	 * Returns 1 on successful login
+	 * If admin credentials are correct and creates a session and sets admin ID as attribute to session
+	 * */
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-	public @ResponseBody Integer adminLogin(@RequestBody Admin admin, HttpServletRequest request) {
+	public @ResponseBody
+	Integer adminLogin(@RequestBody Admin admin, HttpServletRequest request) {
 
 		logger.info("in admin security controller");
 		int status = securityService.login(admin);
@@ -38,24 +42,11 @@ public class SecurityController {
 		return status;
 	}
 
-	/*@RequestMapping(value = "/adminHomePage", method = RequestMethod.GET)
-	public ModelAndView getAdminHomePage(HttpServletRequest request) {
-
-		logger.info("inside getAdminHomePage()");
-
-		HttpSession session = request.getSession(false);
-
-		logger.info("session: " + session);
-		if (session != null)
-			logger.info("admin id in session: " + session.getAttribute("adminId"));
-
-		return ((session != null) && (session.getAttribute("adminId") != null)) ? new ModelAndView("AdminDashBoard")
-				: new ModelAndView("AdminLogin");
-
-	}*/
-
+	/*This method is for admin logout functionality
+	 * Returns 1 on successful logout*/
 	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
-	public @ResponseBody int adminLogout(HttpServletRequest request) {
+	public @ResponseBody
+	int adminLogout(HttpServletRequest request) {
 
 		HttpSession session = request.getSession(false);
 
@@ -70,7 +61,6 @@ public class SecurityController {
 
 	}
 
-
 	/*
 	 * forgotPassword() method takes adminId and emailId as parameter and after
 	 * validating both input , it returns success message such as Email Sent
@@ -78,54 +68,43 @@ public class SecurityController {
 	 * EmailId on the browser.
 	 */
 	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.POST)
-	public @ResponseBody String forgotPassword(@RequestParam("id") Integer adminId,@RequestParam("email") String emailId) {
-		logger.info("in admin forgot password:  id: " + adminId + "    email: " + emailId);
+	public @ResponseBody
+	String forgotPassword(@RequestParam("id") Integer adminId,
+			@RequestParam("email") String emailId) {
+		logger.info("in admin forgot password:  id: " + adminId + "    email: "
+				+ emailId);
 		return securityService.forgotPassword(adminId, emailId);
 
 	}
 
 	/*
-	  * changePassword() method implementation This method takes current password
-	  * and new password as parameter and after checking all the conditions it
-	  * returns either a successful or an error message to the browser
-	  */
+	 * changePassword() method implementation This method takes current password
+	 * and new password as parameter and after checking all the conditions it
+	 * returns either a successful or an error message to the browser
+	 */
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
-	public @ResponseBody String changePassword(HttpServletRequest request, @RequestParam("cpwd") String oldPassword,
+	public @ResponseBody
+	String changePassword(HttpServletRequest request,
+			@RequestParam("cpwd") String oldPassword,
 			@RequestParam("npwd") String newPassword) {
-         if(!HttpSessionUtility.verifySession(request)){
-        	 logger.info("session expired!");
-        	 return JsonUtility.convertToJson("sessionExpired!");
-         }
-         else{
-		    int adminId = (Integer) request.getSession(false).getAttribute("adminId");
-		    logger.info("In change Password:" + adminId);
-		    logger.info("old password: "+oldPassword + "   new password:" + newPassword);
-		    Admin admin=new Admin();
-		    admin.setAdminId(adminId);
-		    admin.setPassword(oldPassword);
-		    logger.info(admin);
-		    int res=securityService.changePassword(admin,newPassword);		
-		    logger.info("res for change password: "+res);
-		    return JsonUtility.convertToJson(res);
-         }
-     
+		if (!HttpSessionUtility.verifySession(request)) {
+			logger.info("session expired!");
+			return JsonUtility.convertToJson("sessionExpired!");
+		} else {
+			int adminId = (Integer) request.getSession(false).getAttribute(
+					"adminId");
+			logger.info("In change Password:" + adminId);
+			logger.info("old password: " + oldPassword + "   new password:"
+					+ newPassword);
+			Admin admin = new Admin();
+			admin.setAdminId(adminId);
+			admin.setPassword(oldPassword);
+			logger.info(admin);
+			int res = securityService.changePassword(admin, newPassword);
+			logger.info("res for change password: " + res);
+			return JsonUtility.convertToJson(res);
+		}
 
 	}
-	
 
-	 /**
-	  * getJsonArray() used to convert Object to String, so that we will send
-	  * this String to other layer
-	  * 
-	  * @param obj
-	  * @return  jsonObj
-	  */
-
-	 private String getJsonArray(Object obj) {
-	  Gson gson = new Gson();
-	  return gson.toJson(obj);
-
-	 }
-	 
-	
 }
