@@ -25,7 +25,7 @@ public class ReportGenerationController {
 
 	private Logger logger = Logger.getLogger(ReportGenerationController.class);
 
-	/*
+	/**
 	 * getReportGenerationPage(-) method will display the ReportGeneration page.
 	 */
 	@RequestMapping(value = "/generateReportHome", method = RequestMethod.GET)
@@ -34,7 +34,7 @@ public class ReportGenerationController {
 		return "GenerateReport";
 	}
 
-	/*
+	/**
 	 * getAutoCompleteInfo(-) method take employeeId as a input and display all
 	 * employeeId's or employeeName's in the search box based on the user
 	 * supplied values.
@@ -64,7 +64,7 @@ public class ReportGenerationController {
 		}
 	}
 
-	/*
+	/**
 	 * getReportById(-) method take employeeId (Integer) as a input and display
 	 * all the working details of an employee.
 	 */
@@ -91,7 +91,7 @@ public class ReportGenerationController {
 				.getEmployees(employeeId));
 	}
 
-	/*
+	/**
 	 * getReportByIdAndDate(-,-)method takes employeeId , attendanceDate as a
 	 * inputs and display particular employee working details on given date if
 	 * it is worked on this date.
@@ -121,7 +121,7 @@ public class ReportGenerationController {
 						new Date(Long.valueOf(attendanceDate))));
 	}
 
-	/*
+	/**
 	 * getReportByIdFromDateToDate(-,-,-) method takes employeeId , fromDate,
 	 * toDate as a inputs and display the working details of an employee during
 	 * given period of time.
@@ -153,7 +153,7 @@ public class ReportGenerationController {
 						new Date(Long.valueOf(toDate))));
 	}
 
-	/*
+	/**
 	 * getReportByName(-) take input as employeeId (String) as a input and we
 	 * extract firstName, lastName from received input string and pass
 	 * firstName, lastName as a input to login(-,-) method to get employeeId
@@ -189,7 +189,7 @@ public class ReportGenerationController {
 		return JsonUtility.convertToJson(empData);
 	}
 
-	/*
+	/**
 	 * getReportByNameDay(-,-) method takes employeeId, attendanceDate as a
 	 * inputs and display the working details of an employee on the specified
 	 * date.
@@ -227,7 +227,7 @@ public class ReportGenerationController {
 		return JsonUtility.convertToJson(empData);
 	}
 
-	/*
+	/**
 	 * getReportByNameDates(-,-,-) takes employeeId, fromdate, toDate as a
 	 * inputs and display the working details of an employee on given period of
 	 * time.
@@ -264,7 +264,7 @@ public class ReportGenerationController {
 		return JsonUtility.convertToJson(empData);
 	}
 
-	/*
+	/**
 	 * getAllEmployees() method will display working details of all employees.
 	 */
 	@RequestMapping(value = "/getAllEmployees", method = RequestMethod.POST)
@@ -275,7 +275,7 @@ public class ReportGenerationController {
 				.getAllEmployees());
 	}
 
-	/*
+	/**
 	 * getAllEmployeesReportByDate(-) method take attendanceDate as a input and
 	 * display all employees working details on a specified date.
 	 */
@@ -289,7 +289,7 @@ public class ReportGenerationController {
 				.getAllEmployeesReport(new Date(Long.valueOf(attendanceDate))));
 	}
 
-	/*
+	/**
 	 * getEmployeesReportBetweenDates(-,-) method takes fromDate, toDate as a
 	 * inputs and displays all employees working details during given period of
 	 * time.
@@ -306,7 +306,9 @@ public class ReportGenerationController {
 						Long.valueOf(toDate))));
 	}
     
-	/*This method returns today attendance details as json object array to front-end*/
+	/**
+	 * This method returns today attendance details as json object array to front-end
+	 * */
 	@RequestMapping(value = "/getTodayReport", method = RequestMethod.GET)
 	public @ResponseBody
 	String getDayWiseReport() {

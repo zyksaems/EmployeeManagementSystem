@@ -21,7 +21,8 @@ public class ValidationController {
 	private ValidationService validationservice;
 	private Logger logger = Logger.getLogger(ValidationController.class);
 
-	/*This method returns all employee Ids along with first name and last name
+	/**
+	 * This method returns all employee Ids along with first name and last name
 	 * in the json object array format
 	 * */
 	@RequestMapping(value = "/getAllEmpIds", method = RequestMethod.POST)
@@ -32,7 +33,8 @@ public class ValidationController {
 
 	}
 
-	/*This method returns employee Ids of employees who are logged-in into application
+	/**
+	 * This method returns employee Ids of employees who are logged-in into application
 	 *in json  array format
 	 * */
 	@RequestMapping(value = "/getLoggedInEmpIds", method = RequestMethod.POST)
@@ -43,7 +45,8 @@ public class ValidationController {
 
 	}
 
-	/*This method returns employee Ids of employees who are logged-out from application
+	/**
+	 * This method returns employee Ids of employees who are logged-out from application
 	 *in json  array format
 	 * */
 	@RequestMapping(value = "/getLoggedOutEmpIds", method = RequestMethod.POST)
@@ -54,7 +57,8 @@ public class ValidationController {
 
 	}
 	
-	/*This method returns all role Id and role names which are available in database
+	/**
+	 * This method returns all role Id and role names which are available in database
 	 *in json object  array format
 	 * */
 	@RequestMapping(value="/getRoleIds",method=RequestMethod.POST)
@@ -65,7 +69,8 @@ public class ValidationController {
 		
 	}
 	
-	/*This method returns all department Id and department names which are available in database
+	/**
+	 * This method returns all department Id and department names which are available in database
 	 *in json object  array format
 	 * */
 	@RequestMapping(value="/getDeptIds",method=RequestMethod.POST)

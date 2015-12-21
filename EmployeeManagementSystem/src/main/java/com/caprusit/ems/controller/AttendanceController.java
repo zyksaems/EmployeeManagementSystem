@@ -19,7 +19,8 @@ public class AttendanceController {
 	
 	private static Logger logger=Logger.getLogger(AttendanceController.class);
 	
-	/*This method will receive login or logout request from front-end with LoginTest Object as request body
+	/**
+	 * This method will receive login or logout request from front-end with LoginTest Object as request body
 	 * This method is for inserting and updating employee attendance 
 	 * */
 	@RequestMapping(value="/login",method = RequestMethod.POST)
@@ -32,7 +33,9 @@ public class AttendanceController {
 
 	}
 	
-	/*This method will return our application home page to the browser*/
+	/**
+	 * This method will return our application home page to the browser
+	 * */
 	@RequestMapping(value="/login",method = RequestMethod.GET)
 	public String getHomePage( ) {
 

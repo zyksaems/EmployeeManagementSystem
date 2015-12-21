@@ -32,7 +32,8 @@ public class ManageUserController {
 	
 	private Logger logger=Logger.getLogger(ManageUserController.class);
 	
-	/*This method is to send all employee details to 
+	/**
+	 * This method is to send all employee details to 
 	 * front-end in json object array format
 	 * */
 	@RequestMapping(value="/getAllEmployeeDetails",method=RequestMethod.GET)
@@ -53,7 +54,8 @@ public class ManageUserController {
 	  return modelAndView;
 	}
 	
-	/*This method is for handling upload excel file(Employee details excel file )  request
+	/**
+	 * This method is for handling upload excel file(Employee details excel file )  request
 	 * returns  success or error details to front-end
 	 * */
 	@RequestMapping(value = "/uploadEmployeeDetailsExcelFile", method = RequestMethod.POST, consumes = "multipart/form-data")
@@ -74,7 +76,8 @@ public class ManageUserController {
 		return result;
 	}
 	
-	/*This method is to add single employee 
+	/**
+	 * This method is to add single employee 
 	 * Takes employee object as request body
 	 * If session expired returns -1*/
 	@RequestMapping(value = "/addSingleEmployee", method = RequestMethod.POST)
@@ -88,7 +91,8 @@ public class ManageUserController {
 
 	}
 	
-	/*This method is to update employee details
+	/**
+	 * This method is to update employee details
 	 * Takes employee object as request body
 	 * returns 1 on successful update
 	 * */

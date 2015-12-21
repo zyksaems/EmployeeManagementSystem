@@ -25,7 +25,8 @@ public class SecurityController {
 
 	private Logger logger = Logger.getLogger(SecurityController.class);
 
-	/*This method is for admin login functionality 
+	/**
+	 * This method is for admin login functionality 
 	 * Takes admin object as request body
 	 * Returns 1 on successful login
 	 * If admin credentials are correct and creates a session and sets admin ID as attribute to session
@@ -42,7 +43,8 @@ public class SecurityController {
 		return status;
 	}
 
-	/*This method is for admin logout functionality
+	/**
+	 * This method is for admin logout functionality
 	 * Returns 1 on successful logout*/
 	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
 	public @ResponseBody

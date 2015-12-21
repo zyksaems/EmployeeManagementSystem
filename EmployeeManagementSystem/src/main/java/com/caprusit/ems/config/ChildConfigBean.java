@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.caprusit.ems")
-public class ConfigBean extends WebMvcConfigurerAdapter {
+public class ChildConfigBean extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public ResourceBundleViewResolver resourceBundleViewResolver() {
@@ -25,7 +25,9 @@ public class ConfigBean extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 
-	/*Bean for view resolver*/
+	/**
+	 * Bean for view resolver
+	 * */
 	@Bean
 	public ViewResolver configureViewResolver() {
 		InternalResourceViewResolver viewResolve = new InternalResourceViewResolver();

@@ -21,7 +21,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		/*$scope.showAddNewAdminDiv=false;*/
 		
 		
-	  /*	function for showing and hiding divisions*/
+	  /*function for showing and hiding divisions*/
 		
 		function showOrHideRemainingDivisions(divName){
 			
