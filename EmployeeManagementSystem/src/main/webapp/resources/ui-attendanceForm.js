@@ -1633,6 +1633,25 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			
 		}
 		
+		  /*function  for prinnting view Employee division*/
+		     
+		     $scope.printViewEmployeeDiv=function(){   
+		    
+		      console.log("print function called..");
+		      if( editingEmployee == true){
+		       openModalOfEditingEmployee();
+		      }
+		      else{
+		          var printContents = document.getElementById("viewEmployeeDetails").innerHTML;
+		             var originalContents = document.body.innerHTML;
+		             document.body.innerHTML = printContents;
+		             window.print();
+		             document.body.innerHTML = originalContents;
+		         
+		      }
+		         
+		     };
+		
 		
 	/*  END ---	function for forgot Password ------END ---*/
 		

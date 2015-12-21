@@ -32,17 +32,13 @@ public class ManageUserController {
 	
 	private Logger logger=Logger.getLogger(ManageUserController.class);
 	
+	/*This method is to send all employee details to 
+	 * front-end in json object array format
+	 * */
 	@RequestMapping(value="/getAllEmployeeDetails",method=RequestMethod.GET)
 	public @ResponseBody String getAllEmployeeDetails(){
 		logger.info("inside ManageUserController getAllEmployee()");	
 		return manageUserService.getEmployees();
-	}
-	
-
-	@RequestMapping(value="/getAllEmployee",method=RequestMethod.GET)
-	public  String getAllEmployee(){
-		logger.info("inside ManageUserController getAllEmployee()");	
-		return "UserManagement2";
 	}
 	
 	
@@ -57,6 +53,9 @@ public class ManageUserController {
 	  return modelAndView;
 	}
 	
+	/*This method is for handling upload excel file(Employee details excel file )  request
+	 * returns  success or error details to front-end
+	 * */
 	@RequestMapping(value = "/uploadEmployeeDetailsExcelFile", method = RequestMethod.POST, consumes = "multipart/form-data")
 	public @ResponseBody String uploadEmployeeDetailsExcelFile(MultipartHttpServletRequest request) {
 
@@ -75,6 +74,9 @@ public class ManageUserController {
 		return result;
 	}
 	
+	/*This method is to add single employee 
+	 * Takes employee object as request body
+	 * If session expired returns -1*/
 	@RequestMapping(value = "/addSingleEmployee", method = RequestMethod.POST)
 	public @ResponseBody Integer addSingleEmployee(HttpServletRequest request,@RequestBody Employee emp,
 			@RequestParam("dob") String milliSeconds) {
@@ -86,6 +88,10 @@ public class ManageUserController {
 
 	}
 	
+	/*This method is to update employee details
+	 * Takes employee object as request body
+	 * returns 1 on successful update
+	 * */
 	@RequestMapping(value="/updateEmployee" , method=RequestMethod.POST)
 	public @ResponseBody int updateEmployee(@RequestBody Employee emp,@RequestParam("dob") String dobMillisecods){
 		

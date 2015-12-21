@@ -3,7 +3,6 @@ package com.caprusit.ems.controller;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,15 +19,9 @@ public class AttendanceController {
 	
 	private static Logger logger=Logger.getLogger(AttendanceController.class);
 	
-	@RequestMapping(value="/log",method = RequestMethod.GET)
-	public String init(ModelMap modelMap) {
-
-		logger.info("inside attendance controlller init()");
-		
-		return "login";
-		
-	}
-
+	/*This method will receive login or logout request from front-end with LoginTest Object as request body
+	 * This method is for inserting and updating employee attendance 
+	 * */
 	@RequestMapping(value="/login",method = RequestMethod.POST)
 	public @ResponseBody Integer login(@RequestBody LoginTest test) {
 		
@@ -39,8 +32,9 @@ public class AttendanceController {
 
 	}
 	
+	/*This method will return our application home page to the browser*/
 	@RequestMapping(value="/login",method = RequestMethod.GET)
-	public String loginPage(ModelMap modelMap) {
+	public String getHomePage( ) {
 
 		logger.info("inside attendance controlller init()");
 		

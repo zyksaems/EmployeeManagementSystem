@@ -16,7 +16,6 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.caprusit.ems.domain.Admin;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.Department;
 import com.caprusit.ems.domain.Employee;
@@ -41,46 +40,43 @@ public class ParentConfigBean {
 	@Value("${password}")
 	private String password;
 
+	
+	/*Bean creation for getting dataSource*/
 	@Bean(name = "dataSource")
-	public DataSource dataSource() {
+	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
 		dataSource.setDriverClassName(driverClassName);
 		dataSource.setUrl(url);
 		dataSource.setUsername(userName);
 		dataSource.setPassword(password);
-
 		return dataSource;
 	}
 	
+	/*Bean creation for sessionFactory of Hibernate*/
 	@Bean(name="sessionFactory")
 	public LocalSessionFactoryBean getSessionFactory() throws Exception{
 		
 		LocalSessionFactoryBean  factory= new LocalSessionFactoryBean ();
-		factory.setDataSource(dataSource());
+		factory.setDataSource(getDataSource());
 		factory.setAnnotatedClasses(Employee.class,Attendance.class,EncryptedAdmin.class,Role.class,Department.class);
-		Properties p=new Properties();
-		
+		Properties p=new Properties();		
 	    p.load(new ClassPathResource("properties/hibernate.properties").getInputStream()); //load gives FileNotFound and IOException
-
 		factory.setHibernateProperties(p);
-		System.out.println("local session factory created"+factory);
-		
+		System.out.println("local session factory created"+factory);		
 		return  factory;
 	}
 	
+	/*Bean for PropertyPlaceHolderConfigurer(for reading properties file and setting values to variables)*/
 	@Bean
 	public static PropertyPlaceholderConfigurer placeholderConfigurer() {
 		PropertyPlaceholderConfigurer placeholderConfigurer = new PropertyPlaceholderConfigurer();
-
 		Resource resource = new ClassPathResource("properties/database.properties");
-
 		placeholderConfigurer.setLocation(resource);
 		return placeholderConfigurer;
 
 	}
 	
-	
+	/*Bean for utility class (sending email to administrator for forgot password purpose)*/
 	@Bean
 	public EmailUtility getEmailUtility() throws Exception{
 		EmailUtility emailUtility= new EmailUtility();
@@ -102,7 +98,7 @@ public class ParentConfigBean {
 	 public MultipartConfigElement multipartConfigElement() {
 	     return new MultipartConfigElement("");
 	 }
-	
+	/*Bean for utility class(uploading excel file of employee details into dataBase)*/
 	@Bean 
 	public UploadExcelFileUtility getExcelFileUtility(){
 		return new UploadExcelFileUtility();

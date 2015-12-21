@@ -13,44 +13,39 @@ import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages="com.caprusit.ems")
+@ComponentScan(basePackages = "com.caprusit.ems")
 public class ConfigBean extends WebMvcConfigurerAdapter {
 
-	
-	
-	 @Bean  
-	    public ResourceBundleViewResolver resourceBundleViewResolver() {  
+	@Bean
+	public ResourceBundleViewResolver resourceBundleViewResolver() {
 		ResourceBundleViewResolver resolver = new ResourceBundleViewResolver();
 		resolver.setOrder(1);
 		resolver.setBasename("properties/excelView");
-	
-	        return resolver;  
-	    }
-	
+
+		return resolver;
+	}
+
+	/*Bean for view resolver*/
 	@Bean
 	public ViewResolver configureViewResolver() {
-	    InternalResourceViewResolver viewResolve = new InternalResourceViewResolver();
-	    viewResolve.setOrder(2);
-	    viewResolve.setPrefix("/WEB-INF/views/");
-	    viewResolve.setSuffix(".jsp");
+		InternalResourceViewResolver viewResolve = new InternalResourceViewResolver();
+		viewResolve.setOrder(2);
+		viewResolve.setPrefix("/WEB-INF/views/");
+		viewResolve.setSuffix(".jsp");
 
-	    return viewResolve;
+		return viewResolve;
 	}
 
-
-	 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	   registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.addResourceHandler("/resources/**").addResourceLocations(
+				"/resources/");
 	}
-	
-	
+
 	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer){
-	  configurer.enable();
+	public void configureDefaultServletHandling(
+			DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
 	}
-	
-	
+
 }
-
-
