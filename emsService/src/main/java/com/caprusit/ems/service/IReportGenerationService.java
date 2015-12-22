@@ -34,5 +34,7 @@ public interface IReportGenerationService {
 	List<String> getAutoCompleteInfo(String employeeId);
 	
 	String getTodayReport();
+	
+    String getDailyReportIndividual(int employeeId, Date attendanceDate) ;
 
 }

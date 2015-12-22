@@ -30,9 +30,12 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			$scope.showTableDetails=(divName=="showTableDetails") ? true:false;
 			$scope.showViewOrUpdateEmployeeDiv=(divName == "showViewOrUpdateEmployeeDiv") ? true:false;
 			
-			if(divName !="showCharts")
+			if(divName =="showCharts"){
+				$("#showChart").show();
+			}else{
 				$("#showChart").hide();
-			
+				
+			}
 		}
 		
 		
@@ -80,7 +83,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			    	$scope.showInitialAccordion=true;
 			        $scope.showAdminLoginButton=false;
 			        $scope.showCharts=true;
-			        $("#canvas-holder").hide();
+			        $("#pie-holder").hide();
 					$("#pieLegend").hide();
 					
 					$("#bar-holder").hide();
@@ -636,15 +639,15 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		/*function for displaying pie chart*/
 		function displayPieChart(numberOfPresetiesForPie,numberOfAbsentiesForPie){
 			
-			$scope.showTableDetails=false;	
-			$scope.showTable=false;
+			showOrHideRemainingDivisions("showCharts");
+
+    		$scope.showLineChartForm=false;
+    		$scope.showLineChartInlineForm=false;
 			$("#bar-holder").hide();
     		$("#barLegend").hide();
     		$("#line-holder").hide();
     		$("#lineLegend").hide();
-    		
-    		$("#showChart").show();
-		    $("#canvas-holder").show();
+		    $("#pie-holder").show();
 			$("#pieLegend").show();
 			
     		var pieData = [
@@ -664,12 +667,14 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
     						}
     					   ];
     		var options = {}
-    		
+    		  if(window.myPie!=null){
+ 		    	 window.myPie.destroy();
+ 		     }
     		var ctx = document.getElementById("pieChart").getContext("2d");
     		window.myPie = new Chart(ctx).Pie(pieData,options);
     		document.getElementById('pieLegend').innerHTML = myPie.generateLegend();
     		$scope.legend = Pie.generateLegend();
-    		
+   
     		var activePoints = myPie.getSegmentsAtEvent(event);
     		
 			
@@ -680,15 +685,18 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		
 		/*for display Bar chart*/
 		$scope.showBar=function(){
-		    
+		    /*
 			$scope.showTableDetails=false;	
-			$scope.showTable=false;
-			$("#canvas-holder").hide();
+			$scope.showTable=false;*/
+			showOrHideRemainingDivisions("showCharts")
+			$("#pie-holder").hide();
 			$("#pieLegend").hide();
 			$("#line-holder").hide();
     		$("#lineLegend").hide();
     		
-    		$scope.showCharts=true;
+
+    		$scope.showLineChartForm=false;
+    		$scope.showLineChartInlineForm=false;
 			$("#showChart").show();
     		$("#bar-holder").show();
     		$("#barLegend").show();
@@ -726,63 +734,256 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 
 		}
 		
-		/*for display Line chart*/
-		$scope.showLine=function(){
-			
-			showOrHideRemainingDivisions("showTable");
-			
-			$scope.showTableDetails=false;	
-			$scope.showTable=false;
+            
+$scope.showLineForm=function(){
 			
 			
-			$("#canvas-holder").hide();
+	
+	showOrHideRemainingDivisions("showCharts");
+			
+			$("#pie-holder").hide();
 			$("#pieLegend").hide();
 			
     		$("#bar-holder").hide();
     		$("#barLegend").hide();
     		
-    		$scope.showCharts=true;
-    		$("#showChart").show();
-    		$("#line-holder").show();
-    		$("#lineLegend").show();
-    		
+    	
+    	
+    		$("#line-holder").hide();
+    		$("#lineLegend").hide();
 			
-			var lineChartData = {
-				labels : ["Monday","Tuseday","Wednesday","Thrusday","Friday","Saturday","Sunday"],
+			$scope.showLineChartForm=false;
+			$scope.showLineChartInlineForm=true;
+
+			
+			
+		}
+		
+		  var maxLength=6,minLength=5;
+		  
+		  function checkId(id){
+			  var msgAndId={msg:"",status:0};
+			  if(id.length<=maxLength && id.length>minLength){
+				  msgAndId.msg="";
+				  if(id.match(/^[0-9]*$/)){
+					  msgAndId.msg="";
+					  msgAndId.status=1;	  
+					  
+				  }else{
+					  msgAndId.status=0;
+					  msgAndId.msg="only digits are allowed "
+				  }
+			  }else{
+				  
+				  msgAndId.status=0;
+				  msgAndId.msg="Id length must be 6 "
+			  }
+			  
+			  return msgAndId;
+		  }
+		/*for display Line chart*/
+		$scope.showLine=function(){
+			
+			var msgAndId=checkId($scope.employeeId);
+			
+    		if(msgAndId.status==1){
+			var idAndDate={id:$scope.employeeId,date:$scope.weeklyDate};
+			var getWeeklyData = $http.post("/EmployeeManagementSystem/getDailyReportGraphOfIndividual.do?employeeId="+idAndDate.id+"&attendanceDate="+idAndDate.date.getTime())
+			 getWeeklyData.success(function(data, status, headers, config) {
+				 
+				 var weeklyData=data;
+				 displayLine(weeklyData);
+				 
+			 });
+		     getWeeklyData.error(function(data, status, headers, config) {});
+		       
+		      
+		     function displayLine(data){
+    	     
+		    	    
+				
+					
+		    	 showOrHideRemainingDivisions("showCharts");
+		    	 
+					$("#pie-holder").hide();
+					$("#pieLegend").hide();
+					
+		    		$("#bar-holder").hide();
+		    		$("#barLegend").hide();
+		    		
+		    		
+		    		$scope.showLineChartForm=true;
+		    		$scope.showLineChartInlineForm=false;
+		    		$("#line-holder").show();
+		    		$("#lineLegend").show();
+		    		
+		    		
+		    	 var weeklyData = JSON.parse(data);
+		    	 console.log(data);  
+		    	 
+		    	 console.log("last day "+weeklyData.lastDay); 
+			     console.log( typeof weeklyData); 
+			     console.log("dayAndWork "+weeklyData.dayAndWork.Saturday);
+			     console.log("start day "+weeklyData.startDay);
+			     
+    	   
+			     var displayLabels=[];
+			     
+    	        days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+    	        
+    	         
+    	         var flag;
+    	         var start;
+    	         
+    	         
+    	         var work=[];
+     	        var total=[];
+     	        var temp;
+     	        
+     	        temp=weeklyData.dayAndWork.Monday;
+     	        if(temp==undefined){
+     	        	
+     	        	work[0]=0.0;
+     	        	total[0]=0.0
+     	        }else{
+     	        	
+     	        	work[0]=temp;
+     	        	total[0]=weeklyData.oneDayHours;
+     	        }
+     	         
+     	        temp=weeklyData.dayAndWork.Tuesday;
+     	        if(temp==undefined){
+     	        	
+     	        	work[1]=0.0;
+     	        	total[1]=0.0
+     	        }else{
+     	        	
+     	        	work[1]=temp;
+     	        	total[1]=weeklyData.oneDayHours;
+     	        }
+     	         
+     	        temp=weeklyData.dayAndWork.Wednesday;
+     	        if(temp==undefined){
+     	        	
+     	        	work[2]=0.0;
+     	        	total[2]=0.0
+     	        }else{
+     	        	
+     	        	work[2]=temp;
+     	        	total[2]=weeklyData.oneDayHours;
+     	        }
+     	      
+     	        temp=weeklyData.dayAndWork.Thursday;
+     	        if(temp==undefined){
+     	        	
+     	        	work[3]=0.0;
+     	        	total[3]=0.0
+     	        }else{
+     	        	
+     	        	work[3]=temp;
+     	        	total[3]=weeklyData.oneDayHours;
+     	        }
+     	      
+     	        temp=weeklyData.dayAndWork.Friday;
+     	        if(temp==undefined){
+     	        	
+     	        	work[4]=0.0;
+     	        	total[4]=0.0
+     	        }else{
+     	        	
+     	        	work[4]=temp;
+     	        	total[4]=weeklyData.oneDayHours;
+     	        }
+     	      
+     	        temp=weeklyData.dayAndWork.Saturday;
+     	        if(temp==undefined){
+     	        	
+     	        	work[5]=0.0;
+     	        	total[5]=0.0
+     	        }else{
+     	        	
+     	        	work[5]=temp;
+     	        	total[5]=weeklyData.oneDayHours;
+     	        }
+     	      
+     	        temp=weeklyData.dayAndWork.Sunday;
+     	        if(temp==undefined){
+     	        	
+     	        	work[6]=0.0;
+     	        	total[6]=0.0
+     	        }else{
+     	        	
+     	        	work[6]=temp;
+     	        	total[6]=weeklyData.oneDayHours;
+     	        }
+     	      
+    	         
+    	         var work1=[],total1=[];
+    	         for(var i=0;i<7;i++){
+  	        		 
+    	        	 if(weeklyData.startDay==days[i]){
+    	                start=i;
+    	        	 }
+    	        	 if(weeklyData.startDay==days[i]){
+    	        		 end=i;
+    	        	 }
+    	         }
+    	         
+    	         for(var j=start; j<7;j++){
+    	        	 displayLabels.push(days[j]);
+    	        	 work1.push(work[j]);
+    	        	 total1.push(total[j]);
+    	         }
+    	         
+    	         for(var k=0; k<end; k++){
+    	        	 displayLabels.push(days[k]);
+    	        	 work1.push(work[k]);
+    	        	 total1.push(total[k]);
+    	         }
+    	   
+    	        lineChartData = {
+				labels : displayLabels,
 				datasets : [
 					{
-						label: "Present",
+						label: "Total Hours",
 						fillColor : "#CCF2FF",
 						strokeColor : "#1ac4ff",
 						pointColor : "#0085b3",
 						pointStrokeColor : "#005f80",
 						pointHighlightFill : "#FFFFFF",
 						pointHighlightStroke : "#000000",
-						data : [70,80,85,65,55,90,0]
+						data : total1
 					},
 					{
-						label: "Absent",
+						label: "Working hours",
 						fillColor : "rgb(255,179,179)",
 						strokeColor:"rgb(230,0,0)",
 						pointColor : "#b30000",
 						pointStrokeColor :"	#804d4d",
 						pointHighlightFill : "#FFFFFF",
 						pointHighlightStroke : "#660033",
-						data : [3,8,8,6,5,9,0]
+						data :work1
 					}
 				]
 
 			}
-
-		
-			var ctx = document.getElementById("canvas").getContext("2d");
-			window.myLine = new Chart(ctx).Line(lineChartData, {
+		     if(window.myLine!=null){
+		    	 window.myLine.destroy();
+		     }
+			var ctx = document.getElementById("lineChart").getContext("2d");
+			myLine = new Chart(ctx).Line(lineChartData, {
 				responsive: true
 			});
-		    
+		   
+			/*myLine.removeData();*/
 			document.getElementById('lineLegend').innerHTML = myLine.generateLegend();
-    		$scope.legend = Line.generateLegend();
-
+   		$scope.legend = Line.generateLegend();
+   		
+       }			
+		}else{
+			
+			$scope.validationMsg = msgAndId.msg;
+		}			
 
 			
 		}

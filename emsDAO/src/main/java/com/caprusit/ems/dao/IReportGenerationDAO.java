@@ -2,6 +2,7 @@ package com.caprusit.ems.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.caprusit.ems.domain.Attendance;
 
@@ -36,5 +37,7 @@ public interface IReportGenerationDAO {
     List<Attendance> getTodayAttendance();
     
     int getNumberOfEmployees();
+    
+    Map<String,Object> getDailyReportIndividual(int employeeId, Date attendanceDate);
 
 }

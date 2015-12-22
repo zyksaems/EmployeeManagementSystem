@@ -1,5 +1,8 @@
 package com.caprusit.ems.service;
 
+import java.text.DateFormatSymbols;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -140,4 +143,79 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return JsonUtility.convertToJson(toDayReportMap);
 		
 	}
+	
+	 public String getDailyReportIndividual(int employeeId, Date attendanceDate) {
+		    logger.info("inside ReportGenerationServiceImpl getDailyReportIndividual()");
+		    
+		    List<Attendance> attendanceDetails= new ArrayList<Attendance>();
+		    
+		    Date lastDate=null;
+		    
+		    Map<String,Object> allMap = reportGenerationDAO.getDailyReportIndividual(employeeId, attendanceDate);
+		    
+		    attendanceDetails=(List<Attendance>) allMap.get("ListOfLine");
+		    
+		    lastDate =(Date) allMap.get("LastDate");
+		    
+		    
+		    logger.info("Attednace List is:"+attendanceDetails);
+		    Double workingHours=0.0,totalAvailableHours=0.0;
+		    
+		    Map<String,Double> dayAndWork=new HashMap<String, Double>();
+		    
+		   // List<Double> workingHourList=new ArrayList<Double>();
+
+		    //List<String> days= new ArrayList<String>();
+		    
+		    int onDayHours=9;
+		    Double totalWorkingHours=0.0;
+		    String dayNames[] = new DateFormatSymbols().getWeekdays();
+		      
+		    Calendar cal = Calendar.getInstance();
+		      
+		    cal.setTime(attendanceDate);
+		    
+		     String startDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
+		     cal.setTime(lastDate);
+		     String lastDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
+		              
+		     List<String> presentDays=new ArrayList<String>();
+		     
+
+		    
+		    for(int i=0; i<attendanceDetails.size();i++){
+		   attendanceDate=attendanceDetails.get(i).getAttendanceDate();
+		     cal.setTime(attendanceDate);
+		     
+		     
+		     workingHours=attendanceDetails.get(i).getWorkingHours();
+		     dayAndWork.put(dayNames[cal.get(Calendar.DAY_OF_WEEK)],workingHours);
+		     presentDays.add(dayNames[cal.get(Calendar.DAY_OF_WEEK)]);
+		     
+		     totalWorkingHours+=workingHours;
+		       
+		     totalAvailableHours+=onDayHours;    
+		      }
+		         
+		     
+		     
+		     
+		   
+		  //  List<Double> graphDetails= new ArrayList<Double>();
+		    Map<String,Object> graphDetails= new HashMap<String, Object>();
+		    graphDetails.put("dayAndWork",dayAndWork);
+		    
+		    graphDetails.put("totalWorkingHours",totalWorkingHours);
+		    graphDetails.put("oneDayHours",onDayHours);
+		    graphDetails.put("totalAvailableHours",totalAvailableHours);
+		    graphDetails.put("startDay",startDay);
+		    graphDetails.put("lastDay",lastDay);
+		        graphDetails.put("presentDays", presentDays);
+		    
+		    
+		    logger.info("Map data is:"+graphDetails);
+		    
+		  
+		    return JsonUtility.convertToJson(graphDetails);
+		   }
 }

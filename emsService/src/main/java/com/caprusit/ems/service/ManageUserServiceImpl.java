@@ -77,7 +77,7 @@ public class ManageUserServiceImpl implements IManageUserService {
 		System.out.println("index of user= " + index);
 		// users.set(index, user);
 
-		manageUserDAO.updateUser(user);
+		((ManageUserServiceImpl) manageUserDAO).updateUser(user);
 	}
 
 	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream,

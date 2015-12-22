@@ -2,7 +2,9 @@ package com.caprusit.ems.dao;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -257,4 +259,31 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		
 		
 	}
+    
+    public Map<String,Object> getDailyReportIndividual(int employeeId, Date attendanceDate) {
+        Map<String,Object> map1= new HashMap<String,Object>();  
+        List<Attendance> result=null;
+          
+          Calendar cal = Calendar.getInstance();
+          cal.setTime(attendanceDate);
+          cal.add(Calendar.DATE, 6); // add 6 days
+
+          Date toDate=cal.getTime();
+          
+          logger.info("Todate is:"+toDate);
+           
+           logger.info("inside ReportGenerationDAOImpl getDailyReportIndividual()");
+           Session session = sessionFactory.openSession();
+
+          Criteria crit = session.createCriteria(Attendance.class);
+          Criterion c1 = Restrictions.eq("employeeId", employeeId);
+          Criterion c2 = Restrictions.between("attendanceDate", attendanceDate, toDate);
+          Criterion c3=Restrictions.and(c1,c2);
+          crit.add(c3);
+          result = crit.list();
+          logger.info("List Size:" + result.size());
+          map1.put("ListOfLine", result);
+          map1.put("LastDate", toDate);
+         return map1;
+        }
 }

@@ -320,4 +320,12 @@ public class ReportGenerationController {
 		return repotrDetails;
 	}
 
+	
+	 @RequestMapping(value = "/getDailyReportGraphOfIndividual", method = RequestMethod.POST)
+	  public @ResponseBody String getDailyReportIndividual(@RequestParam("employeeId") int employeeId,
+	    @RequestParam("attendanceDate") String attendanceDate) {
+	   logger.info("inside ReportGenerationController getDailyReportIndividual()");
+
+	   return JsonUtility.convertToJson(reportGenerationService.getDailyReportIndividual(employeeId, new Date(Long.valueOf(attendanceDate))));
+	  }
 }

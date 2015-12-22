@@ -94,9 +94,9 @@
 
 		<!-- Cipher jar -->
 		<dependency>
-			<groupId>encrypt.decypt.cipher</groupId>
-			<artifactId>cipher</artifactId>
-			<version>1.1.1</version>
+			<groupId>encrypt.decrypt.cipher</groupId>
+            <artifactId>cipher</artifactId>
+            <version>1.1.1</version>
 		</dependency>
 		 
 		
