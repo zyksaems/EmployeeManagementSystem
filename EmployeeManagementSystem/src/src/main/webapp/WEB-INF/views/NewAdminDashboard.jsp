@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+
+
 <html ng-app="ui.ems.app">
  <head>
     <script src="./resources/angular.js"></script>
@@ -23,7 +23,7 @@
     <!--for data tables  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
     <script src="./resources/jquery.dataTables.min.js"></script>
-    <script src="angularJs/angular-resource.min.js"></script>
+    <script src="./resources/angular-resource.js"></script>
     <script src="./resources/angular-datatables.min.js"></script>
     <script src="./resources/angular-datatables.bootstrap.min.js"></script>
     <script src="./resources/bootstrap.min.js"></script> 
@@ -31,10 +31,7 @@
     <link rel="stylesheet" href="./resources/datatables.bootstrap.min.css">
     
    <!--  for charts -->
-    <script src="./resources/Chart.js"></script>
-    
-   
-   
+    <script src="./resources/Chart.js"></script>  
 
   </head>
    
@@ -44,7 +41,7 @@
   
   <!-- Header  Part-->
   <div class="row headerDiv"> 
-  <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
+    <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
       <uib-slide ng-repeat="slide in slides" active="slide.active">
         <img ng-src="{{slide.image}}" style="margin: auto"> <!-- style="margin:auto;" -->
         <div class="carousel-caption">
@@ -74,7 +71,7 @@
             <div class="col-sm-8">
               <form role="form">
                   <div class="form-group">
-                     <!-- <label for="email">Admin ID:</label> -->
+                      <!-- <label for="email">Admin ID:</label> -->
                      <input type="text" maxlength="6" class="form-control" placeholder="Please Enter AdminId" 
                         uib-popover="{{userNamePropoverMsg}}" popover-is-open="enableUsernamePropover" ng-change="AdminIdValidation()" ng-model="Admin.userName">
                   </div>
@@ -108,16 +105,9 @@
              </div>
             <!-- <div class="col-sm-12"><button class="btn btn-sm btn-danger btn-Text" style="float:right;" ng-click="closeModal()">cancel</button></div> -->
          </div>
-              <!-- <div class="row adminLoginValidationMsgDiv">
-                <p class="adminLoginValidationMsg">{{adminLoginValidationMsg}}</p>
-              </div> -->
+             
           </div>
-          <!-- <div class="modal-footer AdminLoginFooter">                      
-                <button class="btn btn-sm btn-danger" ng-click="closeModal()">cancel</button>                                             
-           </div> -->
-        </div>
-        
-
+        </div>       
           <div class="jumbotron"	 ng-show="showforgotPasswordDiv">
 			<form role="form" ng-submit="my.getPassword()" novalidate>
 				<div id="div2">
@@ -225,34 +215,16 @@
         </uib-accordion-group>
         <uib-accordion-group class="panel-heading panelBG" heading="Reports"  >
             <uib-accordion close-others="oneAtATime">
-                <!--  <uib-accordion-group class="panel-heading panelBG" heading="Single Employee" > 
-                  <div><a href="" class="linkColor">Daily </a></div>
-                  <div><a href="" class="linkColor">Weekly</a></div>
-                  <div><a href="" class="linkColor">Monthly</a></div>
-                  <div><a href="" class="linkColor">Yearly</a></div>
-                
-                </uib-accordion-group> -->
-               <!-- <uib-accordion-group class="panel-heading panelBG" heading="All Employee"  is-Open="">
-                  <div><a href="" class="linkColor" >Daily</a></div>
-                  <div><a href="" class="linkColor" >Weekly</a></div>
-                  <div><a href="" class="linkColor" >Monthly</a></div>
-                  <div><a href="" class="linkColor">Yearly</a></div>
-                </uib-accordion-group> -->
-               
-                  
-                  <div><a href="" class="linkColor" ng-click="redirectToGenerateReportPAge()">Generate Report</a></div>
-                
-             </uib-accordion>
+               <div><a href="" class="linkColor" ng-click="redirectToGenerateReportPAge()">Generate Report</a></div>
+            </uib-accordion>
        </uib-accordion-group>
        
         <uib-accordion-group class="panel-heading panelBG " heading="View Attendance" ><!-- is-open="!showInitialAccordion" -->
             <div ><a href="" class="linkColor" ng-click="showPie()">Daily Attendance</a></div>
-            <div ><a href="" class="linkColor" ng-click="">Weekly Attendance</a></div>
         </uib-accordion-group>
         <uib-accordion-group class="panel-heading panelBG " heading="Productivity" ><!-- is-open="!showInitialAccordion" -->
-            <div ><a href="" class="linkColor" ng-click="showLine()">Weekly Productivity</a></div>
+            <div ><a href="" class="linkColor" ng-click="showLineForm()">Weekly Productivity</a></div>
             <div ><a href="" class="linkColor" ng-click="showBar()">Monthly Productivity</a></div>
-            <div ><a href="" class="linkColor">Yearly Productivity</a></div>
         </uib-accordion-group>
                               
                               
@@ -386,10 +358,10 @@
        
         </div>        
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive" id="viewEmployeeDetails">
     <table  class="table row-border table-bordered table-hover">
     <thead>
-    <tr>
+    <tr class="danger">
           <th ng-click="sort('id')" class="info" >Emp Id <span
       class="glyphicon sort-icon" ng-show="sortKey=='id'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
@@ -435,7 +407,7 @@
     </tr>
     </thead>
     <tbody>
-   <tr  ng-repeat="employee in AllEmployees | filter:search	| orderBy:sortKey:reverse"> 
+   <tr  ng-class-even="'success'" ng-class-odd="'active'" ng- ng-repeat="employee in AllEmployees | filter:search	| orderBy:sortKey:reverse"> 
        
          <td> {{ employee.employeeId }}<input type="text" ng-hide="true" ng-model="editEmp[$index].employeeId"></td>
          <td ng-hide="showdecisonArray[$index]">{{ employee.firstName }}</td> <td ng-hide="!showdecisonArray[$index]">
@@ -476,7 +448,7 @@
  
     <div class="col-sm-7">
     
-      <!--  <button class="btn btn-warning btn-sm" ng-click="printViewEmployeeDiv()">Print</button> -->
+       <button class="btn btn-warning btn-sm" ng-click="printViewEmployeeDiv('viewEmployeeDetails')">Print</button>
        
     </div>
  </div>
@@ -559,22 +531,22 @@
 <div class="row">
   <div class="col-sm-9">
      
-     <div  id="canvas-holder" style="margin-top:%">
+     <div  id="pie-holder" style="margin-top:%">
     
            <div class="row pageHeading alert alert-info" style="margin-bottom: 2%">Daily Attendance</div>
 		   <canvas id="pieChart" width="400" height="400" ng-click="clickOnPie($event)" style="margin-left: 25%"></canvas>
 			
     </div>
     
-    <div style="width: 100% ;" id="bar-holder">
+    <div style="width: auto ;" id="bar-holder">
 			<div class="row  pageHeading alert alert-info">Monthly Productivity</div>
 			<canvas id="barChart" height="auto" width="auto" style="margin-left: 5%"></canvas>
 		 	  
     </div> 
-      <div style="width: 100%" ; id="line-holder">
+      <div style="width: auto" ; id="line-holder">
             <div class="row pageHeading alert alert-info" >Weekly Productivity</div>
 			<div>
-				<canvas id="canvas" height="auto" width="auto" style="margin-left: 5%"></canvas>
+				<canvas id="lineChart" height="auto" width="auto" style="margin-left: 5%"></canvas>
 			</div>
 			 
 		</div>
@@ -585,8 +557,69 @@
   <div id="barLegend" class="chart-legend" ></div>
   <div id="lineLegend" class="chart-legend" ></div>
   
+  
+  
+  <!--line chart form  -->
+  <div ng-show="showLineChartForm">
+        <form class="form-vertical" role="form">
+            
+            <div class="form-group">
+                <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
+              <div class="col-sm-12">
+                     <input type="text" class="form-control" id="" ng-model="employeeId">
+              </div>
+            </div>
+            
+            <div class="form-group "  >
+                 <label class=" col-sm-12 control-label" >select Date</label>
+              <div class="col-sm-12">
+                     <input type="date" class="form-control"  ng-model="weeklyDate">
+              </div>
+            </div>
+            
+            
+            <div class="form-group "  >
+              <div class="col-sm-12">
+                     <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showLine()">Show</button>
+              </div>
+            </div>
+            
+       </form>
+     </div>
+  
   </div>  
 </div>
+
+<!--inline form for line chart  -->
+<div class="col-sm-4"></div>
+<div ng-show="showLineChartInlineForm" class="col-sm-4">
+
+<form class="form-vertical" role="form">
+            
+            <div class="form-group">
+                <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
+              <div class="col-sm-12">
+                     <input type="text" class="form-control" id="" ng-model="employeeId">
+              </div>
+            </div>
+            
+            <div class="form-group "  >
+                 <label class=" col-sm-12 control-label" >select Date</label>
+              <div class="col-sm-12">
+                     <input type="date" class="form-control"  ng-model="weeklyDate">
+              </div>
+            </div>
+            
+            
+            <div class="form-group "  >
+              <div class="col-sm-12">
+                     <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showLine()">Show</button>
+              </div>
+            </div>
+     
+</div>
+<div class="col-sm-4"></div>
+
 
 </div>
  
@@ -673,7 +706,6 @@
   
 
 </div>
-
  </div>
   </div>  <!--  END of Admin DashBoard Division -->
   
@@ -696,3 +728,4 @@
 
   </body>
 </html>
+
