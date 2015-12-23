@@ -1,5 +1,7 @@
 package com.caprusit.ems.utility;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +51,9 @@ public class ExcelView extends AbstractExcelView {
 			row.createCell(1).setCellValue(e.getFirstName());
 			row.createCell(2).setCellValue(e.getLastName());
 			logger.info(e.getDob()+" DOB");
-			row.createCell(3).setCellValue(""+e.getDob());
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			String requiredDate = dateFormat.format(e.getDob());		    
+			row.createCell(3).setCellValue(requiredDate);
 			row.createCell(4).setCellValue(""+e.getMobileNo());
 			row.createCell(5).setCellValue(e.getEmailId());
 			row.createCell(6).setCellValue(e.getDesignation());
