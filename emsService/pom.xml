@@ -32,7 +32,7 @@
 		<!-- EMS dao jar file -->
 		<dependency>
 			<groupId>com.caprus</groupId>
-			<artifactId>emsDAO</artifactId>
+			<artifactId>EMSDAO</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

@@ -23,7 +23,7 @@
 
 		<dependency>
 			<groupId>com.caprus</groupId>
-			<artifactId>emsService</artifactId>
+			<artifactId>EMSService</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
