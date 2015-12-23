@@ -11,13 +11,21 @@ table, td, th {
  
     border: 1px solid green;
 }
-input{
+#searchid{
 width:205px; 
 height:24px;
 font-size: 15px;
 border-radius: 0px;
 
-}
+} 
+
+#dateid{
+width:160px; 
+height:24px;
+font-size: 15px;
+border-radius: 0px;
+
+} 
 select{
 	height:24px;
 }
@@ -31,7 +39,7 @@ th {
     color: white;
 }
 body{
- padding: 5px 40px 0px 40px;
+ padding: 0px 0px 0px 0px;
    font-family:  Georgia, serif;
   background-color:#f0f8ff;
 }
@@ -45,7 +53,7 @@ width: auto;
 #searchcriteria{
 	width: auto;
     height: 25px;
-    padding: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 0px;
      background-color:#6495ed;
      color:white;
 }
@@ -70,20 +78,20 @@ width: auto;
 #ul1{
     list-style-type: none;	
 }
-#main{
+#main1{
 	width: auto;
     height: auto;
-    padding-top:20px;
+    padding-top:10px;
     padding-bottom:5px;
-    padding-left:20px;
-    padding-right:20px;
+    padding-left:10px;
+    padding-right:10px;
      background-color:WhiteSmoke;
      
 }
 #fixed {
     position: fixed;
-    right: 25px;
-    top:85px;
+    right: 20px;
+    top:103px;
     width: 135px;
     height:30px;
     border: 3px solid #bebebe;
@@ -97,5 +105,78 @@ width: auto;
 }
 #printbtn{
 	text-align: center;
+}
+
+#jumbotron1 {
+	background: #f0f8ff no-repeat center center;
+	width: 100%;
+	height: auto;
+	border-radius: 10px;
+	position: absolute;
+}
+#jumbotron2 {
+	padding-top: 20px;
+	padding-left: 10px;
+	padding-right: 40px;
+	align-items: center;
+	background: #f0f8ff no-repeat center center;
+	width: auto;
+	height: auto;
+	border-radius: 10px;
+	padding-bottom: 20px;
+	position: absolute;
+	left: 20%;
+	bottom: auto;
+	right: 30%;
+	border: 3px solid black;
+}
+#forgotDiv1 {
+	width: 130px;
+	hight: 170px;
+	float: left;
+	 position:relative;
+}
+#forgotDiv2 {
+	width: 400px;
+	hight: auto;
+	float:left;
+	 position:relative;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+#btn1 {
+	float: right;
+}
+.linkColor{
+	
+	color: #800000;
+}
+.panelBG{
+	
+	background-color:#e2e2d4;/* #e5ffff */
+	font-size: medium;
+	
+}
+.panel-default >.panel-heading {
+    background-color:  #754714;/* #ccfff5 */
+    text-align: center;
+    color: white;
+}
+
+.headerDiv{
+	
+	background-color: black;
+	border-radius: 0px 0px 50px 50px;
+	
+}
+
+.mainDiv{
+
+   background-color: #080808;
+   width: 100%;
+   height: 100%;
+   
 }
 </style>

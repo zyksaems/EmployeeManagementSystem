@@ -30,9 +30,31 @@
     <script src="./resources/alert.js"></script>
     <link rel="stylesheet" href="./resources/datatables.bootstrap.min.css">
     
+    <!-- < for generate report page> -->
+    <script data-require="angular.js@1.3.9" data-semver="1.3.9" src="https://code.angularjs.org/1.3.9/angular.js"></script>
+         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
+         <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+         <!--  <script src="example.js"></script> -->
+         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+         <!-- <script src="angularJs/angular.js"></script>	 -->
+         <link rel="stylesheet" type="text/css" href="css/GenerateReport.css">
+         <!--  <script src="js/GenerateReport.js"></script>
+    
    <!--  for charts -->
     <script src="./resources/Chart.js"></script>  
+    <%
+	  Integer id = (Integer) request.getSession().getAttribute("employeeId");
+     %>  
 
+     <%
+	String name = (String) request.getSession().getAttribute("EmployeeName");
+     %>
+
+     <%
+	String designation = (String) request.getSession().getAttribute("designation");
+     %> 
   </head>
    
   <body>
@@ -71,8 +93,8 @@
             <div class="col-sm-8">
               <form role="form">
                   <div class="form-group">
-                      <!-- <label for="email">Admin ID:</label> -->
-                     <input type="text" maxlength="6" class="form-control" placeholder="Please Enter AdminId" 
+                     <!-- <label for="email">Admin ID:</label> -->
+                     <input type="text" maxlength="15" class="form-control" placeholder="Please Enter AdminId" 
                         uib-popover="{{userNamePropoverMsg}}" popover-is-open="enableUsernamePropover" ng-change="AdminIdValidation()" ng-model="Admin.userName">
                   </div>
                   <div class="form-group">
@@ -105,21 +127,41 @@
              </div>
             <!-- <div class="col-sm-12"><button class="btn btn-sm btn-danger btn-Text" style="float:right;" ng-click="closeModal()">cancel</button></div> -->
          </div>
-             
+              <!-- <div class="row adminLoginValidationMsgDiv">
+                <p class="adminLoginValidationMsg">{{adminLoginValidationMsg}}</p>
+              </div> -->
           </div>
-        </div>       
-          <div class="jumbotron"	 ng-show="showforgotPasswordDiv">
-			<form role="form" ng-submit="my.getPassword()" novalidate>
-				<div id="div2">
+          <!-- <div class="modal-footer AdminLoginFooter">                      
+                <button class="btn btn-sm btn-danger" ng-click="closeModal()">cancel</button>                                             
+           </div> -->
+        </div>
+        
+
+          <div class="jumbotron" id="jumbotron1"	 ng-show="showforgotPasswordDiv">
+                         <p align="center"><font color="green">{{successmsg}}</font></p>
+			<form role="form" ng-submit="getForgotPassword()">
+				<div id="forgotDiv1" ng-hide="hide1">
 					<img
 						src="http://s30.postimg.org/5mqz3osvl/Forgot_Password_icon.png"
 						width="90" height="120">
 				</div>
-				<div class="form-group" ng-class="{'has-error' : !email}">
-					<h2>Forgot your password?</h2>
-					<b>please enter your email and we'll send reset password page
-						link to your email.you can reset your password.</b><br /><br />
-					<div class="col-xs-8">
+                
+				<div class="form-group" >
+                           <div id="forgotDiv2" ng-hide="hide1">
+					<h2>Forgot your password?</h2><br />
+                      <p><font color="red">{{failedmsg}}</font></p>
+               <div class="row" ng-class="{'has-error' : !adminid}">
+                    <div class="col-xs-9">
+					<label class='control-label'>ENTER ID</label>
+                     <input type="number" ng-model="adminid" class="form-control" 
+                            placeholder="enter id" uib-tooltip="please enter valid 6 digits id" 
+                         tooltip-placement="bottom" tooltip-trigger="mouseenter" size="6"
+						tooltip-enable="!adminid" minlength="6" maxlength="6" 
+                        required><br />
+                     </div>
+                </div>
+                   <div class="row" ng-class="{'has-error' : !email}">
+					<div class="col-xs-9">
 					<label class='control-label'>ENTER EMAIL ADDRESS</label>
 					<input type="email" ng-model="email" class="form-control"
 						placeholder="enter your email address"
@@ -128,10 +170,12 @@
 						tooltip-enable="!email"
 						ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
 						required /></div><br />
+                       </div>
 					<br /><br />
-					<button type="submit" class="btn btn-primary" ng-disabled="!email" ng-click=""submitDetails()>submit</button>
-					<br /> <a href="#">back to login</a>
-				</div>
+					<button id="btn1" type="submit" class="btn btn-primary" ng-disabled="!email || !adminid" >submit</button>
+</div>					
+ <br /><a href=""  ng-click="adminForgotPassword()">back to login</a>		
+          </div>
 			</form>
 		</div>
          
@@ -489,41 +533,226 @@
    
    <div class="row" id="changePasswordMainDiv" ng-show="showAdminChangePasswordDiv"> <!-- ng-show="showChangePasswodDiv" -->
 	 
-	     <div class="col-sm-3"> </div>
-=	    
-	     <div class="col-sm-3  changePasswordMainDiv" >
-	         <div class="row" id="changePassImgDiv">
-		      	<img src="http://s11.postimg.org/89jw5zva7/editicon.png" width="90" height="120">		        
-			     <p class="changePassText">Change your password</p>
-	         </div>
-	         
-	         <form  role="form">
-               <div class="form-group">
-                    <label for="email">Current Password:</label>
-                    <input type="password" class="form-control"  ng-model="cpwd">
-                </div>
-                <div class="form-group">
-                    <label for="pwd">New Password:</label>
-                    <input type="password" class="form-control" ng-model="npwd">
-                </div>
-                <div class="form-group">
-                  <label for="pwd">Confirm Password:</label>
-                  <input type="password" class="form-control" ng-model="rpwd" >
-               </div>
-                <button type="submit" class="btn btn-primary"  ng-click="changeAdminPassword()">save Password</button>
-             </form>
-		     <div class="row"><p class="changePasswordSuccessMsg"> {{changePasswordSuccessMsg}}</p></div>
-		    
-		  
-		  </div>
-		  <div class="col-sm-6"> </div>
-		      	
-	    
+	     <div class="jumbotron" id="jumbotron2"  ng-hide="hide">
+     <p><font color="red">{{msg1}}</font></p>
+		<div class='row'>
+			<div class="col-xs-6 col-md-4">
+				<img src="http://s11.postimg.org/89jw5zva7/editicon.png" width="80"
+					height="120">
+			</div>
+			<div class="col-xs-12 col-md-8">
+				<form role="form" novalidate>
+					<div class='row'>
+						<div class='col-sm-12'>
+							<div class="form-group"
+								ng-class="{'has-error' : !currentpassword}">
+								<label class='control-label'>Current password</label> <input
+									class='form-control' type='password' ng-model="currentpassword"
+									type="password"
+									uib-tooltip="check caps lock before enter password"
+									tooltip-trigger="focus" class="form-control"
+									tooltip-enable="!currentpassword" tooltip-placement="top"
+									minlength="4" maxlength="20" >
+							</div>
+						</div>
+					</div>
+					<div class='row'>
+						<div class='col-sm-12'>
+							<div class="form-group" ng-class="{'has-error' : !pwd}">
+								<label class='control-label'>New password</label>
+								<!-- <input autocomplete='off' class='form-control' size='20' type='text'> -->
+								<input ng-model="password" type="password"
+									ng-change="getConfirm()"
+									uib-tooltip="Your password should contain at least one digit, one capital and special symbol[ @ # $ %], should have the length from 8 to 20 symbols"
+									tooltip-trigger="focus" class="form-control"
+									tooltip-enable="!pwd" tooltip-placement="top"
+									ng-pattern="/^(?=.{8,20}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.*[@#$%])/"
+									minlength="8" maxlength="20" >
+							</div>
+						</div>
+					</div>
+					<div class='row'>
+						<div class='col-sm-12'>
+							<div class="form-group" ng-class="{'has-error' : !repwd}">
+								<label class='control-label'>Confirm password</label> <input
+									class='form-control' ng-model="repassword" type='password'
+									ng-change="getConfirm1()"
+									uib-tooltip="New password and confirm password must be same"
+									tooltip-trigger="focus" class="form-control"
+									tooltip-enable="!repwd" tooltip-placement="top" minlength="8"
+									>
+							</div>
+						</div>
+					</div>
+					<div class='row'>
+						<div class='col-md-12'>
+							<button class='btn btn-primary'
+								ng-click="getChangePassword()"
+								ng-disabled="!pwd ||!currentpassword || !repwd">Save</button>
+							<button class='btn btn-primary' ng-click="getClear()">reset</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
  
 	 </div><!-- Change password division close-->
 	 
 	  <!-- END ------ Division for changing adminstrator password ------ END  -->
-	
+	  
+	<!-- < Division for generate report page  > -->
+	  <div id="showGenerateReport" ng-show="showGenerateReportDiv" >
+	 
+	 <div id="d1">
+		<h2 >Caprus IT Staff Attendance Report</h2>
+	</div>
+	<div id="searchcriteria">
+		<h4>
+			<b>Search criteria</b>
+		</h4>
+	</div>
+	<br>
+	<label class='control-label'>Select type :</label>
+	<select ng-model="sel" ng-change="getDis()" >
+		<option title="" value="">--Select--</option>
+		<option value="single">Single</option>
+		<option value="all">All</option>
+	</select>&nbsp;&nbsp;
+	<input id="searchid" type="text" ng-model="id"
+		uib-typeahead="state for state in employeeids |filter:id"
+		placeholder="search employee by id/name" ng-disabled="f1"
+		ng-keyup="getCheck()">&nbsp;&nbsp;
+	<label class='control-label'>Select Report type :</label>
+	<select ng-model="sel1" ng-change="getStatu()">
+		<option title="" value="">--Select Report Type--</option>
+		<option value="none">Total Records</option>
+		<option value="day">Day</option>
+		<!-- <option value="week">Week</option>
+		<option value="month">Month</option>
+		<option value="annual">Annual</option> -->
+		<option value="dates">Select From and To Date</option>
+	</select>&nbsp;
+	<p ng-hide="hide11">From Date</p>
+	<input id="dateid" type="date" ng-model="from" ng-hide="hide11">&nbsp;
+	<p ng-hide="hide12">To Date</p>
+	<input id="dateid" type="date" ng-model="to" ng-hide="hide12">
+	<button class='btn btn-primary' ng-click="getAttendance()">submit</button>
+	<div  id="fixed" class="btn-group"  uib-dropdown uib-keyboard-nav>
+	<p  id="simple-btn-keyboard-nav" uib-dropdown-toggle><b>Productivity Info</b></p>
+	<p id="production"  class="uib-dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+	user : Admin,EMS<br />
+	Total Company Worked Hours: {{totalhours}} hr<br />
+	Worked Hours : {{selectedhours}} hr  
+	</p>
+	</div>
+	<div id="searchcriteria">
+		<h4>
+			<b>Search Results</b>
+		</h4>
+	</div>
+	<div id="main1">
+		<p ng-hide="hide4" align="center"><font size='4' color={{color1}}>No Matches Found</font></p>
+		<div id="pdiv">
+			<div ng-hide="res">
+				<font color="red">{{result}}</font>
+			</div>
+			<div ng-hide="hide1" id="nameofemp">
+				<ul>
+					<li>Employee Id</li>
+					<li>Employee Name</li>
+					<li>Employee Designation</li>
+				</ul>
+			</div>
+			<div ng-hide="hide1" id="nameofemp1">
+				<ul id="ul1">
+					<li>:&nbsp;&nbsp;<i><%=id %></i></li>
+					<li>:&nbsp;&nbsp;<i><%=name %></i></li>
+					<li>:&nbsp;&nbsp;<i><%=designation %></i></li>
+				</ul>
+			</div>
+			<div id="resultperpage">
+				<label ng-hide="newhide1">Results Per Page:</label><select ng-model="viewby"
+					ng-change="setItemsPerPage(viewby)" ng-hide="newhide1">
+					<option title="">5</option>
+					<option>10</option>
+					<option>20</option>
+					<option>30</option>
+					<option>40</option>
+					<option>50</option>
+				</select>
+			</div>
+			<div ng-hide="hide2">
+				<table class="table table-striped table-condensed table-hover"
+					border='2'>
+					<thead>
+						<tr>
+
+							<th>Date</th>
+							<th>StartTime</th>
+							<th>EndTime</th>
+							<th>WorkingHours</th>
+							<th>DayIndicator</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr
+							ng-repeat="at in ats.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+							<td>{{at.attendanceDate | date:'dd-MM-yyyy'}}</td>
+							<td>{{at.startTime | date:'h:mm a'}}</td>
+							<td>{{at.endTime | date :'h:mm a'}}</td>
+							<td>{{at.workingHours}}</td>
+							<td>{{at.dayIndicator}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div ng-hide="hide3">
+				<table class="table table-striped table-condensed table-hover"
+					border='2'>
+					<thead>
+						<tr>
+							<th>EmpId</th>
+							<th>Date</th>
+							<th>StartTime</th>
+							<th>EndTime</th>
+							<th>WorkHours</th>
+							<th>DayIndicator</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr
+							ng-repeat="at1 in ats1.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))"">
+							<td>{{at1.employeeId}}</td>
+							<td>{{at1.attendanceDate | date:'dd-MM-yyyy'}}</td>
+							<td>{{at1.startTime  | date:'h:mm a'}}</td>
+							<td>{{at1.endTime | date:'h:mm a'}}</td>
+							<td>{{at1.workingHours}}</td>
+							<td>{{at1.dayIndicator}}</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+
+			<p align="right" ng-hide="newhide1">Page: {{currentPage}} /
+				{{numPages}}</p>
+		</div>
+			<div ng-hide="newhide1" align="center">
+			<pagination total-items="totalItems" ng-model="currentPage"
+				max-size="maxSize" class="pagination-sm" boundary-links="true"
+				rotate="false" num-pages="numPages" items-per-page="itemsPerPage"></pagination>
+		   </div>
+	</div>
+	<div id="printbtn">
+		<br>
+		<button class='btn btn-primary' ng-click="printDiv('pdiv');">print</button>
+	</div>
+	 
+	 </div> <!-- end of generate reports -->
 	
 <!--Div for pie charts  -->
 

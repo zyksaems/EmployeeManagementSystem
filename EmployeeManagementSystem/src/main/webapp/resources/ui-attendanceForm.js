@@ -18,6 +18,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		$scope.showAdminChangePasswordDiv=false;
 		$scope.showTableDetails=false;
 		$scope.showCharts=true;
+		$scope.showGenerateReportDiv=false;
 		/*$scope.showAddNewAdminDiv=false;*/
 		
 		
@@ -29,6 +30,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			$scope.showAdminChangePasswordDiv=(divName=="showAdminChangePasswordDiv") ? true:false;
 			$scope.showTableDetails=(divName=="showTableDetails") ? true:false;
 			$scope.showViewOrUpdateEmployeeDiv=(divName == "showViewOrUpdateEmployeeDiv") ? true:false;
+			$scope.showGenerateReportDiv=(divName == "showGenerateReportDiv") ? true:false;
 			
 			if(divName =="showCharts"){
 				$("#showChart").show();
@@ -42,6 +44,101 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		
 	  /*END -----  function for showing and hiding divisions    --- END	*/
 		
+		
+		/*  start of change password function */
+		
+		$scope.getConfirm=function()
+	       {
+			if($scope.password.length==0)
+				{
+				 $scope.pwd=false;
+				}
+			else if($scope.currentpassword==$scope.password)
+	       		 {
+	       		  $scope.pwd=false;
+	       		 }
+	       	 else{
+	       		 $scope.pwd=true;
+	       	 }
+	       };
+	       
+	       $scope.getConfirm1=function()
+	       {
+	    	   if($scope.repassword.length==0)
+			{
+				 $scope.repwd=false;
+				}
+	    	   
+	    	   else if($scope.password==$scope.repassword)
+	       		  {
+	       		  $scope.repwd=true;
+	       		  }
+	       	  else{
+	       		  $scope.repwd=false;
+	       	  }
+	       };
+	       
+	       $scope.getClear=function(){
+	    	   
+	    	   $scope.currentpassword=undefined;
+	    	   $scope.password='';
+	    	   $scope.repassword='';
+	    	   $scope.pwd=undefined;
+	    	   $scope.repwd=undefined;
+	       };
+	
+	       $scope.getChangePassword= function(){
+	   							$http({
+	   							method : 'POST',
+	   							url :'changePassword.do?cpwd='+$scope.currentpassword+'&&npwd='+$scope.password
+	   	            
+	   	            
+	   					}).success(function(data, status, headers, config) {
+	   	                    if(data==1)
+	   	                    	{
+	   	                    	
+	   							alert("password has been successfully changed.please login newly");
+	   							$scope.showAdminDashBoard=false;
+	   						  $scope.showAdminLoginButton=false;
+	   						  var modalInstance = $uibModal.open({
+	   						        animation: true,
+	   						        templateUrl: 'AdminLogin.html',
+	   						        controller: 'AdminLoginController',
+	   						        size: 'md',
+	   						        resolve: {
+	   						         //admin:function(){ return $scope.Admin}
+	   						        }
+	   						      });
+	   						 modalInstance.result.then(function (result) {
+	   						     
+	   					        $scope.showAdminDashBoard = result;
+	   					    	$scope.showTable=true;
+	   					    	$scope.showInitialAccordion=true;
+	   					        $scope.showCharts=true;
+	   					        $("#canvas-holder").hide();
+	   							$("#pieLegend").hide();
+	   							
+	   							$("#bar-holder").hide();
+	   							$("#barLegend").hide();
+	   							
+	   							$("#line-holder").hide();
+	   							$("#lineLegend").hide();
+	   					      }, function () {
+	   					    	  $scope.showAdminLoginButton=true;
+	   					        $log.info('Modal dismissed at: ' + new Date());
+	   					      });
+	   	                    	}else
+	   	                    		{
+	   	                    		$scope.msg1="current password and old password must same.";
+	   	                    		}
+	   	     }).error(function(data, status, headers, config) {
+	   	    	   $scope.msg1="Some internal problem occured try again.";
+	   	    	   
+	   	     });
+	   							showOrHideRemainingDivisions("");
+	       }
+
+	       /* end of change password function */
 		
 		  /*for accordion*/
 		  $scope.oneAtATime = true;
@@ -1226,10 +1323,19 @@ $scope.showLineForm=function(){
 		
 	/*	function for redirect to report generation page*/
 		$scope.redirectToGenerateReportPAge=function(){
-			
+			/*$scope.showAddEmployeeMainDiv=false;	
+			$scope.showExcelDiv = false;
+			$scope.showManuallyEnterDiv=false;
+			$scope.showChangePasswodDivValue=false;
+			$scope.showTableDetails=false;	
+			$scope.showCharts=false;
+			$scope.showAdminChangePasswordDiv=false;
 			console.log("redirecting to generate ");
+			$scope.showGenerateReportDiv = !$scope.showGenerateReportDiv;
+			$scope.showGenerateReportDiv*/
+			showOrHideRemainingDivisions("showGenerateReportDiv");
 			
-			$window.location.href="/EmployeeManagementSystem/generateReportHome.do";
+			/*$window.location.href="/EmployeeManagementSystem/generateReportHome.do";*/
 		}
 		
 		
@@ -1568,13 +1674,17 @@ $scope.showLineForm=function(){
 		/*function for admin change password*/
 		$scope.adminChangePasswordDivEnable=function(){
 			
-			/*$scope.showAdminChangePasswordDiv=!$scope.showAdminChangePasswordDiv;
-			$scope.showCharts=false;*/
-			
+			$scope.showAdminChangePasswordDiv=!$scope.showAdminChangePasswordDiv;
+			$scope.showCharts=false;
+			   $scope.currentpassword=undefined;
+			   $scope.password=undefined;
+			   $scope.repassword=undefined;
+			   $scope.pwd=false;
+	    	   $scope.repwd=false;
 			showOrHideRemainingDivisions("showAdminChangePasswordDiv");
 		}
 		
-		$scope.changeAdminPassword=function(){
+		/* $scope.changeAdminPassword=function(){
 			
 			if($scope.cpwd!=null  && $scope.npwd!=null && $scope.rpwd!=null)
 			{
@@ -1639,11 +1749,693 @@ $scope.showLineForm=function(){
 			$scope.changePasswordSuccessMsg="fields should not be empty";
 		}
 		}
-		
+		*/
 		
 	  /* END -----  function for admin change password    --- END */
 		
-	 
+		//generate report js code
+		$scope.totalItems = 0;
+		$scope.viewby = 5;
+		$scope.currentPage = 1;
+		$scope.itemsPerPage = $scope.viewby;
+		$scope.maxSize = 5;
+		
+		var total = 0;
+		var selected = 0;
+		$scope.employeeids = [];
+		$scope.hide1 = true;
+		$scope.hide2 = true;
+		$scope.hide3 = true;
+		$scope.hide11 = true;
+		$scope.hide12 = true;
+		$scope.newhide1 = true;
+		$scope.getCheck = function() {
+			if ($scope.id.length == 0) {
+				$scope.employeeids = [];
+			}
+			if ($scope.id.length == 1
+					&& $scope.employeeids.length == 0) {
+				$http({
+		             method : 'POST',
+		             url : 'getAutoCompleteInfo.do?employeeId='+$scope.id
+		                  
+		     }).success(function(data, status, headers, config) {
+		    	 angular.forEach(data, function(value, key){
+		    		  $scope.employeeids.push(value+"");
+		    		 
+		    	 });
+	  }).error(function(data, status, headers, config) {
+	 	 $scope.result ="error occured due to internal proble please try again id auto" ;
+	 	 });
+			}
+		};
+
+		$scope.getDis = function() {
+			if ($scope.sel == "all") {
+
+				$scope.f1 = true;
+			} else {
+				$scope.f1 = false;
+			}
+		};
+
+		/* selecting report type */
+
+		$scope.getStatu = function() {
+			if ($scope.sel1 == "none") {
+				$scope.hide12 = true;
+				$scope.hide11 = true;
+
+			} else if ($scope.sel1 == "day") {
+				$scope.hide12 = true;
+				$scope.hide11 = false;
+			} else if ($scope.sel1 == "dates") {
+				$scope.hide11 = false;
+				$scope.hide12 = false;
+
+			}
+		};
+
+		$scope.setItemsPerPage = function(num) {
+			$scope.itemsPerPage = num;
+			$scope.currentPage = 1; // reset to first paghe
+		};
+
+		$scope.getAttendance = function() {
+			/*
+			 * select "Single" employee records based on
+			 * conditions
+			 */
+			if ($scope.sel == "single") {
+
+				if ($scope.id != null) {
+
+					/* if we search employee by id */
+					if ($scope.id.match(/^[0-9]*$/)) {
+
+						/*
+						 * when you select "Total Records"
+						 * it will select all records of
+						 * single employee (search type is
+						 * id)
+						 */
+						if ($scope.sel1 == "none") {
+							total=0;
+				            selected=0;
+				            
+						 $http({
+				             method : 'POST',
+				             url : 'getReportById.do?employeeId='+$scope.id
+				          
+				            
+				     }).success(function(data, status, headers, config) {
+												if (data.length != 0) {
+													$scope.hide1 = false;
+													$scope.hide2 = false;
+													$scope.newhide1 = false;
+													$scope.hide4 = true;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.totalItems = data.length;
+													for (var i = 0; i < data.length; i++) {
+
+														var milliseconds = data[i].attendanceDate;
+														var milliseconds1 = data[i].startTime;
+														var milliseconds2 = data[i].endTime;
+														var date = new Date(
+																milliseconds);
+														var date1 = new Date(
+																milliseconds1);
+														var date2 = new Date(
+																milliseconds2);
+														data[i].attendanceDate = date;
+														data[i].startTime = date1;
+														data[i].endTime = date2;
+														total = total + 9;
+														selected = selected
+																+ data[i].workingHours;
+													}
+													$scope.totalhours = total;
+													$scope.selectedhours = selected;
+													$scope.ats = data;
+												} else {
+													$scope.color1 = "red";
+													$scope.hide1 = true;
+													$scope.hide2 = true;
+													$scope.hide4 = false;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.newhide1 = true;
+												}
+
+											
+							 }).error(function(data, status, headers, config) {
+												$scope.hide1 = true;
+												$scope.hide2 = true;
+												$scope.hide3 = true;
+												$scope.res = false;
+												$scope.newhide1 = true;
+												$scope.result = "error occured due to some internal problem please try again none.";
+											});
+						}/* Total Records */
+
+						/*
+						 * when you select "Day" it will
+						 * select that particular day
+						 * records of specified employee
+						 * (search type is id)
+						 */
+						else if ($scope.sel1 == "day") {
+							total=0;
+				            selected=0;
+				            $http({
+						           method : 'POST',
+						             url :'getReportByIdAndDate.do?employeeId=' + $scope.id+ '&attendanceDate=' +$scope.from.getTime()
+				            }).success(function(data, status, headers, config) {
+												if (data.length != 0) {
+													$scope.hide1 = false;
+													$scope.hide2 = false;
+													$scope.newhide1 = false;
+													$scope.hide4 = true;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.totalItems = data.length;
+													for (var i = 0; i < data.length; i++) {
+
+														var milliseconds = data[i].attendanceDate;
+														var milliseconds1 = data[i].startTime;
+														var milliseconds2 = data[i].endTime;
+														var date = new Date(
+																milliseconds);
+														var date1 = new Date(
+																milliseconds1);
+														var date2 = new Date(
+																milliseconds2);
+														data[i].attendanceDate = date;
+														data[i].startTime = date1;
+														data[i].endTime = date2;
+														total = total + 9;
+														selected = selected
+																+ data[i].workingHours;
+
+													}
+													$scope.totalhours = total;
+													$scope.selectedhours = selected;
+													$scope.ats = data;
+												} else {
+													$scope.color1 = "red";
+													$scope.hide1 = true;
+													$scope.hide2 = true;
+													$scope.hide4 = false;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.newhide1 = true;
+												}
+				            }).error(function(data, status, headers, config) {
+												$scope.hide1 = true;
+												$scope.hide2 = true;
+												$scope.hide3 = true;
+												$scope.res = false;
+												$scope.newhide1 = true;
+												$scope.hide4 = true;
+												$scope.result = "error occured due to some internal problem please try again day.";
+											});
+
+						}/* end of day */
+
+						/*
+						 * when you select "From and To
+						 * date" it will select that
+						 * particular day records of
+						 * specified employee (search type
+						 * is id)
+						 */
+						else if ($scope.sel1 == "dates") {
+							total=0;
+				            selected=0;
+				            $http({
+					             method : 'POST',
+					             url : 'getReportByIdFromDateToDate.do?employeeId='+$scope.id+'&fromDate='+$scope.from.getTime()+'&toDate='+$scope.to.getTime()
+				            }).success(function(data, status, headers, config) {
+												if (data.length != 0) {
+													$scope.hide1 = false;
+													$scope.hide2 = false;
+													$scope.newhide1 = false;
+													$scope.hide4 = true;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.totalItems = data.length;
+													for (var i = 0; i < data.length; i++) {
+
+														var milliseconds = data[i].attendanceDate;
+														var milliseconds1 = data[i].startTime;
+														var milliseconds2 = data[i].endTime;
+														var date = new Date(
+																milliseconds);
+														var date1 = new Date(
+																milliseconds1);
+														var date2 = new Date(
+																milliseconds2);
+														data[i].attendanceDate = date;
+														data[i].startTime = date1;
+														data[i].endTime = date2;
+														total = total + 9;
+														selected = selected
+																+ data[i].workingHours;
+
+													}
+													$scope.totalhours = total;
+													$scope.selectedhours = selected;
+													$scope.ats = data;
+												} else {
+													$scope.color1 = "red";
+													$scope.hide1 = true;
+													$scope.hide2 = true;
+													$scope.hide4 = false;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.newhide1 = true;
+												}
+				            }).error(function(data, status, headers, config) {
+												$scope.hide1 = true;
+												$scope.hide2 = true;
+												$scope.hide3 = true;
+												$scope.res = false;
+												$scope.newhide1 = true;
+												$scope.hide4 = true;
+												$scope.result = "error occured due to some internal problem please try again dates.";
+											});
+
+						}/* end of from date and to date */
+
+					}/* end of Id */
+
+					/* if select employee by name */
+					else {
+
+						/*
+						 * when you select Total Records it
+						 * will select all records of single
+						 * employee (search type is name)
+						 */
+						if ($scope.sel1 == "none") {
+							total=0;
+				            selected=0;
+				            $http({
+					             method : 'POST',
+					             url : 'getReportByName.do?employeeId='+$scope.id
+				            }).success(function(data, status, headers, config) {
+												if (data.length != 0) {
+													$scope.hide1 = false;
+													$scope.hide2 = false;
+													$scope.newhide1 = false;
+													$scope.hide4 = true;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.totalItems = data.length;
+													for (var i = 0; i < data.length; i++) {
+
+														var milliseconds = data[i].attendanceDate;
+														var milliseconds1 = data[i].startTime;
+														var milliseconds2 = data[i].endTime;
+														var date = new Date(
+																milliseconds);
+														var date1 = new Date(
+																milliseconds1);
+														var date2 = new Date(
+																milliseconds2);
+														data[i].attendanceDate = date;
+														data[i].startTime = date1;
+														data[i].endTime = date2;
+														total = total + 9;
+														selected = selected
+																+ data[i].workingHours;
+
+													}
+													$scope.totalhours = total;
+													$scope.selectedhours = selected;
+													$scope.ats = data;
+												} else {
+													$scope.color1 = "red";
+													$scope.hide1 = true;
+													$scope.hide2 = true;
+													$scope.hide4 = false;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.newhide1 = true;
+												}
+
+				            }).error(function(data, status, headers, config) {
+												$scope.hide1 = true;
+												$scope.hide2 = true;
+												$scope.hide3 = true;
+												$scope.res = false;
+												$scope.newhide1 = true;
+												$scope.hide4 = true;
+												$scope.result = "error occured due to some internal problem please try again none.";
+											});
+						}/* none */
+
+						/*
+						 * when you select Day it will
+						 * select that particular day
+						 * records of specified employee
+						 * (search type is name)
+						 */
+						else if ($scope.sel1 == "day") {
+							total=0;
+				            selected=0;
+				            $http({
+					             method : 'POST',
+					             url : 'getReportByNameDay.do?employeeId=' + $scope.id+ '&attendanceDate=' + $scope.from.getTime()
+				            }).success(function(data, status, headers, config) {
+												if (data.length != 0) {
+													$scope.hide1 = false;
+													$scope.hide2 = false;
+													$scope.newhide1 = false;
+													$scope.hide4 = true;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.totalItems = data.length;
+													for (var i = 0; i < data.length; i++) {
+
+														var milliseconds = data[i].attendanceDate;
+														var milliseconds1 = data[i].startTime;
+														var milliseconds2 = data[i].endTime;
+														var date = new Date(
+																milliseconds);
+														var date1 = new Date(
+																milliseconds1);
+														var date2 = new Date(
+																milliseconds2);
+														data[i].attendanceDate = date;
+														data[i].startTime = date1;
+														data[i].endTime = date2;
+														total = total + 9;
+														selected = selected
+																+ data[i].workingHours;
+
+													}
+													$scope.totalhours = total;
+													$scope.selectedhours = selected;
+													$scope.ats = data;
+												} else {
+													$scope.color1 = "red";
+													$scope.hide1 = true;
+													$scope.hide2 = true;
+													$scope.hide4 = false;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.newhide1 = true;
+												}
+
+				            }).error(function(data, status, headers, config) {
+												$scope.hide1 = true;
+												$scope.hide2 = true;
+												$scope.hide3 = true;
+												$scope.res = false;
+												$scope.newhide1 = true;
+												$scope.hide4 = true;
+												$scope.result = "error occured due to some internal problem please try again day.";
+											});
+
+						}/* day */
+
+						/*
+						 * when you select From and To Date
+						 * it will select the records with
+						 * in mentioned date of particular
+						 * employee (search type is name)
+						 */
+						else if ($scope.sel1 == "dates") {
+							total=0;
+				            selected=0;
+				            $http({
+					             method : 'POST',
+					             url : 'getReportByNameBetweenDates.do?employeeId=' + $scope.id+ '&fromDate=' + $scope.from.getTime() + '&toDate=' + $scope.to.getTime()
+				            }).success(function(data, status, headers, config) {
+												if (data.length != 0) {
+													$scope.hide1 = false;
+													$scope.hide2 = false;
+													$scope.newhide1 = false;
+													$scope.hide4 = true;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.totalItems = data.length;
+													for (var i = 0; i < data.length; i++) {
+
+														var milliseconds = data[i].attendanceDate;
+														var milliseconds1 = data[i].startTime;
+														var milliseconds2 = data[i].endTime;
+														var date = new Date(
+																milliseconds);
+														var date1 = new Date(
+																milliseconds1);
+														var date2 = new Date(
+																milliseconds2);
+														data[i].attendanceDate = date;
+														data[i].startTime = date1;
+														data[i].endTime = date2;
+														total = total + 9;
+														selected = selected
+																+ data[i].workingHours;
+
+													}
+													$scope.totalhours = total;
+													$scope.selectedhours = selected;
+													$scope.ats = data;
+												} else {
+													$scope.color1 = "red";
+													$scope.hide1 = true;
+													$scope.hide2 = true;
+													$scope.hide4 = false;
+													$scope.res = true;
+													$scope.hide3 = true;
+													$scope.newhide1 = true;
+												}
+
+				            }).error(function(data, status, headers, config) {
+												$scope.hide1 = true;
+												$scope.hide2 = true;
+												$scope.hide3 = true;
+												$scope.hide4 = true;
+												$scope.res = false;
+												$scope.newhide1 = true;
+												$scope.result = "error occured due to some internal problem please try again dates.";
+											});
+
+						}
+
+					}
+
+				}/* not null */
+				else {
+					$scope.hide1 = true;
+					$scope.hide2 = true;
+					$scope.hide3 = true;
+					$scope.newhide1 = true;
+					$scope.res = false;
+					$scope.result = "if you select single id field should not be empty.";
+				}
+			}
+
+			/*
+			 * when Select Type is "ALL" it will select the
+			 * records of all employee based on conditions
+			 */
+			// ALL
+			else {
+
+				/*
+				 * when you select "Total Records" it will
+				 * select all records of all employees
+				 */
+				if ($scope.sel1 == "none") {
+					total=0;
+		            selected=0;
+		            $http({
+			             method : 'POST',
+			             url : 'getAllEmployees.do'
+		            }).success(function(data, status, headers, config) {
+										if (data.length != 0) {
+											$scope.hide1 = true;
+											$scope.hide2 = true;
+											$scope.hide4 = true;
+											$scope.res = true;
+											$scope.hide3 = false;
+											$scope.newhide1 = false;
+											$scope.totalItems = data.length;
+											for (var i = 0; i < data.length; i++) {
+
+												var milliseconds = data[i].attendanceDate;
+												var milliseconds1 = data[i].startTime;
+												var milliseconds2 = data[i].endTime;
+												var date = new Date(
+														milliseconds);
+												var date1 = new Date(
+														milliseconds1);
+												var date2 = new Date(
+														milliseconds2);
+												data[i].attendanceDate = date;
+												data[i].startTime = date1;
+												data[i].endTime = date2;
+												total = total + 9;
+												selected = selected
+														+ data[i].workingHours;
+
+											}
+											$scope.totalhours = total;
+											$scope.selectedhours = selected;
+											$scope.ats1 = data;
+										} else {
+											$scope.color1 = "red";
+											$scope.hide1 = true;
+											$scope.hide2 = true;
+											$scope.hide4 = false;
+											$scope.res = true;
+											$scope.hide3 = true;
+											$scope.newhide1 = true;
+										}
+
+		            }).error(function(data, status, headers, config) {
+										$scope.hide1 = true;
+										$scope.hide2 = true;
+										$scope.hide3 = true;
+										$scope.hide4 = true;
+										$scope.res = false;
+										$scope.newhide1 = true;
+										$scope.result = "error occured due to some internal problem please try again all none.";
+									});
+
+				}/* end of Total Records */
+
+				/*
+				 * when you select "Day" it will select that
+				 * particular day records of all employees
+				 */
+				else if ($scope.sel1 == "day") {
+					total=0;
+		            selected=0;
+		            $http({
+			             method : 'POST',
+			             url : 'getAllEmployeesReportByDate.do?attendanceDate='+ $scope.from.getTime()
+		            }).success(function(data, status, headers, config) {
+										if (data.length != 0) {
+											$scope.hide1 = true;
+											$scope.hide2 = true;
+											$scope.hide4 = true;
+											$scope.res = true;
+											$scope.hide3 = false;
+											$scope.newhide1 = false;
+											$scope.totalItems = data.length;
+											for (var i = 0; i < data.length; i++) {
+
+												var milliseconds = data[i].attendanceDate;
+												var milliseconds1 = data[i].startTime;
+												var milliseconds2 = data[i].endTime;
+												var date = new Date(
+														milliseconds);
+												var date1 = new Date(
+														milliseconds1);
+												var date2 = new Date(
+														milliseconds2);
+												data[i].attendanceDate = date;
+												data[i].startTime = date1;
+												data[i].endTime = date2;
+												total = total + 9;
+												selected = selected
+														+ data[i].workingHours;
+
+											}
+											$scope.totalhours = total;
+											$scope.selectedhours = selected;
+											$scope.ats1 = data;
+										} else {
+											$scope.color1 = "red";
+											$scope.hide1 = true;
+											$scope.hide2 = true;
+											$scope.hide4 = false;
+											$scope.res = true;
+											$scope.hide3 = true;
+											$scope.newhide1 = true;
+										}
+
+		            }).error(function(data, status, headers, config) {
+										$scope.hide1 = true;
+										$scope.hide2 = true;
+										$scope.hide3 = true;
+										$scope.hide4 = true;
+										$scope.res = false;
+										$scope.newhide1 = true;
+										$scope.result = "error occured due to some internal problem please try again all day.";
+									});
+				}/* day */
+
+				/*
+				 * when you select "From and To Date" it
+				 * will select the records with in mentioned
+				 * date of all employees
+				 */
+				else if ($scope.sel1 == "dates") {
+					total=0;
+		            selected=0;
+		            $http({
+			             method : 'POST',
+			             url : 'getEmployeesReportBetweenDates.do?fromDate='+ $scope.from.getTime() + '&toDate=' + $scope.to.getTime()
+		            }).success(function(data, status, headers, config) {
+										if (data.length != 0) {
+											$scope.hide1 = true;
+											$scope.hide2 = true;
+											$scope.hide4 = true;
+											$scope.res = true;
+											$scope.hide3 = false;
+											$scope.newhide1 = false;
+											$scope.totalItems = data.length;
+											for (var i = 0; i < data.length; i++) {
+
+												var milliseconds = data[i].attendanceDate;
+												var milliseconds1 = data[i].startTime;
+												var milliseconds2 = data[i].endTime;
+												var date = new Date(
+														milliseconds);
+												var date1 = new Date(
+														milliseconds1);
+												var date2 = new Date(
+														milliseconds2);
+												data[i].attendanceDate = date;
+												data[i].startTime = date1;
+												data[i].endTime = date2;
+												total = total + 9;
+												selected = selected
+														+ data[i].workingHours;
+
+											}
+											$scope.totalhours = total;
+											$scope.selectedhours = selected;
+											$scope.ats1 = data;
+										} else {
+											$scope.color1 = "red";
+											$scope.hide1 = true;
+											$scope.hide2 = true;
+											$scope.hide4 = false;
+											$scope.res = true;
+											$scope.hide3 = true;
+											$scope.newhide1 = true;
+										}
+
+		            }).error(function(data, status, headers, config) {
+										$scope.hide1 = true;
+										$scope.hide2 = true;
+										$scope.hide3 = true;
+										$scope.hide4 = true;
+										$scope.res = false;
+										$scope.newhide1 = true;
+										$scope.result = "error occured due to some internal problem please try again dates all dates.";
+									});
+				}
+			}
+		};
+		
 		
 		/*function for adding new Administrator
 		
@@ -1790,11 +2582,11 @@ $scope.showLineForm=function(){
 	           
 		 } ;//resetAdminLogin()--close
 		 
-		 /* function for forgot password hyper link*/
+		/*  function for forgot password hyper link
 		 $scope.AdminForgotPassword=function(){
 			 
 			 console.log("forgot password function");
-		 };
+		 };*/
 		 
 		/* function for admin login button */ 
 		$scope.AdminLogin=function(){
@@ -1834,6 +2626,40 @@ $scope.showLineForm=function(){
 			
 		}
 		
+		/* code for forgot password page function */
+		
+		$scope.getForgotPassword=function()
+		{
+			alert("forgot");
+			$http(
+					{
+						method : 'post',
+						url : 'forgotPasswordHome.do?id='
+								+ $scope.adminid + "&email="
+								+ $scope.email
+
+					})
+					.success(
+							function(data, status, headers,	config) {
+								if(data=="Password sent to  your mail, please check your mail"){
+								$scope.hide1=true;
+								$scope.successmsg =data;
+								}
+								else{
+									$scope.failedmsg=data;
+								}
+							})
+					.error(
+							function(data, status, headers,
+									config) {
+
+								$scope.failedmsg = "Some internal problem occured try again.";
+	   	      	});
+			
+		}; 
+
+		
+	/*  END ---	function for forgot Password ------END ---*/
 		  /*function  for prinnting view Employee division*/
 		     
 		     $scope.printViewEmployeeDiv=function(){   
