@@ -83,7 +83,7 @@ public class SecurityDAOImpl implements ISecurityDAO {
 	}
 
 	/**
-	 * This method is to cahne administrator password
+	 * This method is to change administrator password
 	 * updates old password with new password
 	 */
 	public int changePassword(EncryptedAdmin encryptedAdmin){		

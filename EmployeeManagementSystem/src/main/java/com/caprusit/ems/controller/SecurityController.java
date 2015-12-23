@@ -69,7 +69,7 @@ public class SecurityController {
 	 * Successfully or error message such as You entered incorrect adminId or
 	 * EmailId on the browser.
 	 */
-	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.POST)
+	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.GET)
 	public @ResponseBody
 	String forgotPassword(@RequestParam("id") Integer adminId,
 			@RequestParam("email") String emailId) {
