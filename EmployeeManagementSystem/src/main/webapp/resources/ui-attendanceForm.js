@@ -2658,6 +2658,13 @@ $scope.showLineForm=function(){
 			
 		}; 
 
+		  /**  
+		   * Function to show all employees detail in excel sheet format
+		   */
+		  $scope.showExcel=function(){
+				console.log("in showExcel()");
+				$window.location.href="/EmployeeManagementSystem/getExcel";
+		  };
 		
 	/*  END ---	function for forgot Password ------END ---*/
 		  /*function  for prinnting view Employee division*/

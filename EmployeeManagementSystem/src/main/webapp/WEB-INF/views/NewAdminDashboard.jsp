@@ -491,8 +491,8 @@
     <div class="col-sm-5"> </div>
  
     <div class="col-sm-7">
-    
-       <button class="btn btn-warning btn-sm" ng-click="printViewEmployeeDiv('viewEmployeeDetails')">Print</button>
+    					<button class="btn btn-primary btn-sm custom-width" ng-click="showExcel()">Excel View</button>
+                       <button class="btn btn-primary btn-sm custom-width" ng-click="printViewEmployeeDiv('viewEmployeeDetails')">Print</button>
        
     </div>
  </div>
