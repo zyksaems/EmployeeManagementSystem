@@ -33,17 +33,7 @@
 
 		<!-- ojdbc jar file -->
 
-		 <!-- <dependency>
-			 <groupId>oracle.jdbc</groupId>
-             <artifactId>oracle-jdbc</artifactId>
-             <version>10.0.2</version>
-		</dependency> -->
-		<dependency>
-    		<groupId>oracle.jdbc.driver</groupId>
-    		<artifactId>ojdbc14</artifactId>
-    		<version>10.2.0</version>
-		</dependency>
-		
+		 
 		<!-- hibernate jar file -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
