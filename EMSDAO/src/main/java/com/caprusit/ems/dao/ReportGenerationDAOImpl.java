@@ -27,7 +27,7 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	private List<Object> result = null;
+	//private List<Object> result = null;
 	private Logger logger = Logger.getLogger(ReportGenerationDAOImpl.class);
 	
 	@SuppressWarnings("unchecked")
@@ -54,7 +54,7 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Attendance> getEmployeeReport(int employeeId, Date attendanceDate) {
+	public List<Attendance> getEmployeeWorkingDetailsByIdAndDate(int employeeId, Date attendanceDate) {
 		logger.info("inside ReportGenerationDAOImpl getEmployeeReport()");
 		Session session = sessionFactory.openSession();
 		Criteria crit = session.createCriteria(Attendance.class);
@@ -63,11 +63,13 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		Criterion c3 = Restrictions.and(c1, c2);
 		crit.add(c3);
 		List<Attendance> result = crit.list();
+		logger.info("Result size:"+result.size());
+		
 		return result;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Attendance> getAllEmployeeReport(int employeeId, Date fromDate, Date toDate) {
+	public List<Attendance> getEmployeeWorkingDetailsByDates(int employeeId, Date fromDate, Date toDate) {
 		logger.info("inside ReportGenerationDAOImpl getAllEmployeeReport()");
 		Session session = sessionFactory.openSession();
 		
@@ -85,8 +87,8 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Attendance> getEmployees(int employeeId) {
-		logger.info("inside ReportGenerationDAOImpl getEmployees()");
+	public List<Attendance> getEmployeeWorkingDetailsById(int employeeId) {
+		logger.info("inside ReportGenerationDAOImpl getEmployeeWorkingDetailsById()");
 		Session session = sessionFactory.openSession();
 
 		Criteria crit = session.createCriteria(Attendance.class);
@@ -94,11 +96,12 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		crit.add(c1);
 		List<Attendance>result = crit.list();
 		logger.info("List Size:" + result.size());
+		
 		return result;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Attendance> getAllEmployees() {
+	public List<Attendance> getAllEmployeesWorkingDetails() {
 		logger.info("inside ReportGenerationDAOImpl getAllEmployees()");
 		Session session = sessionFactory.openSession();
 
@@ -112,9 +115,9 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		return result;
 	}
 
-	public List<Object> login(int employeeId) {
+	public List<Object> getSingleEmployeeDetailsById(int employeeId) {
 		logger.info("inside ReportGenerationDAOImpl login()");
-		String hql = "select firstName,lastName,designation from com.caprusit.ems.domain.Employee where employeeId=:employeeId";
+		String hql = "select employeeId,firstName,lastName,designation from com.caprusit.ems.domain.Employee where employeeId=:employeeId";
 		Session session = sessionFactory.openSession();
 
 		// Create a query object
@@ -130,8 +133,8 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Attendance> getAllEmployeesReport(Date attendanceDate) {
-		logger.info("inside ReportGenerationDAOImpl getAllEmployeesReport()");
+	public List<Attendance> getAllEmployeesReportByDate(Date attendanceDate) {
+		logger.info("inside ReportGenerationDAOImpl getAllEmployeesReportByDate(-)");
 		Session session = sessionFactory.openSession();
 
 		Criteria crit = session.createCriteria(Attendance.class);
@@ -144,8 +147,8 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Attendance> getEmployeesReport(Date fromDate, Date toDate) {
-		logger.info("inside ReportGenerationDAOImpl getEmployeesReport()");
+	public List<Attendance> getEmployeesReportBetweenDates(Date fromDate, Date toDate) {
+		logger.info("inside ReportGenerationDAOImpl getEmployeesReportBetweenDates()");
 		Session session = sessionFactory.openSession();
 		Criteria crit = session.createCriteria(Attendance.class);
 
@@ -156,9 +159,9 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		return result;
 	}
 
-	public List<Object> login(String firstName, String lastName) {
+	public List<Object> getSingleEmployeeDetailsByEmpName(String firstName, String lastName) {
 		logger.info("inside ReportGenerationDAOImpl login()");
-		String hql = "select employeeId,designation from com.caprusit.ems.domain.Employee where firstName=:firstName and lastName=:lastName";
+		String hql = "select employeeId,firstName,lastName,designation from com.caprusit.ems.domain.Employee where firstName=:firstName and lastName=:lastName";
 		Session session = sessionFactory.openSession();
 		// Create a query object
 		Query query = session.createQuery(hql);
@@ -174,20 +177,21 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 
 
 	@SuppressWarnings("unchecked")
-	public List<Object> getReportByName(int employeeId) {
+	public List<Attendance> getReportByName(int employeeId) {
 		logger.info("inside ReportGenerationDAOImpl getReportByName(EmpId)");
 		Session session = sessionFactory.openSession();
 
 		Criteria crit = session.createCriteria(Attendance.class);
 		Criterion c1 = Restrictions.eq("employeeId", employeeId);
 		crit.add(c1);
-		result = crit.list();
+		List<Attendance> result = crit.list();
 		logger.info("List Size:" + result.size());
+
 		return result;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object> getReportByDay(int employeeId, Date attendanceDate) {
+	public List<Attendance> getReportByDay(int employeeId, Date attendanceDate) {
 		logger.info("inside ReportGenerationDAOImpl getReportByDay(EmpId)");
 		Session session = sessionFactory.openSession();
 
@@ -196,13 +200,13 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		Criterion c2=Restrictions.eq("attendanceDate", attendanceDate);
 		Criterion c3=Restrictions.and(c1,c2);
 		crit.add(c3);
-		List<Object> result = crit.list();
+		List<Attendance> result = crit.list();
 		logger.info("List Size:" + result.size());
 		return result;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object> getReportByNameDates(int employeeId, Date fromDate, Date toDate) {
+	public List<Attendance> getReportByNameDates(int employeeId, Date fromDate, Date toDate) {
 		logger.info("inside ReportGenerationDAOImpl getReportByNameDates()");
 		Session session = sessionFactory.openSession();
 
@@ -211,7 +215,7 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		Criterion c2 = Restrictions.between("attendanceDate", fromDate, toDate);
 		Criterion c3=Restrictions.and(c1,c2);
 		crit.add(c3);
-		List<Object> result = crit.list();
+		List<Attendance> result = crit.list();
 		logger.info("List Size:" + result.size());
 		return result;
 	}
@@ -260,7 +264,8 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		
 	}
     
-    public Map<String,Object> getDailyReportIndividual(int employeeId, Date attendanceDate) {
+    @SuppressWarnings("unchecked")
+	public Map<String,Object> getDailyReportOfIndividual(int employeeId, Date attendanceDate) {
         Map<String,Object> map1= new HashMap<String,Object>();  
         List<Attendance> result=null;
           
@@ -286,4 +291,5 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
           map1.put("LastDate", toDate);
          return map1;
         }
+
 }

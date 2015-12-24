@@ -44,17 +44,6 @@
     
    <!--  for charts -->
     <script src="./resources/Chart.js"></script>  
-    <%
-	  Integer id = (Integer) request.getSession().getAttribute("employeeId");
-     %>  
-
-     <%
-	String name = (String) request.getSession().getAttribute("EmployeeName");
-     %>
-
-     <%
-	String designation = (String) request.getSession().getAttribute("designation");
-     %> 
   </head>
    
   <body>
@@ -667,9 +656,9 @@
 			</div>
 			<div ng-hide="hide1" id="nameofemp1">
 				<ul id="ul1">
-					<li>:&nbsp;&nbsp;<i><%=id %></i></li>
-					<li>:&nbsp;&nbsp;<i><%=name %></i></li>
-					<li>:&nbsp;&nbsp;<i><%=designation %></i></li>
+					<li>:&nbsp;&nbsp;<i>{{singleEmpReportEmpId}}</i></li>
+					<li>:&nbsp;&nbsp;<i>{{singleEmpReportEmpName}}</i></li>
+					<li>:&nbsp;&nbsp;<i>{{singleEmpReportEmpDesignation}}></i></li>
 				</ul>
 			</div>
 			<div id="resultperpage">

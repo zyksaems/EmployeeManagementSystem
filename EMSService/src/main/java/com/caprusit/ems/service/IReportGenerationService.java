@@ -3,38 +3,36 @@ package com.caprusit.ems.service;
 import java.util.Date;
 import java.util.List;
 
-import com.caprusit.ems.domain.Attendance;
-
 public interface IReportGenerationService {
 
-	List<Attendance> getEmployeeReport(int employeeId, Date attendanceDate);
+	String getEmployeeWorkingDetailsById(int employeeId);
+	
+	String getEmployeeWorkingDetailsByIdAndDate(int employeeId, Date attendanceDate);
 
-	List<Attendance> getAllEmployeeReport(int employeeId, Date fromDate, Date toDate);
+	String getEmployeeWorkingDetailsByDates(int employeeId, Date fromDate, Date toDate);
 
-	public List<Attendance> getEmployees(int employeeId);
+	String getAllEmployeesWorkingDetails();
 
-	public List<Attendance> getAllEmployees();
+	String  getSingleEmployeeDetailsById(int employeeId);
 
-	List<Object> login(int employeeId);
+	String getAllEmployeesReportByDate(Date date);
 
-	List<Attendance> getAllEmployeesReport(Date date);
+	String getEmployeesReportBetweenDates(Date fromDate, Date toDate);
 
-	List<Attendance> getEmployeesReport(Date fromDate, Date toDate);
+	String getSingleEmployeeDetailsByEmpName(String employeeId);
 
-	List<Integer> getAutoCompleteInfo(int empid);
+	String getReportByName(String employeeid);
 
-	List<Object> login(String fistName, String lastName);
+	String getReportByDay(String employeeId, Date attendanceDate);
 
-	List<Object> getReportByName(int employeeid);
-
-	List<Object> getReportByDay(int employeeId, Date attendanceDate);
-
-	List<Object> getReportByNameDates(int employeeId, Date fromDate, Date toDate);
-
-	List<String> getAutoCompleteInfo(String employeeId);
+	String getReportByNameDates(String employeeId, Date fromDate, Date toDate);
 	
 	String getTodayReport();
 	
-    String getDailyReportIndividual(int employeeId, Date attendanceDate) ;
+    String getDailyReportOfIndividual(int employeeId, Date attendanceDate) ;
 
+	
+	List<Integer> getAutoCompleteInfo(int empid);
+
+	List<String> getAutoCompleteInfo(String employeeId);
 }

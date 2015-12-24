@@ -31,15 +31,6 @@
 			<version>1.2.17</version>
 		</dependency>
 
-		<!-- gson jar file for json support -->
-
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.2.2</version>
-			<scope>compile</scope>
-		</dependency>
-		
 		<!-- ojdbc jar file -->
 		<dependency>
        	 	 <groupId>oracle.jdbc.driver</groupId>

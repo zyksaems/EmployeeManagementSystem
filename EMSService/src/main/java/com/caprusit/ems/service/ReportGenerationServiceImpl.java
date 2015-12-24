@@ -42,84 +42,230 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return result;
 	}
 
-	public List<Attendance> getEmployees(int employeeId) {
-		logger.info("inside ReportGenerationServiceImpl getEmployees()");
-		List<Attendance> employeeList = reportGenerationDAO.getEmployees(employeeId);
+	public String getEmployeeWorkingDetailsById(int employeeId) {
+		logger.info("inside ReportGenerationServiceImpl getEmployeeWorkingDetailsById(-)");
+		
+		List<Object> empData =reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
+			int empId=0;
+		  String employeeName=null,employeeDesignation=null;
+		  if (empData != null) {
+		   Object[] data = (Object[]) empData.get(0);
+		   if (data != null && data.length > 0) {
+		    logger.info("Emp name:" + (String) data[1] + "  "+ (String) data[2]);    
+		    empId=(Integer)data[0];
+		    employeeName=(String) data[1]+ (String) data[2];
+		    employeeDesignation=(String)data[3];
+		   }
+		  }
+		  List<Attendance> listOfEmpReport= reportGenerationDAO.getEmployeeWorkingDetailsById(empId);
+		  Map<Object,Object> employeeReportMap=new HashMap<Object, Object>();
+		  employeeReportMap.put("empId",empId);
+		  employeeReportMap.put("empName", employeeName);
+		  employeeReportMap.put("empDesignation", employeeDesignation);
+		  employeeReportMap.put("employeeReport", listOfEmpReport);
+		  logger.info("single employee report detais on map: "+employeeReportMap);
+		  
+		  return JsonUtility.convertToJson(employeeReportMap);
+		 }
 
-		return employeeList;
+	public String getEmployeeWorkingDetailsByIdAndDate(int employeeId, Date attendanceDate) {
+		logger.info("Inside ReportGenerationServiceImpl getEmployeeWorkingDetailsByIdAndDate(-,-) method ");
+		
+		List<Object> empData =reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
+		  String employeeName=null,employeeDesignation=null;
+		  int empId=0;
+		  if (empData != null) {
+		   Object[] data = (Object[]) empData.get(0);
+		   if (data != null && data.length > 0) {
+		    logger.info("Emp name:" + (String) data[1] + "  "+ (String) data[2]);   
+		    empId=(Integer)data[0];
+		    employeeName=(String) data[1]+ (String) data[2];
+		    employeeDesignation=(String)data[3];
+		   }
+		  }
+		  List<Attendance> listOfEmpReport= reportGenerationDAO.getEmployeeWorkingDetailsByIdAndDate(empId, attendanceDate);
+		  Map<String,Object> employeeReportMap=new HashMap<String, Object>();
+		  employeeReportMap.put("empId",empId);
+		  employeeReportMap.put("empName", employeeName);
+		  employeeReportMap.put("empDesignation", employeeDesignation);
+		  employeeReportMap.put("employeeReport", listOfEmpReport);
+		  logger.info("single employee report detais on map: "+employeeReportMap);
+		  
+		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	public List<Attendance> getEmployeeReport(int employeeId, Date attendanceDate) {
-		logger.info("Inside ReportGenerationServiceImpl getEmployeeReport() method ");
-		List<Attendance> result = reportGenerationDAO.getEmployeeReport(employeeId, attendanceDate);
-
-		return result;
-	}
-
-	public List<Attendance> getAllEmployeeReport(int employeeId, Date fromDate, Date toDate) {
+	public String getEmployeeWorkingDetailsByDates(int employeeId, Date fromDate, Date toDate) {
 		logger.info("Inside ReportGenerationServiceImpl getAllEmployeeReport() method ");
-		List<Attendance> result = reportGenerationDAO.getAllEmployeeReport(employeeId, fromDate, toDate);
-
-		return result;
+		
+		List<Object> empData =reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
+		
+		  String employeeName=null,employeeDesignation=null;
+		  int empId=0;
+		  if (empData != null) {
+		   Object[] data = (Object[]) empData.get(0);
+		   if (data != null && data.length > 0) {
+		    logger.info("Emp name:" + (String) data[1] + "  "+ (String) data[2]);   
+		    empId=(Integer)data[0];
+		    employeeName=(String) data[1]+ (String) data[2];
+		    employeeDesignation=(String)data[3];
+		   }
+		  }
+		  List<Attendance> listOfEmpReport= reportGenerationDAO.getEmployeeWorkingDetailsByDates(empId, fromDate, toDate);
+		  Map<String,Object> employeeReportMap=new HashMap<String, Object>();
+		  employeeReportMap.put("empId",empId);
+		  employeeReportMap.put("empName", employeeName);
+		  employeeReportMap.put("empDesignation", employeeDesignation);
+		  employeeReportMap.put("employeeReport", listOfEmpReport);
+		  logger.info("single employee report detais on map: "+employeeReportMap);
+		  
+		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	public List<Object> login(int employeeId) {
+	public String getSingleEmployeeDetailsById(int employeeId) {
 		logger.info("inside ReportGenerationServiceImpl login()");
-		List<Object> empData = reportGenerationDAO.login(employeeId);
+		List<Object> empData = reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
 
-		return empData;
+		return JsonUtility.convertToJson(empData);
 	}
 
-	public List<Object> login(String firstName, String lastName) {
-		logger.info("inside ReportGenerationServiceImpl login()");
-		List<Object> empData = reportGenerationDAO.login(firstName, lastName);
+	public String getSingleEmployeeDetailsByEmpName(String employeeId) {
+		logger.info("inside ReportGenerationServiceImpl getEmployeeWorkingDetailsByName()");
+		
+		String string = employeeId;
+		String[] parts = string.split(",");
+		String firstName = parts[0];
+		String lastName = parts[1];
+		logger.info("FirstName:" + firstName);
+		logger.info("lastname:" + lastName);
+		
+		List<Object> empData = reportGenerationDAO.getSingleEmployeeDetailsByEmpName(firstName, lastName);
 
-		return empData;
+		return JsonUtility.convertToJson(empData);
 	}
 
-	public List<Object> getReportByName(int employeeId) {
+	public String getReportByName(String  employeeId) {
 		logger.info("Inside ReportGenerationServiceImpl getReportByName(empId) method ");
-		List<Object> result = reportGenerationDAO.getReportByName(employeeId);
-		logger.info("info list in sevice: " + result);
+		
+		String string = employeeId;
+		 int empId=0;
+		String employeeName=null,employeeDesignation=null;
+		String[] parts = string.split(",");
+		String firstName = parts[0];
+		String lastName = parts[1];
+		logger.info("FirstName:" + firstName);
+		logger.info("lastname:" + lastName);
 
-		return result;
+		List<Object> empData = reportGenerationDAO.getSingleEmployeeDetailsByEmpName(firstName,lastName);
+		
+		if (empData != null) {
+			Object[] data = (Object[]) empData.get(0);
+			if (data != null && data.length > 0) {
+				logger.info("Emp name:" + firstName + "  "+ lastName);    
+				 	empId=(Integer)data[0];
+				    employeeName=(String) data[1]+ (String) data[2];
+				    employeeDesignation=(String)data[3];
+				   }
+			}
+		
+		 List<Attendance> listOfEmpReport= reportGenerationDAO.getReportByName(empId);
+		  Map<String,Object> employeeReportMap=new HashMap<String, Object>();
+		  employeeReportMap.put("empId",empId);
+		  employeeReportMap.put("empName", employeeName);
+		  employeeReportMap.put("empDesignation", employeeDesignation);
+		  employeeReportMap.put("employeeReport", listOfEmpReport);
+		  logger.info("single employee report detais on map: "+employeeReportMap);
+		  
+		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	public List<Object> getReportByDay(int employeeId, Date attendanceDate) {
+	public String  getReportByDay(String employeeId, Date attendanceDate) {
 		logger.info("Inside ReportGenerationServiceImpl getReportByDay(empId) method ");
-		List<Object> result = reportGenerationDAO.getReportByDay(employeeId, attendanceDate);
-		logger.info("info list in sevice: " + result);
+		String string = employeeId;
+		 int empId=0;
+		String employeeName=null,employeeDesignation=null;
+		String[] parts = string.split(",");
+		String firstName = parts[0];
+		String lastName = parts[1];
+		logger.info("FirstName:" + firstName);
+		logger.info("lastname:" + lastName);
 
-		return result;
+		List<Object> empData = reportGenerationDAO.getSingleEmployeeDetailsByEmpName(firstName,lastName);
+		
+		if (empData != null) {
+			Object[] data = (Object[]) empData.get(0);
+			if (data != null && data.length > 0) {
+				logger.info("Emp name:" + firstName + "  "+ lastName);    
+				 	empId=(Integer)data[0];
+				    employeeName=(String) data[1]+ (String) data[2];
+				    employeeDesignation=(String)data[3];
+				   }
+			}
+		
+		 List<Attendance> listOfEmpReport= reportGenerationDAO.getReportByDay(empId,attendanceDate);
+		  Map<String,Object> employeeReportMap=new HashMap<String, Object>();
+		  employeeReportMap.put("empId",empId);
+		  employeeReportMap.put("empName", employeeName);
+		  employeeReportMap.put("empDesignation", employeeDesignation);
+		  employeeReportMap.put("employeeReport", listOfEmpReport);
+		  logger.info("single employee report detais on map: "+employeeReportMap);
+		  
+		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	public List<Object> getReportByNameDates(int employeeId, Date fromDate, Date toDate) {
+	public String getReportByNameDates(String employeeId, Date fromDate, Date toDate) {
 		logger.info("Inside ReportGenerationServiceImpl getReportByNameDates() method ");
-		List<Object> result = reportGenerationDAO.getReportByNameDates(employeeId, fromDate, toDate);
-		logger.info("info list in sevice: " + result);
+		
+		String string = employeeId;
+		 int empId=0;
+		String employeeName=null,employeeDesignation=null;
+		String[] parts = string.split(",");
+		String firstName = parts[0];
+		String lastName = parts[1];
+		logger.info("FirstName:" + firstName);
+		logger.info("lastname:" + lastName);
 
-		return result;
+		List<Object> empData = reportGenerationDAO.getSingleEmployeeDetailsByEmpName(firstName,lastName);
+		
+		if (empData != null) {
+			Object[] data = (Object[]) empData.get(0);
+			if (data != null && data.length > 0) {
+				logger.info("Emp name:" + firstName + "  "+ lastName);    
+				 	empId=(Integer)data[0];
+				    employeeName=(String) data[1]+ (String) data[2];
+				    employeeDesignation=(String)data[3];
+				   }
+			}
+		
+		 List<Attendance> listOfEmpReport= reportGenerationDAO.getReportByNameDates(empId,fromDate, toDate);
+		  Map<String,Object> employeeReportMap=new HashMap<String, Object>();
+		  employeeReportMap.put("empId",empId);
+		  employeeReportMap.put("empName", employeeName);
+		  employeeReportMap.put("empDesignation", employeeDesignation);
+		  employeeReportMap.put("employeeReport", listOfEmpReport);
+		  logger.info("single employee report detais on map: "+employeeReportMap);
+		  
+		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	public List<Attendance> getAllEmployees() {
-		logger.info("inside ReportGenerationServiceImpl getAllEmployees()");
-		List<Attendance> employeeList = reportGenerationDAO.getAllEmployees();
+	public String getAllEmployeesWorkingDetails() {
+		logger.info("inside ReportGenerationServiceImpl getAllEmployeesWorkingDetails()");
+		List<Attendance> employeeList = reportGenerationDAO.getAllEmployeesWorkingDetails();
 
-		return employeeList;
+		return JsonUtility.convertToJson(employeeList);
 	}
 
-	public List<Attendance> getAllEmployeesReport(Date attendanceDate) {
+	public String getAllEmployeesReportByDate(Date attendanceDate) {
 		logger.info("inside ReportGenerationServiceImpl getAllEmployeesReport()");
-		List<Attendance> empData = reportGenerationDAO.getAllEmployeesReport(attendanceDate);
+		List<Attendance> empData = reportGenerationDAO.getAllEmployeesReportByDate(attendanceDate);
 
-		return empData;
+		return  JsonUtility.convertToJson(empData);
 	}
 
-	public List<Attendance> getEmployeesReport(Date fromDate, Date toDate) {
-		logger.info("inside ReportGenerationServiceImpl getEmployeesReport()");
-		List<Attendance> empData = reportGenerationDAO.getEmployeesReport(fromDate, toDate);
+	public String getEmployeesReportBetweenDates(Date fromDate, Date toDate) {
+		logger.info("inside ReportGenerationServiceImpl getEmployeesReportBetweenDates()");
+		List<Attendance> empData = reportGenerationDAO.getEmployeesReportBetweenDates(fromDate, toDate);
 
-		return empData;
+		return  JsonUtility.convertToJson(empData);
 	}
 
 	public String getTodayReport() {
@@ -144,50 +290,37 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		
 	}
 	
-	 public String getDailyReportIndividual(int employeeId, Date attendanceDate) {
-		    logger.info("inside ReportGenerationServiceImpl getDailyReportIndividual()");
-		    
-		    List<Attendance> attendanceDetails= new ArrayList<Attendance>();
-		    
+	 @SuppressWarnings("unchecked")
+	public String getDailyReportOfIndividual(int employeeId, Date attendanceDate) {
+		    logger.info("inside ReportGenerationServiceImpl getDailyReportOfIndividual()");
 		    Date lastDate=null;
-		    
-		    Map<String,Object> allMap = reportGenerationDAO.getDailyReportIndividual(employeeId, attendanceDate);
-		    
-		    attendanceDetails=(List<Attendance>) allMap.get("ListOfLine");
-		    
-		    lastDate =(Date) allMap.get("LastDate");
-		    
-		    
-		    logger.info("Attednace List is:"+attendanceDetails);
 		    Double workingHours=0.0,totalAvailableHours=0.0;
-		    
-		    Map<String,Double> dayAndWork=new HashMap<String, Double>();
-		    
-		   // List<Double> workingHourList=new ArrayList<Double>();
-
-		    //List<String> days= new ArrayList<String>();
-		    
 		    int onDayHours=9;
 		    Double totalWorkingHours=0.0;
 		    String dayNames[] = new DateFormatSymbols().getWeekdays();
 		      
 		    Calendar cal = Calendar.getInstance();
-		      
-		    cal.setTime(attendanceDate);
 		    
+		    List<Attendance> attendanceDetails= new ArrayList<Attendance>(); 
+		    
+		    Map<String,Object> allMap = reportGenerationDAO.getDailyReportOfIndividual(employeeId, attendanceDate);
+		    attendanceDetails=(List<Attendance>) allMap.get("ListOfLine");
+		    lastDate =(Date) allMap.get("LastDate");
+		    logger.info("Attednace List is:"+attendanceDetails);
+		  
+		    Map<String,Double> dayAndWork=new HashMap<String, Double>();
+		    
+		    cal.setTime(attendanceDate);
 		     String startDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
 		     cal.setTime(lastDate);
 		     String lastDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
 		              
 		     List<String> presentDays=new ArrayList<String>();
 		     
-
-		    
 		    for(int i=0; i<attendanceDetails.size();i++){
-		   attendanceDate=attendanceDetails.get(i).getAttendanceDate();
+		    attendanceDate=attendanceDetails.get(i).getAttendanceDate();
 		     cal.setTime(attendanceDate);
-		     
-		     
+
 		     workingHours=attendanceDetails.get(i).getWorkingHours();
 		     dayAndWork.put(dayNames[cal.get(Calendar.DAY_OF_WEEK)],workingHours);
 		     presentDays.add(dayNames[cal.get(Calendar.DAY_OF_WEEK)]);
@@ -196,26 +329,15 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		       
 		     totalAvailableHours+=onDayHours;    
 		      }
-		         
-		     
-		     
-		     
 		   
-		  //  List<Double> graphDetails= new ArrayList<Double>();
 		    Map<String,Object> graphDetails= new HashMap<String, Object>();
 		    graphDetails.put("dayAndWork",dayAndWork);
-		    
 		    graphDetails.put("totalWorkingHours",totalWorkingHours);
 		    graphDetails.put("oneDayHours",onDayHours);
 		    graphDetails.put("totalAvailableHours",totalAvailableHours);
 		    graphDetails.put("startDay",startDay);
 		    graphDetails.put("lastDay",lastDay);
-		        graphDetails.put("presentDays", presentDays);
-		    
-		    
-		    logger.info("Map data is:"+graphDetails);
-		    
-		  
+		    graphDetails.put("presentDays", presentDays);
 		    return JsonUtility.convertToJson(graphDetails);
 		   }
 }

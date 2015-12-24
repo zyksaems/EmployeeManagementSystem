@@ -1850,34 +1850,38 @@ $scope.showLineForm=function(){
 				            
 				     }).success(function(data, status, headers, config) {
 												if (data.length != 0) {
+													$scope.singleEmpReportEmpId=data.empId;
+										             $scope.singleEmpReportEmpName=data.empName;
+										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
+										             var attendanceDetails=data.employeeReport;
 													$scope.hide1 = false;
 													$scope.hide2 = false;
 													$scope.newhide1 = false;
 													$scope.hide4 = true;
 													$scope.res = true;
 													$scope.hide3 = true;
-													$scope.totalItems = data.length;
-													for (var i = 0; i < data.length; i++) {
+													$scope.totalItems = attendanceDetails.length;
+													for (var i = 0; i < attendanceDetails.length; i++) {
 
-														var milliseconds = data[i].attendanceDate;
-														var milliseconds1 = data[i].startTime;
-														var milliseconds2 = data[i].endTime;
+														var milliseconds = attendanceDetails[i].attendanceDate;
+														var milliseconds1 = attendanceDetails[i].startTime;
+														var milliseconds2 = attendanceDetails[i].endTime;
 														var date = new Date(
 																milliseconds);
 														var date1 = new Date(
 																milliseconds1);
 														var date2 = new Date(
 																milliseconds2);
-														data[i].attendanceDate = date;
-														data[i].startTime = date1;
-														data[i].endTime = date2;
+														attendanceDetails[i].attendanceDate = date;
+														attendanceDetails[i].startTime = date1;
+														attendanceDetails[i].endTime = date2;
 														total = total + 9;
 														selected = selected
-																+ data[i].workingHours;
+																+ attendanceDetails[i].workingHours;
 													}
 													$scope.totalhours = total;
 													$scope.selectedhours = selected;
-													$scope.ats = data;
+													$scope.ats = attendanceDetails;
 												} else {
 													$scope.color1 = "red";
 													$scope.hide1 = true;
@@ -1913,35 +1917,39 @@ $scope.showLineForm=function(){
 						             url :'getReportByIdAndDate.do?employeeId=' + $scope.id+ '&attendanceDate=' +$scope.from.getTime()
 				            }).success(function(data, status, headers, config) {
 												if (data.length != 0) {
+													 $scope.singleEmpReportEmpId=data.empId;
+										             $scope.singleEmpReportEmpName=data.empName;
+										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
+										             var attendanceDetails=data.employeeReport;
 													$scope.hide1 = false;
 													$scope.hide2 = false;
 													$scope.newhide1 = false;
 													$scope.hide4 = true;
 													$scope.res = true;
 													$scope.hide3 = true;
-													$scope.totalItems = data.length;
-													for (var i = 0; i < data.length; i++) {
+													$scope.totalItems = attendanceDetails.length;
+													for (var i = 0; i < attendanceDetails.length; i++) {
 
-														var milliseconds = data[i].attendanceDate;
-														var milliseconds1 = data[i].startTime;
-														var milliseconds2 = data[i].endTime;
+														var milliseconds = attendanceDetails[i].attendanceDate;
+														var milliseconds1 = attendanceDetails[i].startTime;
+														var milliseconds2 = attendanceDetails[i].endTime;
 														var date = new Date(
 																milliseconds);
 														var date1 = new Date(
 																milliseconds1);
 														var date2 = new Date(
 																milliseconds2);
-														data[i].attendanceDate = date;
-														data[i].startTime = date1;
-														data[i].endTime = date2;
+														attendanceDetails[i].attendanceDate = date;
+														attendanceDetails[i].startTime = date1;
+														attendanceDetails[i].endTime = date2;
 														total = total + 9;
 														selected = selected
-																+ data[i].workingHours;
+																+ attendanceDetails[i].workingHours;
 
 													}
 													$scope.totalhours = total;
 													$scope.selectedhours = selected;
-													$scope.ats = data;
+													$scope.ats = attendanceDetails;
 												} else {
 													$scope.color1 = "red";
 													$scope.hide1 = true;
@@ -1974,39 +1982,43 @@ $scope.showLineForm=function(){
 							total=0;
 				            selected=0;
 				            $http({
-					             method : 'POST',
+					             method : 'GET',
 					             url : 'getReportByIdFromDateToDate.do?employeeId='+$scope.id+'&fromDate='+$scope.from.getTime()+'&toDate='+$scope.to.getTime()
 				            }).success(function(data, status, headers, config) {
 												if (data.length != 0) {
+													 $scope.singleEmpReportEmpId=data.empId;
+										             $scope.singleEmpReportEmpName=data.empName;
+										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
+										             var attendanceDetails=data.employeeReport;
 													$scope.hide1 = false;
 													$scope.hide2 = false;
 													$scope.newhide1 = false;
 													$scope.hide4 = true;
 													$scope.res = true;
 													$scope.hide3 = true;
-													$scope.totalItems = data.length;
-													for (var i = 0; i < data.length; i++) {
+													$scope.totalItems = attendanceDetails.length;
+													for (var i = 0; i < attendanceDetails.length; i++) {
 
-														var milliseconds = data[i].attendanceDate;
-														var milliseconds1 = data[i].startTime;
-														var milliseconds2 = data[i].endTime;
+														var milliseconds = attendanceDetails[i].attendanceDate;
+														var milliseconds1 = attendanceDetails[i].startTime;
+														var milliseconds2 = attendanceDetails[i].endTime;
 														var date = new Date(
 																milliseconds);
 														var date1 = new Date(
 																milliseconds1);
 														var date2 = new Date(
 																milliseconds2);
-														data[i].attendanceDate = date;
-														data[i].startTime = date1;
-														data[i].endTime = date2;
+														attendanceDetails[i].attendanceDate = date;
+														attendanceDetails[i].startTime = date1;
+														attendanceDetails[i].endTime = date2;
 														total = total + 9;
 														selected = selected
-																+ data[i].workingHours;
+																+ attendanceDetails[i].workingHours;
 
 													}
 													$scope.totalhours = total;
 													$scope.selectedhours = selected;
-													$scope.ats = data;
+													$scope.ats = attendanceDetails;
 												} else {
 													$scope.color1 = "red";
 													$scope.hide1 = true;
@@ -2046,35 +2058,39 @@ $scope.showLineForm=function(){
 					             url : 'getReportByName.do?employeeId='+$scope.id
 				            }).success(function(data, status, headers, config) {
 												if (data.length != 0) {
+													 $scope.singleEmpReportEmpId=data.empId;
+										             $scope.singleEmpReportEmpName=data.empName;
+										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
+										             var attendanceDetails=data.employeeReport;
 													$scope.hide1 = false;
 													$scope.hide2 = false;
 													$scope.newhide1 = false;
 													$scope.hide4 = true;
 													$scope.res = true;
 													$scope.hide3 = true;
-													$scope.totalItems = data.length;
-													for (var i = 0; i < data.length; i++) {
+													$scope.totalItems = attendanceDetails.length;
+													for (var i = 0; i < attendanceDetails.length; i++) {
 
-														var milliseconds = data[i].attendanceDate;
-														var milliseconds1 = data[i].startTime;
-														var milliseconds2 = data[i].endTime;
+														var milliseconds = attendanceDetails[i].attendanceDate;
+														var milliseconds1 = attendanceDetails[i].startTime;
+														var milliseconds2 = attendanceDetails[i].endTime;
 														var date = new Date(
 																milliseconds);
 														var date1 = new Date(
 																milliseconds1);
 														var date2 = new Date(
 																milliseconds2);
-														data[i].attendanceDate = date;
-														data[i].startTime = date1;
-														data[i].endTime = date2;
+														attendanceDetails[i].attendanceDate = date;
+														attendanceDetails[i].startTime = date1;
+														attendanceDetails[i].endTime = date2;
 														total = total + 9;
 														selected = selected
-																+ data[i].workingHours;
+																+ attendanceDetails[i].workingHours;
 
 													}
 													$scope.totalhours = total;
 													$scope.selectedhours = selected;
-													$scope.ats = data;
+													$scope.ats = attendanceDetails;
 												} else {
 													$scope.color1 = "red";
 													$scope.hide1 = true;
@@ -2110,35 +2126,39 @@ $scope.showLineForm=function(){
 					             url : 'getReportByNameDay.do?employeeId=' + $scope.id+ '&attendanceDate=' + $scope.from.getTime()
 				            }).success(function(data, status, headers, config) {
 												if (data.length != 0) {
+													 $scope.singleEmpReportEmpId=data.empId;
+										             $scope.singleEmpReportEmpName=data.empName;
+										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
+										             var attendanceDetails=data.employeeReport;
 													$scope.hide1 = false;
 													$scope.hide2 = false;
 													$scope.newhide1 = false;
 													$scope.hide4 = true;
 													$scope.res = true;
 													$scope.hide3 = true;
-													$scope.totalItems = data.length;
-													for (var i = 0; i < data.length; i++) {
+													$scope.totalItems = attendanceDetails.length;
+													for (var i = 0; i < attendanceDetails.length; i++) {
 
-														var milliseconds = data[i].attendanceDate;
-														var milliseconds1 = data[i].startTime;
-														var milliseconds2 = data[i].endTime;
+														var milliseconds = attendanceDetails[i].attendanceDate;
+														var milliseconds1 = attendanceDetails[i].startTime;
+														var milliseconds2 = attendanceDetails[i].endTime;
 														var date = new Date(
 																milliseconds);
 														var date1 = new Date(
 																milliseconds1);
 														var date2 = new Date(
 																milliseconds2);
-														data[i].attendanceDate = date;
-														data[i].startTime = date1;
-														data[i].endTime = date2;
+														attendanceDetails[i].attendanceDate = date;
+														attendanceDetails[i].startTime = date1;
+														attendanceDetails[i].endTime = date2;
 														total = total + 9;
 														selected = selected
-																+ data[i].workingHours;
+																+ attendanceDetails[i].workingHours;
 
 													}
 													$scope.totalhours = total;
 													$scope.selectedhours = selected;
-													$scope.ats = data;
+													$scope.ats = attendanceDetails;
 												} else {
 													$scope.color1 = "red";
 													$scope.hide1 = true;
@@ -2175,35 +2195,39 @@ $scope.showLineForm=function(){
 					             url : 'getReportByNameBetweenDates.do?employeeId=' + $scope.id+ '&fromDate=' + $scope.from.getTime() + '&toDate=' + $scope.to.getTime()
 				            }).success(function(data, status, headers, config) {
 												if (data.length != 0) {
+													 $scope.singleEmpReportEmpId=data.empId;
+										             $scope.singleEmpReportEmpName=data.empName;
+										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
+										             var attendanceDetails=data.employeeReport;
 													$scope.hide1 = false;
 													$scope.hide2 = false;
 													$scope.newhide1 = false;
 													$scope.hide4 = true;
 													$scope.res = true;
 													$scope.hide3 = true;
-													$scope.totalItems = data.length;
-													for (var i = 0; i < data.length; i++) {
+													$scope.totalItems = attendanceDetails.length;
+													for (var i = 0; i < attendanceDetails.length; i++) {
 
-														var milliseconds = data[i].attendanceDate;
-														var milliseconds1 = data[i].startTime;
-														var milliseconds2 = data[i].endTime;
+														var milliseconds = attendanceDetails[i].attendanceDate;
+														var milliseconds1 = attendanceDetails[i].startTime;
+														var milliseconds2 = attendanceDetails[i].endTime;
 														var date = new Date(
 																milliseconds);
 														var date1 = new Date(
 																milliseconds1);
 														var date2 = new Date(
 																milliseconds2);
-														data[i].attendanceDate = date;
-														data[i].startTime = date1;
-														data[i].endTime = date2;
+														attendanceDetails[i].attendanceDate = date;
+														attendanceDetails[i].startTime = date1;
+														attendanceDetails[i].endTime = date2;
 														total = total + 9;
 														selected = selected
-																+ data[i].workingHours;
+																+ attendanceDetails[i].workingHours;
 
 													}
 													$scope.totalhours = total;
 													$scope.selectedhours = selected;
-													$scope.ats = data;
+													$scope.ats = attendanceDetails;
 												} else {
 													$scope.color1 = "red";
 													$scope.hide1 = true;
@@ -2255,7 +2279,7 @@ $scope.showLineForm=function(){
 		            selected=0;
 		            $http({
 			             method : 'POST',
-			             url : 'getAllEmployees.do'
+			             url : 'getAllEmployeesWorkingDetails.do'
 		            }).success(function(data, status, headers, config) {
 										if (data.length != 0) {
 											$scope.hide1 = true;

@@ -26,15 +26,6 @@ public class ReportGenerationController {
 	private Logger logger = Logger.getLogger(ReportGenerationController.class);
 
 	/**
-	 * getReportGenerationPage(-) method will display the ReportGeneration page.
-	 */
-	@RequestMapping(value = "/generateReportHome", method = RequestMethod.GET)
-	public String getReportGenerationPage(HttpServletRequest request) {
-		logger.info("inside generateReportHome()");
-		return "GenerateReport";
-	}
-
-	/**
 	 * getAutoCompleteInfo(-) method take employeeId as a input and display all
 	 * employeeId's or employeeName's in the search box based on the user
 	 * supplied values.
@@ -70,25 +61,10 @@ public class ReportGenerationController {
 	 */
 	@RequestMapping(value = "/getReportById", method = RequestMethod.POST)
 	public @ResponseBody
-	String getReportById(@RequestParam("employeeId") int employeeId,
-			HttpServletRequest request) {
+	String getReportById(@RequestParam("employeeId") int employeeId) {
 		logger.info("inside ReportGenerationController getReportById()");
-
-		List<Object> empData = reportGenerationService.login(employeeId);
-		if (empData != null) {
-			Object[] data = (Object[]) empData.get(0);
-			if (data != null && data.length > 0) {
-				request.getSession().setAttribute("employeeId", employeeId);
-				request.getSession().setAttribute("EmployeeName",
-						(String) data[0] + " " + (String) data[1]);
-				logger.info("Emp name:" + (String) data[0] + " "
-						+ (String) data[1]);
-				request.getSession().setAttribute("designation",
-						(String) data[2]);
-			}
-		}
-		return JsonUtility.convertToJson(reportGenerationService
-				.getEmployees(employeeId));
+		
+		return reportGenerationService.getEmployeeWorkingDetailsById(employeeId);
 	}
 
 	/**
@@ -103,22 +79,7 @@ public class ReportGenerationController {
 			HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getReportByIdAndDate()");
 
-		List<Object> empData = reportGenerationService.login(employeeId);
-		if (empData != null) {
-			Object[] data = (Object[]) empData.get(0);
-			if (data != null && data.length > 0) {
-				request.getSession().setAttribute("employeeId", employeeId);
-				request.getSession().setAttribute("EmployeeName",
-						(String) data[0] + " " + (String) data[1]);
-				logger.info("Emp name:" + (String) data[0] + " "
-						+ (String) data[1]);
-				request.getSession().setAttribute("designation",
-						(String) data[2]);
-			}
-		}
-		return JsonUtility.convertToJson(reportGenerationService
-				.getEmployeeReport(employeeId,
-						new Date(Long.valueOf(attendanceDate))));
+		return reportGenerationService.getEmployeeWorkingDetailsByIdAndDate(employeeId,new Date(Long.valueOf(attendanceDate)));
 	}
 
 	/**
@@ -126,67 +87,25 @@ public class ReportGenerationController {
 	 * toDate as a inputs and display the working details of an employee during
 	 * given period of time.
 	 */
-	@RequestMapping(value = "/getReportByIdFromDateToDate", method = RequestMethod.POST)
-	public @ResponseBody
-	String getReportByIdFromDateToDate(
-			@RequestParam("employeeId") int employeeId,
-			@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, HttpServletRequest request) {
+	@RequestMapping(value = "/getReportByIdFromDateToDate", method = RequestMethod.GET)
+	public @ResponseBody String getReportByIdFromDateToDate(@RequestParam("employeeId") int employeeId,@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
 		logger.info("inside ReportGenerationController getReportByIdFromDateToDate()");
 
-		List<Object> empData = reportGenerationService.login(employeeId);
-		if (empData != null) {
-			Object[] data = (Object[]) empData.get(0);
-			if (data != null && data.length > 0) {
-				request.getSession().setAttribute("employeeId", employeeId);
-				request.getSession().setAttribute("EmployeeName",
-						(String) data[0] + " " + (String) data[1]);
-				logger.info("Emp name:" + (String) data[0] + " "
-						+ (String) data[1]);
-				request.getSession().setAttribute("designation",
-						(String) data[2]);
-			}
-		}
-		return JsonUtility.convertToJson(reportGenerationService
-				.getAllEmployeeReport(employeeId,
-						new Date(Long.valueOf(fromDate)),
-						new Date(Long.valueOf(toDate))));
+		return reportGenerationService.getEmployeeWorkingDetailsByDates(employeeId,
+				new Date(Long.valueOf(fromDate)),new Date(Long.valueOf(toDate)));
 	}
 
 	/**
-	 * getReportByName(-) take input as employeeId (String) as a input and we
-	 * extract firstName, lastName from received input string and pass
-	 * firstName, lastName as a input to login(-,-) method to get employeeId
-	 * related to employeeName and pass this employeeId to getReportByName(-)
-	 * method of ReportGenerationService to get total records of an employee.
+	 * getReportByName(-) take input as employeeId (String) and 
+	 * display the total working details of an employee.
 	 */
 	@RequestMapping(value = "/getReportByName", method = RequestMethod.POST)
 	public @ResponseBody
-	String getReportByName(@RequestParam("employeeId") String employeeId,
-			HttpServletRequest request) {
+	String getReportByName(@RequestParam("employeeId") String employeeId) {
 		logger.info("inside ReportGenerationController getReportByName()");
-		String string = employeeId;
-		String[] parts = string.split(",");
-		String firstName = parts[0];
-		String lastName = parts[1];
-		logger.info("FirstName:" + firstName);
-		logger.info("lastname:" + lastName);
-		List<Object> empData = reportGenerationService.login(firstName,
-				lastName);
-		if (empData != null) {
-			Object[] data = (Object[]) empData.get(0);
-			if (data != null && data.length > 0) {
-				request.getSession().setAttribute("employeeId",
-						(Integer) data[0]);
-				request.getSession().setAttribute("EmployeeName",
-						firstName + " " + lastName);
-				request.getSession().setAttribute("designation",
-						(String) data[1]);
-				empData = reportGenerationService
-						.getReportByName((Integer) data[0]);
-			}
-		}
-		return JsonUtility.convertToJson(empData);
+		
+		return reportGenerationService.getReportByName(employeeId);
 	}
 
 	/**
@@ -197,38 +116,14 @@ public class ReportGenerationController {
 	@RequestMapping(value = "/getReportByNameDay", method = RequestMethod.POST)
 	public @ResponseBody
 	String getReportByDay(@RequestParam("employeeId") String employeeId,
-			@RequestParam("attendanceDate") String attendanceDate,
-			HttpServletRequest request) {
+			@RequestParam("attendanceDate") String attendanceDate) {
 		logger.info("inside ReportGenerationController getReportByDay()");
-
-		String string = employeeId;
-		String[] parts = string.split(",");
-		String firstName = parts[0];
-		String lastName = parts[1];
-		logger.info("FirstName:" + firstName);
-		logger.info("lastname:" + lastName);
-
-		List<Object> empData = reportGenerationService.login(firstName,
-				lastName);
-		if (empData != null) {
-			Object[] data = (Object[]) empData.get(0);
-			if (data != null && data.length > 0) {
-				request.getSession().setAttribute("employeeId",
-						(Integer) data[0]);
-				request.getSession().setAttribute("EmployeeName",
-						firstName + " " + lastName);
-				request.getSession().setAttribute("designation",
-						(String) data[1]);
-				empData = reportGenerationService.getReportByDay(
-						(Integer) data[0],
-						new Date(Long.valueOf(attendanceDate)));
-			}
-		}
-		return JsonUtility.convertToJson(empData);
+		
+		return reportGenerationService.getReportByDay(employeeId, new Date(Long.valueOf(attendanceDate)));
 	}
 
 	/**
-	 * getReportByNameDates(-,-,-) takes employeeId, fromdate, toDate as a
+	 * getReportByNameDates(-,-,-) takes employeeId, fromDate, toDate as a
 	 * inputs and display the working details of an employee on given period of
 	 * time.
 	 */
@@ -236,43 +131,22 @@ public class ReportGenerationController {
 	public @ResponseBody
 	String getReportByNameDates(@RequestParam("employeeId") String employeeId,
 			@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, HttpServletRequest request) {
+			@RequestParam("toDate") String toDate) {
 		logger.info("inside ReportGenerationController getReportByNameDates()");
-		String string = employeeId;
-		String[] parts = string.split(",");
-		String firstName = parts[0];
-		String lastName = parts[1];
-		logger.info("FirstName:" + firstName);
-		logger.info("lastname:" + lastName);
 
-		List<Object> empData = reportGenerationService.login(firstName,
-				lastName);
-		if (empData != null) {
-			Object[] data = (Object[]) empData.get(0);
-			if (data != null && data.length > 0) {
-				request.getSession().setAttribute("employeeId",
-						(Integer) data[0]);
-				request.getSession().setAttribute("EmployeeName",
-						firstName + " " + lastName);
-				request.getSession().setAttribute("designation",
-						(String) data[1]);
-				empData = reportGenerationService.getReportByNameDates(
-						(Integer) data[0], new Date(Long.valueOf(fromDate)),
-						new Date(Long.valueOf(toDate)));
-			}
-		}
-		return JsonUtility.convertToJson(empData);
+		return reportGenerationService.getReportByNameDates(employeeId, new Date(Long.valueOf(fromDate)),
+				new Date(Long.valueOf(toDate)));
 	}
 
 	/**
-	 * getAllEmployees() method will display working details of all employees.
+	 * getAllEmployeesWorkingDetails() method will display working details of all employees.
 	 */
-	@RequestMapping(value = "/getAllEmployees", method = RequestMethod.POST)
+	@RequestMapping(value = "/getAllEmployeesWorkingDetails", method = RequestMethod.POST)
 	public @ResponseBody
-	String getAllEmployees() {
-		logger.info("inside ReportGenerationController getAllEmployees()");
-		return JsonUtility.convertToJson(reportGenerationService
-				.getAllEmployees());
+	String getAllEmployeesWorkingDetails() {
+		logger.info("inside ReportGenerationController getAllEmployeesWorkingDetails()");
+		
+		return reportGenerationService.getAllEmployeesWorkingDetails();
 	}
 
 	/**
@@ -285,8 +159,8 @@ public class ReportGenerationController {
 			@RequestParam("attendanceDate") String attendanceDate) {
 		logger.info("inside ReportGenerationController getAllEmployeesReportByDate()");
 
-		return JsonUtility.convertToJson(reportGenerationService
-				.getAllEmployeesReport(new Date(Long.valueOf(attendanceDate))));
+		return reportGenerationService
+				.getAllEmployeesReportByDate(new Date(Long.valueOf(attendanceDate)));
 	}
 
 	/**
@@ -296,36 +170,32 @@ public class ReportGenerationController {
 	 */
 	@RequestMapping(value = "/getEmployeesReportBetweenDates", method = RequestMethod.POST)
 	public @ResponseBody
-	String getEmployeesReportBetweenDates(
-			@RequestParam("fromDate") String fromDate,
+	String getEmployeesReportBetweenDates(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 		logger.info("inside ReportGenerationController getEmployeesReportBetweenDates()");
 
-		return JsonUtility.convertToJson(reportGenerationService
-				.getEmployeesReport(new Date(Long.valueOf(fromDate)), new Date(
-						Long.valueOf(toDate))));
+		return reportGenerationService
+				.getEmployeesReportBetweenDates(new Date(Long.valueOf(fromDate)), new Date(Long.valueOf(toDate)));
 	}
     
 	/**
-	 * This method returns today attendance details as json object array to front-end
+	 * This method returns today attendance details as Json object array to front-end
 	 * */
 	@RequestMapping(value = "/getTodayReport", method = RequestMethod.GET)
-	public @ResponseBody
-	String getDayWiseReport() {
+	public @ResponseBody String getDayWiseReport() {
+		logger.info("in ReportGenerationController getDayWiseReport()");
 
-		logger.info("in ReportGenerationController--getDayWiseReport()");
+		String reportDetails = reportGenerationService.getTodayReport();
 
-		String repotrDetails = reportGenerationService.getTodayReport();
-
-		return repotrDetails;
+		return reportDetails;
 	}
 
 	
 	 @RequestMapping(value = "/getDailyReportGraphOfIndividual", method = RequestMethod.POST)
-	  public @ResponseBody String getDailyReportIndividual(@RequestParam("employeeId") int employeeId,
+	  public @ResponseBody String getDailyReportOfIndividual(@RequestParam("employeeId") int employeeId,
 	    @RequestParam("attendanceDate") String attendanceDate) {
-	   logger.info("inside ReportGenerationController getDailyReportIndividual()");
+	   logger.info("inside ReportGenerationController getDailyReportOfIndividual()");
 
-	   return JsonUtility.convertToJson(reportGenerationService.getDailyReportIndividual(employeeId, new Date(Long.valueOf(attendanceDate))));
+	   return reportGenerationService.getDailyReportOfIndividual(employeeId, new Date(Long.valueOf(attendanceDate)));
 	  }
 }
