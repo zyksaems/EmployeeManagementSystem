@@ -60,6 +60,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 	</dependencies>
+	<build>
+		<finalName>EMSDAO</finalName>
+	</build>
 </project>
