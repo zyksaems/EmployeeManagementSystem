@@ -37,7 +37,7 @@ public class ChildConfigBean extends WebMvcConfigurerAdapter {
 
 		return viewResolve;
 	}
-
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations(

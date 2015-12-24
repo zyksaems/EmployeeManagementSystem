@@ -35,7 +35,7 @@ public class EmailUtility {
 	 * sendMail() method takes mailId, password and recipient name as parameter
 	 * and send a mail to given mail Id with password information
 	 */
-	public void sendMail(String mailId, String password, String name) {
+	public void sendMail(String mailId, String url, String name) {
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, mailPassword);
@@ -48,7 +48,7 @@ public class EmailUtility {
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailId));
 			message.setSubject("Forgot Password ");
-			message.setText("Dear " + name + ",\n\n \t Your  Password  is  " + password + " \n\nRegards,\nCaprusIT Team.");
+			message.setText("Dear " + name + ",\n\n \t Your  Reset Password  link is  " + url + " \n\nRegards,\nCaprusIT Team.");
 			// Transmit the mail
 			Transport.send(message);
 			System.out.println("Sent");

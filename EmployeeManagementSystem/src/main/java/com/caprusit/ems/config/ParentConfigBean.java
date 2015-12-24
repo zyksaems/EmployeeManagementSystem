@@ -51,7 +51,7 @@ public class ParentConfigBean {
 		dataSource.setPassword(password);
 		return dataSource;
 	}
-	
+
 	/*Bean creation for sessionFactory of Hibernate*/
 	@Bean(name="sessionFactory")
 	public LocalSessionFactoryBean getSessionFactory() throws Exception{

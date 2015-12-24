@@ -50,13 +50,13 @@ public class SecurityServiceImpl implements ISecurityService {
 
 	}
 
-	public String forgotPassword(int adminId, String emailId) {
+	public String forgotPassword(int adminId, String emailId,String url) {
 		String result = "";
 		List<Object> mailInfo = securityDAO.forgotPassword(adminId);
 		Object[] data = (Object[]) mailInfo.get(0);
 		if (data != null) {
 			if (data[1].equals(emailId)) {
-				emailUtility.sendMail(emailId, (String) mailInfo.get(1), (String) data[0] + " " + (String) data[2]);
+				emailUtility.sendMail(emailId, url, (String) data[0] + " " + (String) data[2]);
 				result = "Password sent to  your mail, please check your mail";
 				logger.info("Mail sent successfully to your  mail id");
 			} else {
@@ -112,5 +112,12 @@ public class SecurityServiceImpl implements ISecurityService {
 			logger.error(e);
 		}
 		return excelFileUtility.saveExcelFileData(workbook);
+	}
+
+	public int resetPassword(Admin admin) {
+		EncryptedAdmin encryptedAdmin=new EncryptedAdmin();
+		encryptedAdmin.setAdminId(admin.getAdminId());
+		encryptedAdmin.setPassword(EncryptionUtility.encryptString(admin.getPassword()));
+		return securityDAO.changePassword(encryptedAdmin);
 	}
 }

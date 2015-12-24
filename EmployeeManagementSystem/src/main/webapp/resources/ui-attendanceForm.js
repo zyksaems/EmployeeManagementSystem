@@ -18,6 +18,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		$scope.showAdminChangePasswordDiv=false;
 		$scope.showTableDetails=false;
 		$scope.showCharts=true;
+		$scope.showAdminResetPasswordDiv=false;
 		$scope.showGenerateReportDiv=false;
 		/*$scope.showAddNewAdminDiv=false;*/
 		
@@ -2461,6 +2462,47 @@ $scope.showLineForm=function(){
 		};
 		
 		
+		/*functionality for reset admin password*/
+		
+		var adminNewPasswordMinLength=1;
+		$scope.showAdminResetPasswordDiv=true;
+		$scope.adminNewPassword='';
+		$scope.adminConfirmNewPassword='';
+		$scope.adminSetNewPasswordSuccessMsg='';
+		
+		$scope.setAdminNewPassword=function(){
+			if($scope.adminNewPassword.length < adminNewPasswordMinLength){
+		      	$scope.adminSetNewPasswordSuccessMsg="Password  too  short";
+			}
+			else if($scope.adminNewPassword != $scope.adminConfirmNewPassword){
+				
+				$scope.adminSetNewPasswordSuccessMsg="New password and Confirm password not matched";
+				
+			}
+			else{
+				/*$scope.adminSetNewPasswordSuccessMsg="going to service";*/
+				var adminObj={adminId:$scope.adminIdForNewPassword,password:$scope.adminConfirmNewPassword};
+				$http.post('/EmployeeManagementSystem/setNewAdminPassword.do',adminObj)
+				.success(function(data, status, headers, config) {
+					if(data == 1){
+						$scope.showAdminResetPasswordDiv=false;
+						$scope.adminSetNewPasswordSuccessMsg="password sucessfully updated";
+					}
+						
+			     })
+			     .error(function(data, status, headers, config) {
+				        alert("failure message: " + JSON.stringify({
+					       data : data
+				        }));
+			      });
+			
+				
+			}
+		};
+		
+		/* --------  END ----functionality for reset admin password ----  END ---------*/
+		
+		
 		/*function for adding new Administrator
 		
 		$scope.addNewAdministratorDivEnable=function(){
@@ -2654,7 +2696,7 @@ $scope.showLineForm=function(){
 		
 		$scope.getForgotPassword=function()
 		{
-			alert("forgot");
+			
 			$http(
 					{
 						method : 'post',

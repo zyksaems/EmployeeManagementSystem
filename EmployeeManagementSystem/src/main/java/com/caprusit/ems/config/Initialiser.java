@@ -25,12 +25,11 @@ public class Initialiser implements WebApplicationInitializer {
 		dispatcherContext.register(ParentConfigBean.class);
 
 		// Register and map the dispatcher servlet
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher",
-				new DispatcherServlet(dispatcherContext));
+		ServletRegistration.Dynamic dispatcher = servletContext.addServlet(
+				"dispatcher", new DispatcherServlet(dispatcherContext));
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping("*.do");
-		
+
 	}
 
 }
-

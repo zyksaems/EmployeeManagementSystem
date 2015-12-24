@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Admin;
@@ -69,14 +70,39 @@ public class SecurityController {
 	 * Successfully or error message such as You entered incorrect adminId or
 	 * EmailId on the browser.
 	 */
-	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.GET)
-	public @ResponseBody
-	String forgotPassword(@RequestParam("id") Integer adminId,
-			@RequestParam("email") String emailId) {
+	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.POST)
+	public @ResponseBody String forgotPassword(HttpServletRequest request,@RequestParam("id") Integer adminId,@RequestParam("email") String emailId) {
+		int portNum=request.getLocalPort();
+		logger.info("port number of system: "+portNum);
+		logger.info("port number of server: "+request.getServerPort());
+		logger.info("name of server: "+request.getServerName());
+		String url="http://"+request.getServerName()+":"+request.getServerPort()+"/EmployeeManagementSystem/getResetPasswordPage.do?id="+adminId;
+		logger.info("url create dofr reset: "+url);
 		logger.info("in admin forgot password:  id: " + adminId + "    email: "
 				+ emailId);
-		return securityService.forgotPassword(adminId, emailId);
+		return securityService.forgotPassword(adminId, emailId,url);
+		/*return "1";*/
 
+	}
+	
+	/**
+	 * This method is returns the JSP page(ModelAndView) to administrator
+	 * In this JSP page admin can reset his password
+	 */
+	@RequestMapping(value = "/getResetPasswordPage", method = RequestMethod.GET)
+	public ModelAndView getResetPAsswordPage(@RequestParam("id") int adminId){
+		logger.info("admin id receiv3d for reset password  :"+adminId);
+		return new ModelAndView("NewAdminDashboard","resetPasswordAdminId",adminId);
+	}
+	
+	/**
+	 * This method is to reset the admin password
+	 * returns 1 after successful reset
+	 */
+	@RequestMapping(value = "/setNewAdminPassword", method = RequestMethod.POST)
+	public @ResponseBody int setNewPassword(@RequestBody Admin admin){
+		logger.info("admin receiv3d for reset password  :"+admin);		
+	     return 	securityService.resetPassword(admin);
 	}
 
 	/*

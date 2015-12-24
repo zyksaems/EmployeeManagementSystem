@@ -1,5 +1,4 @@
-
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html ng-app="ui.ems.app">
  <head>
     <script src="./resources/angular.js"></script>
@@ -12,6 +11,7 @@
     <link href="./resources/AdminDashboard.css" rel="stylesheet">
     <link href="./resources/AdminLogin.css" rel="stylesheet">
     <link href="./resources/AttendanceForm.css" rel="stylesheet">
+    <link href="./resources/admin_ResetPassword.css" rel="stylesheet">
     <link href="./resources/alert.css" rel="stylesheet">
     <link href="./resources/Admin_changePassword.css" rel="stylesheet">
     <link href="./resources/Admin_ViewOrEditEmployee.css" rel="stylesheet">
@@ -202,6 +202,41 @@
      </div>
      <!-- <div class="col-sm-1"></div>  -->
   </div>
+  
+  <!-- Divison to reset admin password -->
+  
+  <div class="row">
+    <p>${errorMsg}</p>
+	<c:if test="${resetPasswordAdminId != null}">
+	    <p ng-init="adminIdForNewPassword=${resetPasswordAdminId}"></p>
+	    <p class="adminResetText">admin id for set new password:  {{adminIdForNewPassword}}</p>
+		<div class="row" ng-show="showAdminResetPasswordDiv">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4 adminResetPasswordDiv">
+				<div class="row adminResetText">Reset your password</div>
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label class="control-label" for="email">Enter new
+							password</label> <input type="text" class="form-control" id="email" ng-model="adminNewPassword" placeholder="Enter new Password">
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="pwd">Confirm password</label> <input
+							type="text" class="form-control" ng-model="adminConfirmNewPassword" id="pwd"
+							placeholder="Confirm  new Password">
+					</div>
+					<div class="form-group">
+						<button type="submit" ng-click="setAdminNewPassword()" class="btn btn-default">Submit</button>
+					</div>
+				</form>
+				<div class="row adminResetPasswordDiv"><p>{{adminSetNewPasswordSuccessMsg}}</p></div>
+			</div>
+			<div class="col-sm-4"></div>
+		</div>
+		<div class="row" nh-hide="showForgotPasswordDiv"><p>{{adminSetNewPasswordSuccessMsg}}</p></div>
+	</c:if>
+</div>
+  
+  <!-- END- Divison to reset admin password -->
  
   <!-- form to take employee Attendance -->
   <div class="row" style="margin-top: 150px" ng-show="!showAdminDashBoard">  <!-- ng-show="!showAdminDashBoard" -->
