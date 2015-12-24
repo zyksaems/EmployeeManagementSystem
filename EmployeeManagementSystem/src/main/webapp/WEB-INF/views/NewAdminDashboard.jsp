@@ -217,15 +217,15 @@
 				<form class="form-horizontal" role="form">
 					<div class="form-group">
 						<label class="control-label" for="email">Enter new
-							password</label> <input type="text" class="form-control" id="email" ng-model="adminNewPassword" placeholder="Enter new Password">
+							password</label> <input type="password" class="form-control" id="email" ng-model="adminNewPassword" placeholder="Enter new Password">
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="pwd">Confirm password</label> <input
-							type="text" class="form-control" ng-model="adminConfirmNewPassword" id="pwd"
+							type="password" class="form-control" ng-model="adminConfirmNewPassword" id="pwd"
 							placeholder="Confirm  new Password">
 					</div>
 					<div class="form-group">
-						<button type="submit" ng-click="setAdminNewPassword()" class="btn btn-default">Submit</button>
+						<button type="submit btn btn-primary" ng-click="setAdminNewPassword()" class="btn btn-default">Reset Password</button>
 					</div>
 				</form>
 				<div class="row adminResetPasswordDiv"><p>{{adminSetNewPasswordSuccessMsg}}</p></div>
