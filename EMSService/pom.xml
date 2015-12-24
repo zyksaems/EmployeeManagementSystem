@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 	
 
-	<name>emsService</name>
+	<name>EMSService</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
