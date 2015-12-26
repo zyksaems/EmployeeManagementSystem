@@ -49,7 +49,7 @@ public class EmailUtility {
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailId));
 			message.setSubject("Forgot Password ");
-			message.setText("Dear " + name + ",\n\n \t Your  Reset Password  link is  " + url + " \n\nRegards,\nCaprusIT Team.");
+			message.setText("Dear " + name + ",\n\n\n \t Your  Reset Password  link is  " + url + " \n\n\n \t NOTE: This link will expire in 1 minute \n\nRegards,\nCaprusIT Team.");
 			// Transmit the mail
 			Transport.send(message);
 			System.out.println("Sent");
