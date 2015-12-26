@@ -5,10 +5,14 @@ import java.security.Key;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.log4j.Logger;
+
 public class EncryptionUtility {
 		
 		private static Cipher cipher;
 		private static Key secreteKey;
+		
+		private static Logger logger=Logger.getLogger(EncryptionUtility.class);
 		
 		public static byte[] encryptString(String passwordToEncrypt){
 			
@@ -80,11 +84,11 @@ public class EncryptionUtility {
 				
 				secreteKeyBuffer.append(key);
 			}
-			System.out.println("buffer after append: "+secreteKeyBuffer);
+			logger.info("buffer after append: "+secreteKeyBuffer);
 			
 			String finalSecreteKey=secreteKeyBuffer.substring(0, secreteKeyLength);
-			System.out.println("final secrete key created: "+finalSecreteKey +"\n its length: "+finalSecreteKey.length());
-			System.out.println("our calculated length is: "+secreteKeyLength);
+			logger.info("final secrete key created: "+finalSecreteKey +"\n its length: "+finalSecreteKey.length());
+			logger.info("our calculated length is: "+secreteKeyLength);
 			
 			return finalSecreteKey;
 		}
