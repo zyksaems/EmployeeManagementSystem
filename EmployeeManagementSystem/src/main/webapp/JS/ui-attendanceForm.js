@@ -1850,7 +1850,7 @@ $scope.showLineForm=function(){
 				          
 				            
 				     }).success(function(data, status, headers, config) {
-												if (data.length != 0) {
+				    	 if (data.employeeReport.length != 0) {
 													$scope.singleEmpReportEmpId=data.empId;
 										             $scope.singleEmpReportEmpName=data.empName;
 										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
@@ -1917,7 +1917,7 @@ $scope.showLineForm=function(){
 						           method : 'POST',
 						             url :'getReportByIdAndDate.do?employeeId=' + $scope.id+ '&attendanceDate=' +$scope.from.getTime()
 				            }).success(function(data, status, headers, config) {
-												if (data.length != 0) {
+				            	                   if (data.employeeReport.length != 0) {
 													 $scope.singleEmpReportEmpId=data.empId;
 										             $scope.singleEmpReportEmpName=data.empName;
 										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
@@ -1952,6 +1952,7 @@ $scope.showLineForm=function(){
 													$scope.selectedhours = selected;
 													$scope.ats = attendanceDetails;
 												} else {
+												
 													$scope.color1 = "red";
 													$scope.hide1 = true;
 													$scope.hide2 = true;
@@ -1986,7 +1987,7 @@ $scope.showLineForm=function(){
 					             method : 'GET',
 					             url : 'getReportByIdFromDateToDate.do?employeeId='+$scope.id+'&fromDate='+$scope.from.getTime()+'&toDate='+$scope.to.getTime()
 				            }).success(function(data, status, headers, config) {
-												if (data.length != 0) {
+				            	if (data.employeeReport.length != 0) {
 													 $scope.singleEmpReportEmpId=data.empId;
 										             $scope.singleEmpReportEmpName=data.empName;
 										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
@@ -2058,7 +2059,7 @@ $scope.showLineForm=function(){
 					             method : 'POST',
 					             url : 'getReportByName.do?employeeId='+$scope.id
 				            }).success(function(data, status, headers, config) {
-												if (data.length != 0) {
+				            	if (data.employeeReport.length != 0) {
 													 $scope.singleEmpReportEmpId=data.empId;
 										             $scope.singleEmpReportEmpName=data.empName;
 										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
@@ -2126,7 +2127,7 @@ $scope.showLineForm=function(){
 					             method : 'POST',
 					             url : 'getReportByNameDay.do?employeeId=' + $scope.id+ '&attendanceDate=' + $scope.from.getTime()
 				            }).success(function(data, status, headers, config) {
-												if (data.length != 0) {
+				            	if (data.employeeReport.length != 0) {
 													 $scope.singleEmpReportEmpId=data.empId;
 										             $scope.singleEmpReportEmpName=data.empName;
 										             $scope.singleEmpReportEmpDesignation=data.empDesignation;
@@ -2195,7 +2196,7 @@ $scope.showLineForm=function(){
 					             method : 'POST',
 					             url : 'getReportByNameBetweenDates.do?employeeId=' + $scope.id+ '&fromDate=' + $scope.from.getTime() + '&toDate=' + $scope.to.getTime()
 				            }).success(function(data, status, headers, config) {
-												if (data.length != 0) {
+				            	if (data.employeeReport.length != 0) {
 													 $scope.singleEmpReportEmpId=data.empId;
 										             $scope.singleEmpReportEmpName=data.empName;
 										             $scope.singleEmpReportEmpDesignation=data.empDesignation;

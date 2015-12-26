@@ -707,7 +707,7 @@
 				<ul id="ul1">
 					<li>:&nbsp;&nbsp;<i>{{singleEmpReportEmpId}}</i></li>
 					<li>:&nbsp;&nbsp;<i>{{singleEmpReportEmpName}}</i></li>
-					<li>:&nbsp;&nbsp;<i>{{singleEmpReportEmpDesignation}}></i></li>
+					<li>:&nbsp;&nbsp;<i>{{singleEmpReportEmpDesignation}}</i></li>
 				</ul>
 			</div>
 			<div id="resultperpage">

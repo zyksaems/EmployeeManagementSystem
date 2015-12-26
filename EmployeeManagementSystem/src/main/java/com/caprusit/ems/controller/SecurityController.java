@@ -1,8 +1,10 @@
 package com.caprusit.ems.controller;
 
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -27,7 +29,7 @@ public class SecurityController {
 	@Autowired
 	private ISecurityService securityService;
 	
-	private Set<Integer> resetPasswordAdminSet;
+	private Set<Integer> resetPasswordAdminSet=new HashSet<Integer>();
 
 	private Logger logger = Logger.getLogger(SecurityController.class);
 
@@ -77,18 +79,18 @@ public class SecurityController {
 	 */
 	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.POST)
 	public @ResponseBody int forgotPassword(HttpServletRequest request,@RequestParam("id") Integer adminId,@RequestParam("email") String emailId) {
-		HttpSession resetAdminsession= request.getSession();
-		resetPasswordAdminSet=(Set<Integer>) resetAdminsession.getAttribute("resetPaswordAdminIdList");
-		if(resetPasswordAdminSet == null)
-			resetPasswordAdminSet=new HashSet<Integer>();
-		resetPasswordAdminSet.add(adminId);
-		resetAdminsession.setAttribute("resetPaswordAdminIdList", resetPasswordAdminSet);
-		resetAdminsession.setMaxInactiveInterval(20000);
+		ServletContext servletContext= request.getSession().getServletContext();
+		resetPasswordAdminSet=(Set<Integer>) servletContext.getAttribute("resetPaswordAdminIdList");
+		if(resetPasswordAdminSet != null)
+		    resetPasswordAdminSet.add(adminId);
+		servletContext.setAttribute("resetPaswordAdminIdList", resetPasswordAdminSet);
+	
 		logger.info("port number of server: "+request.getServerPort());
 		logger.info("name of server: "+request.getServerName());
-		String url="http://"+request.getServerName()+":"+request.getServerPort()+"/EmployeeManagementSystem/getResetPasswordPage.do?id="+adminId;
+		String url="http://"+request.getServerName()+":"+request.getServerPort()+"/EmployeeManagementSystem/getResetPasswordPage.do?id="+adminId+"&&pas="+ Calendar.getInstance().getTimeInMillis();
 		logger.info("url created for reset password : "+url);
 		logger.info("in admin forgot password:  id: " + adminId + "    email: "+ emailId);
+		logger.info("reset admin id set(/resetPasswordAdminSet): "+resetPasswordAdminSet);
 		return securityService.forgotPassword(adminId, emailId,url);
 
 	}
@@ -98,12 +100,14 @@ public class SecurityController {
 	 * In this JSP page admin can reset his password
 	 */
 	@RequestMapping(value = "/getResetPasswordPage", method = RequestMethod.GET)
-	public ModelAndView getResetPAsswordPage(HttpServletRequest request,@RequestParam("id") int adminId){
+	public ModelAndView getResetPAsswordPage(HttpServletRequest request,@RequestParam("id") int adminId,@RequestParam("pas") long milliSeconds){
 		logger.info("admin id receiv3d for reset password  :"+adminId);
-		HttpSession resetAdminsession= request.getSession();
-		Set<Integer> resetAdminIdSet=(Set<Integer>) resetAdminsession.getAttribute("resetPaswordAdminIdList");
-		ModelAndView resetAdminModelAndVlew=(resetAdminIdSet != null && resetAdminIdSet.contains(adminId))?new ModelAndView("NewAdminDashboard","resetPasswordAdminId",adminId):new ModelAndView("NewAdminDashboard","errorMsg","Sorry, This link expired");
+		ServletContext servletContext= request.getSession(false).getServletContext();
+		long currentMilliSeconds=Calendar.getInstance().getTimeInMillis();
+		Set<Integer> resetAdminIdSet=(Set<Integer>) servletContext.getAttribute("resetPaswordAdminIdList");
+		ModelAndView resetAdminModelAndVlew=(resetAdminIdSet != null && resetAdminIdSet.contains(adminId) && (milliSeconds+ 20000 <= currentMilliSeconds) )?new ModelAndView("NewAdminDashboard","resetPasswordAdminId",adminId):new ModelAndView("NewAdminDashboard","errorMsg","Sorry, This link expired");
 		logger.info("model and view created for reset password: "+resetAdminModelAndVlew);
+		logger.info("reset admin id set(/getResetPasswordPage): "+resetAdminIdSet);
 		return resetAdminModelAndVlew;
 	}
 	
@@ -113,16 +117,18 @@ public class SecurityController {
 	 */
 	@RequestMapping(value = "/setNewAdminPassword", method = RequestMethod.POST)
 	public @ResponseBody int setNewPassword(HttpServletRequest request,@RequestBody Admin admin){
-		HttpSession resetAdminsession= request.getSession();
-		Set<Integer> resetAdminIdSet=(Set<Integer>) resetAdminsession.getAttribute("resetPaswordAdminIdList");
+		ServletContext servletContext= request.getSession(false).getServletContext();
+		Set<Integer> resetAdminIdSet=(Set<Integer>) servletContext.getAttribute("resetPaswordAdminIdList");
 		logger.info("admin received for reset password  :"+admin);		
 	     int resultResetPassword=securityService.resetPassword(admin);
 	     if(resultResetPassword ==1){
 	    	 resetAdminIdSet.remove(admin.getAdminId());
-	         resetAdminsession.setAttribute("resetPaswordAdminIdList", resetAdminIdSet);	        
+	    	 servletContext.setAttribute("resetPaswordAdminIdList", resetAdminIdSet);	     
+	         logger.info("reset admin id set(/setNewAdminPassword): "+resetAdminIdSet);
 	         return 1;
 	     }
 	     else{
+	    	 logger.info("reset admin id set(/setNewAdminPassword): "+resetAdminIdSet);
 	    	 return 0;
 	     }
 	}
