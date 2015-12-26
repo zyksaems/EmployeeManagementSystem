@@ -1,49 +1,49 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html ng-app="ui.ems.app">
  <head>
-    <script src="./resources/angular.js"></script>
-    <script src="./resources/ui-bootstrap-tpls-0.14.3.min.js"></script>
-    <script src="./resources/angular-animate.js"></script><!-- https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-animate.min.js -->
-    <script src="./resources/ui-attendanceForm.js"></script>
-    
+ 
+  <!-- AngularJS main script(library) file -->
+  <script src="./angularJs/angular.js"></script>
+  <script src="./angularJs/angular-animate.js"></script>
+  
+  <!-- setting icon to page -->
+  <link rel="shortcut icon" type="image/x-icon" href="images/faviconlogo.png"/>
+  
+  <!-- Bootstrap main script(library) file -->
+  <link href="./bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script src="./bootstrap/bootstrap.min.js"></script> 
+  <script src="./ui-bootstrap/ui-bootstrap-tpls-0.14.3.min.js"></script>
+  <script src="./jquery/jquery-2.1.4.js"></script>
+  
+ <c:choose>
+    <c:when test="${errorMsg != null}">
+       <script src="./JS/admin_resetPassword.js"></script>
+       <link href="./css/admin_ResetPassword.css" rel="stylesheet">
+    </c:when>
+    <c:when test="${resetPasswordAdminId != null}">
+       <script src="./JS/admin_resetPassword.js"></script>
+       <link href="./css/admin_ResetPassword.css" rel="stylesheet">
+    </c:when>
+    <c:otherwise>
+       <!--  for charts script-->
+       <script src="./chartJS/Chart.js"></script>  
+        
+       <script src="./JS/ui-attendanceForm.js"></script>  
+       <script src="./alertJS/alert.js"></script>       
      
-    <link href="./resources/bootstrap.min.css" rel="stylesheet">
-    <link href="./resources/AdminDashboard.css" rel="stylesheet">
-    <link href="./resources/AdminLogin.css" rel="stylesheet">
-    <link href="./resources/AttendanceForm.css" rel="stylesheet">
-    <link href="./resources/admin_ResetPassword.css" rel="stylesheet">
-    <link href="./resources/alert.css" rel="stylesheet">
-    <link href="./resources/Admin_changePassword.css" rel="stylesheet">
-    <link href="./resources/Admin_ViewOrEditEmployee.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="images/faviconlogo.png"/>
+       <link href="./css/Admin_Login.css" rel="stylesheet">
+       <link href="./css/AttendanceForm.css" rel="stylesheet">
+       <link href="./alertJS/alert.css" rel="stylesheet">
+       <link href="./css/Admin_changePassword.css" rel="stylesheet">
+       <link href="./css/Admin_ViewOrEditEmployee.css" rel="stylesheet">
+       <link rel="stylesheet" href="./css/Admin_addEmployeeDetails.css">
+       <link rel="stylesheet" href="css/generateReport.css">
+       
+    </c:otherwise>
+</c:choose>
+
     
     
-    <link rel="stylesheet" href="./resources/Admin_addEmployeeDetails.css">
-    
-    <!--for data tables  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
-    <script src="./resources/jquery.dataTables.min.js"></script>
-    <script src="./resources/angular-resource.js"></script>
-    <script src="./resources/angular-datatables.min.js"></script>
-    <script src="./resources/angular-datatables.bootstrap.min.js"></script>
-    <script src="./resources/bootstrap.min.js"></script> 
-    <script src="./resources/alert.js"></script>
-    <link rel="stylesheet" href="./resources/datatables.bootstrap.min.css">
-    
-    <!-- < for generate report page> -->
-    <script data-require="angular.js@1.3.9" data-semver="1.3.9" src="https://code.angularjs.org/1.3.9/angular.js"></script>
-         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
-         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
-         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
-         <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
-         <!--  <script src="example.js"></script> -->
-         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-         <!-- <script src="angularJs/angular.js"></script>	 -->
-         <link rel="stylesheet" type="text/css" href="css/GenerateReport.css">
-         <!--  <script src="js/GenerateReport.js"></script>
-    
-   <!--  for charts -->
-    <script src="./resources/Chart.js"></script>  
   </head>
    
   <body>
@@ -62,7 +62,56 @@
 
   
   </div>
-  <!-- for showing admin login modal -->
+  
+  <c:choose>
+    <c:when test="${errorMsg != null}">
+        <p class="linkErrorMsg">${errorMsg}</p>
+    </c:when>
+    <c:when test="${resetPasswordAdminId != null}">
+       
+         <!-- Divison to reset admin password -->
+  
+  <div class="row">
+    <p>${errorMsg}</p>
+	    <p ng-init="adminIdForNewPassword=${resetPasswordAdminId}"></p>	    
+		<div class="row" ng-show="showAdminResetPasswordDiv">
+		    <p class="adminResetPasswordHeading">Reset your Password</p>
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4 adminResetPasswordDiv">
+				<div class="row usernameText">your username:{{adminIdForNewPassword}}</div>
+				<div class="row">
+				<form class="form-horizontal" role="form">
+				    <div class="col-sm-3"></div>
+				    <div class="col-sm-6">
+					<div class="form-group">						    
+					    <input type="password" class="form-control passwordTextBox"  ng-model="adminNewPassword" placeholder="Enter new Password">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control passwordTextBox" ng-model="adminConfirmNewPassword" placeholder="Confirm  new Password">
+					</div>
+					<div class="form-group">
+						<button type="submit" ng-click="setAdminNewPassword()" class=" btn btn-info">Reset Password</button>
+					</div>
+					</div>
+					<div class="col-sm-3"></div>
+				</form>
+				</div>
+				<div class="row adminResetPasswordSuccessMsg"><p>{{adminSetNewPasswordSuccessMsg}}</p></div>
+			</div>
+			<div class="col-sm-4"></div>
+		</div>
+		<div class="row" ng-hide="showAdminResetPasswordDiv">
+		     <p class="resetSuccesmsg">{{adminSetNewPasswordSuccessMsg}}</p>
+		</div>
+	
+</div>
+  
+  <!-- END- Divison to reset admin password  --- END ---->
+       
+    </c:when>
+    <c:otherwise>
+        
+               <!-- for showing admin login modal -->
   <script type="text/ng-template" id="AdminLogin.html"> 
      <div style="background-color: #858585">
        <div class="modal-header AdminLoginHeader" ng-show="!showforgotPasswordDiv">
@@ -191,7 +240,7 @@
        </div>
    </script> 
      
-     
+    
   
   <!-- Top menu -->
   <div class="row" > 
@@ -202,41 +251,7 @@
      </div>
      <!-- <div class="col-sm-1"></div>  -->
   </div>
-  
-  <!-- Divison to reset admin password -->
-  
-  <div class="row">
-    <p>${errorMsg}</p>
-	<c:if test="${resetPasswordAdminId != null}">
-	    <p ng-init="adminIdForNewPassword=${resetPasswordAdminId}"></p>
-	    <p class="adminResetText">admin id for set new password:  {{adminIdForNewPassword}}</p>
-		<div class="row" ng-show="showAdminResetPasswordDiv">
-			<div class="col-sm-4"></div>
-			<div class="col-sm-4 adminResetPasswordDiv">
-				<div class="row adminResetText">Reset your password</div>
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label class="control-label" for="email">Enter new
-							password</label> <input type="password" class="form-control" id="email" ng-model="adminNewPassword" placeholder="Enter new Password">
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="pwd">Confirm password</label> <input
-							type="password" class="form-control" ng-model="adminConfirmNewPassword" id="pwd"
-							placeholder="Confirm  new Password">
-					</div>
-					<div class="form-group">
-						<button type="submit btn btn-primary" ng-click="setAdminNewPassword()" class="btn btn-default">Reset Password</button>
-					</div>
-				</form>
-				<div class="row adminResetPasswordDiv"><p>{{adminSetNewPasswordSuccessMsg}}</p></div>
-			</div>
-			<div class="col-sm-4"></div>
-		</div>
-		<div class="row" nh-hide="showForgotPasswordDiv"><p>{{adminSetNewPasswordSuccessMsg}}</p></div>
-	</c:if>
-</div>
-  
-  <!-- END- Divison to reset admin password -->
+ 
  
   <!-- form to take employee Attendance -->
   <div class="row" style="margin-top: 150px" ng-show="!showAdminDashBoard">  <!-- ng-show="!showAdminDashBoard" -->
@@ -429,49 +444,48 @@
     <div class="table-responsive" id="viewEmployeeDetails">
     <table  class="table row-border table-bordered table-hover">
     <thead>
-    <tr class="danger">
-          <th ng-click="sort('id')" class="info" >Emp Id <span
+    <tr>
+          <th ng-click="sort('id')">Emp Id <span
       class="glyphicon sort-icon" ng-show="sortKey=='id'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-     <th ng-click="sort('first_name')" class="warning">First Name <span
+     <th ng-click="sort('first_name')" >First Name <span
       class="glyphicon sort-icon" ng-show="sortKey=='first_name'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-     <th ng-click="sort('last_name')" class="success">Last Name <span
+     <th ng-click="sort('last_name')" >Last Name <span
       class="glyphicon sort-icon" ng-show="sortKey=='last_name'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-     <th ng-click="sort('dob')" class="info">Date Of Birth <span
+     <th ng-click="sort('dob')">Date Of Birth <span
       class="glyphicon sort-icon" ng-show="sortKey=='dob'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-     <th ng-click="sort('mob')" class="warning">Mobile No <span
+     <th ng-click="sort('mob')">Mobile No <span
       class="glyphicon sort-icon" ng-show="sortKey=='mob'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-     <th ng-click="sort('email')" class="success">Email Id <span
+     <th ng-click="sort('email')">Email Id <span
       class="glyphicon sort-icon" ng-show="sortKey=='email'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-     <th ng-click="sort('des')" class="info">Designation <span
+     <th ng-click="sort('des')" >Designation <span
       class="glyphicon sort-icon" ng-show="sortKey=='des'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-     <th ng-click="sort('role')" class="warning">Role Id <span
+     <th ng-click="sort('role')" >Role Id <span
       class="glyphicon sort-icon" ng-show="sortKey=='role'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-     <th ng-click="sort('status')" class="success">Status <span
+     <th ng-click="sort('status')" >Status <span
       class="glyphicon sort-icon" ng-show="sortKey=='status'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-     <th ng-click="sort('dept')" class="info">Dept Id <span
+     <th ng-click="sort('dept')" >Dept Id <span
       class="glyphicon sort-icon" ng-show="sortKey=='dept'"
       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
      </th>
-        <!--  <th>Index</th> -->
-        <th class="active">edit/save</th>
+     <th>edit/save</th>
     </tr>
     </thead>
     <tbody>
@@ -979,6 +993,12 @@
  </div>
   </div>  <!--  END of Admin DashBoard Division -->
   
+    </c:otherwise>
+ </c:choose>
+  
+     
+  
+ 
   
   
   <!--footer Part  -->
@@ -988,13 +1008,8 @@
            <div class="col-sm-4 "><img src="images/footer_logo.jpg" alt="footer logo" class="img-responsive"></div>
            <div class="col-sm-4 footerText text-right ">re-defining IT culture</div>
    </div> -->
-</div>
-  </div> 
-  
-  
-  
- 
- 
+</div> <!-- END of container division -->
+
 
   </body>
 </html>

@@ -23,10 +23,11 @@ public interface IManageUserService {
 
 	List<Employee> findAllUsers();
 
-	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream,String fileName);
-	
+	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream,
+			String fileName);
+
 	public int addSingleEmployee(Employee emp, String milliseconds);
-	
+
 	public int updateEmployee(Employee employee);
 
 }

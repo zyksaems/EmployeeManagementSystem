@@ -2462,7 +2462,7 @@ $scope.showLineForm=function(){
 		};
 		
 		
-		/*functionality for reset admin password*/
+		/* --------  BEGIN ----functionality for reset admin password ----  BEGIN ---------*/
 		
 		var adminNewPasswordMinLength=1;
 		$scope.showAdminResetPasswordDiv=true;
@@ -2707,12 +2707,15 @@ $scope.showLineForm=function(){
 					})
 					.success(
 							function(data, status, headers,	config) {
-								if(data=="Password sent to  your mail, please check your mail"){
+								if(data== 1){
 								$scope.hide1=true;
-								$scope.successmsg =data;
+								$scope.successmsg ="Reset password link sent to  your mail, please check your mail";
+								}
+								else if(data == 0){
+									$scope.failedmsg="You entered wrong mail Id";
 								}
 								else{
-									$scope.failedmsg=data;
+									$scope.failedmsg="You entered Invalid adminId";
 								}
 							})
 					.error(

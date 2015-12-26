@@ -1,5 +1,8 @@
 package com.caprusit.ems.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +26,8 @@ public class SecurityController {
 
 	@Autowired
 	private ISecurityService securityService;
+	
+	private Set<Integer> resetPasswordAdminSet;
 
 	private Logger logger = Logger.getLogger(SecurityController.class);
 
@@ -71,17 +76,20 @@ public class SecurityController {
 	 * EmailId on the browser.
 	 */
 	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.POST)
-	public @ResponseBody String forgotPassword(HttpServletRequest request,@RequestParam("id") Integer adminId,@RequestParam("email") String emailId) {
-		int portNum=request.getLocalPort();
-		logger.info("port number of system: "+portNum);
+	public @ResponseBody int forgotPassword(HttpServletRequest request,@RequestParam("id") Integer adminId,@RequestParam("email") String emailId) {
+		HttpSession resetAdminsession= request.getSession();
+		resetPasswordAdminSet=(Set<Integer>) resetAdminsession.getAttribute("resetPaswordAdminIdList");
+		if(resetPasswordAdminSet == null)
+			resetPasswordAdminSet=new HashSet<Integer>();
+		resetPasswordAdminSet.add(adminId);
+		resetAdminsession.setAttribute("resetPaswordAdminIdList", resetPasswordAdminSet);
+		resetAdminsession.setMaxInactiveInterval(20000);
 		logger.info("port number of server: "+request.getServerPort());
 		logger.info("name of server: "+request.getServerName());
 		String url="http://"+request.getServerName()+":"+request.getServerPort()+"/EmployeeManagementSystem/getResetPasswordPage.do?id="+adminId;
-		logger.info("url create dofr reset: "+url);
-		logger.info("in admin forgot password:  id: " + adminId + "    email: "
-				+ emailId);
+		logger.info("url created for reset password : "+url);
+		logger.info("in admin forgot password:  id: " + adminId + "    email: "+ emailId);
 		return securityService.forgotPassword(adminId, emailId,url);
-		/*return "1";*/
 
 	}
 	
@@ -90,9 +98,13 @@ public class SecurityController {
 	 * In this JSP page admin can reset his password
 	 */
 	@RequestMapping(value = "/getResetPasswordPage", method = RequestMethod.GET)
-	public ModelAndView getResetPAsswordPage(@RequestParam("id") int adminId){
+	public ModelAndView getResetPAsswordPage(HttpServletRequest request,@RequestParam("id") int adminId){
 		logger.info("admin id receiv3d for reset password  :"+adminId);
-		return new ModelAndView("NewAdminDashboard","resetPasswordAdminId",adminId);
+		HttpSession resetAdminsession= request.getSession();
+		Set<Integer> resetAdminIdSet=(Set<Integer>) resetAdminsession.getAttribute("resetPaswordAdminIdList");
+		ModelAndView resetAdminModelAndVlew=(resetAdminIdSet != null && resetAdminIdSet.contains(adminId))?new ModelAndView("NewAdminDashboard","resetPasswordAdminId",adminId):new ModelAndView("NewAdminDashboard","errorMsg","Sorry, This link expired");
+		logger.info("model and view created for reset password: "+resetAdminModelAndVlew);
+		return resetAdminModelAndVlew;
 	}
 	
 	/**
@@ -100,9 +112,19 @@ public class SecurityController {
 	 * returns 1 after successful reset
 	 */
 	@RequestMapping(value = "/setNewAdminPassword", method = RequestMethod.POST)
-	public @ResponseBody int setNewPassword(@RequestBody Admin admin){
-		logger.info("admin receiv3d for reset password  :"+admin);		
-	     return 	securityService.resetPassword(admin);
+	public @ResponseBody int setNewPassword(HttpServletRequest request,@RequestBody Admin admin){
+		HttpSession resetAdminsession= request.getSession();
+		Set<Integer> resetAdminIdSet=(Set<Integer>) resetAdminsession.getAttribute("resetPaswordAdminIdList");
+		logger.info("admin received for reset password  :"+admin);		
+	     int resultResetPassword=securityService.resetPassword(admin);
+	     if(resultResetPassword ==1){
+	    	 resetAdminIdSet.remove(admin.getAdminId());
+	         resetAdminsession.setAttribute("resetPaswordAdminIdList", resetAdminIdSet);	        
+	         return 1;
+	     }
+	     else{
+	    	 return 0;
+	     }
 	}
 
 	/*

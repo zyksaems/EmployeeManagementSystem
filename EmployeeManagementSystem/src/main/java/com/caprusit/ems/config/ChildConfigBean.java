@@ -24,7 +24,7 @@ public class ChildConfigBean extends WebMvcConfigurerAdapter {
 
 		return resolver;
 	}
-
+	
 	/**
 	 * Bean for view resolver
 	 * */

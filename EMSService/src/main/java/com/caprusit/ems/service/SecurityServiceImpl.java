@@ -50,24 +50,24 @@ public class SecurityServiceImpl implements ISecurityService {
 
 	}
 
-	public String forgotPassword(int adminId, String emailId,String url) {
-		String result = "";
+	public int forgotPassword(int adminId, String emailId,String url) {
+		int result;
 		List<Object> mailInfo = securityDAO.forgotPassword(adminId);
 		Object[] data = (Object[]) mailInfo.get(0);
 		if (data != null) {
 			if (data[1].equals(emailId)) {
 				emailUtility.sendMail(emailId, url, (String) data[0] + " " + (String) data[2]);
-				result = "Password sent to  your mail, please check your mail";
+				result = 1;
 				logger.info("Mail sent successfully to your  mail id");
 			} else {
-				result = "You entered wrong EmailId";
+				result = 0;
 				logger.info("Incorrect EmalId");
 			}
 		} else {
-			result = "You entered wrong AdminID";
+			result = -1;
 			logger.info("Incorrect AdminId");
 		}
-		return JsonUtility.convertToJson(result);
+		return result;
 	}
 
 	public int changePassword(Admin admin,String newPassword) {

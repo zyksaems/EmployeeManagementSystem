@@ -39,7 +39,6 @@ public class ParentConfigBean {
 
 	@Value("${password}")
 	private String password;
-
 	
 	/*Bean creation for getting dataSource*/
 	@Bean(name = "dataSource")

@@ -6,7 +6,6 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptionUtility {
-
 		
 		private static Cipher cipher;
 		private static Key secreteKey;
