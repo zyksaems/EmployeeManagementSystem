@@ -30,6 +30,9 @@ public class SecurityController {
 	private ISecurityService securityService;
 	
 	private Set<Integer> resetPasswordAdminSet=new HashSet<Integer>();
+	
+	/*This integer represents validity time in  minutes */
+	private int passwordLinkValidTime=1;
 
 	private Logger logger = Logger.getLogger(SecurityController.class);
 
@@ -81,8 +84,11 @@ public class SecurityController {
 	public @ResponseBody int forgotPassword(HttpServletRequest request,@RequestParam("id") Integer adminId,@RequestParam("email") String emailId) {
 		ServletContext servletContext= request.getSession().getServletContext();
 		resetPasswordAdminSet=(Set<Integer>) servletContext.getAttribute("resetPaswordAdminIdList");
-		if(resetPasswordAdminSet != null)
-		    resetPasswordAdminSet.add(adminId);
+		if(resetPasswordAdminSet == null){
+			resetPasswordAdminSet=new HashSet<Integer>();
+		}
+		resetPasswordAdminSet.add(adminId);
+	    logger.info("admin id added to context");
 		servletContext.setAttribute("resetPaswordAdminIdList", resetPasswordAdminSet);
 	
 		logger.info("port number of server: "+request.getServerPort());
@@ -90,7 +96,7 @@ public class SecurityController {
 		String url="http://"+request.getServerName()+":"+request.getServerPort()+"/EmployeeManagementSystem/getResetPasswordPage.do?id="+adminId+"&&pas="+ Calendar.getInstance().getTimeInMillis();
 		logger.info("url created for reset password : "+url);
 		logger.info("in admin forgot password:  id: " + adminId + "    email: "+ emailId);
-		logger.info("reset admin id set(/resetPasswordAdminSet): "+resetPasswordAdminSet);
+		logger.info("reset admin id set(/forgotPasswordHome): "+resetPasswordAdminSet);
 		return securityService.forgotPassword(adminId, emailId,url);
 
 	}
@@ -102,11 +108,15 @@ public class SecurityController {
 	@RequestMapping(value = "/getResetPasswordPage", method = RequestMethod.GET)
 	public ModelAndView getResetPAsswordPage(HttpServletRequest request,@RequestParam("id") int adminId,@RequestParam("pas") long milliSeconds){
 		logger.info("admin id receiv3d for reset password  :"+adminId);
-		ServletContext servletContext= request.getSession(false).getServletContext();
+		ServletContext servletContext= request.getSession().getServletContext();
 		long currentMilliSeconds=Calendar.getInstance().getTimeInMillis();
 		Set<Integer> resetAdminIdSet=(Set<Integer>) servletContext.getAttribute("resetPaswordAdminIdList");
-		ModelAndView resetAdminModelAndVlew=(resetAdminIdSet != null && resetAdminIdSet.contains(adminId) && (milliSeconds+ 20000 <= currentMilliSeconds) )?new ModelAndView("NewAdminDashboard","resetPasswordAdminId",adminId):new ModelAndView("NewAdminDashboard","errorMsg","Sorry, This link expired");
+		ModelAndView resetAdminModelAndVlew=(resetAdminIdSet != null && resetAdminIdSet.contains(adminId) && (currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000) )?new ModelAndView("NewAdminDashboard","resetPasswordAdminId",adminId):new ModelAndView("NewAdminDashboard","errorMsg","Sorry, This link expired");
 		logger.info("model and view created for reset password: "+resetAdminModelAndVlew);
+		logger.info("condition for time checking:   "+(currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000 ));
+		logger.info("condition for time checking    currentTime:-   "+currentMilliSeconds );
+		logger.info("condition for time checking    sent+: ++  "+	(currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000) );
+	
 		logger.info("reset admin id set(/getResetPasswordPage): "+resetAdminIdSet);
 		return resetAdminModelAndVlew;
 	}
