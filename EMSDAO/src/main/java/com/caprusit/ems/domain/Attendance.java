@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "attendance_table")
+@Table(name = "PRAKASH.attendance_table")
 public class Attendance implements Serializable {
 
 	private static final long serialVersionUID = 1L;

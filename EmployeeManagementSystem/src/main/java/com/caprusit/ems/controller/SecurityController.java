@@ -80,6 +80,7 @@ public class SecurityController {
 	 * Successfully or error message such as You entered incorrect adminId or
 	 * EmailId on the browser.
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/forgotPasswordHome", method = RequestMethod.POST)
 	public @ResponseBody int forgotPassword(HttpServletRequest request,@RequestParam("id") Integer adminId,@RequestParam("email") String emailId) {
 		ServletContext servletContext= request.getSession().getServletContext();
@@ -105,9 +106,10 @@ public class SecurityController {
 	 * This method is returns the JSP page(ModelAndView) to administrator
 	 * In this JSP page admin can reset his password
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getResetPasswordPage", method = RequestMethod.GET)
 	public ModelAndView getResetPAsswordPage(HttpServletRequest request,@RequestParam("id") int adminId,@RequestParam("pas") long milliSeconds){
-		logger.info("admin id receiv3d for reset password  :"+adminId);
+		logger.info("admin id received for reset password  :"+adminId);
 		ServletContext servletContext= request.getSession().getServletContext();
 		long currentMilliSeconds=Calendar.getInstance().getTimeInMillis();
 		Set<Integer> resetAdminIdSet=(Set<Integer>) servletContext.getAttribute("resetPaswordAdminIdList");
@@ -128,6 +130,7 @@ public class SecurityController {
 	@RequestMapping(value = "/setNewAdminPassword", method = RequestMethod.POST)
 	public @ResponseBody int setNewPassword(HttpServletRequest request,@RequestBody Admin admin){
 		ServletContext servletContext= request.getSession(false).getServletContext();
+		@SuppressWarnings("unchecked")
 		Set<Integer> resetAdminIdSet=(Set<Integer>) servletContext.getAttribute("resetPaswordAdminIdList");
 		logger.info("admin received for reset password  :"+admin);		
 	     int resultResetPassword=securityService.resetPassword(admin);

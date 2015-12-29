@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ADMINISTRATOREMS_TABLE")
+@Table(name = "PRAKASH.ADMINISTRATOREMS_TABLE")
 public class EncryptedAdmin implements Serializable {
 
 	private static final long serialVersionUID = 1L;

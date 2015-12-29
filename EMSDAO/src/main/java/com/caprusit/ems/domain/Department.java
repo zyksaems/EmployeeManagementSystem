@@ -6,15 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="DEPARTMENT_TABLE")
+@Table(name="PRAKASH.DEPARTMENT_TABLE")
 public class Department implements Serializable{
 
-	/**
-	 * 
-	 */
-	
 	private static final long serialVersionUID = 1L;
 	@Id
 	private int deptId;

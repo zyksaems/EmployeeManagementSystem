@@ -2,6 +2,7 @@ package com.caprusit.ems.domain;
 
 import java.io.Serializable;
 
+
 public class EmployeeData implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
