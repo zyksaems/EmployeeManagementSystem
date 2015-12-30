@@ -20,6 +20,7 @@ import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.Department;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EncryptedAdmin;
+import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.Role;
 import com.caprusit.ems.utility.EmailUtility;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
@@ -57,7 +58,7 @@ public class ParentConfigBean {
 		
 		LocalSessionFactoryBean  factory= new LocalSessionFactoryBean ();
 		factory.setDataSource(getDataSource());
-		factory.setAnnotatedClasses(Employee.class,Attendance.class,EncryptedAdmin.class,Role.class,Department.class);
+		factory.setAnnotatedClasses(Employee.class,Attendance.class,EncryptedAdmin.class,Role.class,Department.class,EncryptedEmployee.class);
 		Properties p=new Properties();		
 	    p.load(new ClassPathResource("properties/hibernate.properties").getInputStream()); //load gives FileNotFound and IOException
 		factory.setHibernateProperties(p);

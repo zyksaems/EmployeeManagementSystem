@@ -3,6 +3,7 @@ package com.caprusit.ems.dao;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -31,11 +32,8 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 	public List<Employee> getEmployees() {
 		logger.info("inside ManageUserDAOImpl getEmployees()");
 		Session session = sessionFactory.openSession();
-		String sql = "SELECT * FROM EMPLOYEE_TABLE";
-		SQLQuery query = session.createSQLQuery(sql);
-		query.addEntity(Employee.class);
-		@SuppressWarnings("unchecked")
-		List<Employee> results = query.list();		
+		Criteria allEmployeeCriteria=session.createCriteria(Employee.class);
+		List<Employee> results = allEmployeeCriteria.list();		
 		session.close();
 		return results;
 	}

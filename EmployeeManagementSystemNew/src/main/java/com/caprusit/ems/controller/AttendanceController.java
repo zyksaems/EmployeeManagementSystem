@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.caprusit.ems.domain.LoginTest;
+import com.caprusit.ems.domain.EmployeeAttendanceRequest;
 import com.caprusit.ems.service.IAttendanceService;
 
 @Controller
@@ -24,7 +24,7 @@ public class AttendanceController {
 	 * This method is for inserting and updating employee attendance 
 	 * */
 	@RequestMapping(value="/login",method = RequestMethod.POST)
-	public @ResponseBody Integer login(@RequestBody LoginTest test) {
+	public @ResponseBody Integer login(@RequestBody EmployeeAttendanceRequest test) {
 		
 		logger.info("inside attendance controller login()");
 
@@ -42,6 +42,22 @@ public class AttendanceController {
 		logger.info("inside attendance controlller init()");
 		
 		return "NewAdminDashboard";
+		
+	}
+	
+	/**
+	 * This method takes attendance request
+	 * returns 1 on successful login/logout
+	 * returns 0 if password is wrong
+	 * returns -1 if any problem occurs 
+	 * */
+	@RequestMapping(value="/secureLogin",method = RequestMethod.POST)
+	public @ResponseBody int postEmployeeAttendance(@RequestBody  EmployeeAttendanceRequest attendanceRequest) {
+
+		logger.info("inside attendance controlller -- postEmployeeAttendance()");
+		logger.info("attendance request received: "+attendanceRequest);
+		
+		return attendanceService.EmployeeLogInOrLogOut(attendanceRequest);
 		
 	}
 

@@ -79,6 +79,12 @@
   text-align: center;
 }
 
+.changePasswordSuccessMsg{
+
+     text-align: center;
+     font-size: 20px;
+}
+
 </style>
 <!-- java  script -->
 <script type="text/javascript">
@@ -149,7 +155,19 @@
 	        	/* variable for showing logout error message (String) */
 	        	var outTimeErrorMsg="Error in logout Try again?";
 	        	/* variable for showing internal server error message (String) */
-	        	var internalServerProblem="Some problem occured try again! "
+	        	var internalServerProblem="Some problem occured try again! ";
+	        	
+	        	/* variable for storing request url's for making ajax calls*/
+	        	/* variable for storing application name (String) */
+	        	var applicationName="EmployeeManagementSystemNew";
+	        	/* variable for storing get all employee ids request (String) */
+	        	var allEmployeeIdsRequest="getAllEmpIds.do";
+	        	/* variable for storing get logged out employee ids request (String) */
+	        	var loggedOutEmpIdsRequest="getLoggedOutEmpIds.do";
+	        	/* variable for storing get logged in employee ids request (String) */
+	        	var loggedInEmpIdsRequest="getLoggedInEmpIds.do";
+	        	/* variable for storing attendance request (String) */
+	        	var sendAttendanceRequest="secureLogin.do";
 
 			   /* 
 				* function for setting default values to attendance form 
@@ -185,7 +203,7 @@
 				 */
 				function getAllEmpployeeIds(){
 					
-					$.post("/EmployeeManagementSystem/getAllEmpIds.do", function( data ) {
+					$.post("/"+applicationName+"/"+allEmployeeIdsRequest, function( data ) {
 						   console.log("All employee ids data: "+data);
 						   console.log("All employee ids array length: "+data.length);
 						   allEmployeeIdsArray=data;
@@ -198,7 +216,7 @@
 				 */
 				function getLoggedOutEmpployeeIds(){
 					
-					$.post("/EmployeeManagementSystem/getLoggedOutEmpIds.do", function( data ) {
+					$.post("/"+applicationName+"/"+loggedOutEmpIdsRequest, function( data ) {
 						   console.log("logged out  employee ids data: "+data);
 						   loggedOutEmployeeIdsArray=data;
 						   $("#loggedOutEmpArray").text("logged-out employees: "+JSON.stringify(loggedOutEmployeeIdsArray));
@@ -210,7 +228,7 @@
 				 */
 				function getLoggedInEmpployeeIds(){
 					
-					$.post("/EmployeeManagementSystem/getLoggedInEmpIds.do", function( data ) {
+					$.post("/"+applicationName+"/"+loggedInEmpIdsRequest, function( data ) {
 						   console.log("logged in  employee ids data: "+data);
 						   loggedInEmployeeIdsArray=data;
 						   $("#loggedInEmpArray").text("logged-in employees: "+JSON.stringify(loggedInEmployeeIdsArray));
@@ -356,14 +374,15 @@
 						  disableOrEnableAttendanceButton();
 					  }
 				 };// END --changeCssClassOfEmpPasswordTextBox(empPasswordLength)
-				 
+				
 				 /*
 				  * function for searching element in plain JsonArray
 				  */
 				  function postAttendance(attendanceObject) {
 					  var result=0;
+					  console.log("attendance url: "+"/"+applicationName+"/"+sendAttendanceRequest);
 					   $.ajax ({
-						    url: "/EmployeeManagementSystem/secureLogin.do",
+						    url: "/"+applicationName+"/"+sendAttendanceRequest,
 						    type: "POST",
 						    data: JSON.stringify(attendanceObject),
 						    dataType: "json",
@@ -471,11 +490,11 @@
 	            /* creating variables for error or success messages to display on browser */
 	            
 	            /* variable to display short employee id error message  (string) */
-	            var shortEmployeeIdMsg="short empoyee ID";
+	            var shortEmployeeIdMsg="Empoyee ID is short";
 	            /* variable to display employee id is wrong error message  (string) */
 	            var invalidChangePassEmployeeIdMsg="Invalid employee ID";
 	            /* variable to display current password is short error message  (string) */
-	            var shortCurrentPasswordMsg="current password is short";
+	            var shortCurrentPasswordMsg="Current password is short";
 	            /* variable to display new password is short error message  (string) */
 	            var shortNewPasswordMsg="New password is short";
 	            /* variable to display new password and confirm password not mateched error message  (string) */
@@ -634,14 +653,18 @@
 					<div class="col-sm-8">
 					    <div class="row changePasswordHeading">Change password</div>
 						<form action="#" class="form-horizontal">
+						    <label >Employee ID:</label>
 							<input type="text" placeholder="Enter employee ID" class="form-control" maxlength="6" id="changePasswordemployeeID" autocomplete="off"><br> 
+							<label >Current password:</label>
 							<input type="password" placeholder="Enter Current password" class="form-control" maxlength="30" id="employeeCurrentPassword"><br> 
+							<label >New passwod:</label>
 							<input type="password" placeholder="Enter New Password" class="form-control" maxlength="30" id="employeeNewPassword" /> <br>
+							<label >Confirm new password:</label>
 							<input type="password" placeholder="Confirm New Password" class="form-control" maxlength="30" id="employeeConfirmPassword" /> <br> 
 						    <button class="btn  btn-primary" id="changeEmployeePasswordButton">change Password</button>
 						    <button class="btn  btn-primary" id="cancelButton">cancel</button>
 						</form>
-						<div class="row"><p id="changeEmployeePasswordSuccessMsg"></p></div>
+						<div class="row"><p class="changePasswordSuccessMsg" id="changeEmployeePasswordSuccessMsg"></p></div>
 					</div>
 					<div class="col-sm-2">
 					     

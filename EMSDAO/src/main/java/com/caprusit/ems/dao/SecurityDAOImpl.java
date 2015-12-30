@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.caprusit.ems.domain.Admin;
 import com.caprusit.ems.domain.EncryptedAdmin;
+import com.caprusit.ems.domain.EncryptedEmployee;
 
 @Repository
 public class SecurityDAOImpl implements ISecurityDAO {
@@ -93,6 +94,17 @@ public class SecurityDAOImpl implements ISecurityDAO {
 		session.update(encryptedAdmin);
 		ts.commit();
 		return 1;	 
+	}
+	
+	/**
+	 * This method takes employee id
+	 * returns employee password employee object format
+	 */
+	public EncryptedEmployee getEmployeeCurrentPassword(int employeeNumber) {
+		Session session = sessionFactory.openSession();	
+		EncryptedEmployee employee=(EncryptedEmployee) session.get(EncryptedEmployee.class, employeeNumber);
+		session.close();
+		return employee;
 	}
 
 
