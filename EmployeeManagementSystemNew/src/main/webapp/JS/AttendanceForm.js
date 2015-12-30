@@ -1,94 +1,6 @@
+	
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>EMS AttendancePage</title>
-<script src="jquery/jquery-2.1.4.js"></script>
-<link href="./bootstrap/bootstrap.min.css" rel="stylesheet">
-<script src="./bootstrap/bootstrap.min.js"></script>
- <!-- setting icon to page -->
-  <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png"/>
-<!-- style sheet -->
-<style>
-
-.mainContainer{
-
-    font-family: verdana;
-}
-/* .attendanceForm {
-	margin-left: 45%;
-} */
-
-.employeeIdTextBOx_default {
-
-	box-shadow: 0px 1px 20px lightblue;
-	text-align: center;
-}
-
-.employeeIdTextBOx_ok {
-	/*     border-color: green;
-       width: 150px;
-       height:150px;
-       color: green;	
-       text-align: center; */
-	box-shadow: 0px 1px 20px lightgreen;
-	text-align: center;
-}
-
-.employeeIdTextBOx_error {
-	/*  border-color: orange;
-       height: 50px;
-       width:200px;
-       color:red;
-       text-align: right; */
-	box-shadow: 0px 1px 20px red;
-	text-align: center;
-}
-
-.employeePassword{
-
-   text-align: center;
-}
-.AttendanceDiv{
-
-  background-color: lightblue;
-  border-radius: 15px;
-  margin-top: 5%;
-  
-}
-
-.employeeLoginSuccessMsg{
-
-     text-align: center;
-}
-.attendanceForm{
-     margin-top: 3%;
-}
-.attendanceHeading{
-
-     margin-top: 3%;
-     font-size: 20px;
-     text-align: center;
-}
-
-
-/*  --------------  css for employeee change password------------- */
-
-.changePasswordHeading{
-  text-align: center;
-}
-
-.changePasswordSuccessMsg{
-
-     text-align: center;
-     font-size: 20px;
-}
-
-</style>
-<!-- java  script -->
-<script type="text/javascript">
-	$("document").ready(
+$("document").ready(
 			function() {
 				
 				/*  variables  declaring  */
@@ -168,25 +80,47 @@
 	        	var loggedInEmpIdsRequest="getLoggedInEmpIds.do";
 	        	/* variable for storing attendance request (String) */
 	        	var sendAttendanceRequest="secureLogin.do";
+	        	
+	        	/*variables for storing bootstrap css classes*/
+				var successClass="has-success";
+				var glyphiconOk="glyphicon-ok";
+				var errorCalss="has-error" ;
+				var glyphiconError="glyphicon-remove";
+				
+				/*variables for storing id of diviions and text boxes and buttons*/
+				 var employeeId_id="#employee-id-val";
+				 var employeePassword_id="#employee-password-val";
+				 var employeeId_div_id="#employee-id-div";
+				 var employeeId_span_id="#employee-id-span";
+				 var employeePassword_div_id="#employee-password-div";
+				 var employeePassword_span_id="#employee-password-span";
+				 var employeeAttendanceButton_id="#employeeAttendanceButton";
+				 var employeeLoginSuccessMsg_id="#employeeLoginSuccessMsg";
 
 			   /* 
 				* function for setting default values to attendance form 
 				*/
 				function setDefaultVales(){
 					
-					$("#employeeID").val("");
-					$("#employeePassword").val("");
-					$("#employeeAttendanceButton").text(login);
-					$( "#employeeAttendanceButton" ).prop( "disabled", true );
-					$("#employeeID").removeClass(employeeIdCssOkClass).addClass(employeeIdCssDefaultClass);
-					$("#employeePassword").removeClass(employeeIdCssOkClass).addClass(employeeIdCssDefaultClass);
+					$(employeeId_id).val("");
+					$(employeePassword_id).val("");
+					$(employeeAttendanceButton_id).text(login);
+					$(employeeAttendanceButton_id).prop( "disabled", true );					
 					loggedInstatus=false;
 					loggedOutstatus=false;
 					employeeIdFlag=false;
 					employeePasswordFlag=false;
 					
+					/*remove success classes for divisions and set default classes*/
+					$(employeePassword_div_id).removeClass(successClass);
+					$(employeePassword_span_id).removeClass(glyphiconOk);
+					$(employeeId_div_id).removeClass(successClass);
+					$(employeeId_span_id).removeClass(glyphiconOk);
+					
 				}// END--setDefaultVales()
 				
+				/*setting employee id text box maxlength property*/
+				$(employeeId_id).prop( "maxlength", employeeIdMinLength );
 				
 				/* function call to set default values */
 				setDefaultVales();
@@ -195,7 +129,7 @@
 			    getAllEmpployeeIds();
 				getLoggedOutEmpployeeIds();
 				getLoggedInEmpployeeIds(); 
-				
+
 				
 				
 				/* This funcion will make ajax call to get 
@@ -240,38 +174,36 @@
                 /*  function for employee id text box
                  *  This function calls when keyup - employee id text box
                  */
-				$("#employeeID").keyup(function() {
+				$(employeeId_id).keyup(function() {
 
-					var employeeIdLength = $("#employeeID").val().length;
-					$("#employeeID").removeClass(employeeIdCssDefaultClass);
+					var employeeIdLength = $(employeeId_id).val().length;
 					/* function call to change css class function */
 					changeCssClassOfEmpIdTextBox(employeeIdLength);
 
-				});// END -- $("#employeeID").keyup()
+				});// END -- $(employeeId_id).keyup()
 				
 				
 				/*  function for employee password text box
                  *  This function calls when keyup - employee password text box
                  */
-				$("#employeePassword").keyup(function() {
+				$(employeePassword_id).keyup(function() {
 					/* employeePasswordMinLength */
-					var empPasswordLength = $("#employeePassword").val().length;
-					$("#employeePassword").removeClass(employeeIdCssDefaultClass);
+					var empPasswordLength = $(employeePassword_id).val().length;					
 					/* function call to change css class function */
 					changeCssClassOfEmpPasswordTextBox(empPasswordLength);
 
-				});// END -- $("#employeePassword").keyup()
+				});// END -- $(employeePassword_id).keyup()
 				
 				/*  function for login/logout button
 	             *  This function calls when button clicks
 	             */			
-				$("#employeeAttendanceButton").click(function(){
+				$(employeeAttendanceButton_id).click(function(){
 					
 					console.log("button clicked??");
 					console.log("logged out status: "+loggedOutstatus);
 					console.log("logged in status: "+loggedInstatus);
-					employeePassword=$("#employeePassword").val();
-					employeeId=$("#employeeID").val();
+					employeePassword=$(employeePassword_id).val();
+					employeeId=$(employeeId_id).val();
 					 if(loggedOutstatus == false && loggedInstatus == false){
 						console.log("logged in - intime");
 					    attendanceObj={id:employeeId,type:attendanceLoginType,password:employeePassword};
@@ -292,7 +224,7 @@
 						setDefaultVales();
 					} 
 					
-				});//END -- $("#employeeAttendanceButton").click()
+				});//END -- $(employeeAttendanceButton_id).click()
 
 				
 				
@@ -303,7 +235,7 @@
 				function changeCssClassOfEmpIdTextBox(empIdLength) {
 
 					if (empIdLength == employeeIdMinLength) {
-						 employeeId=$("#employeeID").val();
+						 employeeId=$(employeeId_id).val();
 						console.log(" ok");
 						if(serachInJsonObjectArray(employeeId, allEmployeeIdsArray)){
 							console.log("loggedInEmployeeIdsArray "+loggedInEmployeeIdsArray);
@@ -316,27 +248,33 @@
 							
 							console.log("logged out status:- "+loggedOutstatus);
 							console.log("logged in status:- "+loggedInstatus); 
-							$("#employeeID").removeClass(employeeIdCssErrorClass).addClass(employeeIdCssOkClass);
-							$("#employeeLoginSuccessMsg").text((buttonText == invalid)? attendancePostedMsg: "");
-							$( "#employeeAttendanceButton" ).text(buttonText);
+	
+							$(employeeId_div_id).removeClass(errorCalss).addClass(successClass);
+							$(employeeId_span_id).removeClass(glyphiconError).addClass(glyphiconOk);
+							
+							$(employeeLoginSuccessMsg_id).text((buttonText == invalid)? attendancePostedMsg: "");
+							$( employeeAttendanceButton_id ).text(buttonText);
 							/* function call to deisable or enable button */
 							disableOrEnableAttendanceButton();
 						}
 						else{
+							$(employeeId_div_id).removeClass(successClass).addClass(errorCalss);
+							$(employeeId_span_id).removeClass(glyphiconOk).addClass(glyphiconError); 
 							employeeIdFlag=false;
 							/* function call to disable or enable button */
 							disableOrEnableAttendanceButton();
 							console.log("employee not --	 found");
-							$("#employeeLoginSuccessMsg").text(invalidIdMsg);
+							$(employeeLoginSuccessMsg_id).text(invalidIdMsg);
 						}
 						
-						/* $("#employeeLoginSuccessMsg").text("okk"); */
+						
 					}
 					else {
 						console.log(" error ");
+						$(employeeId_div_id).removeClass(successClass).addClass(errorCalss);
+						$(employeeId_span_id).removeClass(glyphiconOk).addClass(glyphiconError); 
 						employeeIdFlag=false;
-					    $("#employeeLoginSuccessMsg").text(""); 
-						$("#employeeID").removeClass(employeeIdCssOkClass).addClass(employeeIdCssErrorClass);
+					    $(employeeLoginSuccessMsg_id).text(""); 
 						/* function call to disable or enable button */
 						disableOrEnableAttendanceButton();
 					}
@@ -347,13 +285,13 @@
 			      * This function disables/enables the login button 
 				  */
 				 function disableOrEnableAttendanceButton(){
-					 /* $( "#employeeAttendanceButton" ).prop( "disabled",(buttonText == invalid && employeePasswordFlag== false && employeeIdFlag == false)? true: false ); */
+					 /* $( employeeAttendanceButton_id ).prop( "disabled",(buttonText == invalid && employeePasswordFlag== false && employeeIdFlag == false)? true: false ); */
 					 
 					  if(buttonText == invalid || employeePasswordFlag == false || employeeIdFlag == false ){
-						  $( "#employeeAttendanceButton" ).prop( "disabled",true );
+						  $( employeeAttendanceButton_id ).prop( "disabled",true );
 					  }
 					  else{
-						  $( "#employeeAttendanceButton" ).prop( "disabled",false );
+						  $( employeeAttendanceButton_id ).prop( "disabled",false );
 					  }
 				 };// END --disableOrEnableAttendanceButton()
 				 
@@ -363,12 +301,17 @@
 				 function changeCssClassOfEmpPasswordTextBox(empPasswordLength){
 					 
 					  if(empPasswordLength < employeePasswordMinLength ){
-					    $("#employeePassword").removeClass(employeeIdCssOkClass).addClass(employeeIdCssErrorClass);
-					    employeePasswordFlag=false;
-					    disableOrEnableAttendanceButton();
+					  
+						  $(employeePassword_div_id).removeClass(successClass).addClass(errorCalss);
+						  $(employeePassword_span_id).removeClass(glyphiconOk).addClass(glyphiconError);  
+					      employeePasswordFlag=false;
+					      disableOrEnableAttendanceButton();
+					    
 					  }
 					  else{
-						  $("#employeePassword").removeClass(employeeIdCssErrorClass).addClass(employeeIdCssOkClass);
+						 
+						  $(employeePassword_div_id).removeClass(errorCalss).addClass(successClass);
+						  $(employeePassword_span_id).removeClass(glyphiconError).addClass(glyphiconOk);
 						  employeePasswordFlag=true;
 						  /* function call to deisable or enable button */
 						  disableOrEnableAttendanceButton();
@@ -380,7 +323,7 @@
 				  */
 				  function postAttendance(attendanceObject) {
 					  var result=0;
-					  console.log("attendance url: "+"/"+applicationName+"/"+sendAttendanceRequest);
+			
 					   $.ajax ({
 						    url: "/"+applicationName+"/"+sendAttendanceRequest,
 						    type: "POST",
@@ -391,24 +334,24 @@
 						    	console.log("data: "+data);
 						    	result=data;
 						        if(result == 1 || result == 2){
-						        	$("#employeeLoginSuccessMsg").text((attendanceObject.type == attendanceLoginType)? inTimeSuccessMsg : outTimeSuccessMsg );
+						        	$(employeeLoginSuccessMsg_id).text((attendanceObject.type == attendanceLoginType)? inTimeSuccessMsg : outTimeSuccessMsg );
 						        	(attendanceObject.type == attendanceLoginType)?loggedInEmployeeIdsArray.push(employeeId):loggedOutEmployeeIdsArray.push(employeeId);
 						        	/* function call to set default values */
 						        	setDefaultVales();
 						        }
 						        else if(result == 0){
-						        	$("#employeeLoginSuccessMsg").text(passwordIncorrectMsg );
-						        	/* function call to passwordWrong() */
-						        	passwordWrong();
+						        	$(employeeLoginSuccessMsg_id).text(passwordIncorrectMsg );
+						        	/* function call to attendancepasswordWrong() */
+						        	attendancepasswordWrong();
 						        	
 						        }
 						        else{
-						        	$("#employeeLoginSuccessMsg").text((attendanceObject.type == attendanceLoginType)? inTimeErrorMsg : outTimeErrorMsg );
+						        	$(employeeLoginSuccessMsg_id).text((attendanceObject.type == attendanceLoginType)? inTimeErrorMsg : outTimeErrorMsg );
 						        }
 						     },
 					      error: function(data){
 					    	  setDefaultVales();
-					    	  $("#employeeLoginSuccessMsg").text(internalServerProblem);
+					    	  $(employeeLoginSuccessMsg_id).text(internalServerProblem);
 					      }
 						}); 
 					   console.log("retult: "+result);
@@ -417,14 +360,15 @@
 			   /*
 				* function to set some default values when password is wrong
 				*/
-				function passwordWrong() {
+				function attendancepasswordWrong() {
 					
-					$("#employeePassword").val("");
+					$(employeePassword_id).val("");
 					employeePasswordFlag=false;
-					$("#employeePassword").removeClass(employeeIdCssOkClass).addClass(employeeIdCssDefaultClass);
-					$( "#employeeAttendanceButton" ).prop( "disabled", true );
+					$(employeePassword_div_id).removeClass(successClass);
+					$(employeePassword_span_id).removeClass(glyphiconOk);
+					$( employeeAttendanceButton_id ).prop( "disabled", true );
 
-				};// END -- passwordWrong()
+				};// END -- attendancepasswordWrong()
 				 
 				/*
 				 * function for searching element in JsonObjectArray 
@@ -465,12 +409,17 @@
 				$("#loggedOutEmpArray").text(loggedInEmployeeIdsArray);
 				
 				
-	/* ---------------------- employee change password functionality -------------------------------*/	
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------*/
+				
+				 
+				/* ---------------------- employee change password functionality -------------------------------*/	
+				
+				  
+				
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------*/				
 	
-	            $("#changePasswordemployeeID").val("");
-	            $("#employeeCurrentPassword").val("");
-	            $("#employeeNewPassword").val("");
-	            $("#employeeConfirmPassword").val("");
+	
+	           
 	            
 	            
 	            /* declaring variables */
@@ -499,9 +448,33 @@
 	            var shortNewPasswordMsg="New password is short";
 	            /* variable to display new password and confirm password not mateched error message  (string) */
 	            var newPasswordConfimPassNotMatchedMsg="New password and confirm password not matched";
+	            /* variable to display employee password successfully changed message  (string) */
+	            var changePasswordSuccessMsg="Password successfully changed!";
+	            /* variable to display current password is not corrent error message  (string) */
+	            var changePasswordCurrentPassNotMatchedMsg="Entered current password is wrong try again";
+	             /* variable to display internal problem in change password error message  (string) */
+	            var changePasswordInternalErrorMsg="Some problem occured try again !!";
 	            
 	            
+	            /* creating variables for sending ajax requset calls */
 	            
+	            /* variable store employee change password request url  (string) */
+	            var changePasswordRequest="changeEmployeePassword.do";
+	            
+	            /* setting some default values to text fields */
+	            /*
+	             * This function sets default values to text fleds 
+	             */
+	            function setChangePasswordDefaultValues(){
+	                $("#changePasswordemployeeID").val("");
+	                $("#employeeCurrentPassword").val("");
+	                $("#employeeNewPassword").val("");
+	                $("#employeeConfirmPassword").val("");
+	                
+	            };// END -- setChangePasswordDefaultValues()
+	            
+	            /* function call to set default values */
+	            setChangePasswordDefaultValues();
 	
 	            /*
 	             * This function is called when employee clicks change 
@@ -534,8 +507,9 @@
 						var correctDetailsFlag=validateChangePasswordDetails();
 					    console.log("correct details flag: "+correctDetailsFlag);
 					    if(correctDetailsFlag){
+					        var changePasswordObject={userName:changePasswordEmpoyeeId,currentPassword:employeeCurrentPassword,newPassword:employeeNewPassword};
 					    	/* function call to make ajax call for changing password */
-					    	makeAjaxCallToChangePassword();
+					    	makeAjaxCallToChangePassword(changePasswordObject);
 					    }
 					    else{
 					    	
@@ -555,51 +529,66 @@
                  */
 				function validateChangePasswordDetails(){
 					var errorMessage="";
-					errorMessage=(employeeNewPassword.length < employeePasswordMinLength)?shortNewPasswordMsg : errorMessage;
+					
 					errorMessage=(employeeNewPassword != employeeConfirmPassword)?newPasswordConfimPassNotMatchedMsg : errorMessage;
+					errorMessage=(employeeNewPassword.length < employeePasswordMinLength)?shortNewPasswordMsg : errorMessage;
 					errorMessage=(employeeCurrentPassword.length < employeePasswordMinLength)? shortCurrentPasswordMsg : errorMessage;
 					errorMessage=(changePasswordEmpoyeeIdFlag)? errorMessage : invalidChangePassEmployeeIdMsg;					
 					$("#changeEmployeePasswordSuccessMsg").text(errorMessage);
 					return (errorMessage == "")? true : false;
-				};
+					
+				};// END -- validateChangePasswordDetails()
 				
 				
 				/*  function for make ajax call to change password
                  *  
                  */
-				function makeAjaxCallToChangePassword(){
+				function makeAjaxCallToChangePassword(changePasswordObject){
 					$.ajax ({
-					    url: "/EmployeeManagementSystem/changeEmployeePassword.do",
+					    url: "/"+applicationName+"/"+changePasswordRequest,
 					    type: "POST",
-					    data: JSON.stringify(attendanceObject),
+					    data: JSON.stringify(changePasswordObject),
 					    dataType: "json",
 					    contentType: "application/json; charset=utf-8",
 					    success: function(data){
 					    	console.log("data: "+data);
-					    	result=data;
-					        if(result == 1 || result == 2){
-					        	$("#employeeLoginSuccessMsg").text((attendanceObject.type == attendanceLoginType)? inTimeSuccessMsg : outTimeSuccessMsg );
-					        	(attendanceObject.type == attendanceLoginType)?loggedInEmployeeIdsArray.push(employeeId):loggedOutEmployeeIdsArray.push(employeeId);
-					        	/* function call to set default values */
-					        	setDefaultVales();
+					    	var result=data;
+					    	var displayResult="";
+					        if(result == 1){
+					            /* function call to set default values */
+					            setChangePasswordDefaultValues();
+					        	displayResult=changePasswordSuccessMsg;  
 					        }
 					        else if(result == 0){
-					        	$("#employeeLoginSuccessMsg").text(passwordIncorrectMsg );
-					        	/* function call to passwordWrong() */
-					        	passwordWrong();
 					        	
+					        	displayResult=changePasswordCurrentPassNotMatchedMsg; 
+					        	/* function call to employeeEnteredWrongPassword() */
+					        	employeeEnteredWrongPassword(); 
 					        }
 					        else{
-					        	$("#employeeLoginSuccessMsg").text((attendanceObject.type == attendanceLoginType)? inTimeErrorMsg : outTimeErrorMsg );
+					        	displayResult=changePasswordInternalErrorMsg;
+					        	/* function call to set default values */
+					            setChangePasswordDefaultValues(); 
 					        }
+					        $("#changeEmployeePasswordSuccessMsg").text(displayResult);
 					     },
 				      error: function(data){
 				    	  setDefaultVales();
-				    	  $("#employeeLoginSuccessMsg").text(internalServerProblem);
+				    	  $("#changeEmployeePasswordSuccessMsg").text(internalServerProblem);
 				      }
 					}); 
-				};
+				};// END -- makeAjaxCallToChangePassword(changePasswordObject)
 				
+				/*  
+                 *  function to set default values when password is wrong
+                 */
+				function employeeEnteredWrongPassword(){
+				
+				     $("#employeeCurrentPassword").val("");
+	                 $("#employeeNewPassword").val("");
+	                 $("#employeeConfirmPassword").val("");
+				
+				};// END -- employeeEnteredWrongPassword()
 				
 	            
 	
@@ -608,83 +597,3 @@
 				
 				
 			});/*  END -- ready() */
-</script>
-</head>
-<body>
-
-	<div class="container-fluid mainContainer">
-		<div class="row">
-			<div class="logo">
-				<img src="" alt="logoImage" height="150px" width="100%" />
-			</div>
-		</div>
-		<!-- <div class="row">Attendace</div> -->
-		<div class="row" id="attendanceDivision">  
-			<div class="col-sm-4"></div>
-			<div class="col-sm-4">
-				<div class="row AttendanceDiv">
-				    <div class="col-sm-2"></div>
-					<div class="col-sm-8">
-					    <div class="row attendanceHeading">Post Attendance</div>
-						<form action="#" class="form-horizontal attendanceForm">
-							<input type="text" placeholder="Enter employee ID" class="form-control" maxlength="6" id="employeeID" autocomplete="off"><br> 
-							<input type="password" placeholder="Enter employee Password" class="form-control employeePassword" maxlength="30" id="employeePassword" /> <br>
-						    <button class="btn btn-group-justified btn-primary" id="employeeAttendanceButton"></button>
-						</form>
-						<div class="row employeeLoginSuccessMsg"><p id="employeeLoginSuccessMsg"></p></div>
-					</div>
-					<div class="col-sm-2">
-					     
-					</div>
-				</div>
-			</div>
-		    <div class="col-sm-1">
-		        <button class="btn btn-block btn-warning" id="showChangePasswordDivButton">change</button>
-		    </div>
-
-		</div>
-		
-		<!-- This Division for employee hange password -->
-		<div class="row" id="changePasswordDivision">
-			<div class="col-sm-4"></div>
-			<div class="col-sm-4">
-				<div class="row ">
-				    <div class="col-sm-2"></div>
-					<div class="col-sm-8">
-					    <div class="row changePasswordHeading">Change password</div>
-						<form action="#" class="form-horizontal">
-						    <label >Employee ID:</label>
-							<input type="text" placeholder="Enter employee ID" class="form-control" maxlength="6" id="changePasswordemployeeID" autocomplete="off"><br> 
-							<label >Current password:</label>
-							<input type="password" placeholder="Enter Current password" class="form-control" maxlength="30" id="employeeCurrentPassword"><br> 
-							<label >New passwod:</label>
-							<input type="password" placeholder="Enter New Password" class="form-control" maxlength="30" id="employeeNewPassword" /> <br>
-							<label >Confirm new password:</label>
-							<input type="password" placeholder="Confirm New Password" class="form-control" maxlength="30" id="employeeConfirmPassword" /> <br> 
-						    <button class="btn  btn-primary" id="changeEmployeePasswordButton">change Password</button>
-						    <button class="btn  btn-primary" id="cancelButton">cancel</button>
-						</form>
-						<div class="row"><p class="changePasswordSuccessMsg" id="changeEmployeePasswordSuccessMsg"></p></div>
-					</div>
-					<div class="col-sm-2">
-					     
-					</div>
-				</div>
-			</div>
-		    <div class="col-sm-4"></div>
-
-		</div>
-		
-		<!--  This division just for know employee login/logout details -->
-   <div class="row">
-      <!-- <div class="right" id="allEmployeeArray">All employee array</div>
-      <div class="right" id="loggedInEmpArray">All logged in employee array</div>
-      <div class="right" id="loggedOutEmpArray">All logged out employee array</div> -->
-   </div>
-
-	</div>
-	<!--END -- main division -->
-
-   
-</body>
-</html>

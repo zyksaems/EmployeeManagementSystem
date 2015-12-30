@@ -13,6 +13,7 @@ import com.caprusit.ems.domain.EmployeeAttendanceRequest;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.User;
 import com.caprusit.ems.utility.EncryptionUtility;
+import com.caprusit.ems.utility.ValidatePasswordUtility;
 
 @Service
 public class AttendanceServiceImpl implements IAttendanceService {
@@ -23,6 +24,9 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	
 	private Logger logger=Logger.getLogger(AttendanceServiceImpl.class);
 	
+	/**
+	 * This method is for 
+	 */
 	public int logInOrLogOut(EmployeeAttendanceRequest test) {
 		User user = new User();
 		user.setEid(test.getId());
@@ -42,7 +46,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		
 		EncryptedEmployee encryptedEmployee=securityDao.getEmployeeCurrentPassword(test.getId());
 		byte [] currentPassword=encryptedEmployee.getEncryptedPassword();
-		if(!validateEmployeePassword(test.getPassword(),currentPassword)){
+		if(!ValidatePasswordUtility.validatePassword(test.getPassword(),currentPassword)){
 			logger.info("returnning 0 to controller -- employeee password mismatch");
 			return 0;
 		}
@@ -78,24 +82,6 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		return attendance;
 	}
 	
-	/**
-	 * This method takes plain password and encrypted password
-	 * if plain password is correct returns true
-	 * otherwise returns false
-	 * 
-	 */
-	private boolean validateEmployeePassword(String plainPassword,byte [] encryptedPassword){
-		logger.info("inside validation of employee password");
-		String password=EncryptionUtility.decryptPassword(plainPassword,encryptedPassword);
-		if(password != null){
-			logger.info("employee password ok -proceed");
-			return true;
-		}
-		else{
-			logger.info("employee password wrong  - try again");
-		}
-		
-		return false;
-	}
+	
 
 }

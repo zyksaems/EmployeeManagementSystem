@@ -13,6 +13,8 @@ public interface ISecurityDAO {
 
 	public int changePassword(EncryptedAdmin encryptedAdmin);
 	
+	public int changeEmployeePassword(EncryptedEmployee encryptedEmployee);
+	
 	public EncryptedEmployee getEmployeeCurrentPassword(int employeeId);
 
 }

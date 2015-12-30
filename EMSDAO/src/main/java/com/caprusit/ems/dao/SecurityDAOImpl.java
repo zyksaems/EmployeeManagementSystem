@@ -98,13 +98,25 @@ public class SecurityDAOImpl implements ISecurityDAO {
 	
 	/**
 	 * This method takes employee id
-	 * returns employee password employee object format
+	 * returns employee object format
 	 */
-	public EncryptedEmployee getEmployeeCurrentPassword(int employeeNumber) {
+	public EncryptedEmployee getEmployeeCurrentPassword(int employeeId) {
 		Session session = sessionFactory.openSession();	
-		EncryptedEmployee employee=(EncryptedEmployee) session.get(EncryptedEmployee.class, employeeNumber);
+		EncryptedEmployee employee=(EncryptedEmployee) session.get(EncryptedEmployee.class, employeeId);
 		session.close();
 		return employee;
+	}
+
+	/**
+	 * This method is to change employee password
+	 * updates old password with new password
+	 */
+	public int changeEmployeePassword(EncryptedEmployee encryptedEmployee) {
+		Session session = sessionFactory.openSession();
+		Transaction ts=session.beginTransaction();
+		session.update(encryptedEmployee);
+		ts.commit();
+		return 1;	 
 	}
 
 

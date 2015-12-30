@@ -1,8 +1,7 @@
 package com.caprusit.ems.service;
 
-import java.io.InputStream;
-
 import com.caprusit.ems.domain.Admin;
+import com.caprusit.ems.domain.ChangePasswordRequest;
 
 public interface ISecurityService {
 	
@@ -14,6 +13,5 @@ public interface ISecurityService {
 	
 	int resetPassword(Admin admin);
 
-	String uploadEmployeeDetailsExcelFile(InputStream excelInputStream,
-			String fileName);
+	public int changeEmployeePassword(ChangePasswordRequest changePasswordData);
 }

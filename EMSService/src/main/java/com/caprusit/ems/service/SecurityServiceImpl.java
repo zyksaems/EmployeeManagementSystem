@@ -1,23 +1,20 @@
 package com.caprusit.ems.service;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.caprusit.ems.dao.ISecurityDAO;
 import com.caprusit.ems.domain.Admin;
+import com.caprusit.ems.domain.ChangePasswordRequest;
 import com.caprusit.ems.domain.EncryptedAdmin;
+import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.utility.EmailUtility;
 import com.caprusit.ems.utility.EncryptionUtility;
-import com.caprusit.ems.utility.JsonUtility;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
+import com.caprusit.ems.utility.ValidatePasswordUtility;
 
 @Service
 public class SecurityServiceImpl implements ISecurityService {
@@ -32,6 +29,13 @@ public class SecurityServiceImpl implements ISecurityService {
 
 	private Logger logger = Logger.getLogger(SecurityServiceImpl.class);
 
+	/**
+	 * This method is for administrator login validation
+	 * Takes admin object
+	 * returns 1 if password is correct
+	 * returns 0 if password is wrong
+	 * returns -1 if admin username is wrong
+	 */
 	public int login(Admin admin) {
 
 		String adminCurrentPassword=null;
@@ -50,6 +54,13 @@ public class SecurityServiceImpl implements ISecurityService {
 
 	}
 
+	/**
+	 * This method is for forgot password functionality
+	 * Takes username,email id,url
+	 * Returns 1 if mail sent to user
+	 * Returns 0 if mail ID is wrong
+	 * Returns -1 if username is wrong
+	 */
 	public int forgotPassword(int adminId, String emailId,String url) {
 		int result;
 		List<Object> mailInfo = securityDAO.forgotPassword(adminId);
@@ -70,6 +81,13 @@ public class SecurityServiceImpl implements ISecurityService {
 		return result;
 	}
 
+	/**
+	 * This method is for change administrator functionality
+	 * Takes admin object and new password
+	 * Returns 1 if password successfully changed
+	 * Returns 0 if old password is incorrect
+	 * Returns -1 if any problem occured
+	 */
 	public int changePassword(Admin admin,String newPassword) {
 
 		List<Object> oldPaswordList=securityDAO.getAdminCurrentPassword(new EncryptedAdmin(admin.getAdminId()));
@@ -91,33 +109,44 @@ public class SecurityServiceImpl implements ISecurityService {
 		
 	}
 
-	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream, String fileName) {
-
-		logger.info("in upload file(service)");
-		Workbook workbook = null;
-		String[] extensionArray = fileName.split("[.]");
-		logger.info("arrays isze: " + extensionArray.length);
-
-		try {
-
-			if (extensionArray[1].equals("xls")) {
-				workbook = new HSSFWorkbook(excelInputStream);
-				logger.info("2003 file");
-			} else {
-				logger.info("2007 file");
-				workbook = new XSSFWorkbook(excelInputStream);
-			}
-
-		} catch (IOException e) {
-			logger.error(e);
-		}
-		return excelFileUtility.saveExcelFileData(workbook);
-	}
-
+	/**
+	 * This method is to reset password incase of forgot password
+	 * Takes admin object
+	 * Returns 1 on successfull reset
+	 */
 	public int resetPassword(Admin admin) {
 		EncryptedAdmin encryptedAdmin=new EncryptedAdmin();
 		encryptedAdmin.setAdminId(admin.getAdminId());
 		encryptedAdmin.setPassword(EncryptionUtility.encryptString(admin.getPassword()));
 		return securityDAO.changePassword(encryptedAdmin);
 	}
+	
+	/**
+	 * This method is for chane employee funtionality
+	 * This method takes ChangePasswordrequest object
+	 * Returns 1 if successfully chaneged
+	 * Returns 0 if current password is wrong
+	 * Returns -1 if any problem ocuured
+	 */
+	public int changeEmployeePassword(ChangePasswordRequest changePasswordData) {
+        logger.info("in SecurityServiceImpl class -- changeEmployeePassword(ChangePasswordRequest changePasswordData)");
+        EncryptedEmployee encEmployee=securityDAO.getEmployeeCurrentPassword(changePasswordData.getUserName());
+        if(encEmployee == null){
+        	logger.info("entered username is not found in database");
+              return -1;	
+        }
+        else if(ValidatePasswordUtility.validatePassword(changePasswordData.getCurrentPassword(), encEmployee.getEncryptedPassword())){
+        	logger.info("validation ok -- now chaniging employee password");
+        	encEmployee.setEmployeeId(changePasswordData.getUserName());
+        	encEmployee.setEncryptedPassword(EncryptionUtility.encryptString(changePasswordData.getNewPassword()));
+        	return securityDAO.changeEmployeePassword(encEmployee);
+        	
+		}
+		else{
+			logger.info("entered password  is not matched with current password");
+			return 0;
+		}
+		
+	}
+
 }

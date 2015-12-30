@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Admin;
+import com.caprusit.ems.domain.ChangePasswordRequest;
 import com.caprusit.ems.service.ISecurityService;
 import com.caprusit.ems.utility.JsonUtility;
 
@@ -146,7 +147,7 @@ public class SecurityController {
 	     }
 	}
 
-	/*
+	/**
 	 * changePassword() method implementation This method takes current password
 	 * and new password as parameter and after checking all the conditions it
 	 * returns either a successful or an error message to the browser
@@ -174,6 +175,19 @@ public class SecurityController {
 			return JsonUtility.convertToJson(res);
 		}
 
+	}
+	
+	/**
+	 * changeEmployeePassword() method implementation This method takes current password
+	 * and new password as parameter and after checking all the conditions it
+	 * returns either a successful or an error message to the browser
+	 */
+	@RequestMapping(value = "/changeEmployeePassword", method = RequestMethod.POST)
+	public @ResponseBody int changeEmployeePassword(@RequestBody ChangePasswordRequest changePasswordData) {
+        logger.info("in security controller -- changeEmployeePassword()");
+        logger.info("change password request received : "+changePasswordData);
+        return  securityService.changeEmployeePassword(changePasswordData);
+       
 	}
 
 }
