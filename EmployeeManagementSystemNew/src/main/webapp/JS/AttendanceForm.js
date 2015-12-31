@@ -480,19 +480,9 @@ $("document").ready(
 	           var employeeChangePasswordSuccessMsg_id="#employee-change-password-success-message";
 	     
 	           
-	           /*hide the employee change password division*/
-	           $(employeeChangePasswordDiv_id).hide();
+	      
 	           
-	           /*
-	            * This function is to show employee change password division when button clicks
-	            * This function will hides attendance form division
-	            */
-	           $(showEmployeeChangePasswordDiv_id).click(function(){
-	        	   
-	        	   $(attendanceForm_id).hide();
-	        	   $(employeeChangePasswordDiv_id).show();
-	        	   
-	           });// END -- $(showEmployeeChangePasswordDiv_id).click()
+	           
 	            
 	            
 	            /* declaring variables */

@@ -12,7 +12,7 @@
   <script src="./bootstrap/bootstrap.min.js"></script>
 
   <!-- custom javascript file with jQuery code-->
-  <script src="./testHome/js/homepage.js"></script>
+  <script src="./JS/homepage.js"></script>
   <!-- <script src="./testHome/js/AttendanceForm.js"></script> -->
   <!-- <script src="./testHome/js/Admin_AdminSignin.js"></script>  -->
   <script src="./JS/AttendanceForm.js"></script> 
@@ -28,6 +28,8 @@
   <link rel="stylesheet" href="./CSS/footer.css">
   <link rel="stylesheet" href="./CSS/intime.css">
   <link rel="stylesheet" href="./CSS/signin.css"> 
+  <link rel="stylesheet" href="./CSS/aboutUs.css"> 
+  <link rel="stylesheet" href="./CSS/contactUs.css"> 
   
   
   
@@ -52,7 +54,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li  class="active" id="home-li"> <a href="#" id="home-link"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li  class="" id="home-li"> <a href="#" id="home-link"><span class="glyphicon glyphicon-home"></span> Home</a></li>
         <li  class="" id="show-Employee-Cahange-password-div"> <a href="#" id=""><span class="glyphicon glyphicon-pencil"></span> Change Password</a></li>
         <li id="about-li"><a href="#"><span class="glyphicon glyphicon-info-sign"></span>About</a></li>
         <li id="contact-li"><a href="#"><span class="glyphicon glyphicon-phone"></span>Contact</a></li>
@@ -124,7 +126,30 @@
 		</form>
     
 	</div><!--End of employee change password div  -->
+      <!--  About Us div --> 
+     <div class="container" id="about-us-div">
+        <div id="about" class="text-center">
+          <h1> About Employee Management System !</h1>
+          <p>
+             Employee Management System is an automated system for maintaining employee’s attendance details for any organization efficiently.<br>
+             It provides an environment to keep track of user attendance details to produce productivity.
+        </p>
+        </div>
+     </div>
 
+      <!--  Contact Us div --> 
+       <div id="contact-us-div" class="text-center">
+                 <h1> Registered Office :</h1>
+               <p>
+                      New Mark House <br>
+                      Patrika Nagar, Madhapur <br>
+                      Hyderabad - 81 <br>
+                      India . <br>
+                     +91-40-66201101 <br>
+                     +91-40-40171448  <br>
+  	           </p>
+       </div>
+  
 <!-- Sign-IN form Modal -->
 
   <div class="modal fade" id="myModal" role="dialog">
