@@ -117,10 +117,14 @@ $("document").ready(
 					$(employeeId_div_id).removeClass(successClass);
 					$(employeeId_span_id).removeClass(glyphiconOk);
 					
+					
+					
 				}// END--setDefaultVales()
 				
 				/*setting employee id text box maxlength property*/
 				$(employeeId_id).prop( "maxlength", employeeIdMinLength );
+				
+				
 				
 				/* function call to set default values */
 				setDefaultVales();
@@ -249,8 +253,10 @@ $("document").ready(
 							console.log("logged out status:- "+loggedOutstatus);
 							console.log("logged in status:- "+loggedInstatus); 
 	
-							$(employeeId_div_id).removeClass(errorCalss).addClass(successClass);
-							$(employeeId_span_id).removeClass(glyphiconError).addClass(glyphiconOk);
+							/*function call to set text box class to ok*/
+							setTextBoxClassOk(employeeId_div_id,employeeId_span_id);
+							/*$(employeeId_div_id).removeClass(errorCalss).addClass(successClass);
+							$(employeeId_span_id).removeClass(glyphiconError).addClass(glyphiconOk);*/
 							
 							$(employeeLoginSuccessMsg_id).text((buttonText == invalid)? attendancePostedMsg: "");
 							$( employeeAttendanceButton_id ).text(buttonText);
@@ -258,8 +264,11 @@ $("document").ready(
 							disableOrEnableAttendanceButton();
 						}
 						else{
-							$(employeeId_div_id).removeClass(successClass).addClass(errorCalss);
-							$(employeeId_span_id).removeClass(glyphiconOk).addClass(glyphiconError); 
+							/*function call to set text box class to error*/
+							setTextBoxClassError(employeeId_div_id,employeeId_span_id);
+							/*$(employeeId_div_id).removeClass(successClass).addClass(errorCalss);
+							$(employeeId_span_id).removeClass(glyphiconOk).addClass(glyphiconError); */
+							
 							employeeIdFlag=false;
 							/* function call to disable or enable button */
 							disableOrEnableAttendanceButton();
@@ -271,8 +280,10 @@ $("document").ready(
 					}
 					else {
 						console.log(" error ");
-						$(employeeId_div_id).removeClass(successClass).addClass(errorCalss);
-						$(employeeId_span_id).removeClass(glyphiconOk).addClass(glyphiconError); 
+						/*function call to set text box class to error*/
+						setTextBoxClassError(employeeId_div_id,employeeId_span_id);
+						/*$(employeeId_div_id).removeClass(successClass).addClass(errorCalss);
+						$(employeeId_span_id).removeClass(glyphiconOk).addClass(glyphiconError); */
 						employeeIdFlag=false;
 					    $(employeeLoginSuccessMsg_id).text(""); 
 						/* function call to disable or enable button */
@@ -301,17 +312,21 @@ $("document").ready(
 				 function changeCssClassOfEmpPasswordTextBox(empPasswordLength){
 					 
 					  if(empPasswordLength < employeePasswordMinLength ){
+						  
+						  /*function call to set text box class to error*/
+						  setTextBoxClassError(employeePassword_div_id,employeePassword_span_id);
 					  
-						  $(employeePassword_div_id).removeClass(successClass).addClass(errorCalss);
-						  $(employeePassword_span_id).removeClass(glyphiconOk).addClass(glyphiconError);  
+						  /*$(employeePassword_div_id).removeClass(successClass).addClass(errorCalss);
+						  $(employeePassword_span_id).removeClass(glyphiconOk).addClass(glyphiconError);*/  
 					      employeePasswordFlag=false;
 					      disableOrEnableAttendanceButton();
 					    
 					  }
 					  else{
-						 
-						  $(employeePassword_div_id).removeClass(errorCalss).addClass(successClass);
-						  $(employeePassword_span_id).removeClass(glyphiconError).addClass(glyphiconOk);
+						  /*function call to set text box class to ok*/
+						  setTextBoxClassOk(employeePassword_div_id,employeePassword_span_id);
+						  /*$(employeePassword_div_id).removeClass(errorCalss).addClass(successClass);
+						  $(employeePassword_span_id).removeClass(glyphiconError).addClass(glyphiconOk);*/
 						  employeePasswordFlag=true;
 						  /* function call to deisable or enable button */
 						  disableOrEnableAttendanceButton();
@@ -366,29 +381,11 @@ $("document").ready(
 					employeePasswordFlag=false;
 					$(employeePassword_div_id).removeClass(successClass);
 					$(employeePassword_span_id).removeClass(glyphiconOk);
-					$( employeeAttendanceButton_id ).prop( "disabled", true );
+					$(employeeAttendanceButton_id).prop( "disabled", true );
 
 				};// END -- attendancepasswordWrong()
 				 
-				/*
-				 * function for searching element in JsonObjectArray 
-				 */
-				function serachInJsonObjectArray(key, arr) {
-					 //console.log("key in search "+key);
-					 //console.log("array for search :"+arr);
-						var length = arr.length;
-						console.log(" array length: "+length);
-						for (var i = 0; i < length; i++) {
-							if (key == arr[i].empId){					
-								employeeName=arr[i].empName;
-								console.log("emp name: "+employeeName);
-								return true;
-							}
-							//console.log("i: "+i);
-						}
-						return false;
-
-				};// END -- serachInJsonObjectArray(key, arr)
+				
 					
 			    /*
 				 * function for searching element in plain JsonArray
@@ -411,6 +408,45 @@ $("document").ready(
 				
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------*/
 				
+				/*
+				 * This function is to set text box is ok (correct input)
+				 */
+				function setTextBoxClassOk(divId,spanId){
+					
+					$(divId).removeClass(errorCalss).addClass(successClass);
+					$(spanId).removeClass(glyphiconError).addClass(glyphiconOk);
+					
+				}// END -- setTextBoxClassOk(divId,spanId)
+				
+				/*
+				 * This function is to set text box is wrong (incorrect input)
+				 */
+                function setTextBoxClassError(divId,spanId){
+                	
+                	$(divId).removeClass(successClass).addClass(errorCalss);
+					$(spanId).removeClass(glyphiconOk).addClass(glyphiconError); 
+					
+				}// END -- setTextBoxClassError(divId,spanId
+                
+                /*
+				 * function for searching element in JsonObjectArray 
+				 */
+				function serachInJsonObjectArray(key, arr) {
+					 //console.log("key in search "+key);
+					 //console.log("array for search :"+arr);
+						var length = arr.length;
+						console.log(" array length: "+length);
+						for (var i = 0; i < length; i++) {
+							if (key == arr[i].empId){					
+								employeeName=arr[i].empName;
+								console.log("emp name: "+employeeName);
+								return true;
+							}
+							//console.log("i: "+i);
+						}
+						return false;
+
+				};// END -- serachInJsonObjectArray(key, arr)
 				 
 				/* ---------------------- employee change password functionality -------------------------------*/	
 				
@@ -419,7 +455,44 @@ $("document").ready(
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------*/				
 	
 	
+	           var showEmployeeChangePasswordDiv_id="#show-Employee-Cahange-password-div";
+	           var attendanceForm_id="#in-time-form";
+	           var employeeChangePasswordDiv_id="#employee-change-passowrd-div";
 	           
+	           var changePasswordEmployeeIdDiv_id = "#change-password-employee-id-div";
+	           var changePasswordEmployeeId_id="#change-password-employee-id-val";
+	           var changePasswordEmployeeIdSpan_id="#change-password-employee-id-span";
+	           
+	           var changePasswordEmployeeCurrentPassDiv_id="#change-password-employee-current-password-div";  
+	           var changePasswordEmployeeCurrentPass_id="#change-password-employee-current-password-val";
+	           var changePasswordEmployeeCurrentPassSpan_id="#change-password-employee-current-password-span";
+	           
+	           var changePasswordEmployeeNewPassDiv_id="#change-password-employee-new-password-div";
+	           var changePasswordEmployeeNewPass_id="#change-password-employee-new-password-val";
+	           var changePasswordEmployeeNewPassSpan_id="#change-password-employee-new-password-span";
+	           
+	           var changePasswordEmployeeConfirmPassDiv_id="#change-password-employee-confirm-password-div";
+	           var changePasswordEmployeeConfirmPass_id="#change-password-employee-confirm-password-val";
+	           var changePasswordEmployeeConfirmPassSpan_id="#change-password-employee-confirm-password-span";
+	           
+	           var changeEmployeePasswordButton_id="#change-employee-password-button";
+	           
+	           var employeeChangePasswordSuccessMsg_id="#employee-change-password-success-message";
+	     
+	           
+	           /*hide the employee change password division*/
+	           $(employeeChangePasswordDiv_id).hide();
+	           
+	           /*
+	            * This function is to show employee change password division when button clicks
+	            * This function will hides attendance form division
+	            */
+	           $(showEmployeeChangePasswordDiv_id).click(function(){
+	        	   
+	        	   $(attendanceForm_id).hide();
+	        	   $(employeeChangePasswordDiv_id).show();
+	        	   
+	           });// END -- $(showEmployeeChangePasswordDiv_id).click()
 	            
 	            
 	            /* declaring variables */
@@ -466,43 +539,112 @@ $("document").ready(
 	             * This function sets default values to text fleds 
 	             */
 	            function setChangePasswordDefaultValues(){
-	                $("#changePasswordemployeeID").val("");
-	                $("#employeeCurrentPassword").val("");
-	                $("#employeeNewPassword").val("");
-	                $("#employeeConfirmPassword").val("");
+	                $(changePasswordEmployeeId_id).val("");
+	                $(changePasswordEmployeeCurrentPass_id).val("");
+	                $(changePasswordEmployeeNewPass_id).val("");
+	                $(changePasswordEmployeeConfirmPass_id).val("");
+	                
+	                /*reomve all success classes from text boxes*/
+	                 $(changePasswordEmployeeCurrentPassDiv_id).removeClass(successClass);
+	                 $(changePasswordEmployeeNewPassDiv_id).removeClass(successClass);
+	                 $(changePasswordEmployeeConfirmPassDiv_id).removeClass(successClass);
+	                 $(changePasswordEmployeeIdDiv_id).removeClass(successClass);		                 
+					 $(changePasswordEmployeeIdSpan_id).removeClass(glyphiconOk);
+					 $(changePasswordEmployeeCurrentPassSpan_id).removeClass(glyphiconOk); 
+					 $(changePasswordEmployeeNewPassSpan_id).removeClass(glyphiconOk); 
+					 $(changePasswordEmployeeConfirmPassSpan_id).removeClass(glyphiconOk); 
+	                
 	                
 	            };// END -- setChangePasswordDefaultValues()
 	            
 	            /* function call to set default values */
 	            setChangePasswordDefaultValues();
 	
-	            /*
-	             * This function is called when employee clicks change 
-	             * employee password button.
-	             * This function hides attendance division and shows
-	             * change password division
-	             */
-	            $("#showChangePasswordDivButton").click(function (){
+	            
+	            /*  function calls when change password employee id key up
+                 *  This function validates input details and displays
+                 *  success/error message
+                 */
+	            $(changePasswordEmployeeId_id).keyup(function(){
 	            	
-	            	/* $("#changePasswordDivision").hide(); */
-	            	/* $("#attendanceDivision").show(); */
-	            	$("#changePasswordDivision").toggle();
+	            	var length=$(changePasswordEmployeeId_id).val().length;
+	            	if(length == employeeIdMinLength){
+	            		changePasswordEmpoyeeId=$(changePasswordEmployeeId_id).val();
+	            		changePasswordEmpoyeeIdFlag=serachInJsonObjectArray(changePasswordEmpoyeeId, allEmployeeIdsArray);
+	            		if(changePasswordEmpoyeeIdFlag)
+	            		  setTextBoxClassOk(changePasswordEmployeeIdDiv_id,changePasswordEmployeeIdSpan_id);
+	            		else
+	            		  setTextBoxClassError(changePasswordEmployeeIdDiv_id,changePasswordEmployeeIdSpan_id);
+	            			
+	            	}
+	            	else{
+	            		
+	            		setTextBoxClassError(changePasswordEmployeeIdDiv_id,changePasswordEmployeeIdSpan_id);
+	            	}
 	            	
-	            });// END -- $("#employeeChangePasswordButton").click()
+	            });// END -- $(changePasswordEmployeeId_id).keyup()
+	            
+	            /*  function calls when change password employee current password key up
+                 *  This function validates input details and displays
+                 *  success/error message
+                 */
+	            $(changePasswordEmployeeCurrentPass_id).keyup(function(){
+	            	var length=$(changePasswordEmployeeCurrentPass_id).val().length;
+	            	if(length < employeePasswordMinLength){
+	            		setTextBoxClassError(changePasswordEmployeeCurrentPassDiv_id,changePasswordEmployeeCurrentPassSpan_id);
+	            	}
+	            	else{
+	            		setTextBoxClassOk(changePasswordEmployeeCurrentPassDiv_id,changePasswordEmployeeCurrentPassSpan_id);
+	            	}
+	            	
+	            });// END -- $(changePasswordEmployeeId_id).keyup()
+	            
+	            /*  function calls when change password employee new password key up
+                 *  This function validates input details and displays
+                 *  success/error message
+                 */
+	            $(changePasswordEmployeeNewPass_id).keyup(function(){
+	            	var length=$(changePasswordEmployeeNewPass_id).val().length;
+	            	if(length < employeePasswordMinLength){
+	            		setTextBoxClassError(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);
+	            	}
+	            	else{
+	            		setTextBoxClassOk(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);
+	            	}
+	            	
+	            });// END -- $(changePasswordEmployeeId_id).keyup()
+	            
+	            /*  function calls when change password employee confirm password key up
+                 *  This function validates input details and displays
+                 *  success/error message
+                 */
+	            $(changePasswordEmployeeConfirmPass_id).keyup(function(){
+	            	var confirmPassword=$(changePasswordEmployeeConfirmPass_id).val();
+	            	var newPassword=$(changePasswordEmployeeNewPass_id).val();
+	            	if(newPassword.length >= employeePasswordMinLength && confirmPassword == newPassword){
+	            		setTextBoxClassOk(changePasswordEmployeeConfirmPassDiv_id,changePasswordEmployeeConfirmPassSpan_id);
+	            		
+	            	}
+	            	else{
+	            		setTextBoxClassError(changePasswordEmployeeConfirmPassDiv_id,changePasswordEmployeeConfirmPassSpan_id);
+	            	}
+	            	
+	            });// END -- $(changePasswordEmployeeId_id).keyup()
+	            
 		
 	            /*  function for change password employee button
                  *  This function validates input details and displays
                  *  success/error message
                  */
-				$("#changeEmployeePasswordButton").click(function() {
-
-					var changePasswordemployeeIdLength = $("#changePasswordemployeeID").val().length;
+				$(changeEmployeePasswordButton_id).click(function() {
+                     console.log("button clicked");
+					var changePasswordemployeeIdLength = $(changePasswordEmployeeId_id).val().length;
 					if(changePasswordemployeeIdLength == employeeIdMinLength){
-						changePasswordEmpoyeeId= $("#changePasswordemployeeID").val();
-						employeeCurrentPassword=$("#employeeCurrentPassword").val();
-						employeeNewPassword=$("#employeeNewPassword").val();
-						employeeConfirmPassword=$("#employeeConfirmPassword").val();
-						changePasswordEmpoyeeIdFlag=serachInJsonObjectArray(changePasswordEmpoyeeId, allEmployeeIdsArray);
+						changePasswordEmpoyeeId= $(changePasswordEmployeeId_id).val();
+						employeeCurrentPassword=$(changePasswordEmployeeCurrentPass_id).val();
+						employeeNewPassword=$(changePasswordEmployeeNewPass_id).val();
+						employeeConfirmPassword=$(changePasswordEmployeeConfirmPass_id).val();
+						
 						/* function call to validate details entered by employee */
 						var correctDetailsFlag=validateChangePasswordDetails();
 					    console.log("correct details flag: "+correctDetailsFlag);
@@ -516,7 +658,7 @@ $("document").ready(
 					    }
 				     }
 					else{
-						$("#changeEmployeePasswordSuccessMsg").text(shortEmployeeIdMsg);
+						$(employeeChangePasswordSuccessMsg_id).text(shortEmployeeIdMsg);
 					}
 					/* function call to search employee id in all employee details array */
 					
@@ -534,7 +676,7 @@ $("document").ready(
 					errorMessage=(employeeNewPassword.length < employeePasswordMinLength)?shortNewPasswordMsg : errorMessage;
 					errorMessage=(employeeCurrentPassword.length < employeePasswordMinLength)? shortCurrentPasswordMsg : errorMessage;
 					errorMessage=(changePasswordEmpoyeeIdFlag)? errorMessage : invalidChangePassEmployeeIdMsg;					
-					$("#changeEmployeePasswordSuccessMsg").text(errorMessage);
+					$(employeeChangePasswordSuccessMsg_id).text(errorMessage);
 					return (errorMessage == "")? true : false;
 					
 				};// END -- validateChangePasswordDetails()
@@ -570,26 +712,36 @@ $("document").ready(
 					        	/* function call to set default values */
 					            setChangePasswordDefaultValues(); 
 					        }
-					        $("#changeEmployeePasswordSuccessMsg").text(displayResult);
+					        $(employeeChangePasswordSuccessMsg_id).text(displayResult);
 					     },
 				      error: function(data){
 				    	  setDefaultVales();
-				    	  $("#changeEmployeePasswordSuccessMsg").text(internalServerProblem);
+				    	  $(employeeChangePasswordSuccessMsg_id).text(internalServerProblem);
 				      }
 					}); 
 				};// END -- makeAjaxCallToChangePassword(changePasswordObject)
 				
+				
 				/*  
-                 *  function to set default values when password is wrong
-                 */
+	             *  function to set default values when password is wrong
+	             */
 				function employeeEnteredWrongPassword(){
-				
-				     $("#employeeCurrentPassword").val("");
-	                 $("#employeeNewPassword").val("");
-	                 $("#employeeConfirmPassword").val("");
-				
+					
+					     $(changePasswordEmployeeCurrentPass_id).val("");
+		                 $(changePasswordEmployeeNewPass_id).val("");
+		                 $(changePasswordEmployeeConfirmPass_id).val("");
+		                 
+		                 /*reomve all success classes from text boxes*/
+		                 $(changePasswordEmployeeCurrentPassDiv_id).removeClass(successClass);
+		                 $(changePasswordEmployeeNewPassDiv_id).removeClass(successClass);
+		                 $(changePasswordEmployeeConfirmPassDiv_id).removeClass(successClass);		                 
+						 $(changePasswordEmployeeCurrentPassSpan_id).removeClass(glyphiconOk); 
+						 $(changePasswordEmployeeNewPassSpan_id).removeClass(glyphiconOk); 
+						 $(changePasswordEmployeeConfirmPassSpan_id).removeClass(glyphiconOk); 
+		                 
+		        
+					
 				};// END -- employeeEnteredWrongPassword()
-				
 	            
 	
 	/* END---------------------- employee change password functionality ------------------------------- END */	

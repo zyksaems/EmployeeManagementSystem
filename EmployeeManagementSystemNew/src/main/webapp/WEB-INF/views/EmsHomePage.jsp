@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>EMS home page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -16,6 +16,7 @@
   <!-- <script src="./testHome/js/AttendanceForm.js"></script> -->
   <!-- <script src="./testHome/js/Admin_AdminSignin.js"></script>  -->
   <script src="./JS/AttendanceForm.js"></script> 
+  <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png"/>
   <!-- boottrap css-->
   <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
   
@@ -33,6 +34,7 @@
   
 </head>
 <body>
+<!--  <div class="container-fluid">  -->
 
 <!-- header -->
 <div class="well-lg well-custom">
@@ -51,6 +53,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li  class="active" id="home-li"> <a href="#" id="home-link"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li  class="" id="show-Employee-Cahange-password-div"> <a href="#" id=""><span class="glyphicon glyphicon-pencil"></span> Change Password</a></li>
         <li id="about-li"><a href="#"><span class="glyphicon glyphicon-info-sign"></span>About</a></li>
         <li id="contact-li"><a href="#"><span class="glyphicon glyphicon-phone"></span>Contact</a></li>
       </ul>
@@ -68,12 +71,14 @@
 			<h2 class="form-inTime-heading "><span class="glyphicon glyphicon-pencil"></span>Enter Employee Id</h2>
 			
 			<!--text box for Employee id  -->			
-		    <div class="form-group  has-feedback " id="employee-id-div">
-                <input type="text" class="form-control text-center " id="employee-id-val" required >
+		    <div class="form-group  has-feedback" id="employee-id-div">
+		        <label>Employee id</label>
+                <input type="text" class="form-control text-center " id="employee-id-val" autocomplete="off" >
                 <span class="glyphicon  form-control-feedback" id="employee-id-span"></span>
             </div>
            <!-- textBox for employee Password -->
 			<div class="form-group has-feedback " id="employee-password-div">
+			    <label>Password</label>
                 <input type="password" class="form-control text-center " id="employee-password-val" required >
                 <span class="glyphicon form-control-feedback" id="employee-password-span"></span>
             </div>
@@ -83,6 +88,42 @@
 		</form>
     
 	</div><!--End of In Time Form  -->
+  <!-- Employee change password division -->
+<div class="container intime-margin" id="employee-change-passowrd-div">
+
+		<form action="" class="form-inTime">
+			<h2 class="form-inTime-heading "><span class="glyphicon glyphicon-pencil"></span>Change Password</h2>
+			
+			<!--text box for Employee id  -->			
+		    <div class="form-group  has-feedback " id="change-password-employee-id-div">
+		        <label>Employee Id</label>
+                <input type="text" class="form-control text-center " id="change-password-employee-id-val" required >
+                <span class="glyphicon  form-control-feedback" id="change-password-employee-id-span"></span>
+            </div>
+           <!-- textBox for employee current Password -->
+			<div class="form-group has-feedback " id="change-password-employee-current-password-div">
+			    <label>Cuurent Password</label>
+                <input type="password" class="form-control text-center " id="change-password-employee-current-password-val" required >
+                <span class="glyphicon form-control-feedback" id="change-password-employee-current-password-span"></span>
+            </div>
+            <!-- textBox for employee new  Password -->
+			<div class="form-group has-feedback " id="change-password-employee-new-password-div">
+			    <label>New Password</label>
+                <input type="password" class="form-control text-center " id="change-password-employee-new-password-val" required >
+                <span class="glyphicon form-control-feedback" id="change-password-employee-new-password-span"></span>
+            </div>
+            <!-- textBox for employee confirm Password -->
+			<div class="form-group has-feedback " id="change-password-employee-confirm-password-div">
+			    <label>Confirm Password</label>
+                <input type="password" class="form-control text-center " id="change-password-employee-confirm-password-val" required >
+                <span class="glyphicon form-control-feedback" id="change-password-employee-confirm-password-span"></span>
+            </div>
+            			
+			<button class="btn btn-lg btn-primary btn-block " type="submit" id="change-employee-password-button">Change Password</button>
+			<h4 class="text-center" id="employee-change-password-success-message"></h4>
+		</form>
+    
+	</div><!--End of employee change password div  -->
 
 <!-- Sign-IN form Modal -->
 
@@ -164,5 +205,6 @@
   <p>Footer Text</p>
 </footer>
 
+<!-- </div> -->
 </body>
 </html>
