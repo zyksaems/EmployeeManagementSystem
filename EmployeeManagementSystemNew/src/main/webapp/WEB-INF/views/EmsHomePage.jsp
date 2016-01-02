@@ -129,9 +129,9 @@
       <!--  About Us div --> 
      <div class="container" id="about-us-div">
         <div id="about" class="text-center">
-          <h1> About Employee Management System !</h1>
+          <h1> About Employee Management System !</h1> <br>
           <p>
-             Employee Management System is an automated system for maintaining employee’s attendance details for any organization efficiently.<br>
+             Employee Management System is an automated system for maintaining employee  attendance details for any organization efficiently.<br>
              It provides an environment to keep track of user attendance details to produce productivity.
         </p>
         </div>

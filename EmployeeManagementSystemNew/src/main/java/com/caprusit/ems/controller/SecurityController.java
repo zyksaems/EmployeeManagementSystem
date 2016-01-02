@@ -108,7 +108,7 @@ public class SecurityController {
 	 * In this JSP page admin can reset his password
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/getResetPasswordPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/ResetPasswordPage", method = RequestMethod.GET)
 	public ModelAndView getResetPAsswordPage(HttpServletRequest request,@RequestParam("id") int adminId,@RequestParam("pas") long milliSeconds){
 		logger.info("admin id received for reset password  :"+adminId);
 		ServletContext servletContext= request.getSession().getServletContext();
@@ -120,7 +120,7 @@ public class SecurityController {
 		logger.info("condition for time checking    currentTime:-   "+currentMilliSeconds );
 		logger.info("condition for time checking    sent+: ++  "+	(currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000) );
 	
-		logger.info("reset admin id set(/getResetPasswordPage): "+resetAdminIdSet);
+		logger.info("reset admin id set(/ResetPasswordPage): "+resetAdminIdSet);
 		return resetAdminModelAndVlew;
 	}
 	
