@@ -54,6 +54,24 @@ public class SecurityController {
 
 		return status;
 	}
+	/**
+	 * This method is foradmin home page 
+	 * If admin id is there in session returns admin home page
+	 * otherwise returns error page
+	 * */
+	@RequestMapping(value = "/adminHomePage", method = RequestMethod.GET)
+	public String getAdminHomePage(HttpServletRequest request) {
+
+		logger.info("in admin security controller -- getAdminHomePage()");
+		if(HttpSessionUtility.verifySession(request)){
+			
+			return "adminHome";
+		}
+		else{
+			return "ErrorPage";
+		}
+		
+	}
 
 	/**
 	 * This method is for admin logout functionality

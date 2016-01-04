@@ -1,12 +1,10 @@
-body {
-    background-color: #eee;
-}
 
-h1{
+
+.aboutHeading{
     color: purple;
 }
 
-p{
+.aboutDescription{
     font-family: "Calibri";
     font-size: 20px;
     text-align: center;

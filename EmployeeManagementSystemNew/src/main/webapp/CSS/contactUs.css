@@ -1,13 +1,14 @@
-body {
+/* body {
     background-color: #eee;
 }
-
-h1{
+ */
+ 
+.contactUsHeading{
     color: purple;
     text-align: center;
 }
 
-p{
+.contactUsDescription{
     font-family: "Calibri";
     font-size: 20px;
 }

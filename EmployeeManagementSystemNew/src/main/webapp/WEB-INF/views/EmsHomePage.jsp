@@ -16,6 +16,8 @@
   <!-- <script src="./testHome/js/AttendanceForm.js"></script> -->
   <!-- <script src="./testHome/js/Admin_AdminSignin.js"></script>  -->
   <script src="./JS/AttendanceForm.js"></script> 
+  <script src="./JS/Admin_login.js"></script> 
+  
   <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png"/>
   <!-- boottrap css-->
   <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
@@ -129,8 +131,8 @@
       <!--  About Us div --> 
      <div class="container" id="about-us-div">
         <div id="about" class="text-center">
-          <h1> About Employee Management System !</h1> <br>
-          <p>
+          <h1 class="aboutHeading"> About Employee Management System !</h1> <br>
+          <p class="aboutDescription">
              Employee Management System is an automated system for maintaining employee  attendance details for any organization efficiently.<br>
              It provides an environment to keep track of user attendance details to produce productivity.
         </p>
@@ -139,8 +141,8 @@
 
       <!--  Contact Us div --> 
        <div id="contact-us-div" class="text-center">
-                 <h1> Registered Office :</h1>
-               <p>
+                 <h1 class="contactUsHeading"> Registered Office :</h1>
+               <p class="contactUsDescription">
                       New Mark House <br>
                       Patrika Nagar, Madhapur <br>
                       Hyderabad - 81 <br>
@@ -165,52 +167,31 @@
           
         <div id="sign-in-form">
 
-		<form class="form-signin">
-			<div class="form-group" id="input-adminid-div">
-			<input type="text" id="input-adminid" class="form-control text-center"
-				placeholder="Admin ID" required autofocus>
-		    </div>
-		    
-		    <div class="form-group has-success has-feedback " id="input-adminid-success-div">
-            <input type="text" class="form-control text-center " id="input-adminid-success" required >
-                <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+	    <form class="form-signin">	    
+			 <!-- text box for admin id -->
+		    <div class="form-group  has-feedback " id="admin-login-adminid-div">
+            <input type="text" class="form-control text-center " id="admin-login-adminid-val" required >
+                <span class="glyphicon form-control-feedback"  id="admin-login-adminid-span"></span>
             </div>
-			
-		    <div class="form-group has-error has-feedback " id="input-adminid-error-div">
-            <input type="text" class="form-control text-center " id="input-adminid-error" required >
-                <span class="glyphicon glyphicon-remove form-control-feedback" ></span>
+            <!-- text box for admin password -->			
+			<div class="form-group  has-feedback " id="admin-login-adminpass-div">
+            <input type="password" class="form-control text-center " id="admin-login-adminpass-val" required >
+                <span class="glyphicon  form-control-feedback" id="admin-login-adminpass-span"></span>
             </div>
-		    
-		    <div class="form-group" id="input-adminpass-div">
-		    <input
-				type="password" id="input-adminpass" class="form-control text-center"
-				placeholder="Password" required>
-		    </div>
-			
-			<div class="form-group has-success has-feedback " id="input-adminpass-success-div">
-            <input type="password" class="form-control text-center " id="input-adminpass-success" required >
-                <span class="glyphicon glyphicon-ok form-control-feedback"></span>
-            </div>
-			
-		    <div class="form-group has-error has-feedback " id="input-adminpass-error-div">
-            <input type="password" class="form-control text-center " id="input-adminpass-error" required >
-                <span class="glyphicon glyphicon-remove form-control-feedback" ></span>
-            </div>
-			
 			<div class="checkbox form-group">
-				<label> <input type="checkbox" class="" id="checkbox-show-pass" >
+				<label> <input type="checkbox" class="" id="admin-login-show-adminpass" >
 					Show Password
 				</label>
 			</div>
 			
 			<div class="form-group">
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+			<button class="btn btn-lg btn-primary btn-block" id="admin-login-submit-button">Sign in</button>
 		    </div>
 		    
 		    <div class="form-group-lg text-center">
-              <label class="text-danger ">Login failed </label>
+              <label class="text-danger" id="admin-login-success-msg"></label>
             </div>
-		    </form>
+		   </form>
            </div>
           </div>
         <div class="modal-footer ">
