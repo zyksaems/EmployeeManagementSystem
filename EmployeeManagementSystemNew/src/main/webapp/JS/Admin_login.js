@@ -216,8 +216,7 @@ $("document").ready(function(){
 		        }
 		     },
 	      error: function(data){
-	    	  setDefaultVales();
-	    	  $(employeeLoginSuccessMsg_id).text(internalProblem_msg);
+	    	  $(admin_login_errorMsg_id).text(internalProblem_msg);
 	    	  setDefaultValues();
 	      }
 		}); // END ---- $.ajax()

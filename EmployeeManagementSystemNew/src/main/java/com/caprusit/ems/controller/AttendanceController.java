@@ -26,7 +26,7 @@ public class AttendanceController {
 	@RequestMapping(value="/home",method = RequestMethod.GET)
 	public String getHomePage( ) {
 
-		logger.info("inside attendance controlller init()");
+		logger.info("inside attendance controlller getHomePage()");
 		
 		return "EmsHomePage";
 		

@@ -209,7 +209,8 @@
 <!-- footer -->
 <footer class="container-fluid text-center navbar-fixed-bottom" >
   <p>Footer Text</p>
-</footer>
+</footer> 
+<!-- <footer class="main-footer ems-footer"><div>Copyright © 2005 - 2015 CaprusIT</div><div></footer> -->
 
 <!-- </div> -->
 </body>

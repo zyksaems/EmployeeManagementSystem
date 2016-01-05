@@ -69,7 +69,7 @@ public class SecurityController {
 			return "AdminTemplate";
 		}
 		else{
-			return "ErrorPage";
+			return "EmsHomePage";
 		}
 		
 	}

@@ -74,7 +74,7 @@ public class SecurityController {
 
 	}
 
-	/*
+	/**
 	 * forgotPassword() method takes adminId and emailId as parameter and after
 	 * validating both input , it returns success message such as Email Sent
 	 * Successfully or error message such as You entered incorrect adminId or

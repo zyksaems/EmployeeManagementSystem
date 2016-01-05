@@ -105,8 +105,8 @@ left: 45px;
 					<span class="glyphicon glyphicon-cog icon-setting"
 						data-toggle="dropdown"></span>
 					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
-						<li><a href="#">Profile</a></li>
-						<li><a href="#">Change password</a></li>
+						<li><a href="#" id="admin-profile-link">Profile</a></li>
+						<li><a href="#" id="admin-change-pass-link">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>
 				</div>
