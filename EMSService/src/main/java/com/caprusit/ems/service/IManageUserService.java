@@ -13,6 +13,7 @@ import com.caprusit.ems.domain.Employee;
 @Transactional
 public interface IManageUserService {
 
+	
 	public String getEmployees();
 
 	public List<Employee> getAllEmployee();

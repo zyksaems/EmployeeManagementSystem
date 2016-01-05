@@ -16,7 +16,6 @@ import com.cipher.decryption.Decryption;
 
 
 public class EmailUtility {
-
 	private Properties props;
 	private String mailPassword, username;
 

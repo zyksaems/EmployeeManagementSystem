@@ -10,8 +10,10 @@ import org.apache.log4j.Logger;
  * */
 public class HttpSessionUtility {
 	
+	
 	private static Logger logger=Logger.getLogger(HttpSessionUtility.class);
 
+	
 	/**
 	 * This method verify session is alive or not
 	 * If session is not alive returns false

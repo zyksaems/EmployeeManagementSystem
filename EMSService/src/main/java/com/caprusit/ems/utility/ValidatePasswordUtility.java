@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 public class ValidatePasswordUtility {
 	
+	
 	private static Logger logger=Logger.getLogger(ValidatePasswordUtility.class);
 
 	/**

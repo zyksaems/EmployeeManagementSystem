@@ -167,7 +167,7 @@
           
         <div id="sign-in-form">
 
-	    <form class="form-signin">	    
+	    <form class="form-signin" acton="#">	    
 			 <!-- text box for admin id -->
 		    <div class="form-group  has-feedback " id="admin-login-adminid-div">
             <input type="text" class="form-control text-center " id="admin-login-adminid-val" required >

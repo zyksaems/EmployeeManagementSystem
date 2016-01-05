@@ -54,6 +54,7 @@ public class SecurityController {
 
 		return status;
 	}
+	
 	/**
 	 * This method is foradmin home page 
 	 * If admin id is there in session returns admin home page
@@ -65,7 +66,7 @@ public class SecurityController {
 		logger.info("in admin security controller -- getAdminHomePage()");
 		if(HttpSessionUtility.verifySession(request)){
 			
-			return "adminHome";
+			return "AdminTemplate";
 		}
 		else{
 			return "ErrorPage";
