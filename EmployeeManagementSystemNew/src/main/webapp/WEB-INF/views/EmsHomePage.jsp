@@ -10,7 +10,7 @@
   
   <!-- bootstrap javascript file -->
   <script src="./bootstrap/bootstrap.min.js"></script>
-
+	
   <!-- custom javascript file with jQuery code-->
   <script src="./JS/homepage.js"></script>
   <!-- <script src="./testHome/js/AttendanceForm.js"></script> -->
@@ -70,10 +70,9 @@
 
 <!-- In-Time form -->
 <div class="container intime-margin" id="in-time-form">
-
-		<form action="" class="form-inTime">
-			<h2 class="form-inTime-heading "><span class="glyphicon glyphicon-pencil"></span>Enter Employee Id</h2>
 			
+			<form action="#" class="form-inTime" id="attendance-form">
+			<h2 class="form-inTime-heading "><span class="glyphicon glyphicon-pencil"></span>Enter Employee Id</h2>
 			<!--text box for Employee id  -->			
 		    <div class="form-group  has-feedback" id="employee-id-div">
 		        <label>Employee id</label>
@@ -86,16 +85,17 @@
                 <input type="password" class="form-control text-center " id="employee-password-val" required >
                 <span class="glyphicon form-control-feedback" id="employee-password-span"></span>
             </div>
-            			
-			<button class="btn btn-lg btn-primary btn-block " type="submit" id="employeeAttendanceButton">In-Time</button>
+            <button class="btn btn-lg btn-primary btn-block "  id="employeeAttendanceButton">In-Time</button>
 			<h4 class="text-center" id="employeeLoginSuccessMsg"></h4>
-		</form>
+           </form>			
+			
+		</div> 
     
 	</div><!--End of In Time Form  -->
   <!-- Employee change password division -->
 <div class="container intime-margin" id="employee-change-passowrd-div">
 
-		<form action="" class="form-inTime">
+		<form action="#" class="form-inTime" id="emp-change-pass-form">
 			<h2 class="form-inTime-heading "><span class="glyphicon glyphicon-pencil"></span>Change Password</h2>
 			
 			<!--text box for Employee id  -->			
@@ -123,9 +123,9 @@
                 <span class="glyphicon form-control-feedback" id="change-password-employee-confirm-password-span"></span>
             </div>
             			
-			<button class="btn btn-lg btn-primary btn-block " type="submit" id="change-employee-password-button">Change Password</button>
+			<button class="btn btn-lg btn-primary btn-block " id="change-employee-password-button">Change Password</button>
 			<h4 class="text-center" id="employee-change-password-success-message"></h4>
-		</form>
+		</form> 
     
 	</div><!--End of employee change password div  -->
       <!--  About Us div --> 
@@ -167,21 +167,24 @@
           
         <div id="sign-in-form">
 
-	    <form class="form-signin" acton="#">	    
+	    <form action="#" class="form-signin" id="admin-login-form">	    
 			 <!-- text box for admin id -->
 		    <div class="form-group  has-feedback " id="admin-login-adminid-div">
-            <input type="text" class="form-control text-center " id="admin-login-adminid-val" required >
+		        <label>Admin ID</label> 
+                <input type="text" class="form-control text-center " id="admin-login-adminid-val" required >
                 <span class="glyphicon form-control-feedback"  id="admin-login-adminid-span"></span>
             </div>
             <!-- text box for admin password -->			
 			<div class="form-group  has-feedback " id="admin-login-adminpass-div">
-            <input type="password" class="form-control text-center " id="admin-login-adminpass-val" required >
+			    <label>Password</label>  
+               <input type="password" class="form-control text-center " id="admin-login-adminpass-val" required >
                 <span class="glyphicon  form-control-feedback" id="admin-login-adminpass-span"></span>
             </div>
 			<div class="checkbox form-group">
 				<label> <input type="checkbox" class="" id="admin-login-show-adminpass" >
-					Show Password
-				</label>
+					Show Password </label>
+				<label> <a herf="" class="text-danger" id="admin-login-show-adminpass" >forgot password?</a>
+					 </label>
 			</div>
 			
 			<div class="form-group">
@@ -202,9 +205,6 @@
     </div>
   </div>
   
-
-
-
 
 <!-- footer -->
 <footer class="container-fluid text-center navbar-fixed-bottom" >

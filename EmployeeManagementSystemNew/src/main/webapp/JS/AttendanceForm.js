@@ -96,6 +96,8 @@ $("document").ready(
 				 var employeePassword_span_id="#employee-password-span";
 				 var employeeAttendanceButton_id="#employeeAttendanceButton";
 				 var employeeLoginSuccessMsg_id="#employeeLoginSuccessMsg";
+				 
+				 var attendanceForm_id="#attendance-form";
 
 			   /* 
 				* function for setting default values to attendance form 
@@ -181,6 +183,7 @@ $("document").ready(
 				$(employeeId_id).keyup(function() {
 
 					var employeeIdLength = $(employeeId_id).val().length;
+					$(employeeLoginSuccessMsg_id).text("");
 					/* function call to change css class function */
 					changeCssClassOfEmpIdTextBox(employeeIdLength);
 
@@ -191,6 +194,12 @@ $("document").ready(
                  *  This function calls when keyup - employee password text box
                  */
 				$(employeePassword_id).keyup(function() {
+					
+					/*$(employeeLoginSuccessMsg_id).text("");*/
+					var errorMsg=$(employeeLoginSuccessMsg_id).text();
+					if(errorMsg != invalidIdMsg && errorMsg !=attendancePostedMsg){
+						$(employeeLoginSuccessMsg_id).text("");
+					}
 					/* employeePasswordMinLength */
 					var empPasswordLength = $(employeePassword_id).val().length;					
 					/* function call to change css class function */
@@ -230,7 +239,15 @@ $("document").ready(
 					
 				});//END -- $(employeeAttendanceButton_id).click()
 
-				
+				/*
+				 * This function to stop reloading page
+				 * on form submit
+				 */
+				$(attendanceForm_id).submit(function(){
+					
+					return false;
+					
+				}); // END --$(attendanceForm_id).submit()
 				
 				
 				/* Function for changing csss class
@@ -449,15 +466,15 @@ $("document").ready(
 				};// END -- serachInJsonObjectArray(key, arr)
 				 
 				/* ---------------------- employee change password functionality -------------------------------*/	
-				
+			
 				  
 				
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------*/				
 	
 	
-	           var showEmployeeChangePasswordDiv_id="#show-Employee-Cahange-password-div";
+	           /*var showEmployeeChangePasswordDiv_id="#show-Employee-Cahange-password-div";
 	           var attendanceForm_id="#in-time-form";
-	           var employeeChangePasswordDiv_id="#employee-change-passowrd-div";
+	           var employeeChangePasswordDiv_id="#employee-change-passowrd-div";*/
 	           
 	           var changePasswordEmployeeIdDiv_id = "#change-password-employee-id-div";
 	           var changePasswordEmployeeId_id="#change-password-employee-id-val";
@@ -478,6 +495,7 @@ $("document").ready(
 	           var changeEmployeePasswordButton_id="#change-employee-password-button";
 	           
 	           var employeeChangePasswordSuccessMsg_id="#employee-change-password-success-message";
+	           var employeeChangePasswordForm_id="#emp-change-pass-form";
 	     
 	           
 	      
@@ -502,7 +520,7 @@ $("document").ready(
 	            /* creating variables for error or success messages to display on browser */
 	            
 	            /* variable to display short employee id error message  (string) */
-	            var shortEmployeeIdMsg="Empoyee ID is short";
+	            var shortEmployeeIdMsg="Empoyee ID should contain 6 digits";
 	            /* variable to display employee id is wrong error message  (string) */
 	            var invalidChangePassEmployeeIdMsg="Invalid employee ID";
 	            /* variable to display current password is short error message  (string) */
@@ -557,6 +575,7 @@ $("document").ready(
                  */
 	            $(changePasswordEmployeeId_id).keyup(function(){
 	            	
+	            	$(employeeChangePasswordSuccessMsg_id).text("");
 	            	var length=$(changePasswordEmployeeId_id).val().length;
 	            	if(length == employeeIdMinLength){
 	            		changePasswordEmpoyeeId=$(changePasswordEmployeeId_id).val();
@@ -579,6 +598,7 @@ $("document").ready(
                  *  success/error message
                  */
 	            $(changePasswordEmployeeCurrentPass_id).keyup(function(){
+	            	$(employeeChangePasswordSuccessMsg_id).text("");
 	            	var length=$(changePasswordEmployeeCurrentPass_id).val().length;
 	            	if(length < employeePasswordMinLength){
 	            		setTextBoxClassError(changePasswordEmployeeCurrentPassDiv_id,changePasswordEmployeeCurrentPassSpan_id);
@@ -594,6 +614,7 @@ $("document").ready(
                  *  success/error message
                  */
 	            $(changePasswordEmployeeNewPass_id).keyup(function(){
+	            	$(employeeChangePasswordSuccessMsg_id).text("");
 	            	var length=$(changePasswordEmployeeNewPass_id).val().length;
 	            	if(length < employeePasswordMinLength){
 	            		setTextBoxClassError(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);
@@ -609,6 +630,7 @@ $("document").ready(
                  *  success/error message
                  */
 	            $(changePasswordEmployeeConfirmPass_id).keyup(function(){
+	            	$(employeeChangePasswordSuccessMsg_id).text("");
 	            	var confirmPassword=$(changePasswordEmployeeConfirmPass_id).val();
 	            	var newPassword=$(changePasswordEmployeeNewPass_id).val();
 	            	if(newPassword.length >= employeePasswordMinLength && confirmPassword == newPassword){
@@ -653,7 +675,17 @@ $("document").ready(
 					/* function call to search employee id in all employee details array */
 					
 
-				});// END -- $("#employeeID").keyup()
+				});// END -- $(changeEmployeePasswordButton_id).click()
+				
+				/*
+				 * This function to stop reloading page
+				 * on form submit
+				 */
+                $(employeeChangePasswordForm_id).submit(function(){
+					
+					return false;
+					
+				});// END -- $(employeeChangePasswordForm_id).submit()
 				
 				/*  function for validating change password details
                  *  This function validates all details and displays

@@ -15,6 +15,7 @@ $("document").ready(function(){
 	var admin_login_errorMsg_id="#admin-login-success-msg";	
 	
 	var adminLoginModal_id="#myModal";
+	var adminLoginForm_id="#admin-login-form";
 	
 	
 	/* variable for employee id length (number) */
@@ -75,6 +76,7 @@ $("document").ready(function(){
 	 * This function executes when keyup(admin Id)
 	 */
 	$(adminId_val_id).keyup(function(){
+		$(admin_login_errorMsg_id).text("");
 		var adminId=$(adminId_val_id).val();
 		var length=adminId.length;
 		if(length != adminIdMinLength || !adminId.match(/^[0-9]*$/)){
@@ -94,6 +96,8 @@ $("document").ready(function(){
 	 * This function executes when keyup(admin password)
 	 */
 	$(adminPass_val_id).keyup(function(){
+		
+		$(admin_login_errorMsg_id).text("");
 		var length=$(adminPass_val_id).val().length;
 		if(length < employeePasswordMinLength){
 			setTextBoxClassError(adminPass_div_id,adminPass_span_id);
@@ -146,6 +150,16 @@ $("document").ready(function(){
 
 		
 	});// END -- $(admin_show_pass_id).click()
+	
+	 /*
+	 * This function to stop reloading page
+	 * on form submit
+	 */
+    $(adminLoginForm_id).submit(function(){
+
+         return false;
+         
+     }); // END -- $(adminLoginForm_id).submit()
 	
 	/*
 	 * This function tomake ajax call for admin login
