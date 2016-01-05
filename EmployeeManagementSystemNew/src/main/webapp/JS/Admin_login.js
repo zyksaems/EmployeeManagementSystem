@@ -16,6 +16,7 @@ $("document").ready(function(){
 	
 	var adminLoginModal_id="#myModal";
 	var adminLoginForm_id="#admin-login-form";
+	var adminForgotPasswordLink_id="#admin-login-forgot-password";
 	
 	
 	/* variable for employee id length (number) */
@@ -150,6 +151,24 @@ $("document").ready(function(){
 
 		
 	});// END -- $(admin_show_pass_id).click()
+		
+	/*
+	 * This function executes when forgot password link clicks
+	 */
+	$(adminForgotPasswordLink_id).click(function(){
+		
+		var isChecked=$(admin_show_pass_id).prop('checked');
+		if(isChecked){
+			
+			$(adminPass_val_id).prop('type',"text");
+		}
+		else{
+			$(adminPass_val_id).prop('type',"password");
+		}
+
+		
+	});// END -- $(adminForgotPasswordLink_id).click()
+	
 	
 	 /*
 	 * This function to stop reloading page

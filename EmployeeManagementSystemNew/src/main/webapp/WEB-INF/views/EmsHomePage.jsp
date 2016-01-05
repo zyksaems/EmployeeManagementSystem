@@ -101,7 +101,7 @@
 			<!--text box for Employee id  -->			
 		    <div class="form-group  has-feedback " id="change-password-employee-id-div">
 		        <label>Employee Id</label>
-                <input type="text" class="form-control text-center " id="change-password-employee-id-val" required >
+                <input type="text" class="form-control text-center " id="change-password-employee-id-val" autocomplete="off" required >
                 <span class="glyphicon  form-control-feedback" id="change-password-employee-id-span"></span>
             </div>
            <!-- textBox for employee current Password -->
@@ -171,7 +171,7 @@
 			 <!-- text box for admin id -->
 		    <div class="form-group  has-feedback " id="admin-login-adminid-div">
 		        <label>Admin ID</label> 
-                <input type="text" class="form-control text-center " id="admin-login-adminid-val" required >
+                <input type="text" class="form-control text-center " id="admin-login-adminid-val" autocomplete="off" required >
                 <span class="glyphicon form-control-feedback"  id="admin-login-adminid-span"></span>
             </div>
             <!-- text box for admin password -->			
@@ -183,7 +183,7 @@
 			<div class="checkbox form-group">
 				<label> <input type="checkbox" class="" id="admin-login-show-adminpass" >
 					Show Password </label>
-				<label> <a herf="" class="text-danger" id="admin-login-show-adminpass" >forgot password?</a>
+				<label> <a herf="" class="text-danger" id="admin-login-forgot-password" >forgot password?</a>
 					 </label>
 			</div>
 			

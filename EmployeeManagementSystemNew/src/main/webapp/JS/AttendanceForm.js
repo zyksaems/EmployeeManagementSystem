@@ -506,21 +506,21 @@ $("document").ready(
 	            /* declaring variables */
 	            
 	            /* variable for storing  change password employee id (String) */
-	            var changePasswordEmpoyeeId;
+	            var changePasswordEmployeeId;
 	            /* variable for storing  current employee password (String) */
 	            var employeeCurrentPassword;
-	            /* variable for storing  empoyee new password (String) */
+	            /* variable for storing  employee new password (String) */
 	            var employeeNewPassword;
 	            /* variable for storing  employee confirm password (String) */
 	            var employeeConfirmPassword;
 	            /* variable for storing  change password employee if flag  (boolean) */
-	            var changePasswordEmpoyeeIdFlag;
+	            var changePasswordEmployeeIdFlag;
 	            
 	            
 	            /* creating variables for error or success messages to display on browser */
 	            
 	            /* variable to display short employee id error message  (string) */
-	            var shortEmployeeIdMsg="Empoyee ID should contain 6 digits";
+	            var shortEmployeeIdMsg="Employee ID should contain 6 digits";
 	            /* variable to display employee id is wrong error message  (string) */
 	            var invalidChangePassEmployeeIdMsg="Invalid employee ID";
 	            /* variable to display current password is short error message  (string) */
@@ -578,9 +578,9 @@ $("document").ready(
 	            	$(employeeChangePasswordSuccessMsg_id).text("");
 	            	var length=$(changePasswordEmployeeId_id).val().length;
 	            	if(length == employeeIdMinLength){
-	            		changePasswordEmpoyeeId=$(changePasswordEmployeeId_id).val();
-	            		changePasswordEmpoyeeIdFlag=serachInJsonObjectArray(changePasswordEmpoyeeId, allEmployeeIdsArray);
-	            		if(changePasswordEmpoyeeIdFlag)
+	            		changePasswordEmployeeId=$(changePasswordEmployeeId_id).val();
+	            		changePasswordEmployeeIdFlag=serachInJsonObjectArray(changePasswordEmployeeId, allEmployeeIdsArray);
+	            		if(changePasswordEmployeeIdFlag)
 	            		  setTextBoxClassOk(changePasswordEmployeeIdDiv_id,changePasswordEmployeeIdSpan_id);
 	            		else
 	            		  setTextBoxClassError(changePasswordEmployeeIdDiv_id,changePasswordEmployeeIdSpan_id);
@@ -652,7 +652,7 @@ $("document").ready(
                      console.log("button clicked");
 					var changePasswordemployeeIdLength = $(changePasswordEmployeeId_id).val().length;
 					if(changePasswordemployeeIdLength == employeeIdMinLength){
-						changePasswordEmpoyeeId= $(changePasswordEmployeeId_id).val();
+						changePasswordEmployeeId= $(changePasswordEmployeeId_id).val();
 						employeeCurrentPassword=$(changePasswordEmployeeCurrentPass_id).val();
 						employeeNewPassword=$(changePasswordEmployeeNewPass_id).val();
 						employeeConfirmPassword=$(changePasswordEmployeeConfirmPass_id).val();
@@ -661,7 +661,7 @@ $("document").ready(
 						var correctDetailsFlag=validateChangePasswordDetails();
 					    console.log("correct details flag: "+correctDetailsFlag);
 					    if(correctDetailsFlag){
-					        var changePasswordObject={userName:changePasswordEmpoyeeId,currentPassword:employeeCurrentPassword,newPassword:employeeNewPassword};
+					        var changePasswordObject={userName:changePasswordEmployeeId,currentPassword:employeeCurrentPassword,newPassword:employeeNewPassword};
 					    	/* function call to make ajax call for changing password */
 					    	makeAjaxCallToChangePassword(changePasswordObject);
 					    }
@@ -697,7 +697,7 @@ $("document").ready(
 					errorMessage=(employeeNewPassword != employeeConfirmPassword)?newPasswordConfimPassNotMatchedMsg : errorMessage;
 					errorMessage=(employeeNewPassword.length < employeePasswordMinLength)?shortNewPasswordMsg : errorMessage;
 					errorMessage=(employeeCurrentPassword.length < employeePasswordMinLength)? shortCurrentPasswordMsg : errorMessage;
-					errorMessage=(changePasswordEmpoyeeIdFlag)? errorMessage : invalidChangePassEmployeeIdMsg;					
+					errorMessage=(changePasswordEmployeeIdFlag)? errorMessage : invalidChangePassEmployeeIdMsg;					
 					$(employeeChangePasswordSuccessMsg_id).text(errorMessage);
 					return (errorMessage == "")? true : false;
 					

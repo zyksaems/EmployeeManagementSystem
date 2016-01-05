@@ -1,0 +1,33 @@
+
+
+.AddEmpHeadingText{
+	
+	font-size: 30px;
+	text-align: center;
+	margin-top: 2%;
+	color: blue;
+}
+.excelButtton{
+	
+	text-align: center;
+	margin-left: 100px;
+}
+
+.excelDivHeadingText{
+	
+	font-size: 20px;
+	
+}
+
+
+
+.ExcelEmployeeSuccessMsg{
+	
+	font-size: 20px;	
+	
+}
+
+.ManualEmployeeSuccessMsg{
+	
+	font-size: 20px;
+}
