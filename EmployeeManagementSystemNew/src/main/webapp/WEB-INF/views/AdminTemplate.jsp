@@ -29,6 +29,8 @@
   <!-- js for admin division hide and show functionality -->
   <script src="./JS/Admin_homeDivConrroll.js"></script>
   
+  <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png"/>
+  
   
 <style>
 .headpart {
@@ -119,7 +121,7 @@ left: 45px;
 			<div class="col-sm-2 sidebar">
 			
 			 <div id="accordion">
-			<h3>Manage Employee</h3>
+			<h3 style="">Manage Employee</h3>
 	    	<div>
 	    	<ul>
 	    	<li><a href="#" id="admin-add-employee-link">Add Employee</a></li>
@@ -270,7 +272,7 @@ left: 45px;
                                   <button type="submit" class="btn btn-primary" id="add-employee-submit-button">Save Employee</button> 
                                </div>                                 
                                <div class="row">
-                                  <span class="ManualEmployeeSuccessMsg text-danger"  id="add-employee-success-message"></span>   
+                                  <p class="ManualEmployeeSuccessMsg text-danger"  id="add-employee-success-message"></p>   
                                 </div>                
                              </div>             
                              <div class="col-sm-4"></div>    

@@ -198,4 +198,19 @@ public class ReportGenerationController {
 
 	   return reportGenerationService.getDailyReportOfIndividual(employeeId, new Date(Long.valueOf(attendanceDate)));
 	  }
+	 
+	 @RequestMapping(value = "/getEmployeeMonthlyProductivity", method = RequestMethod.POST)
+	  public @ResponseBody String getEmoplotyeeMonthlyReport(@RequestParam("employeeId") int employeeId,
+	    @RequestParam("year") int year) 
+	 {
+	   logger.info("inside ReportGenerationController getEmoplotyeeMonthlyReport()");
+	   logger.info("data received: employee id: "+employeeId+"  year: "+year);
+
+	   //return reportGenerationService.getDailyReportOfIndividual(employeeId, new Date(Long.valueOf(attendanceDate)));
+	   
+	   /*return "1";*/
+	   
+	   return reportGenerationService.getEmployeeMonthlyProductivity(employeeId, year);
+	   
+	  }
 }

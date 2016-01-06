@@ -781,12 +781,13 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		
 		
 		
-		/*for display Bar chart*/
+		/*for display Bar chart (monthly report)*/
 		$scope.showBar=function(){
-		    /*
-			$scope.showTableDetails=false;	
-			$scope.showTable=false;*/
-			showOrHideRemainingDivisions("showCharts")
+		    
+			/*function call to hide remaining divisions*/
+			showOrHideRemainingDivisions("showCharts");
+			$scope.showMonthlyReportForm=true;
+			
 			$("#pie-holder").hide();
 			$("#pieLegend").hide();
 			$("#line-holder").hide();
@@ -799,29 +800,76 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
     		$("#bar-holder").show();
     		$("#barLegend").show();
     		
-    		
+		};// END-- showBar()
+		
+		/*This function is for employee monthly report*/
+		$scope.showEmployeeMonthlyReport=function(){
+			var employeeId=$scope.MonthlyReportEmployeeId;
+			var year=$scope.MonthlyReportYear;
+			console.log("this year : "+new Date().getFullYear());
+			console.log("emplyee monthly report details for search:  emp id: "+ employeeId+"  year: "+year);
+			if(year > new Date().getFullYear() || year < 2000 ){
+				
+				$scope.employeeMonthlyReportMsg="Invalid Year";
+				$("#showChart").show();
+	    		$("#bar-holder").show();
+	    		$("#barLegend").show();
+			}
+			else if(serachInJsonObjectArray(employeeId, json)){
+				$scope.employeeMonthlyReportMsg="";
+				var emplyeeMonthlyData = $http.post('/EmployeeManagementSystem/getEmployeeMonthlyProductivity.do?employeeId='+employeeId+'&&year='+year);
+				emplyeeMonthlyData.success(function(data, status, headers, config) {
+					/*jsonLoggedIn = data;
+					$scope.loggedInIds = data;*/
+					console.log("Employee monthly report data returned from server: "+data);
+					console.log("parsed data: "+JSON.stringify(data));
+					printBarChart(data.workingHoursArray,data.nonWorkingHoursArray);
+
+				});
+				emplyeeMonthlyData.error(function(data, status, headers, config) {
+					alert("failure message: " + JSON.stringify({
+						data : data
+					}));
+				});
+				
+			}
+			else{
+				$scope.employeeMonthlyReportMsg="Invalid employee Id";
+				$("#showChart").show();
+	    		$("#bar-holder").show();
+	    		$("#barLegend").show();
+			}
+			
+		};// END --  showEmployeeMonthlyReport()
+		
+		/*function to print bar chart*/
+		function printBarChart(presentData,absentData){
+    		console.log("data received for monthly graph  present: "+presentData+"  absentdata: "+absentData);
     		var barChartData = {
-    				labels : ["January","February","March","April","May","June","July","Aug","Sep","Oct","Nov","Des"],
+    				labels : ["January","February","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"],
     				datasets : [
     					{
-    						label:"present",
+    						label:"Working Hours",
     						fillColor : "#0085b3",
     						strokeColor : "#002633",
     						highlightFill: "#4dd1ff",
     						highlightStroke: "#005f80",
-    						data:[100,150,250,90,40,140,170,120,120,200,150,170]
+    						data:presentData
     					},
-    					{   label:"absent",
+    					{   label:"Non working Hours",
     						fillColor : "#b30000",
     						strokeColor : "#800000",
     						highlightFill : "#cc0000",
     						highlightStroke : "#330000",
-    						data : [15,18,19,12,19,15,17,14,2,4,18,12]
+    						data : absentData
     					}
     				]
 
     			}
-    		
+    		if(window.myBar!=null){
+    			 console.log("destroying bar graph");
+		    	 window.myBar.destroy();
+		     }
     		var ctx = document.getElementById("barChart").getContext("2d");
     		window.myBar = new Chart(ctx).Bar(barChartData, {
     			responsive : true
@@ -830,11 +878,12 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
     		document.getElementById('barLegend').innerHTML = myBar.generateLegend();
     		$scope.legend = Bar.generateLegend();
 
-		}
+		}; // END -- printBarChart(presentData,absentData)
 		
             
 $scope.showLineForm=function(){
 			
+	$scope.showMonthlyReportForm=true;
 			
 	
 	showOrHideRemainingDivisions("showCharts");
@@ -851,6 +900,7 @@ $scope.showLineForm=function(){
     		$("#lineLegend").hide();
 			
 			$scope.showLineChartForm=false;
+			$scipe.showMonthlyReportForm=false;
 			$scope.showLineChartInlineForm=true;
 
 			
@@ -916,7 +966,8 @@ $scope.showLineForm=function(){
 		    		$("#lineLegend").show();
 		    		
 		    		
-		    	 var weeklyData = JSON.parse(data);
+		    	 /*var weeklyData = JSON.parse(data);*/
+		    		var weeklyData =data;
 		    	 console.log(data);  
 		    	 
 		    	 console.log("last day "+weeklyData.lastDay); 

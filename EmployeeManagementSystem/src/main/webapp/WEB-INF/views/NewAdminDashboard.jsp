@@ -9,11 +9,13 @@
   <!-- setting icon to page -->
   <link rel="shortcut icon" type="image/x-icon" href="images/faviconlogo.png"/>
   
+  <script src="./jquery/jquery-2.1.4.js"></script>
+  
   <!-- Bootstrap main script(library) file -->
   <link href="./bootstrap/bootstrap.min.css" rel="stylesheet">
   <script src="./bootstrap/bootstrap.min.js"></script> 
   <script src="./ui-bootstrap/ui-bootstrap-tpls-0.14.3.min.js"></script>
-  <script src="./jquery/jquery-2.1.4.js"></script>
+  
   
  <c:choose>
     <c:when test="${errorMsg != null}">
@@ -853,6 +855,40 @@
             <div class="form-group "  >
               <div class="col-sm-12">
                      <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showLine()">Show</button>
+              </div>
+            </div>
+            
+       </form>
+     </div>
+     
+       <!--bar chart form (monthly report) -->
+  <div ng-show="showMonthlyReportForm">
+        <form class="form-vertical" role="form">
+            <div class="form-group " style="color: red" >              
+               <label class=" col-sm-12 control-label" ng-model="validationMsg">{{validationMsg}}</label>
+           </div>            
+           <div class="form-group">
+                <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" id="" ng-model="MonthlyReportEmployeeId">
+              </div>
+            </div>            
+             <div class="form-group ">
+                 <label class=" col-sm-12 control-label" >Enter year</label>
+              <div class="col-sm-12">
+                     <input type="text" class="form-control"  maxlength="4" ng-model="MonthlyReportYear">
+              </div>
+            </div>                        
+            <div class="form-group "  >
+              <div class="col-sm-12">
+                  <br	>
+                  <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showEmployeeMonthlyReport()">Show</button>
+              </div>
+            </div>
+            <div class="form-group "  >
+              <div class="col-sm-12">
+                  <br>
+                  <b class="text-center text-danger">{{employeeMonthlyReportMsg}}</b>
               </div>
             </div>
             

@@ -30,7 +30,8 @@ public interface IReportGenerationService {
 	String getTodayReport();
 	
     String getDailyReportOfIndividual(int employeeId, Date attendanceDate) ;
-
+    
+    String getEmployeeMonthlyProductivity(int employeeId,int year) ;
 	
 	List<Integer> getAutoCompleteInfo(int empid);
 

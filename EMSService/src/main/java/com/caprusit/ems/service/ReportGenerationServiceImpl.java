@@ -340,4 +340,54 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		    graphDetails.put("presentDays", presentDays);
 		    return JsonUtility.convertToJson(graphDetails);
 		   }
+
+	public String getEmployeeMonthlyProductivity(int employeeId, int year) {
+
+        Calendar calendar=Calendar.getInstance();
+        double[] workingHoursArray=new double[12];
+        double[] nonWorkingHoursArray=new double[12];
+        int workingHoursPerDay=9;
+        int daysPerMonth=26,month,listSize;
+        Attendance attendanceObj;
+        double actualWorkingHours=daysPerMonth*workingHoursPerDay;
+        String employeeName = null,employeeDesignation = null;
+        calendar.set(year, 0, 1);
+        Date YearstartDate=calendar.getTime();
+        calendar.set(year, 11,31);
+        Date yearEndDate=calendar.getTime();
+        logger.info("employee monthly report year start date : "+YearstartDate+"  year end date: "+yearEndDate);
+        List<Attendance> employeeMonthlyData=reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId,YearstartDate,yearEndDate);
+        listSize=employeeMonthlyData.size();
+        logger.info("attendance details received for monthly individual employee results: "+employeeMonthlyData);
+        logger.info("monthly employee report data size: "+listSize);
+        for(int i=0;i<listSize;i++){
+        	attendanceObj=employeeMonthlyData.get(i);
+        	calendar.setTime(attendanceObj.getAttendanceDate());
+        	month=calendar.get(Calendar.MONTH);
+        	workingHoursArray[month]+=attendanceObj.getWorkingHours();
+        
+        }
+        for(int i=0;i<12;i++){
+        	
+        	nonWorkingHoursArray[i]=actualWorkingHours-workingHoursArray[i];
+        	
+        }
+        /*for(double val:workingHoursArray){
+        	System.out.print(" "+val);
+        }*/
+        List<Object> employeeDetails=reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
+        logger.info("employee details: "+employeeDetails);
+        if(employeeDetails.get(0)!= null ){
+        	Object[] details=(Object[])employeeDetails.get(0);
+        	employeeDesignation=(String)details[3];
+        	employeeName=details[1]+""+details[2];
+        }
+        Map<String,Object> employeeMonthlyReportMap=new HashMap<String, Object>(); 
+        employeeMonthlyReportMap.put("workingHoursArray", workingHoursArray);
+        employeeMonthlyReportMap.put("nonWorkingHoursArray", nonWorkingHoursArray);
+        employeeMonthlyReportMap.put("employeeName",employeeName );
+        employeeMonthlyReportMap.put("employeeDesignation", employeeDesignation);
+        
+		return JsonUtility.convertToJson(employeeMonthlyReportMap);
+	}
 }
