@@ -1,0 +1,21 @@
+#canvas {
+	background-color : purple;
+}
+#validationMsg{
+	color:red;
+}
+
+.AbsentEmployeeDetails{
+	text-align: center;
+	color:green;
+	font-size: medium;
+}
+
+.presentEmployeeDetails{
+	text-align: center;
+	color:green ;
+	font-size: medium;
+}
+thead{
+	color:blue;
+}
