@@ -264,6 +264,7 @@ $("document").ready(function(){
     	console.log("request to get admin home page");
     	window.location.href="/"+applicationName+"/"+adminHomePageRequest;
 		
-	}// END -- getAdminHomePage()
+	};// END -- getAdminHomePage()
+
 	
 });//// END -- $("document").ready(function())

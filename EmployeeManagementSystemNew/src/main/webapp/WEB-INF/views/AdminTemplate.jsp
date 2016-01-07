@@ -28,6 +28,8 @@
   
   <!-- js for admin division hide and show functionality -->
   <script src="./JS/Admin_homeDivConrroll.js"></script>
+  <script src="./JS/Admin_logout.js"></script>
+  <script src="./JS/Admin_leftMenuControll.js"></script>
   
   <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png"/>
   
@@ -161,7 +163,7 @@ left: 45px;
 			<li>
 			<a href="#">Monthly Productivity</a></li>
 			<li>
-			<a href="#">Annually Productivity</a></li>
+			<a href="#" id="anual-productivity-link">Annually Productivity</a></li>
 			</ul>
 			</div>
 			</div> 
@@ -170,7 +172,7 @@ left: 45px;
 
              <!-- This division is the division on right for display content to show (Right division)-->
 			<div class="col-sm-10">
-			
+			         <!-- This division for add employee manually and through excel file-->
 			        <div  class="row addEmployeeMainDivision" id="add-employee-main-division" > 
                          <div class="row" >  <!--  id="importEmployeeDataDiv" -->
                               <div class="col-sm-4"></div>
@@ -280,6 +282,78 @@ left: 45px;
                     </div>  <!--  END -- Add employee manual division -->       
                 </div> <!-- END -- add employee main division -->
 			
+			    <!-- main divsion for charts and graphs -->
+			   <div class="row">
+			    <!--bar chart form (monthly report) -->
+                <div ng-show="showMonthlyReportForm" id="monthly-report-select-div">
+                <div class="row">
+                <div class="col-sm-1"></div>
+                 <div class="col-sm-10">
+             <br>
+            <button class="btn btn-primary btn-Text" ng-click="AllEmployeeMonthlyReport()">Over all Report</button>
+            <button class="btn btn-primary btn-Text" ng-click="individualMonthlyReport()">Invidual Report</button>
+        </div>
+        <div class="col-sm-1"></div>
+              
+        </div>
+  
+        <form class="form-vertical" role="form" ng-show="showIndividualMonthlyForm">
+            <div class="form-group " style="color: red" >              
+               <label class=" col-sm-12 control-label text-center" >Individual Report</label>
+           </div>            
+           <div class="form-group">
+                <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" id="" ng-model="MonthlyReportEmployeeId">
+              </div>
+            </div>            
+             <div class="form-group ">
+                 <label class=" col-sm-12 control-label" >Enter year</label>
+              <div class="col-sm-12">
+                     <input type="text" class="form-control"  maxlength="4" ng-model="MonthlyReportYear">
+              </div>
+            </div>                        
+            <div class="form-group "  >
+              <div class="col-sm-12">
+                  <br	>
+                  <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showEmployeeMonthlyReport()">Show</button>
+              </div>
+            </div>
+            <div class="form-group "  >
+              <div class="col-sm-12">
+                  <br>
+                  <p class="text-center text-danger monthlyErrorMsg">{{employeeMonthlyReportMsg}}</p>
+              </div>
+            </div>
+            
+       </form>
+       <form class="form-vertical" role="form" ng-show="!showIndividualMonthlyForm">
+              <div class="form-group " style="color: red" >              
+                <label class=" col-sm-12 control-label text-center">Over all Report</label>
+              </div>         
+              <div class="form-group ">
+                 <label class=" col-sm-12 control-label" >Enter year</label>
+                 <div class="col-sm-12">
+                     <input type="text" class="form-control"  maxlength="4" ng-model="AllMonthlyReportYear">
+                 </div>
+              </div>                        
+              <div class="form-group "  >
+                 <div class="col-sm-12">
+                   <br>
+                   <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showAllEmployeeMonthlyReport()">Show</button>
+                 </div>
+              </div>
+              <div class="form-group "  >
+                <div class="col-sm-12">
+                  <br>
+                  <p class="text-center text-danger monthlyErrorMsg">{{AllemployeeMonthlyReportMsg}}</p>
+                </div>
+              </div>
+            
+        </form>
+     </div>
+     
+     </div> <!-- END -- (charts and graphs division) -->
 			</div> <!-- END -- (Right division) -->
 
 		</div>
