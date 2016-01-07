@@ -419,8 +419,7 @@
       </div>         
    </div>
    <!-- END ------ Division for Adding single and multiple employees through excel file ------ END  -->
-   <!-- BEGIN  --- Division for View or update employee details -- BEGIN -->
-   
+   <!-- BEGIN  --- Division for View or update employee details -- BEGIN -->   
    <div class="row editOrUpdateEmployeeDivision" ng-show="showViewOrUpdateEmployeeDiv">
     <div class="row">
        <div class="col-sm-3">
@@ -808,7 +807,7 @@
     </div>
     
     <div style="width: auto ;" id="bar-holder">
-			<div class="row  pageHeading alert alert-info">Monthly Productivity</div>
+			<div class="row  pageHeading alert alert-info">Monthly Productivity {{monthlyProductivityEmployeeDetails}}</div>
 			<canvas id="barChart" height="auto" width="auto" style="margin-left: 5%"></canvas>
 		 	  
     </div> 
@@ -863,9 +862,20 @@
      
        <!--bar chart form (monthly report) -->
   <div ng-show="showMonthlyReportForm">
-        <form class="form-vertical" role="form">
+        <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+             <br>
+            <button class="btn btn-primary btn-Text" ng-click="AllEmployeeMonthlyReport()">Over all Report</button>
+            <button class="btn btn-primary btn-Text" ng-click="individualMonthlyReport()">Invidual Report</button>
+        </div>
+        <div class="col-sm-1"></div>
+              
+        </div>
+  
+        <form class="form-vertical" role="form" ng-show="showIndividualMonthlyForm">
             <div class="form-group " style="color: red" >              
-               <label class=" col-sm-12 control-label" ng-model="validationMsg">{{validationMsg}}</label>
+               <label class=" col-sm-12 control-label text-center" >Individual Report</label>
            </div>            
            <div class="form-group">
                 <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
@@ -888,11 +898,35 @@
             <div class="form-group "  >
               <div class="col-sm-12">
                   <br>
-                  <b class="text-center text-danger">{{employeeMonthlyReportMsg}}</b>
+                  <p class="text-center text-danger monthlyErrorMsg">{{employeeMonthlyReportMsg}}</p>
               </div>
             </div>
             
        </form>
+       <form class="form-vertical" role="form" ng-show="!showIndividualMonthlyForm">
+              <div class="form-group " style="color: red" >              
+                <label class=" col-sm-12 control-label text-center">Over all Report</label>
+              </div>         
+              <div class="form-group ">
+                 <label class=" col-sm-12 control-label" >Enter year</label>
+                 <div class="col-sm-12">
+                     <input type="text" class="form-control"  maxlength="4" ng-model="AllMonthlyReportYear">
+                 </div>
+              </div>                        
+              <div class="form-group "  >
+                 <div class="col-sm-12">
+                   <br>
+                   <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showAllEmployeeMonthlyReport()">Show</button>
+                 </div>
+              </div>
+              <div class="form-group "  >
+                <div class="col-sm-12">
+                  <br>
+                  <p class="text-center text-danger monthlyErrorMsg">{{AllemployeeMonthlyReportMsg}}</p>
+                </div>
+              </div>
+            
+        </form>
      </div>
   
   </div>  

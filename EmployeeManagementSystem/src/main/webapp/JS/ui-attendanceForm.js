@@ -731,7 +731,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		   			   		
 		   			  
 		    
-			}	
+			};	
 		
 		
 		/*function for displaying pie chart*/
@@ -787,6 +787,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			/*function call to hide remaining divisions*/
 			showOrHideRemainingDivisions("showCharts");
 			$scope.showMonthlyReportForm=true;
+			$scope.showIndividualMonthlyForm=false;
+			
 			
 			$("#pie-holder").hide();
 			$("#pieLegend").hide();
@@ -797,23 +799,74 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
     		$scope.showLineChartForm=false;
     		$scope.showLineChartInlineForm=false;
 			$("#showChart").show();
-    		$("#bar-holder").show();
-    		$("#barLegend").show();
+			$("#bar-holder").hide();
+    		$("#barLegend").hide();
     		
 		};// END-- showBar()
 		
+		/*function to show all comapany monthly report year division*/
+		$scope.AllEmployeeMonthlyReport=function(){
+			
+			$scope.employeeMonthlyReportMsg="";
+			$scope.AllemployeeMonthlyReportMsg="";
+			
+			$scope.showIndividualMonthlyForm=false;
+			$scope.monthlyProductivityEmployeeDetails="";
+			$("#bar-holder").hide();
+    		$("#barLegend").hide();
+			
+		};
+		/*function to display all empoyee monthly report*/
+		$scope.showAllEmployeeMonthlyReport=function(){
+			
+			var year=$scope.AllMonthlyReportYear;
+			console.log("year : "+year);
+			if(year > new Date().getFullYear() || year < 2015 || year == undefined){
+				
+				$scope.AllemployeeMonthlyReportMsg="Invalid year";
+				$("#bar-holder").hide();
+	    		$("#barLegend").hide();
+			}
+			else{
+				$scope.AllemployeeMonthlyReportMsg="";
+				var allEmplyeeMonthlyData = $http.post('/EmployeeManagementSystem/getAllEmployeeMonthlyProductivity.do?year='+year);
+				allEmplyeeMonthlyData.success(function(data, status, headers, config) {
+					/*jsonLoggedIn = data;
+					$scope.loggedInIds = data;*/
+					console.log("Employee monthly report data returned from server: "+data);
+					console.log("parsed data: "+JSON.stringify(data));
+					printBarChart(data.workingHoursArray,data.nonWorkingHoursArray);
+
+				});
+				allEmplyeeMonthlyData.error(function(data, status, headers, config) {
+					alert("failure message: " + JSON.stringify({
+						data : data
+					}));
+				});
+			}
+			
+		}
+		
+		/*function to show individual employee monthly report*/
+		$scope.individualMonthlyReport=function(){
+			$scope.showIndividualMonthlyForm=true;
+			$scope.employeeMonthlyReportMsg="";
+			$scope.AllemployeeMonthlyReportMsg="";
+			$("#bar-holder").hide();
+    		$("#barLegend").hide();
+		};
+		
 		/*This function is for employee monthly report*/
 		$scope.showEmployeeMonthlyReport=function(){
+			
 			var employeeId=$scope.MonthlyReportEmployeeId;
 			var year=$scope.MonthlyReportYear;
 			console.log("this year : "+new Date().getFullYear());
 			console.log("emplyee monthly report details for search:  emp id: "+ employeeId+"  year: "+year);
-			if(year > new Date().getFullYear() || year < 2000 ){
-				
-				$scope.employeeMonthlyReportMsg="Invalid Year";
-				$("#showChart").show();
-	    		$("#bar-holder").show();
-	    		$("#barLegend").show();
+			if(year > new Date().getFullYear() || year < 2015 || year == undefined ){				
+				$scope.employeeMonthlyReportMsg="Invalid Year";				
+				$("#bar-holder").hide();
+	    		$("#barLegend").hide();	    		
 			}
 			else if(serachInJsonObjectArray(employeeId, json)){
 				$scope.employeeMonthlyReportMsg="";
@@ -823,6 +876,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 					$scope.loggedInIds = data;*/
 					console.log("Employee monthly report data returned from server: "+data);
 					console.log("parsed data: "+JSON.stringify(data));
+					$scope.monthlyProductivityEmployeeDetails="Of "+data.employeeName+" , Designation: "+data.employeeDesignation;
 					printBarChart(data.workingHoursArray,data.nonWorkingHoursArray);
 
 				});
@@ -834,10 +888,9 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 				
 			}
 			else{
-				$scope.employeeMonthlyReportMsg="Invalid employee Id";
-				$("#showChart").show();
-	    		$("#bar-holder").show();
-	    		$("#barLegend").show();
+				$scope.employeeMonthlyReportMsg="Invalid employee Id";				
+				$("#bar-holder").hide();
+	    		$("#barLegend").hide();
 			}
 			
 		};// END --  showEmployeeMonthlyReport()
@@ -845,6 +898,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		/*function to print bar chart*/
 		function printBarChart(presentData,absentData){
     		console.log("data received for monthly graph  present: "+presentData+"  absentdata: "+absentData);
+    		$("#bar-holder").show();
+    		$("#barLegend").show();
     		var barChartData = {
     				labels : ["January","February","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"],
     				datasets : [
@@ -876,12 +931,15 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
     		});
     		
     		document.getElementById('barLegend').innerHTML = myBar.generateLegend();
-    		$scope.legend = Bar.generateLegend();
+    		//$scope.legend = Bar.generateLegend();
+    		
+    		$("#bar-holder").show();
+    		$("#barLegend").show();
 
 		}; // END -- printBarChart(presentData,absentData)
 		
             
-$scope.showLineForm=function(){
+  $scope.showLineForm=function(){
 			
 	$scope.showMonthlyReportForm=true;
 			
@@ -900,7 +958,7 @@ $scope.showLineForm=function(){
     		$("#lineLegend").hide();
 			
 			$scope.showLineChartForm=false;
-			$scipe.showMonthlyReportForm=false;
+			$scope.showMonthlyReportForm=false;
 			$scope.showLineChartInlineForm=true;
 
 			

@@ -190,7 +190,10 @@ public class ReportGenerationController {
 		return reportDetails;
 	}
 
-	
+	 /**
+	  * This method is to find individual employee attendance 
+	  * for given date  
+	  */
 	 @RequestMapping(value = "/getDailyReportGraphOfIndividual", method = RequestMethod.POST)
 	  public @ResponseBody String getDailyReportOfIndividual(@RequestParam("employeeId") int employeeId,
 	    @RequestParam("attendanceDate") String attendanceDate) {
@@ -199,18 +202,33 @@ public class ReportGenerationController {
 	   return reportGenerationService.getDailyReportOfIndividual(employeeId, new Date(Long.valueOf(attendanceDate)));
 	  }
 	 
+	 /**
+	  * This method is to find individual employee productibity 
+	  * for given year  
+	  */
 	 @RequestMapping(value = "/getEmployeeMonthlyProductivity", method = RequestMethod.POST)
 	  public @ResponseBody String getEmoplotyeeMonthlyReport(@RequestParam("employeeId") int employeeId,
 	    @RequestParam("year") int year) 
 	 {
 	   logger.info("inside ReportGenerationController getEmoplotyeeMonthlyReport()");
 	   logger.info("data received: employee id: "+employeeId+"  year: "+year);
-
-	   //return reportGenerationService.getDailyReportOfIndividual(employeeId, new Date(Long.valueOf(attendanceDate)));
-	   
-	   /*return "1";*/
 	   
 	   return reportGenerationService.getEmployeeMonthlyProductivity(employeeId, year);
 	   
 	  }
+	 
+	 /**
+	  * This method is to find all employee productibity 
+	  * for given year  
+	  */
+	 @RequestMapping(value = "/getAllEmployeeMonthlyProductivity", method = RequestMethod.POST)
+	  public @ResponseBody String getAllEmoplotyeeMonthlyReport(@RequestParam("year") int year) 
+	 {
+	   logger.info("inside ReportGenerationController getAllEmoplotyeeMonthlyReport()");
+	   logger.info("data received:  year: "+year);
+	   
+	   return reportGenerationService.getAllEmployeeMonthlyProductivity(year);
+	   
+	  }
+	 
 }

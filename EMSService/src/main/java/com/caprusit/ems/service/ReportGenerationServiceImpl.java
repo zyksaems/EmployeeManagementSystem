@@ -26,6 +26,9 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	@Autowired
 	private IManageUserDAO manageUserDAO;
 	
+	 private int workingHoursPerDay=9,daysPerMonth=26;
+      
+	
 	private Logger logger = Logger.getLogger(ReportGenerationServiceImpl.class);
 
 	public List<Integer> getAutoCompleteInfo(int employeeId) {
@@ -295,7 +298,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		    logger.info("inside ReportGenerationServiceImpl getDailyReportOfIndividual()");
 		    Date lastDate=null;
 		    Double workingHours=0.0,totalAvailableHours=0.0;
-		    int onDayHours=9;
+		    int onDayHours=workingHoursPerDay;
 		    Double totalWorkingHours=0.0;
 		    String dayNames[] = new DateFormatSymbols().getWeekdays();
 		      
@@ -340,16 +343,18 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		    graphDetails.put("presentDays", presentDays);
 		    return JsonUtility.convertToJson(graphDetails);
 		   }
-
+    /**
+     * This method is to calculate individual employee 
+     * monthly productivity based on given year
+     */
 	public String getEmployeeMonthlyProductivity(int employeeId, int year) {
 
         Calendar calendar=Calendar.getInstance();
         double[] workingHoursArray=new double[12];
         double[] nonWorkingHoursArray=new double[12];
-        int workingHoursPerDay=9;
-        int daysPerMonth=26,month,listSize;
-        Attendance attendanceObj;
+        int month,listSize;
         double actualWorkingHours=daysPerMonth*workingHoursPerDay;
+        
         String employeeName = null,employeeDesignation = null;
         calendar.set(year, 0, 1);
         Date YearstartDate=calendar.getTime();
@@ -360,27 +365,18 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
         listSize=employeeMonthlyData.size();
         logger.info("attendance details received for monthly individual employee results: "+employeeMonthlyData);
         logger.info("monthly employee report data size: "+listSize);
-        for(int i=0;i<listSize;i++){
-        	attendanceObj=employeeMonthlyData.get(i);
-        	calendar.setTime(attendanceObj.getAttendanceDate());
-        	month=calendar.get(Calendar.MONTH);
-        	workingHoursArray[month]+=attendanceObj.getWorkingHours();
         
-        }
-        for(int i=0;i<12;i++){
-        	
-        	nonWorkingHoursArray[i]=actualWorkingHours-workingHoursArray[i];
-        	
-        }
-        /*for(double val:workingHoursArray){
-        	System.out.print(" "+val);
-        }*/
+        
+        calculateWorkingHours(workingHoursArray, employeeMonthlyData);
+        
+        calculateNonWorkingHours(nonWorkingHoursArray, actualWorkingHours, workingHoursArray);
+        
         List<Object> employeeDetails=reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
         logger.info("employee details: "+employeeDetails);
         if(employeeDetails.get(0)!= null ){
         	Object[] details=(Object[])employeeDetails.get(0);
         	employeeDesignation=(String)details[3];
-        	employeeName=details[1]+""+details[2];
+        	employeeName=details[1]+" "+details[2];
         }
         Map<String,Object> employeeMonthlyReportMap=new HashMap<String, Object>(); 
         employeeMonthlyReportMap.put("workingHoursArray", workingHoursArray);
@@ -389,5 +385,53 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
         employeeMonthlyReportMap.put("employeeDesignation", employeeDesignation);
         
 		return JsonUtility.convertToJson(employeeMonthlyReportMap);
+	}
+	
+	/**
+     * This method is to calculate All employee 
+     * monthly productivity based on given year
+     */
+	public String getAllEmployeeMonthlyProductivity(int year) {
+		
+		 double[] workingHoursArray=new double[12];
+         double[] nonWorkingHoursArray=new double[12];
+         double actualWorkingHours=daysPerMonth*workingHoursPerDay;
+         
+		 Calendar calendar=Calendar.getInstance();
+		 calendar.set(year, 0, 1);
+	     Date yearstartDate=calendar.getTime();
+	     calendar.set(year, 11,31);
+	     Date yearEndDate=calendar.getTime();	        
+	     List<Attendance> allEmployeeMonthlyData= reportGenerationDAO.getEmployeesReportBetweenDates(yearstartDate,yearEndDate);
+	     //calculate working hours
+	     calculateWorkingHours(workingHoursArray, allEmployeeMonthlyData);
+	     //calculate non working hours
+	     calculateNonWorkingHours(nonWorkingHoursArray, actualWorkingHours, workingHoursArray);
+	     Map<String,Object> allEmployeeMonthlyReportMap=new HashMap<String, Object>(); 
+	     allEmployeeMonthlyReportMap.put("workingHoursArray", workingHoursArray);
+	     allEmployeeMonthlyReportMap.put("nonWorkingHoursArray", nonWorkingHoursArray);
+		 return JsonUtility.convertToJson(allEmployeeMonthlyReportMap);
+	}
+	/*This method is to calculate monthly working hours*/
+	private void calculateWorkingHours(double[] workingHoursArray,List<Attendance> attendanceDetailsList){
+		int listSize=attendanceDetailsList.size(),month;
+		Attendance attendanceObj;
+		Calendar calendar = Calendar.getInstance();
+		for(int i=0;i<listSize;i++){
+        	attendanceObj=attendanceDetailsList.get(i);
+        	calendar.setTime(attendanceObj.getAttendanceDate());
+        	month=calendar.get(Calendar.MONTH);
+        	workingHoursArray[month]+=attendanceObj.getWorkingHours();
+       
+        }
+	}
+	/*This method is to calculate monthly non working hours*/
+	private void calculateNonWorkingHours(double[] nonWorkingHoursArray,double workingHoursPerMonth,double[] workingHoursArray){
+		
+        for(int i=0;i<12;i++){
+        	
+        	nonWorkingHoursArray[i]=workingHoursPerMonth-workingHoursArray[i];
+        	
+        }
 	}
 }
