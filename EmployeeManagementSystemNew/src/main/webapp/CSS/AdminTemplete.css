@@ -1,0 +1,114 @@
+.headpart {
+	width: auto;
+	height: 100px;
+	color: white;
+	background-color: #3c8dbc;
+}
+
+.sidebar {
+	width: 200px;
+	height: 575px;
+	left: 0px;
+	background-color: #3c8dbc;
+}
+
+.icon-setting {
+	font-size: 25px;
+	top: 60px;
+	left: 55px;
+}
+
+ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+.title_menu {
+	right: 10px;
+}
+
+a:hover {
+	color: hotpink;
+}
+
+span:HOVER {
+	color: hotpink;
+}
+
+#dropdown {
+	max-width: 160px;
+	min-width: 100px;
+	top: 100px;
+	width: 200px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.icon {
+	top: 15px;
+	left: 45px;
+}
+
+#print {
+	left: 50%;
+	position: relative;
+}
+
+.generatereportheder {
+	border: 1px solid #bebebe;
+}
+
+.generatereportmain {
+	border: 1px solid black;
+}
+
+table, td, th {
+	border: 1px solid green;
+}
+
+th, td {
+	width: 130px;
+	height: 30px;
+}
+
+th {
+	height: 40px;
+	background-color: green;
+	color: white;
+}
+
+.generateposition {
+	width: auto;
+	height: 60px;
+	left: 22%;
+	top: 17%;
+	position: absolute;
+	padding-top: 13px;
+	background-color: #F5F5F5;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.generateposition1 {
+	width: auto;
+	height: auto;
+	left: 22%;
+	top: 28%;
+	position: absolute;
+	padding-top: 13px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+input {
+	font-size: 15px;
+	width: 180px;
+	height: 28px;
+	border-radius: 5px;
+}
+
+select {
+	width: 100px;
+	height: 28px;
+	border-radius: 5px;
+}

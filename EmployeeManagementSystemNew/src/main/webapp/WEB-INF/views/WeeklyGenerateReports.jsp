@@ -10,19 +10,8 @@
 <script src="./jquery/jquery-2.1.4.js"></script>
 <script src="./jquery/jquery-ui.js"></script>
 
-<style>
-#fixed {
-	text-decoration: none;
-	position: fixed;
-	right: 0px;
-	top: 102px;
-	width: 110px;
-	height: 30px;
-	border: 3px solid #bebebe;
-}
-</style>
 <script type="text/javascript">
-$(function() {
+ $(function() {
 var employeeids=[];
     $("#id").autocomplete({
   	  source :function(request, response) {
@@ -44,7 +33,7 @@ var employeeids=[];
 			}
 		});
 	});
-
+	 
 	function getDisable()
 	{
 		if($( "#select" ).val()=="all")
@@ -58,21 +47,19 @@ var employeeids=[];
 	}
 	$("document").ready(
 			function() {
-	$("#dayreports").click(function()
+	$("#weekreports").click(function()
 	{
 		 $("#remove").remove();
         
 		var empId = $( "#id" ).val();
-		var day1=$("#datepicker").val();
-		var newday=new Date(day1);
-		var newdayMilli=newday.getTime();
-	
+		var day1=$("#week").val();
+		
 		if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		{
 		var request = $.ajax({
-		  url: "<%=request.getContextPath()%>/AttendanceDay",
-		  method: "GET",
-		  data: { id : empId,day:newdayMilli},
+		  url: "<%=request.getContextPath()%>/AttendanceWeek",
+		  method: "POST",
+		  data: { id : empId,week:day1},
 		  dataType: "json"
 		});
 		 
@@ -94,6 +81,7 @@ var employeeids=[];
                     if(txt != ""){
                         $("#table").append(txt);
                     }
+                    
                 }
 			else{
 				$( "#print" ).hide();
@@ -111,9 +99,9 @@ var employeeids=[];
 		else if($( "#select" ).val()=="all" && day1!="")
 			{
 			var request = $.ajax({
-				  url: "<%=request.getContextPath()%>/AttendanceSrv",
+				  url: "<%=request.getContextPath()%>/",
 				  method: "GET",
-				  data: { day :day1},
+				  data: {week :day1},
 				  dataType: "json"
 				});
 				 
@@ -135,7 +123,6 @@ var employeeids=[];
 		                    if(txt != ""){
 		                        $("#table").append(txt);
 		                    }
-		                   
 		                }
 					else{
 						$( "#print" ).hide();
@@ -157,11 +144,9 @@ var employeeids=[];
 			document.getElementById("res").innerHTML="field should not be empty.";
 		}
 	});
-	
-	$('[data-toggle="popover"]').popover(); 
-});
-</script>
+			});
 
+</script>
 
 </head>
 <body>
@@ -173,13 +158,8 @@ var employeeids=[];
 			<option value="single">Single</option>
 			<option value="all">All</option>
 		</select>&nbsp;&nbsp;&nbsp; <input type="text" id="id" placeholder="enter id">&nbsp;&nbsp;
-		Date: <input type="text" id="datepicker">&nbsp;&nbsp;
-		<button class="btn btn-primary" id="dayreports">submit</button>
-
-		<a id="fixed" href="#" data-toggle="popover" data-placement="left"
-			data-trigger="focus" data-content="user : Admin,EMS ">
-
-			Productivity info </a>
+		Week: <input type="week" id="week">&nbsp;&nbsp;
+		<button class="btn btn-primary" id="weekreports">submit</button>
 	</div>
 	<div class="row generateposition1">
 		<div id="printdiv">

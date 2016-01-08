@@ -2,17 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
-
-   <!-- <link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>  -->
+<title>EMS</title>
   
   <link rel="stylesheet" type="text/css" href="./CSS/style.css">
   
@@ -38,72 +28,46 @@
     <!-- custom css -->
   <link rel="stylesheet" href="./CSS/chart.css">
   
+  <link rel="stylesheet" href="./CSS/AdminTemplete.css">
   
   <!-- custom javascript file -->
   <script src="./JS/showGraphs.js"></script>
   
   <link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png"/>
   
-  
-<style>
-.headpart {
-	width: auto;
-	height: 100px;
-	color: white;
-	background-color: #3c8dbc;
-}
-
-.sidebar {
-	width: 200px;
-	height: 575px;
-	left: 0px;
-	background-color: #3c8dbc;
-}
-
-.icon-setting {
-	font-size: 25px;
-	top: 60px;
-	left: 55px;
-}
-
-ul {
-	padding: 0px;
-	margin: 0px;
-}
-
-.title_menu {
-	right: 10px;
-}
-a:hover {
-    color: hotpink;
-}
-span:HOVER {
-	color: hotpink;
-}
-#dropdown{
- max-width: 160px ;
-    min-width: 100px ;
-    top: 100px;
-    width: 200px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-}
-.icon{
-top: 15px;
-left: 45px;
-}
-</style>
-
+ 
 <script>
-  $(function() {
-    $( "#accordion" ).accordion();
-  });
 
-  $(function() {
-      $( "#datepicker" ).datepicker();
-    });
+	$("document").ready(function() {
+		$("#print").hide();
 
-  </script>
+	});
+	/* function printDiv(pdiv) {
+	 var printContents = document
+	 .getElementById("printdiv").innerHTML;
+	 var originalContents = document.body.innerHTML;
+	 document.body.innerHTML = printContents;
+	 window.print();
+	 document.body.innerHTML = originalContents;
+	 }; */
+
+	function PrintDiv(pdiv) {
+		var divToPrint = document.getElementById('printdiv');
+		var popupWin = window.open('', '_blank', 'width=900,height=650');
+		popupWin.document.open();
+		popupWin.document.write('<html><body onload="window.print()">'
+				+ divToPrint.innerHTML + '</html>');
+		popupWin.document.close();
+
+	};
+	$(function() {
+		$("#accordion").accordion();
+	});
+
+	$(function() {
+		$("#datepicker").datepicker();
+	});
+</script>
   
 </head>
 <body>
@@ -121,7 +85,7 @@ left: 45px;
 						data-toggle="dropdown"></span>
 					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
 						<li><a href="#" id="admin-profile-link">Profile</a></li>
-						<li><a href="#" id="admin-change-pass-link">Change password</a></li>
+						<li><a href="./ChangePassword.jsp" id="admin-change-pass-link">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>
 				</div>
@@ -143,16 +107,17 @@ left: 45px;
 			</div>
 			<h3>Reports</h3>
 			<div>
-			<ul>
-			<li>
-			<a href="./DailyGenerateReports.jsp">Daily Reports</a></li></ul>
-			<li>
-			<a href="#">Weekly Reports</a></li></ul>
-			<li>
-			<a href="#">Monthly Reports</a></li></ul>
-			<li>
-			<a href="#">annually Reports</a></li></ul>
-			</div>
+						<ul>
+							<li><a href="./DailyGenerateReports.jsp">Daily Reports</a></li>
+						</ul>
+						<li><a href="./WeeklyGenerateReports.jsp">Weekly Reports</a></li>
+						</ul>
+						<li><a href="./MonthlyGenerateReports.jsp">Monthly
+								Reports</a></li>
+						</ul>
+						<li><a href="#">annually Reports</a></li>
+						</ul>
+					</div>
 			<h3>View Attendance</h3>
 			<div>
 			<ul>

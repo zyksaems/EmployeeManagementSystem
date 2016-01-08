@@ -498,7 +498,13 @@ $("document").ready(
 	           var employeeChangePasswordForm_id="#emp-change-pass-form";
 	     
 	           
-	      
+	           var forgotpassword_div="#Forgot_password_div";
+	           var forgotpassword_id="#empid";
+	           var forgotpassword_span_id="#forgotpassword-id-span";
+	       
+	            var forgotpassword_email_div="#forgot_password_email_div";
+	            var forgotpassword_email="#email1";
+	            var forgotpassword_email_span_id="#forgotpassword-email-span";
 	           
 	           
 	            
@@ -568,6 +574,19 @@ $("document").ready(
 	            /* function call to set default values */
 	            setChangePasswordDefaultValues();
 	
+	            
+	            function setForgotPasswordDefaulValues()
+	            {
+	            	  $(forgotpassword_id).val("");
+	            	  $(forgotpassword_email).val("");
+	            	  $(forgotpassword_div).removeClass(successClass);
+		                $(forgotpassword_span_id).removeClass(glyphiconOk)
+	            	  $(forgotpassword_email_div).removeClass(successClass);
+		                $(forgotpassword_email_span_id).removeClass(glyphiconOk);
+		                 
+	            };
+	            
+	            setForgotPasswordDefaulValues();
 	            
 	            /*  function calls when change password employee id key up
                  *  This function validates input details and displays
@@ -643,7 +662,43 @@ $("document").ready(
 	            	
 	            });// END -- $(changePasswordEmployeeId_id).keyup()
 	            
+	            
+	            //start code of forgot password page ...
 		
+   $("#forgotpassword_button").prop('disabled', true);
+	            
+	            $(forgotpassword_id).keyup(function(){
+	            	
+	            	var length=$(forgotpassword_id).val().length;
+	            	
+	            	if($(forgotpassword_id).val().length==6 ) {
+	            		setTextBoxClassOk(forgotpassword_div,forgotpassword_span_id);
+	            		$("#forgotpassword_button").prop('disabled', false);
+	                 }
+	                 else{
+	                	 
+	                	 setTextBoxClassError(forgotpassword_div,forgotpassword_span_id);
+	              	   $("#forgotpassword_button").prop('disabled', true);
+	                 }
+	            });
+	            var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+	            
+	            $(forgotpassword_email).keyup(function(){
+	            	
+	            	if(testEmail.test($(forgotpassword_email).val()) ) {
+	                	
+	            		setTextBoxClassOk(forgotpassword_email_div,forgotpassword_email_span_id);
+	            		$("#forgotpassword_button").prop('disabled', false);
+	                }
+	                else{
+	                	setTextBoxClassError(forgotpassword_email_div,forgotpassword_email_span_id);
+	                	$("#forgotpassword_button").prop('disabled', true);
+	                }
+	            });
+	            
+	            //end of forgot password page code
+	            
+	            
 	            /*  function for change password employee button
                  *  This function validates input details and displays
                  *  success/error message
@@ -768,6 +823,32 @@ $("document").ready(
 	
 	/* END---------------------- employee change password functionality ------------------------------- END */	
 			   
+				
+
+				// start of  forgot password page action code 
+
+				$("#forgotpassword_button").click(function(){
+					
+					var id=document.getElementById("empid").value;
+					var email=document.getElementById("email1").value;
+					
+					 $.ajax({
+				        type: 'POST',
+				        url: 'forgotpassword',
+				        data:{empid:id,empemail1:email} ,
+				        success: function (data) {
+				 
+				        	$("#hide1").hide();
+				        	document.getElementById("res").innerHTML="Reset password page link sent to  your mail, please check your mail";
+				        	 
+				        },
+				        error: function (Response, Status, Error) {
+				        
+				        	document.getElementById("res1").innerHTML="please try again"  }
+				    }) 
+					
+				});// end of forgot password page
+				
 				
 				
 			});/*  END -- ready() */

@@ -205,7 +205,6 @@
     </div>
   </div>
   
-
 <!-- footer -->
 <footer class="container-fluid text-center navbar-fixed-bottom" >
   <p>Footer Text</p>
