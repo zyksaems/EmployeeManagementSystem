@@ -1,6 +1,8 @@
 package com.caprusit.ems.service;
 
+import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -352,7 +354,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
         Calendar calendar=Calendar.getInstance();
         double[] workingHoursArray=new double[12];
         double[] nonWorkingHoursArray=new double[12];
-        int month,listSize;
+        int listSize;
         double actualWorkingHours=daysPerMonth*workingHoursPerDay;
         
         String employeeName = null,employeeDesignation = null;
@@ -434,4 +436,194 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
         	
         }
 	}
+
+	/**
+     * getEmployeeReportForWeekByIdAndWeekDate(-,-) method takes int employeeId and  string weekDate as parameters ,
+     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(,-,-)
+     *  method to get employee working details for particular week.
+     */
+	public String getEmployeeReportForWeekByIdAndWeekDate(int employeeId, String weekDate) throws Exception {
+		
+	     String weekdate[]=weekDate.split("-");
+	     
+	     String week_year=weekdate[0];
+	     String week_weeknumber=weekdate[1];
+	     
+	     String week_weeknumber_remove=week_weeknumber.substring(1, week_weeknumber.length());
+	     
+	     int week_parseyear=Integer.parseInt(week_year);
+	     int week_parseweeknumber=Integer.parseInt(week_weeknumber_remove);
+	     
+	     int week_parseweeknumberstart=week_parseweeknumber+1;
+	    
+	     logger.info(week_parseyear);
+	     logger.info(week_parseweeknumber);
+	     
+	   
+	     // Get calendar, clear it and set week number and year.
+	     Calendar calendar = Calendar.getInstance();
+	     calendar.clear();
+	     calendar.set(Calendar.WEEK_OF_YEAR, week_parseweeknumberstart);
+	     calendar.set(Calendar.YEAR, week_parseyear);
+
+	     // Now get the first day of week.
+	     Date startdate = calendar.getTime();
+	     
+	     Calendar last = (Calendar) calendar.clone();
+	     last.add(Calendar.DAY_OF_YEAR, 6);
+
+	     // print the result
+	     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	     
+	     
+	     logger.info(df.format(startdate.getTime()) + " -> " + 
+	                        df.format(last.getTime()));
+	     logger.info(startdate);
+	     
+	     String startDatestr=df.format(startdate.getTime());
+	     String endDatestr=df.format(last.getTime());
+	     
+	     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	     
+	     Date fromDate = (Date)formatter.parse(startDatestr);
+	     Date toDate = (Date)formatter.parse(endDatestr);
+	     
+	     logger.info("From Date is :" +fromDate);
+		
+	     logger.info("To date is:"+toDate);
+		
+		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, fromDate, toDate));
+	}
+	
+	/**
+     * getEmployeeReportForWeekByIdAndWeekDate(-,-) method take string weekDate as parameters ,
+     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-) method
+     *  to get the working details of all employee between particular week.
+     */
+	public String getAllEmployeeReportForWeekByWeekDate(String weekDate) throws Exception {
+		
+		logger.info("Inside ReportGenerationDAOImpl getAllEmployeeReportForWeekByWeekDate(-) method	"); 
+		String weekdate[]=weekDate.split("-");
+	     
+	     String week_year=weekdate[0];
+	     String week_weeknumber=weekdate[1];
+	     
+	     String week_weeknumber_remove=week_weeknumber.substring(1, week_weeknumber.length());
+	     
+	     int week_parseyear=Integer.parseInt(week_year);
+	     int week_parseweeknumber=Integer.parseInt(week_weeknumber_remove);
+	     
+	     int week_parseweeknumberstart=week_parseweeknumber+1;
+	    
+	     logger.info(week_parseyear);
+	     logger.info(week_parseweeknumber);
+	     
+	   
+	     // Get calendar, clear it and set week number and year.
+	     Calendar calendar = Calendar.getInstance();
+	     calendar.clear();
+	     calendar.set(Calendar.WEEK_OF_YEAR, week_parseweeknumberstart);
+	     calendar.set(Calendar.YEAR, week_parseyear);
+
+	     // Now get the first day of week.
+	     Date startdate = calendar.getTime();
+	     
+	     Calendar last = (Calendar) calendar.clone();
+	     last.add(Calendar.DAY_OF_YEAR, 6);
+
+	     // print the result
+	     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	     
+	     
+	     logger.info(df.format(startdate.getTime()) + " -> " + 
+	                        df.format(last.getTime()));
+	     logger.info(startdate);
+	     
+	     String startDatestr=df.format(startdate.getTime());
+	     String endDatestr=df.format(last.getTime());
+	     
+	     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	     
+	     Date fromDate = (Date)formatter.parse(startDatestr);
+	     Date toDate = (Date)formatter.parse(endDatestr);
+	     
+	     logger.info("From Date in getAllEmployeeReportForWeekByWeekDate :" +fromDate);
+		
+	     logger.info("To date in getAllEmployeeReportForWeekByWeekDate:"+toDate);
+		
+		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeesReportBetweenDates(fromDate, toDate));
+	}
+	
+	/**
+     * getEmployeeReportForMonthByIdAndMonth(-,-) method takes int employeeId and  string month as parameters ,
+     * and we will convert String month to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-,)
+     * method  to get employee working details for particular month.
+     */
+	public String getEmployeeReportForMonthByIdAndMonth(int employeeId, String month) {
+		
+		 String monthdate[]=month.split("-");
+	     String month_year=monthdate[0];
+	     String month_monthnumber=monthdate[1];
+	     
+	     int month_parseyear=Integer.parseInt(month_year);
+	     int month_parsemonthnumber=Integer.parseInt(month_monthnumber);
+	     
+	     Calendar calendar = Calendar.getInstance();
+	     calendar.clear();
+	     calendar.set(Calendar.DAY_OF_MONTH, 1);
+	     calendar.set(Calendar.MONTH, month_parsemonthnumber-1);
+	     calendar.set(Calendar.YEAR, month_parseyear);
+
+	     Date fromDate = calendar.getTime();
+	     
+	 
+	     calendar.set(Calendar.DAY_OF_MONTH,
+	    		  calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+	     
+	     Date toDate=calendar.getTime();
+	     
+	     logger.info("From Date is :" +fromDate);
+		
+	     logger.info("To date is:"+toDate);
+		
+		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, fromDate, toDate));
+	}
+	
+	
+	
+	/**
+     * getAllEmployeeReportForMonthByMonth(-) method take string month as parameters ,
+     * and we will convert String month to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-,)
+     * method  to get employee working details for particular month.
+     */
+	public String getAllEmployeeReportForMonthByMonth(String month) {
+		
+		 String monthdate[]=month.split("-");
+	     String month_year=monthdate[0];
+	     String month_monthnumber=monthdate[1];
+	     
+	     int month_parseyear=Integer.parseInt(month_year);
+	     int month_parsemonthnumber=Integer.parseInt(month_monthnumber);
+	     
+	     Calendar calendar = Calendar.getInstance();
+	     calendar.clear();
+	     calendar.set(Calendar.DAY_OF_MONTH, 1);
+	     calendar.set(Calendar.MONTH, month_parsemonthnumber-1);
+	     calendar.set(Calendar.YEAR, month_parseyear);
+
+	     Date fromDate = calendar.getTime();
+	     
+	 
+	     calendar.set(Calendar.DAY_OF_MONTH,
+	    		  calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+	     
+	     Date toDate=calendar.getTime();
+	     
+	     logger.info("From Date in getAllEmployeeReportForMonthByMonth  :" +fromDate);
+		
+	     logger.info("To date in getAllEmployeeReportForMonthByMonth:"+toDate);
+		
+		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeesReportBetweenDates(fromDate, toDate));
+	}
+	
 }

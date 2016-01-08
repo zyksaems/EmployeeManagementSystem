@@ -38,4 +38,12 @@ public interface IReportGenerationService {
 	List<Integer> getAutoCompleteInfo(int empid);
 
 	List<String> getAutoCompleteInfo(String employeeId);
+
+	String getEmployeeReportForWeekByIdAndWeekDate(int employeeId, String weekDate) throws Exception;
+	
+	String getAllEmployeeReportForWeekByWeekDate(String weekDate) throws Exception;
+
+	String getEmployeeReportForMonthByIdAndMonth(int employeeId, String month);
+
+	String getAllEmployeeReportForMonthByMonth(String month);
 }

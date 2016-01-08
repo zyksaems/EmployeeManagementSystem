@@ -26,6 +26,56 @@ public class ReportGenerationController {
 	private Logger logger = Logger.getLogger(ReportGenerationController.class);
 
 	/**
+	 *  getDailyReportGenerationPage() method will display DailyReportGenerationPage when we click 
+	 *  on DailyReports link in Report Generation Functionality.
+	 */
+	
+	@RequestMapping(value = "/getDailyReportGenerationPage", method = RequestMethod.GET)
+	public String getDailyReportGenerationPage() {
+		logger.info("inside ReportGenerationController getDailyReportGenerationPage()");
+		
+		return "DailyGenerateReports";
+	}
+	
+	
+	/**
+	 *  getWeeklyReportGenerationPage() method will display WeeklyReportGenerationPage when we click 
+	 *  on WeeklyReports link in Report Generation Functionality.
+	 */
+	
+	@RequestMapping(value = "/getWeeklyReportGenerationPage", method = RequestMethod.GET)
+	public String getWeeklyReportGenerationPage() {
+		logger.info("inside ReportGenerationController getWeeklyReportGenerationPage()");
+		
+		return "WeeklyGenerateReports";
+	}
+	
+	/**
+	 *  getMonthlyReportGenerationPage() method will display MonthlyReportGenerationPage when we click 
+	 *  on MonthlyReports link in Report Generation Functionality.
+	 */
+	
+	@RequestMapping(value = "/getMonthlyReportGenerationPage", method = RequestMethod.GET)
+	public String getMonthlyReportGenerationPage() {
+		logger.info("inside ReportGenerationController getMonthlyReportGenerationPage()");
+		
+		return "MonthlyGenerateReports";
+	}
+	
+	/**
+	 *  getAnnuallyReportGenerationPage() method will display AnnuallyReportGenerationPage when we click 
+	 *  on AnnualyReports link in Report Generation Functionality.
+	 */
+	
+	@RequestMapping(value = "/getAnnuallyReportGenerationPage", method = RequestMethod.GET)
+	public String getAnnuallyReportGenerationPage() {
+		logger.info("inside ReportGenerationController getAnnuallyReportGenerationPage()");
+		
+		return "AnnuallyReportGenerationPage";
+	}
+	
+	
+	/**
 	 * getAutoCompleteInfo(-) method take employeeId as a input and display all
 	 * employeeId's or employeeName's in the search box based on the user
 	 * supplied values.
@@ -190,7 +240,9 @@ public class ReportGenerationController {
 		return reportDetails;
 	}
 
-	
+	/**
+	 * getDailyReportGraphOfIndividual(-) method display the working details of an employee using line chart.
+	 * */
 	 @RequestMapping(value = "/getDailyReportGraphOfIndividual", method = RequestMethod.POST)
 	  public @ResponseBody String getDailyReportOfIndividual(@RequestParam("employeeId") int employeeId,
 	    @RequestParam("attendanceDate") String attendanceDate) {
@@ -198,4 +250,83 @@ public class ReportGenerationController {
 
 	   return reportGenerationService.getDailyReportOfIndividual(employeeId, new Date(Long.valueOf(attendanceDate)));
 	  }
+	 
+	 
+	 
+	 /**
+		 * getEmployeeReportForWeekByIdAndWeekDate(-,-) method takes employeeId,weekDate as a
+		 * inputs and displays employee working details during given period of
+		 * time.
+		 * @throws Exception 
+		 */
+		@RequestMapping(value = "/getEmployeeReportForWeekByIdAndWeekDate", method = RequestMethod.POST)
+		public @ResponseBody
+		String getEmployeeReportForWeekByIdAndWeekDate(@RequestParam("employeeId") int employeeId,
+				@RequestParam("weekDate") String weekDate) throws Exception {
+			logger.info("inside ReportGenerationController getEmployeeReportForWeekByIdAndWeekDate()");
+			
+			logger.info("Employee ID:"+employeeId);
+			
+			logger.info("Date: "+weekDate);
+			
+			return reportGenerationService
+					.getEmployeeReportForWeekByIdAndWeekDate(employeeId,weekDate);
+		}
+	 
+		/**
+		 * getAllEmployeeReportForWeekByWeekDate(-) method takes month as a
+		 * inputs and displays all employees working details during given period of
+		 * time.
+		 * @throws Exception 
+		 */
+		@RequestMapping(value = "/getAllEmployeeReportForWeekByWeekDate", method = RequestMethod.POST)
+		public @ResponseBody
+		String getAllEmployeeReportForWeekByWeekDate(@RequestParam("weekDate") String weekDate) throws Exception {
+			logger.info("inside ReportGenerationController getAllEmployeeReportForWeekByWeekDate()");
+			
+			logger.info("Date in getAllEmployeeReportForWeekByWeekDate : "+weekDate);
+			
+			return reportGenerationService
+					.getAllEmployeeReportForWeekByWeekDate(weekDate);
+		}
+		
+		
+		 /**
+		 * getEmployeeReportForMonthByIdAndMonth(-,-) method takes employeeId,month as a
+		 * inputs and displays employee working details during given period of
+		 * time.
+		 * @throws Exception 
+		 */
+		@RequestMapping(value = "/getEmployeeReportForMonthByIdAndMonth", method = RequestMethod.POST)
+		public @ResponseBody
+		String getEmployeeReportForMonthByIdAndMonth(@RequestParam("employeeId") int employeeId,
+				@RequestParam("month") String month) throws Exception {
+			logger.info("inside ReportGenerationController getEmployeeReportForMonthByIdAndMonth()");
+			
+			logger.info("Employee ID:"+employeeId);
+			
+			logger.info("Month: "+month);
+			
+			return reportGenerationService
+					.getEmployeeReportForMonthByIdAndMonth(employeeId,month);
+		}
+		
+		
+		/**
+		 * getAllEmployeeReportForMonthByMonth(-) method takes month as a
+		 * inputs and displays all employees working details during given period of
+		 * time.
+		 * @throws Exception 
+		 */
+		@RequestMapping(value = "/getAllEmployeeReportForMonthByMonth", method = RequestMethod.POST)
+		public @ResponseBody
+		String getAllEmployeeReportForMonthByMonth(@RequestParam("month") String month) throws Exception {
+			logger.info("inside ReportGenerationController getAllEmployeeReportForMonthByMonth()");
+			
+			logger.info("Month in getAllEmployeeReportForMonthByMonth : "+month);
+			
+			return reportGenerationService
+					.getAllEmployeeReportForMonthByMonth(month);
+		}	
+		
 }

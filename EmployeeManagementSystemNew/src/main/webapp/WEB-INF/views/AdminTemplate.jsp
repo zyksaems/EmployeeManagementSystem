@@ -108,14 +108,13 @@
 			<h3>Reports</h3>
 			<div>
 						<ul>
-							<li><a href="./DailyGenerateReports.jsp">Daily Reports</a></li>
+							<li><a href="/EmployeeManagementSystemNew/getDailyReportGenerationPage.do">Daily Reports</a></li>
 						</ul>
-						<li><a href="./WeeklyGenerateReports.jsp">Weekly Reports</a></li>
+						<li><a href="/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">Weekly Reports</a></li>
 						</ul>
-						<li><a href="./MonthlyGenerateReports.jsp">Monthly
-								Reports</a></li>
+						<li><a href="/EmployeeManagementSystemNew/getMonthlyReportGenerationPage.do">Monthly Reports</a></li>
 						</ul>
-						<li><a href="#">annually Reports</a></li>
+						<li><a href="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do">annually Reports</a></li>
 						</ul>
 					</div>
 			<h3>View Attendance</h3>

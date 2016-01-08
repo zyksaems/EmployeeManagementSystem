@@ -15,11 +15,15 @@
 var employeeids=[];
     $("#id").autocomplete({
   	  source :function(request, response) {
+  		 var id_value=document.getElementById("id").value;
+  	      
+  	      if(id_value.length==1){
+  	       employeeids=[];
     				$.ajax({
-            			url : "<%=request.getContextPath()%>/AutoCompleteId",
-					type : "GET",
+            			url : "/EmployeeManagementSystemNew/getAutoCompleteInfo.do",
+					type : "POST",
 					data : {
-						term : request.term
+						employeeId : request.term
 					},
 					dataType : "json",
 					success : function(data) {
@@ -30,6 +34,10 @@ var employeeids=[];
 						response(employeeids);
 					}
 				});
+  	    }
+  	      else{
+  	     response(employeeids);
+  	      }
 			}
 		});
 	});
@@ -57,9 +65,9 @@ var employeeids=[];
 		if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		{
 		var request = $.ajax({
-		  url: "<%=request.getContextPath()%>/AttendanceWeek",
+		  url: "/EmployeeManagementSystemNew/getEmployeeReportForWeekByIdAndWeekDate.do",
 		  method: "POST",
-		  data: { id : empId,week:day1},
+		  data: { employeeId : empId,weekDate:day1},
 		  dataType: "json"
 		});
 		 
@@ -74,7 +82,9 @@ var employeeids=[];
                 	txt+="<tbody id='remove'>"
                     for(var i=0;i<len;i++){
                         
-                            txt += "<tr><td></td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+data[i].endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
+                    	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime;
+                    	
+                            txt += "<tr><td></td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
                         
                     }
                 	txt+="</tbody>";
@@ -99,9 +109,9 @@ var employeeids=[];
 		else if($( "#select" ).val()=="all" && day1!="")
 			{
 			var request = $.ajax({
-				  url: "<%=request.getContextPath()%>/",
-				  method: "GET",
-				  data: {week :day1},
+				  url: "/EmployeeManagementSystemNew/getAllEmployeeReportForWeekByWeekDate.do",
+				  method: "POST",
+				  data: {weekDate :day1},
 				  dataType: "json"
 				});
 				 
@@ -116,7 +126,9 @@ var employeeids=[];
 		                	txt+="<tbody id='remove'>"
 		                    for(var i=0;i<len;i++){
 		                        
-		                            txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+data[i].endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
+		                    	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime;
+		                    	
+		                            txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
 		                        
 		                    }
 		                	txt+="</tbody>";
@@ -157,7 +169,7 @@ var employeeids=[];
 			<option title="" value="">--Select--</option>
 			<option value="single">Single</option>
 			<option value="all">All</option>
-		</select>&nbsp;&nbsp;&nbsp; <input type="text" id="id" placeholder="enter id">&nbsp;&nbsp;
+		</select>&nbsp;&nbsp;&nbsp; <input type="text" id="id" maxlength="6"  placeholder="enter id">&nbsp;&nbsp;
 		Week: <input type="week" id="week">&nbsp;&nbsp;
 		<button class="btn btn-primary" id="weekreports">submit</button>
 	</div>

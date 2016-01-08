@@ -36,7 +36,7 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		
 		Session session = sessionFactory.openSession();
 		
-		SQLQuery query = session.createSQLQuery("select employeeid from employee_table where employeeid like '"+employeeId+"%'");
+		SQLQuery query = session.createSQLQuery("select employeeid from PRAKASH.employee_table where employeeid like '"+employeeId+"%'");
 		List<Integer> pusList = query.list();
 		logger.info("info list in dao: "+pusList);
 		
@@ -156,6 +156,7 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		crit.add(c1);
 
 		List<Attendance> result = crit.list();
+		logger.info("Data List size:"+ result.size());
 		return result;
 	}
 

@@ -26,11 +26,15 @@ $(function() {
 var employeeids=[];
     $("#id").autocomplete({
   	  source :function(request, response) {
+  		 var id_value=document.getElementById("id").value;
+  	      
+  	      if(id_value.length==1){
+  	       employeeids=[];
     				$.ajax({
-            			url : "<%=request.getContextPath()%>/AutoCompleteId",
-					type : "GET",
+            			url : "/EmployeeManagementSystemNew/getAutoCompleteInfo.do",
+					type : "POST",
 					data : {
-						term : request.term
+						employeeId : request.term
 					},
 					dataType : "json",
 					success : function(data) {
@@ -41,6 +45,10 @@ var employeeids=[];
 						response(employeeids);
 					}
 				});
+  	    }
+  	      else{
+  	     response(employeeids);
+  	      }
 			}
 		});
 	});
@@ -66,30 +74,34 @@ var employeeids=[];
 		var day1=$("#datepicker").val();
 		var newday=new Date(day1);
 		var newdayMilli=newday.getTime();
-	
+	    console.log("emp id: "+empId+"    dtae: "+newday);
 		if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		{
+			console.log(" getReportByIdAndDate ");
 		var request = $.ajax({
-		  url: "<%=request.getContextPath()%>/AttendanceDay",
-		  method: "GET",
-		  data: { id : empId,day:newdayMilli},
+		  url: "/EmployeeManagementSystemNew/getReportByIdAndDate.do",
+		  method: "POST",
+		  data: { employeeId : empId,attendanceDate: newdayMilli},
 		  dataType: "json"
 		});
 		 
 		request.done(function( data ) {
-			
-                var len = data.length;
+			console.log("response : "+data);
+			   console.log("response for  getReportByIdAndDate"+JSON.stringify(data));
+                var len = data.employeeReport.length;
+                
+                console.log("data length: "+len);
                 var txt = "";
                 if(len > 0){
+                	var report= data.employeeReport[0];
+                	var endTime=(report.endTime == undefined)?"Not Logged Out":report.endTime;
                 	$( "#print" ).show();
                 	$("#tbody").show();
                 	$( "#res" ).hide();
                 	txt+="<tbody id='remove'>"
-                    for(var i=0;i<len;i++){
                         
-                            txt += "<tr><td></td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+data[i].endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
+                            txt += "<tr><td>"+empId+"</td><td>"+report.attendanceDate+"</td><td>"+report.startTime+"</td><td>"+endTime+"</td><td>"+report.workingHours+"</td><td>"+report.dayIndicator+"</td></tr>";
                         
-                    }
                 	txt+="</tbody>";
                     if(txt != ""){
                         $("#table").append(txt);
@@ -110,14 +122,22 @@ var employeeids=[];
 	}
 		else if($( "#select" ).val()=="all" && day1!="")
 			{
-			var request = $.ajax({
-				  url: "<%=request.getContextPath()%>/AttendanceSrv",
-				  method: "GET",
-				  data: { day :day1},
+				var day1=$("#datepicker").val();
+				var newday=new Date(day1);
+				var newdayMilli=newday.getTime();
+				
+				 console.log("Date: "+newday);
+				
+				var request = $.ajax({
+				  url: "/EmployeeManagementSystemNew/getAllEmployeesReportByDate.do",
+				  method: "POST",
+				  data: { attendanceDate: newdayMilli},
 				  dataType: "json"
 				});
 				 
 				request.done(function(data) {
+					
+					console.log("Response come from  getAllEmployeesReportByDate() method "+JSON.stringify(data));
 					
 					 var len = data.length;
 		                var txt = "";
@@ -127,8 +147,9 @@ var employeeids=[];
 		                	$( "#res" ).hide();
 		                	txt+="<tbody id='remove'>"
 		                    for(var i=0;i<len;i++){
-		                        
-		                            txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+data[i].endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
+		                    	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime;
+		                    	
+		                            txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
 		                        
 		                    }
 		                	txt+="</tbody>";
@@ -172,7 +193,7 @@ var employeeids=[];
 			<option title="" value="">--Select--</option>
 			<option value="single">Single</option>
 			<option value="all">All</option>
-		</select>&nbsp;&nbsp;&nbsp; <input type="text" id="id" placeholder="enter id">&nbsp;&nbsp;
+		</select>&nbsp;&nbsp;&nbsp; <input type="text" id="id" maxlength="6" placeholder="enter id">&nbsp;&nbsp;
 		Date: <input type="text" id="datepicker">&nbsp;&nbsp;
 		<button class="btn btn-primary" id="dayreports">submit</button>
 

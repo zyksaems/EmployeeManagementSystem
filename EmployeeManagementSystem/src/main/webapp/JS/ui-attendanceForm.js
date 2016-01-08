@@ -1,5 +1,3 @@
-
-
 var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 	app.controller('ValidController', function($scope, $http,$window,$uibModal, $log) {
 		
