@@ -46,4 +46,8 @@ public interface IReportGenerationService {
 	String getEmployeeReportForMonthByIdAndMonth(int employeeId, String month);
 
 	String getAllEmployeeReportForMonthByMonth(String month);
+
+	String getEmployeeReportForYearByIdAndYear(int employeeId, String year);
+
+	String getAllEmployeeReportForYearByYearDate(String yearDate);
 }

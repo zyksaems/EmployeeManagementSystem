@@ -329,4 +329,36 @@ public class ReportGenerationController {
 					.getAllEmployeeReportForMonthByMonth(month);
 		}	
 		
+		
+		 /**
+		 * getEmployeeReportForYearByIdAndYear(-,-) method takes employeeId,year as a
+		 * inputs and displays employee working details during given particular
+		 * year.
+		 */
+		@RequestMapping(value = "/getEmployeeReportForYearByIdAndYear", method = RequestMethod.POST)
+		public @ResponseBody
+		String getEmployeeReportForYearByIdAndYear(@RequestParam("employeeId") int employeeId,
+				@RequestParam("year") String year) throws Exception {
+			logger.info("inside ReportGenerationController getEmployeeReportForYearByIdAndYear()");
+			
+			    
+			    return reportGenerationService.getEmployeeReportForYearByIdAndYear(employeeId,year);
+		}
+		
+		/**
+		 * getAllEmployeeReportForMonthByMonth(-) method takes month as a
+		 * inputs and displays all employees working details during given period of
+		 * time.
+		 * @throws Exception 
+		 */
+		@RequestMapping(value = "/getAllEmployeeReportForYearByYearDate", method = RequestMethod.POST)
+		public @ResponseBody
+		String getAllEmployeeReportForYearByYearDate(@RequestParam("yearDate") String yearDate) throws Exception {
+			logger.info("inside ReportGenerationController getAllEmployeeReportForYearByYearDate()");
+			
+			logger.info("Year in getAllEmployeeReportForYearByYearDate : "+yearDate);
+			
+			return reportGenerationService
+					.getAllEmployeeReportForYearByYearDate(yearDate);
+		}	
 }

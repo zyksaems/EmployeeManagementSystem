@@ -12,7 +12,9 @@
 
 <script type="text/javascript">
  $(function() {
-var employeeids=[];
+	 $("#table").hide();
+	 $("#table1").hide();
+	var employeeids=[];
     $("#id").autocomplete({
   	  source :function(request, response) {
   		 var id_value=document.getElementById("id").value;
@@ -64,7 +66,7 @@ var employeeids=[];
 		
 		if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		{
-		var request = $.ajax({
+			var request = $.ajax({
 		  url: "/EmployeeManagementSystemNew/getEmployeeReportForWeekByIdAndWeekDate.do",
 		  method: "POST",
 		  data: { employeeId : empId,weekDate:day1},
@@ -76,6 +78,9 @@ var employeeids=[];
                 var len = data.length;
                 var txt = "";
                 if(len > 0){
+                	$("#table1").show();
+       				 $("#table").hide();
+                	
                 	$( "#print" ).show();
                 	$("#tbody").show();
                 	$( "#res" ).hide();
@@ -84,18 +89,21 @@ var employeeids=[];
                         
                     	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime;
                     	
-                            txt += "<tr><td></td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
+                            txt += "<tr><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
                         
                     }
                 	txt+="</tbody>";
                     if(txt != ""){
-                        $("#table").append(txt);
+                        $("#table1").append(txt);
                     }
                     
                 }
 			else{
 				$( "#print" ).hide();
 				$( "#res" ).show();
+				
+				 $("#table").hide();
+				 $("#table1").hide();
 				document.getElementById("res").innerHTML="NO MATCHES FOUND";
 			}
 		});
@@ -108,7 +116,7 @@ var employeeids=[];
 	}
 		else if($( "#select" ).val()=="all" && day1!="")
 			{
-			var request = $.ajax({
+				var request = $.ajax({
 				  url: "/EmployeeManagementSystemNew/getAllEmployeeReportForWeekByWeekDate.do",
 				  method: "POST",
 				  data: {weekDate :day1},
@@ -120,6 +128,9 @@ var employeeids=[];
 					 var len = data.length;
 		                var txt = "";
 		                if(len > 0){
+		                	$("#table").show();
+		    				$("#table1").hide();
+		    				
 		                	$( "#print" ).show();
 		                	$("#tbody").show();
 		                	$( "#res" ).hide();
@@ -137,8 +148,14 @@ var employeeids=[];
 		                    }
 		                }
 					else{
+						$("#table").show();
+						$("#table1").hide();
+						
 						$( "#print" ).hide();
 						$( "#res" ).show();
+						
+						 $("#table").hide();
+						 $("#table1").hide();
 						document.getElementById("res").innerHTML="NO MATCHES FOUND";
 					}
 				});
@@ -163,7 +180,7 @@ var employeeids=[];
 </head>
 <body>
 	<jsp:include page="AdminTemplate.jsp"></jsp:include>
-	<div class="row generateposition">
+	<div class="row generateposition" id="weekly-productivity-div">
 		<label>select type:</label> <select id="select"
 			onchange="getDisable()">
 			<option title="" value="">--Select--</option>
@@ -175,10 +192,22 @@ var employeeids=[];
 	</div>
 	<div class="row generateposition1">
 		<div id="printdiv">
-			<table id="table" border='2'>
+			 <table id="table" border='2' class="table table-bordered table-striped">
 				<thead>
 					<tr>
 						<th>empId</th>
+						<th>Date</th>
+						<th>StartTime</th>
+						<th>EndTime</th>
+						<th>WorkHours</th>
+						<th>DayIndicator</th>
+					</tr>
+				</thead>
+			</table>
+			
+				 <table id="table1" border='2' class="table table-bordered table-striped">
+				<thead>
+					<tr>
 						<th>Date</th>
 						<th>StartTime</th>
 						<th>EndTime</th>

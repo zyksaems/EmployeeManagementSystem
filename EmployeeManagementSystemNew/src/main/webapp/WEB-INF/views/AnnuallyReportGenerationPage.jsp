@@ -10,23 +10,13 @@
 <script src="./jquery/jquery-2.1.4.js"></script>
 <script src="./jquery/jquery-ui.js"></script>
 
-<style>
-#fixed {
-	text-decoration: none;
-	position: fixed;
-	right: 0px;
-	top: 102px;
-	width: 110px;
-	height: 30px;
-	border: 3px solid #bebebe;
-}
-</style>
 <script type="text/javascript">
-$(function() {
-
-	$("#table").hide();
-	 $("#table1").hide();
-	var employeeids=[];
+ $(function() {
+var employeeids=[];
+ 
+ $("#table").hide();
+ $("#table1").hide();
+ 
     $("#id").autocomplete({
   	  source :function(request, response) {
   		 var id_value=document.getElementById("id").value;
@@ -55,7 +45,7 @@ $(function() {
 			}
 		});
 	});
-
+	 
 	function getDisable()
 	{
 		if($( "#select" ).val()=="all")
@@ -69,49 +59,46 @@ $(function() {
 	}
 	$("document").ready(
 			function() {
-	$("#dayreports").click(function()
+	$("#annualReports").click(function()
 	{
 		 $("#remove").remove();
         
 		var empId = $( "#id" ).val();
-		var day1=$("#datepicker").val();
-		var newday=new Date(day1);
-		var newdayMilli=newday.getTime();
-	    console.log("emp id: "+empId+"    dtae: "+newday);
+		var day1=$("#year").val();
+		
 		if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		{
-			console.log(" getReportByIdAndDate ");
 		var request = $.ajax({
-		  url: "/EmployeeManagementSystemNew/getReportByIdAndDate.do",
+		  url: "/EmployeeManagementSystemNew/getEmployeeReportForYearByIdAndYear.do",
 		  method: "POST",
-		  data: { employeeId : empId,attendanceDate: newdayMilli},
+		  data: { employeeId : empId,year:day1},
 		  dataType: "json"
 		});
 		 
 		request.done(function( data ) {
-			console.log("response : "+data);
-			   console.log("response for  getReportByIdAndDate"+JSON.stringify(data));
-                var len = data.employeeReport.length;
-                
-                console.log("data length: "+len);
+			
+                var len = data.length;
                 var txt = "";
                 if(len > 0){
-                	$("#table1").show();
-       			 	$("#table").hide();
-       			 	
-                	var report= data.employeeReport[0];
-                	var endTime=(report.endTime == undefined)?"Not Logged Out":report.endTime;
+                	 $("#table1").show();
+        			 $("#table").hide();
+        			 
                 	$( "#print" ).show();
                 	$("#tbody").show();
                 	$( "#res" ).hide();
                 	txt+="<tbody id='remove'>"
+                    for(var i=0;i<len;i++){
                         
-                            txt += "<tr><td>"+report.attendanceDate+"</td><td>"+report.startTime+"</td><td>"+endTime+"</td><td>"+report.workingHours+"</td><td>"+report.dayIndicator+"</td></tr>";
+                    	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime;
+                    	
+                            txt += "<tr><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
                         
+                    }
                 	txt+="</tbody>";
                     if(txt != ""){
                         $("#table1").append(txt);
                     }
+                    
                 }
 			else{
 				$( "#print" ).hide();
@@ -119,6 +106,7 @@ $(function() {
 				
 				 $("#table").hide();
 				 $("#table1").hide();
+				
 				document.getElementById("res").innerHTML="NO MATCHES FOUND";
 			}
 		});
@@ -131,34 +119,27 @@ $(function() {
 	}
 		else if($( "#select" ).val()=="all" && day1!="")
 			{
-				var day1=$("#datepicker").val();
-				var newday=new Date(day1);
-				var newdayMilli=newday.getTime();
-				
-				 console.log("Date: "+newday);
-				
 				var request = $.ajax({
-				  url: "/EmployeeManagementSystemNew/getAllEmployeesReportByDate.do",
+				  url: "/EmployeeManagementSystemNew/getAllEmployeeReportForYearByYearDate.do",
 				  method: "POST",
-				  data: { attendanceDate: newdayMilli},
+				  data: {yearDate :day1},
 				  dataType: "json"
 				});
 				 
 				request.done(function(data) {
 					
-					console.log("Response come from  getAllEmployeesReportByDate() method "+JSON.stringify(data));
-					
 					 var len = data.length;
 		                var txt = "";
 		                if(len > 0){
 		                	$("#table").show();
-		    				$("#table1").hide();
+		        			$("#table1").hide();
 		                	
 		                	$( "#print" ).show();
 		                	$("#tbody").show();
 		                	$( "#res" ).hide();
 		                	txt+="<tbody id='remove'>"
 		                    for(var i=0;i<len;i++){
+		                        
 		                    	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime;
 		                    	
 		                            txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
@@ -168,7 +149,6 @@ $(function() {
 		                    if(txt != ""){
 		                        $("#table").append(txt);
 		                    }
-		                   
 		                }
 					else{
 						$( "#print" ).hide();
@@ -193,31 +173,25 @@ $(function() {
 			document.getElementById("res").innerHTML="field should not be empty.";
 		}
 	});
-	
-	$('[data-toggle="popover"]').popover(); 
-});
-</script>
+			});
 
+</script>
 
 </head>
 <body>
 	<jsp:include page="AdminTemplate.jsp"></jsp:include>
-	<div id="daily-attendance-div">
+	<div id="anual-report-select-div">
 	<div class="row generateposition">
 		<label>select type:</label> <select id="select"
 			onchange="getDisable()">
 			<option title="" value="">--Select--</option>
 			<option value="single">Single</option>
 			<option value="all">All</option>
-		</select>&nbsp;&nbsp;&nbsp; <input type="text" id="id" maxlength="6" placeholder="enter id">&nbsp;&nbsp;
-		Date: <input type="text" id="datepicker">&nbsp;&nbsp;
-		<button class="btn btn-primary" id="dayreports">submit</button>
-
-		<a id="fixed" href="#" data-toggle="popover" data-placement="left"
-			data-trigger="focus" data-content="user : Admin,EMS ">Productivity info </a>
+		</select>&nbsp;&nbsp;&nbsp; <input type="text" id="id" maxlength="6"  placeholder="enter id">&nbsp;&nbsp;
+		year: <input type="year" id="year" maxlength="4">&nbsp;&nbsp;
+		<button class="btn btn-primary" id="annualReports">submit</button>
 	</div>
-	</div>
-	<div class="row generateposition1">
+	<div class="row generateposition1"> 
 		<div id="printdiv">
 			 <table id="table" border='2' class="table table-bordered table-striped">
 				<thead>
@@ -232,7 +206,7 @@ $(function() {
 				</thead>
 			</table>
 			
-			 <table id="table1" border='2' class="table table-bordered table-striped">
+		 <table id="table1" border='2' class="table table-bordered table-striped">
 				<thead>
 					<tr>
 						<th>Date</th>
@@ -248,6 +222,7 @@ $(function() {
 		<br />
 		<button id="print" class='btn btn-primary'
 			onclick="PrintDiv('printdiv');">print</button>
+	</div>
 	</div>
 </body>
 </html>

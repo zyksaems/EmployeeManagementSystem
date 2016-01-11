@@ -85,7 +85,7 @@
 						data-toggle="dropdown"></span>
 					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
 						<li><a href="#" id="admin-profile-link">Profile</a></li>
-						<li><a href="./ChangePassword.jsp" id="admin-change-pass-link">Change password</a></li>
+						<li><a href="#" id="admin-change-passowrd-div">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>
 				</div>
@@ -123,9 +123,9 @@
 			<li>
 			<a href="#" id="daily-attendance-link">Daily Attendance</a></li>
 			<!-- <li>
-			<a href="#" >Weekly Attendance</a></li>
+			<a href="#" id="weekly-productivity-link">Weekly Attendance</a></li>
 			<li>
-			<a href="#">Monthly Attendance</a></li> -->
+			<a href="#" id="monthly-productivity-link">Monthly Attendance</a></li> -->
 			</ul>
 			</div>
 			<h3>Productivity</h3>
@@ -136,7 +136,7 @@
 			<li>
 			<a href="#" id="weekly-productivity-link">Weekly Productivity</a></li>
 			<li>
-			<a href="#" >Monthly Productivity</a></li>
+			<a href="#" id="monthly-productivity-link">Monthly Productivity</a></li>
 			<li>
 			<a href="#" id="anual-productivity-link">Annually Productivity</a></li>
 			</ul>

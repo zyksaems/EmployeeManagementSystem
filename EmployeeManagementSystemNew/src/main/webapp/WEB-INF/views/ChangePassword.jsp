@@ -5,9 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>EMS</title>
-<link rel="shortcut icon" type="image/x-icon" href="./js1/caprus logo.png"/>
+<link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png"/>
 <link rel="stylesheet" type="text/css" href="style.css">
-   <script src="./js1/jquery-2.1.4.js"></script>
+   <script src="./jquery/jquery-2.1.4.js"></script>
 <script src="./JS/ChangePassword.js"></script>
 <style>
 .generateposition2{
@@ -38,7 +38,7 @@ height: auto;
 			
            <!-- textBox for employee current Password -->
 			<div class="form-group has-feedback " id="change-password-admin-current-password-div">
-			    <label>Cuurent Password</label>
+			    <label>Current Password</label>
                 <input type="password" class="form-control text-center " id="change-password-admin-current-password-val" required >
                 <span class="glyphicon form-control-feedback" id="change-password-admin-current-password-span"></span>
             </div>

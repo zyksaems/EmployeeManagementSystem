@@ -184,7 +184,7 @@ function validateChangePasswordDetails(){
 */
 function makeAjaxCallToChangePassword(changePasswordObject){
 	$.ajax ({
-	    url: "forgotpassword",
+	    url: "/EmployeeManagementSystemNew/changePassword.do",
 	    type: "POST",
 	    data: JSON.stringify(changePasswordObject),
 	    dataType: "json",
@@ -224,7 +224,7 @@ function makeAjaxCallToChangePassword(changePasswordObject){
 */
 function employeeEnteredWrongPassword(){
 	
-        /*reomve all success classes from text boxes*/
+        /*remove all success classes from text boxes*/
         $(changePasswordEmployeeCurrentPassDiv_id).removeClass(successClass);		                 
 		 $(changePasswordEmployeeCurrentPassSpan_id).removeClass(glyphiconOk); 
 };

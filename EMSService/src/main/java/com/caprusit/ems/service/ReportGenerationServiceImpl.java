@@ -351,6 +351,8 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      */
 	public String getEmployeeMonthlyProductivity(int employeeId, int year) {
 
+		  logger.info("inside ReportGenerationServiceImpl getEmployeeMonthlyProductivity(-,-) method");
+		  
         Calendar calendar=Calendar.getInstance();
         double[] workingHoursArray=new double[12];
         double[] nonWorkingHoursArray=new double[12];
@@ -394,6 +396,8 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * monthly productivity based on given year
      */
 	public String getAllEmployeeMonthlyProductivity(int year) {
+		
+		 logger.info("inside ReportGenerationServiceImpl getAllEmployeeMonthlyProductivity(-) method");
 		
 		 double[] workingHoursArray=new double[12];
          double[] nonWorkingHoursArray=new double[12];
@@ -439,10 +443,12 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 
 	/**
      * getEmployeeReportForWeekByIdAndWeekDate(-,-) method takes int employeeId and  string weekDate as parameters ,
-     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(,-,-)
+     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-,-)
      *  method to get employee working details for particular week.
      */
 	public String getEmployeeReportForWeekByIdAndWeekDate(int employeeId, String weekDate) throws Exception {
+		
+		logger.info("inside ReportGenerationServiceImpl getEmployeeReportForWeekByIdAndWeekDate(-,-) method");
 		
 	     String weekdate[]=weekDate.split("-");
 	     
@@ -502,7 +508,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      */
 	public String getAllEmployeeReportForWeekByWeekDate(String weekDate) throws Exception {
 		
-		logger.info("Inside ReportGenerationDAOImpl getAllEmployeeReportForWeekByWeekDate(-) method	"); 
+		logger.info("Inside ReportGenerationServiceImpl getAllEmployeeReportForWeekByWeekDate(-) method	"); 
 		String weekdate[]=weekDate.split("-");
 	     
 	     String week_year=weekdate[0];
@@ -556,10 +562,12 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	
 	/**
      * getEmployeeReportForMonthByIdAndMonth(-,-) method takes int employeeId and  string month as parameters ,
-     * and we will convert String month to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-,)
+     * and we will convert String month to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-)
      * method  to get employee working details for particular month.
      */
 	public String getEmployeeReportForMonthByIdAndMonth(int employeeId, String month) {
+		
+		logger.info("Inside ReportGenerationServiceImpl getEmployeeReportForMonthByIdAndMonth(-,-) method	");
 		
 		 String monthdate[]=month.split("-");
 	     String month_year=monthdate[0];
@@ -575,15 +583,11 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	     calendar.set(Calendar.YEAR, month_parseyear);
 
 	     Date fromDate = calendar.getTime();
-	     
-	 
 	     calendar.set(Calendar.DAY_OF_MONTH,
 	    		  calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 	     
 	     Date toDate=calendar.getTime();
-	     
 	     logger.info("From Date is :" +fromDate);
-		
 	     logger.info("To date is:"+toDate);
 		
 		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, fromDate, toDate));
@@ -593,10 +597,12 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	
 	/**
      * getAllEmployeeReportForMonthByMonth(-) method take string month as parameters ,
-     * and we will convert String month to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-,)
+     * and we will convert String month to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-)
      * method  to get employee working details for particular month.
      */
 	public String getAllEmployeeReportForMonthByMonth(String month) {
+		
+		logger.info("Inside ReportGenerationServiceImpl getAllEmployeeReportForMonthByMonth(-) method	");
 		
 		 String monthdate[]=month.split("-");
 	     String month_year=monthdate[0];
@@ -612,18 +618,87 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	     calendar.set(Calendar.YEAR, month_parseyear);
 
 	     Date fromDate = calendar.getTime();
-	     
-	 
 	     calendar.set(Calendar.DAY_OF_MONTH,
 	    		  calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 	     
 	     Date toDate=calendar.getTime();
-	     
 	     logger.info("From Date in getAllEmployeeReportForMonthByMonth  :" +fromDate);
-		
 	     logger.info("To date in getAllEmployeeReportForMonthByMonth:"+toDate);
 		
 		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeesReportBetweenDates(fromDate, toDate));
 	}
+
 	
+	
+	/**
+     * getEmployeeReportForYearByIdAndYear(-,-) method takes int employeeId and  string year as parameters ,
+     * and we will convert String year to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-,-)
+     * method  to get employee working details for particular month.
+     */
+	public String getEmployeeReportForYearByIdAndYear(int employeeId, String year) {
+		
+			logger.info("Inside ReportGenerationServiceImpl getEmployeeReportForYearByIdAndYear(-,-) method	");
+			logger.info("Employee ID:"+employeeId);
+		
+			int yearDate= Integer.parseInt(year);
+			logger.info("Entered Year: "+yearDate);
+		
+		    Calendar calendarStart=Calendar.getInstance();
+		    calendarStart.set(Calendar.YEAR,yearDate);
+		    
+		    calendarStart.set(Calendar.MONTH,0);
+		    
+		    calendarStart.set(Calendar.DAY_OF_MONTH,1);
+		    
+		    // returning the first date
+		    Date startDate=calendarStart.getTime();
+		    logger.info("First Day of the Year:" + startDate);
+
+		    Calendar calendarEnd=Calendar.getInstance();
+		    calendarEnd.set(Calendar.YEAR,yearDate);
+		    calendarEnd.set(Calendar.MONTH,11);
+		    calendarEnd.set(Calendar.DAY_OF_MONTH,31);
+
+		    // returning the last date
+		    Date endDate=calendarEnd.getTime();
+		    logger.info("End Date:"+endDate);
+		
+		    return JsonUtility.convertToJson(reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, startDate, endDate));
+	}
+	
+	/**
+     * getAllEmployeeReportForYearByYearDate(-) method take string yearDate as parameters ,
+     * and we will convert String yearDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-)
+     * method  to get employee working details for particular month.
+     */
+	
+	public String getAllEmployeeReportForYearByYearDate(String yearDate) {
+		
+		logger.info("Inside ReportGenerationServiceImpl getEmployeeReportForYearByIdAndYear(-,-) method	");
+		
+		int year= Integer.parseInt(yearDate);
+		logger.info("Entered Year: "+year);
+	
+	    Calendar calendarStart=Calendar.getInstance();
+	    calendarStart.set(Calendar.YEAR,year);
+	    
+	    calendarStart.set(Calendar.MONTH,0);
+	    
+	    calendarStart.set(Calendar.DAY_OF_MONTH,1);
+	    
+	    // returning the first date
+	    Date startDate=calendarStart.getTime();
+	    logger.info("First Day of the Year:" + startDate);
+
+	    Calendar calendarEnd=Calendar.getInstance();
+	    calendarEnd.set(Calendar.YEAR,year);
+	    calendarEnd.set(Calendar.MONTH,11);
+	    calendarEnd.set(Calendar.DAY_OF_MONTH,31);
+
+	    // returning the last date
+	    Date endDate=calendarEnd.getTime();
+	    logger.info("End Date:"+endDate);
+	
+	    return JsonUtility.convertToJson(reportGenerationDAO.getEmployeesReportBetweenDates(startDate, endDate));
+	}
 }
