@@ -36,7 +36,7 @@ public class SecurityController {
 	private int passwordLinkValidTime=1;
 
 	private Logger logger = Logger.getLogger(SecurityController.class);
-
+	
 	/**
 	 * This method is for admin login functionality 
 	 * Takes admin object as request body
@@ -56,7 +56,7 @@ public class SecurityController {
 	}
 	
 	/**
-	 * This method is foradmin home page 
+	 * This method is for admin home page 
 	 * If admin id is there in session returns admin home page
 	 * otherwise returns error page
 	 * */
@@ -73,6 +73,20 @@ public class SecurityController {
 		}
 		
 	}
+	
+	
+	/**
+	 *  getChangePasswordPage() method will display ChangePasswordPage when we click 
+	 *  on ChangePassword button in AdminDashboard.
+	 */
+	
+	@RequestMapping(value = "/getChangePasswordPage", method = RequestMethod.GET)
+	public String getChangePasswordPage() {
+		logger.info("inside SecurityController getChangePasswordPage()");
+		
+		return "ChangePassword";
+	}
+	
 
 	/**
 	 * This method is for admin logout functionality

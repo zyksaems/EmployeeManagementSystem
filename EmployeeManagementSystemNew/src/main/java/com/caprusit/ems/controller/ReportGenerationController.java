@@ -1,5 +1,6 @@
 package com.caprusit.ems.controller;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -252,6 +253,17 @@ public class ReportGenerationController {
 	  }
 	 
 	 
+	 /**
+		 * getWeeklyReportOfEmployeeByIdAndWeek(-) method display the working details of an employee for a week using line chart.
+		 * @throws ParseException 
+		 * */
+		 @RequestMapping(value = "/getWeeklyReportOfEmployeeByIdAndWeek", method = RequestMethod.POST)
+		  public @ResponseBody String getWeeklyReportOfEmployeeByIdAndWeek(@RequestParam("employeeId") int employeeId,
+		    @RequestParam("weekDate") String weekDate) throws ParseException {
+		   logger.info("inside ReportGenerationController getWeeklyReportOfEmployeeByIdAndWeek()");
+
+		   return reportGenerationService.getWeeklyReportOfEmployeeByIdAndWeek(employeeId, weekDate);
+		  }
 	 
 	 /**
 		 * getEmployeeReportForWeekByIdAndWeekDate(-,-) method takes employeeId,weekDate as a

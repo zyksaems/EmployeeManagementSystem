@@ -503,8 +503,8 @@ function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie){
 	  
 	   console.log("in show line button click function");
 	   
-		var employeeId=$("#employeeId").val();
-		
+	   var employeeId=$("#employeeId").val();
+	   
 		$("#showTableDetails").hide();
 	   
 		 $("#showAbsentDetails").hide();
@@ -523,11 +523,13 @@ function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie){
 			
 			/*	var msgAndId=checkId(employeeId);*/
 		   var startDate=$("#weeklyDate").val();
-		   startDate=new Date(startDate);
+		   
+		   alert("Start Date is:"+startDate);
+		   //startDate=new Date(startDate);
 		
 		/*after successful validation*/
 		$.ajax({
-            url:"/EmployeeManagementSystemNew/getDailyReportGraphOfIndividual.do?employeeId="+employeeId+"&attendanceDate="+startDate.getTime(),
+            url:"/EmployeeManagementSystemNew/getWeeklyReportOfEmployeeByIdAndWeek.do?employeeId="+employeeId+"&weekDate="+startDate,
             type: 'POST',
             dataType: "json",
          contentType: "application/json; charset=utf-8",

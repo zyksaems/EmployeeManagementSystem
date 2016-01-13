@@ -1,5 +1,6 @@
 package com.caprusit.ems.service;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -50,4 +51,6 @@ public interface IReportGenerationService {
 	String getEmployeeReportForYearByIdAndYear(int employeeId, String year);
 
 	String getAllEmployeeReportForYearByYearDate(String yearDate);
+
+	String getWeeklyReportOfEmployeeByIdAndWeek(int employeeId, String weekDate) throws ParseException;
 }

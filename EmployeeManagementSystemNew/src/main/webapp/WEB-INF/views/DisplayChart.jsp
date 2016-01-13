@@ -83,7 +83,7 @@
             <div class="form-group "  >
                  <label class=" col-sm-10 control-label" >select Date</label>
               <div class="col-sm-10">
-                     <input type="date" class="form-control"  id="weeklyDate">
+                     <input type="week" class="form-control"  id="weeklyDate">
               </div>
             </div>
             

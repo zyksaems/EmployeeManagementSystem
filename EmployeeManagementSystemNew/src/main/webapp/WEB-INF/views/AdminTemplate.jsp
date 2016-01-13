@@ -85,7 +85,7 @@
 						data-toggle="dropdown"></span>
 					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
 						<li><a href="#" id="admin-profile-link">Profile</a></li>
-						<li><a href="#" id="admin-change-passowrd-div">Change password</a></li>
+						<li><a href="/EmployeeManagementSystemNew/getChangePasswordPage.do">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>
 				</div>
@@ -352,7 +352,7 @@
             <div class="form-group "  >
                  <label class=" col-sm-10 control-label" >select Date</label>
               <div class="col-sm-10">
-                     <input type="date" class="form-control"  id="weeklyDate">
+                     <input type="week" class="form-control"  id="weeklyDate">
               </div>
             </div>
             

@@ -1,8 +1,7 @@
 package com.caprusit.ems.service;
 
-import java.text.DateFormat;
 import java.text.DateFormatSymbols;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -345,6 +344,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		    graphDetails.put("presentDays", presentDays);
 		    return JsonUtility.convertToJson(graphDetails);
 		   }
+	 	
     /**
      * This method is to calculate individual employee 
      * monthly productivity based on given year
@@ -442,122 +442,47 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	}
 
 	/**
-     * getEmployeeReportForWeekByIdAndWeekDate(-,-) method takes int employeeId and  string weekDate as parameters ,
-     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-,-)
-     *  method to get employee working details for particular week.
+     * getEmployeeReportForWeekByIdAndWeekDate(-,-) method takes integer employeeId and  string weekDate as parameters.
+     * call getEmployeeReportForWeekByIdAndWeekDate(-,-) method to get fromDate , toDate and 
+     * call EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-,-) method 
+     * to get employee working details for particular week.
      */
 	public String getEmployeeReportForWeekByIdAndWeekDate(int employeeId, String weekDate) throws Exception {
 		
 		logger.info("inside ReportGenerationServiceImpl getEmployeeReportForWeekByIdAndWeekDate(-,-) method");
 		
-	     String weekdate[]=weekDate.split("-");
-	     
-	     String week_year=weekdate[0];
-	     String week_weeknumber=weekdate[1];
-	     
-	     String week_weeknumber_remove=week_weeknumber.substring(1, week_weeknumber.length());
-	     
-	     int week_parseyear=Integer.parseInt(week_year);
-	     int week_parseweeknumber=Integer.parseInt(week_weeknumber_remove);
-	     
-	     int week_parseweeknumberstart=week_parseweeknumber+1;
-	    
-	     logger.info(week_parseyear);
-	     logger.info(week_parseweeknumber);
-	     
-	   
-	     // Get calendar, clear it and set week number and year.
-	     Calendar calendar = Calendar.getInstance();
-	     calendar.clear();
-	     calendar.set(Calendar.WEEK_OF_YEAR, week_parseweeknumberstart);
-	     calendar.set(Calendar.YEAR, week_parseyear);
-
-	     // Now get the first day of week.
-	     Date startdate = calendar.getTime();
-	     
-	     Calendar last = (Calendar) calendar.clone();
-	     last.add(Calendar.DAY_OF_YEAR, 6);
-
-	     // print the result
-	     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	     
-	     
-	     logger.info(df.format(startdate.getTime()) + " -> " + 
-	                        df.format(last.getTime()));
-	     logger.info(startdate);
-	     
-	     String startDatestr=df.format(startdate.getTime());
-	     String endDatestr=df.format(last.getTime());
-	     
-	     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	     
-	     Date fromDate = (Date)formatter.parse(startDatestr);
-	     Date toDate = (Date)formatter.parse(endDatestr);
-	     
-	     logger.info("From Date is :" +fromDate);
+		Date startDate=null,endDate=null;
 		
-	     logger.info("To date is:"+toDate);
+		/*Calling  getFromDateAndToDateFromWeekDate(-) method to get fromDate and toDate based on given string weekDate*/
+		   
+		Map<String,Date> dateValues= getFromDateAndToDateFromWeekDate(weekDate);
+
+		startDate= dateValues.get("startDate");
+		endDate=dateValues.get("endDate");
 		
-		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, fromDate, toDate));
+		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, startDate, endDate));
 	}
 	
 	/**
-     * getEmployeeReportForWeekByIdAndWeekDate(-,-) method take string weekDate as parameters ,
-     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-) method
-     *  to get the working details of all employee between particular week.
+     * getAllEmployeeReportForWeekByWeekDate(-,-) method take string weekDate as parameters.
+     * call getEmployeeReportForWeekByIdAndWeekDate(-) method to get fromDate , toDate and 
+     * call EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-) method 
+     * to get employee working details for particular week.
      */
 	public String getAllEmployeeReportForWeekByWeekDate(String weekDate) throws Exception {
 		
 		logger.info("Inside ReportGenerationServiceImpl getAllEmployeeReportForWeekByWeekDate(-) method	"); 
-		String weekdate[]=weekDate.split("-");
-	     
-	     String week_year=weekdate[0];
-	     String week_weeknumber=weekdate[1];
-	     
-	     String week_weeknumber_remove=week_weeknumber.substring(1, week_weeknumber.length());
-	     
-	     int week_parseyear=Integer.parseInt(week_year);
-	     int week_parseweeknumber=Integer.parseInt(week_weeknumber_remove);
-	     
-	     int week_parseweeknumberstart=week_parseweeknumber+1;
-	    
-	     logger.info(week_parseyear);
-	     logger.info(week_parseweeknumber);
-	     
-	   
-	     // Get calendar, clear it and set week number and year.
-	     Calendar calendar = Calendar.getInstance();
-	     calendar.clear();
-	     calendar.set(Calendar.WEEK_OF_YEAR, week_parseweeknumberstart);
-	     calendar.set(Calendar.YEAR, week_parseyear);
-
-	     // Now get the first day of week.
-	     Date startdate = calendar.getTime();
-	     
-	     Calendar last = (Calendar) calendar.clone();
-	     last.add(Calendar.DAY_OF_YEAR, 6);
-
-	     // print the result
-	     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	     
-	     
-	     logger.info(df.format(startdate.getTime()) + " -> " + 
-	                        df.format(last.getTime()));
-	     logger.info(startdate);
-	     
-	     String startDatestr=df.format(startdate.getTime());
-	     String endDatestr=df.format(last.getTime());
-	     
-	     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	     
-	     Date fromDate = (Date)formatter.parse(startDatestr);
-	     Date toDate = (Date)formatter.parse(endDatestr);
-	     
-	     logger.info("From Date in getAllEmployeeReportForWeekByWeekDate :" +fromDate);
 		
-	     logger.info("To date in getAllEmployeeReportForWeekByWeekDate:"+toDate);
+		Date startDate=null,endDate=null;
 		
-		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeesReportBetweenDates(fromDate, toDate));
+		/*Calling  getFromDateAndToDateFromWeekDate(-) method to get fromDate and toDate based on given string weekDate*/
+		   
+		Map<String,Date> dateValues= getFromDateAndToDateFromWeekDate(weekDate);
+
+		startDate= dateValues.get("startDate");	
+		endDate=dateValues.get("endDate");
+		
+		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeesReportBetweenDates(startDate, endDate));
 	}
 	
 	/**
@@ -700,5 +625,123 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	    logger.info("End Date:"+endDate);
 	
 	    return JsonUtility.convertToJson(reportGenerationDAO.getEmployeesReportBetweenDates(startDate, endDate));
+	}
+
+	/**
+     * getWeeklyReportOfEmployeeByIdAndWeek(-) method take string weekDate as parameters ,
+     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-)
+     * method  to get employee working details for particular week and display using line chart.
+	 * @throws ParseException 
+     */
+	
+	@SuppressWarnings("unchecked")
+	public String getWeeklyReportOfEmployeeByIdAndWeek(int employeeId, String weekDate) throws ParseException {
+	
+		logger.info("inside ReportGenerationServiceImpl getWeeklyReportOfEmployeeByIdAndWeek(-,-) method");
+		
+		Date startDate=null, endDate=null;
+		
+	   Double workingHours=0.0,totalAvailableHours=0.0;
+	   int onDayHours=workingHoursPerDay;
+	   Double totalWorkingHours=0.0;
+	   String dayNames[] = new DateFormatSymbols().getWeekdays();
+		      
+	   Calendar cal = Calendar.getInstance();
+		
+	   /*Calling  getFromDateAndToDateFromWeekDate(-) method to get fromDate and toDate based on given string weekDate*/
+	   
+		Map<String,Date> dateValues= getFromDateAndToDateFromWeekDate(weekDate);
+
+		startDate= dateValues.get("startDate");
+		endDate=dateValues.get("endDate");
+		
+		logger.info("Inside getWeeklyReportOfEmployeeByIdAndWeekStart(-)  Date:"+startDate);
+		logger.info(" Inside getWeeklyReportOfEmployeeByIdAndWeekStart(-)  End date:"+endDate);
+		    
+		    List<Attendance> attendanceDetails= new ArrayList<Attendance>(); 
+		    
+		    List<Attendance> workingDetails=reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, startDate, endDate);
+		    
+		     Map<String,Object> allMap = new HashMap<String, Object>();
+		     allMap.put("ListOfLine", workingDetails);
+		     allMap.put("LastDate",endDate);
+		     
+		   
+		     
+		    attendanceDetails=(List<Attendance>) allMap.get("ListOfLine");
+		    endDate =(Date) allMap.get("LastDate");
+		    logger.info("Attendance List is:"+attendanceDetails);
+		  
+		    Map<String,Double> dayAndWork=new HashMap<String, Double>();
+		    
+		    cal.setTime(startDate);
+		     String startDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
+		     cal.setTime(endDate);
+		     String lastDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
+		              
+		     List<String> presentDays=new ArrayList<String>();
+		     
+		    for(int i=0; i<attendanceDetails.size();i++){
+		    	startDate=attendanceDetails.get(i).getAttendanceDate();
+		     cal.setTime(startDate);
+
+		     workingHours=attendanceDetails.get(i).getWorkingHours();
+		     dayAndWork.put(dayNames[cal.get(Calendar.DAY_OF_WEEK)],workingHours);
+		     presentDays.add(dayNames[cal.get(Calendar.DAY_OF_WEEK)]);
+		     
+		     totalWorkingHours+=workingHours;
+		       
+		     totalAvailableHours+=onDayHours;    
+		      }
+		   
+		    Map<String,Object> graphDetails= new HashMap<String, Object>();
+		    graphDetails.put("dayAndWork",dayAndWork);
+		    graphDetails.put("totalWorkingHours",totalWorkingHours);
+		    graphDetails.put("oneDayHours",onDayHours);
+		    graphDetails.put("totalAvailableHours",totalAvailableHours);
+		    graphDetails.put("startDay",startDay);
+		    graphDetails.put("lastDay",lastDay);
+		    graphDetails.put("presentDays", presentDays);
+		    
+		    return JsonUtility.convertToJson(graphDetails);
+	}
+	
+	
+	/**
+     * This getFromDateAndToDateFromWeekDate(-) method provides fromDate and toDate in java.util.Date format
+     *  based on given weekDate of String type.
+     */
+	public Map<String, Date> getFromDateAndToDateFromWeekDate(String weekDate) {
+		
+		 logger.info("inside ReportGenerationServiceImpl getFromDateAndToDateFromWeekDate(-) method");
+		 
+		 String weekdate[]=weekDate.split("-");
+	     String week_year=weekdate[0];
+	     String week_weeknumber=weekdate[1];
+	     String week_weeknumber_remove=week_weeknumber.substring(1, week_weeknumber.length());
+	     
+	     int week_parseyear=Integer.parseInt(week_year);
+	     int week_parseweeknumber=Integer.parseInt(week_weeknumber_remove);
+	     int week_parseweeknumberstart=week_parseweeknumber+1;
+	   
+	     // Get calendar, clear it and set week number and year.
+	     Calendar calendar = Calendar.getInstance();
+	     calendar.clear();
+	     calendar.set(Calendar.WEEK_OF_YEAR, week_parseweeknumberstart);
+	     calendar.set(Calendar.YEAR, week_parseyear);
+
+	     // Now get the first day of week.
+	     Date startdate = calendar.getTime();
+	     
+	     Calendar last = (Calendar) calendar.clone();
+	     last.add(Calendar.DAY_OF_YEAR, 6);
+	     
+	     Date endDate=last.getTime();
+	     
+	    Map<String,Date> dates= new HashMap<String, Date>();
+	    dates.put("startDate", startdate);
+	    dates.put("endDate", endDate);
+	    
+	    return dates;
 	}
 }

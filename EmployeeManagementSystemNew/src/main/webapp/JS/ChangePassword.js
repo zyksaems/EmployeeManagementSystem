@@ -136,9 +136,10 @@ $(changePasswordEmployeeConfirmPass_id).keyup(function(){
 
 $(changeEmployeePasswordButton_id).click(function() {
     console.log("button clicked");
-    alert("ok");
+
     var flag=true;
 	if(flag){
+	
 		employeeCurrentPassword=$(changePasswordEmployeeCurrentPass_id).val();
 		employeeNewPassword=$(changePasswordEmployeeNewPass_id).val();
 		employeeConfirmPassword=$(changePasswordEmployeeConfirmPass_id).val();
@@ -149,6 +150,7 @@ $(changeEmployeePasswordButton_id).click(function() {
 	    if(correctDetailsFlag){
 	        var changePasswordObject={currentPassword:employeeCurrentPassword,newPassword:employeeNewPassword};
 	    	/* function call to make ajax call for changing password */
+	        alert("ok");
 	    	makeAjaxCallToChangePassword(changePasswordObject);
 	    }
 	    else{
@@ -190,7 +192,8 @@ function makeAjaxCallToChangePassword(changePasswordObject){
 	    dataType: "json",
 	    contentType: "application/json; charset=utf-8",
 	    success: function(data){
-	    	console.log("data: "+data);
+	    	alert("data: "+data);
+	    	alert("Hi");
 	    	var result=data;
 	    	var displayResult="";
 	        if(result == 1){
