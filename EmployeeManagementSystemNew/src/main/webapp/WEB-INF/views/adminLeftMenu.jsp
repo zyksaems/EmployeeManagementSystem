@@ -104,7 +104,7 @@
 	    	<div>
 	    	<ul>
 	    	<li><a href="/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">Add Employee</a></li>
-	    	<li><a href="#" id="admin-view-update-emp-link">View/Update Employee</a></li>
+	    	<li><a href="/EmployeeManagementSystemNew/ViewUser.do" id="admin-view-update-emp-link">View/Update Employee</a></li>
 	    	</ul>
 			</div>
 			<h3>Reports</h3>

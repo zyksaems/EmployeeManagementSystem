@@ -1,0 +1,14 @@
+.modal-header, .close {
+	background-color: #5cb85c;
+	color: white !important;
+	text-align: center;
+	font-size: 30px;
+}
+
+.modal.modal-wide .modal-dialog {
+	width: 50%;
+}
+
+.modal-footer {
+	background-color: #f9f9f9;
+}

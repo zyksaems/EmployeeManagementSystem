@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.domain.EmployeeD;
 
 @Service("UserService")
 @Transactional
@@ -30,5 +31,9 @@ public interface IManageUserService {
 	public int addSingleEmployee(Employee emp, String milliseconds);
 
 	public int updateEmployee(Employee employee);
+	
+	public List<EmployeeD> getEmployees2();
+	public List<EmployeeD> getEmployeeOneTime(int i);
+	public String updateEmployee2(Employee e);
 
 }

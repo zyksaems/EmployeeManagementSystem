@@ -1,6 +1,9 @@
 package com.caprusit.ems.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.domain.EmployeeD;
+import com.caprusit.ems.domain.JsonEmployee;
 import com.caprusit.ems.service.IManageUserService;
 
 @Controller
@@ -116,5 +123,72 @@ public class ManageUserController {
 		
 		return manageUserService.updateEmployee(emp);
 	}
+	@RequestMapping(value = "ViewUser")
+	public String  updateUser() {
+		
+		return "UpdateUser";
+		
+	}
+	@RequestMapping(value = "Controller")
+	public @ResponseBody List<EmployeeD>  home( ) {
+		
+		List<EmployeeD> employees=manageUserService.getEmployees2();
+		
+		System.out.println(employees);
+		
+		return employees;
+		
+	}
+	@RequestMapping(value = "Controller.do"+"/"+"{employeeid}")
+	public @ResponseBody List<EmployeeD>  edit(@PathVariable("employeeid")int employeeid) {
+		
+		System.out.println(employeeid);
+		
+		List<EmployeeD> employees=manageUserService.getEmployeeOneTime(employeeid);
+		
+		System.out.println(employees);
+		
+		return employees;
+		
+	}
+	@RequestMapping(value = "sendObj", method = RequestMethod.POST)
+	public @ResponseBody String  getEmployeeJson(@ModelAttribute JsonEmployee employeeJson) throws ParseException {
+		
+		
+		Employee employee=new Employee();
+		
+		employee.setEmployeeId(Integer.parseInt(employeeJson.getEmployeeId()));
+		employee.setFirstName(employeeJson.getFirstName());
+		employee.setLastName(employeeJson.getLastName());
+		
+		DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+		Date d2 = df2.parse(employeeJson.getDob());
+	    java.sql.Date sqlDate = new java.sql.Date(d2.getTime());
+	      
+		employee.setDob(sqlDate);
+		
+		employee.setMobileNo(employeeJson.getMobileNo());
+		employee.setEmailId(employeeJson.getEmailId());
+		employee.setDesignation(employeeJson.getDesignation());
+		employee.setRollId(Integer.parseInt(employeeJson.getRollId()));
+		employee.setStatus(employeeJson.getStatus());
+		employee.setDeptId(Integer.parseInt(employeeJson.getDeptId()));
+		
+		
+		
+		
+		System.out.println("inside Home controller");
+		String message=manageUserService.updateEmployee2(employee);
+		System.out.println("outside Home controller");
+		
+		
+		
+		System.out.println("Employee from Json data == "+employee);
+		return message;
+		
+		
+		
+	}
+
 	
 }

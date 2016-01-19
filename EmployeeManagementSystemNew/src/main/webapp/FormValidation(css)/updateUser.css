@@ -1,0 +1,24 @@
+.modal-header, .close {
+	background-color: #3c8dbc;
+	color: white !important;
+	text-align: center;
+	font-size: 30px;
+}
+
+.modal.modal-wide .modal-dialog {
+	width: 50%;
+}
+
+.modal-footer {
+	background-color: #f9f9f9;
+}
+
+thead{
+	
+	background-color: #BDBDBD;
+}
+
+th{
+	height:60px;
+	font-size: 14px;
+}

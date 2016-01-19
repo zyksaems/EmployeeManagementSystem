@@ -83,6 +83,37 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		session.close();
 		return 1;
 	}
+    public List<Employee> getEmployees2() {
+		Session session = sessionFactory.openSession();
+		String sql = "SELECT * FROM PRAKASH.EMPLOYEE_TABLE";
+		SQLQuery query = session.createSQLQuery(sql);
+		query.addEntity(Employee.class);
+		@SuppressWarnings("unchecked")
+		List<Employee> results = query.list();		
+		session.close();
+		return results;
+	}
+	public List<Employee> getEmployeeOneTime(int i){
+		Session session = sessionFactory.openSession();
+		String sql = "SELECT * FROM PRAKASH.EMPLOYEE_TABLE where EMPLOYEEID="+i;
+		SQLQuery query = session.createSQLQuery(sql);
+		query.addEntity(Employee.class);
+		@SuppressWarnings("unchecked")
+		List<Employee> results = query.list();		
+		session.close();
+		return results;
+
+	}
+	public Integer updateEmployee2(Employee e){
+		Session session = sessionFactory.openSession();
+		Transaction ts = session.beginTransaction();
+		session.update(e);
+		ts.commit();
+		session.close();
+		return 1;
+		
+
+	}
 	
 }
 

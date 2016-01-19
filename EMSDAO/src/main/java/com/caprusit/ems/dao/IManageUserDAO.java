@@ -16,5 +16,9 @@ public interface IManageUserDAO {
 	int saveEmployee(Employee employee);
 
 	public int updateEmployee(Employee emp);
+	
+	public List<Employee> getEmployees2();
+	public List<Employee> getEmployeeOneTime(int i);
+	public Integer updateEmployee2(Employee e);
 
 }

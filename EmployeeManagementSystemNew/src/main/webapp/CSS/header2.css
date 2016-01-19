@@ -1,0 +1,115 @@
+/* override the well default color style */ 
+    .well-custom{
+      background-color: #3c8dbc;
+      color :white;
+       border-radius: 0;
+    }
+    
+    Remove the navbar's default margin-bottom and rounded borders 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      
+    }
+   
+    
+    .headpart {
+	width: auto;
+	height: 100px;
+	color: white;
+	background-color: #3c8dbc;
+}
+
+.sidebar {
+	width: 200px;
+	height:1200px;
+	left: 0px;
+	background-color: #3c8dbc;
+}
+
+.icon-setting {
+	font-size: 25px;
+	top: 60px;
+	left: 55px;
+}
+
+ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+.title_menu {
+	right: 10px;
+}
+
+a:hover {
+	color: hotpink;
+}
+
+span:HOVER {
+	color: hotpink;
+}
+
+#dropdown {
+	max-width: 160px;
+	min-width: 100px;
+	top: 100px;
+	right : 140px;
+	width: 250px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.icon {
+	top: 15px;
+	left: 45px;
+}
+
+#print {
+	left: 50%;
+	position: relative;
+}
+
+.generatereportheder {
+	border: 1px solid #bebebe;
+}
+
+.generatereportmain {
+	border: 1px solid black;
+}
+
+.generateposition {
+	width: auto;
+	height: 60px;
+	left: 13%;
+	top: 13%;
+	position: absolute;
+	padding-top: 13px;
+	background-color: #F5F5F5;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.generateposition1 {
+	width: auto;
+	height: auto;
+	left: 12.5%;
+	top: 21%;
+	position: absolute;
+	padding-top: 13px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+input {
+	font-size: 18px;
+	width: 250px;
+	height: 35px;
+	border-radius: 5px;
+}
+
+select {
+	width: 250px;
+	height: 35px;
+	border-radius: 5px;
+}
