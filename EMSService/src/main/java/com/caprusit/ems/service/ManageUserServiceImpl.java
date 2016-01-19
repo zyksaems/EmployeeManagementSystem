@@ -45,6 +45,7 @@ public class ManageUserServiceImpl implements IManageUserService {
 	}
 
 	public List<Employee> getAllEmployee() {
+		
 		List<Employee> employeeList = manageUserDAO.getEmployees();
 		return employeeList;
 	}

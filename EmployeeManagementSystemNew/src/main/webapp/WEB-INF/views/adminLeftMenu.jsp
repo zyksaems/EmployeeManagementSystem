@@ -1,0 +1,150 @@
+
+  <link rel="stylesheet" type="text/css" href="./CSS/style.css">
+  
+   <script src="./jquery/jquery-2.1.4.js"></script>
+  <!-- <script src="./js1/jquery-1.3.2.min.js"></script> -->
+  <script src="./jquery/jquery-ui.js"></script>
+   <script src="./bootstrap/bootstrap.min.js"></script> 
+  <link rel="stylesheet"  href="./bootstrap/bootstrap.min.css">
+  <link rel="stylesheet"  href="./jquery/jquery-ui.css">
+  
+  <link rel="stylesheet"  href="./CSS/AdminTemplate.css">
+  
+  <!-- js for admin division hide and show functionality -->
+  <script src="./JS/Admin_leftMenuControll.js"></script>
+    
+  <script src="./JS/Admin_logout.js"></script>
+  
+  <!-- css and js for add employee through excel and manually -->
+  <script src="./JS/Admin_addEmployee.js"></script>
+  <link rel="stylesheet" href="./CSS/Admin_addEmployee.css">
+  
+  <!-- Chart.Js library  -->
+  <script src="./chartJS/Chart.js"></script>
+  
+    <!-- custom css -->
+  <link rel="stylesheet" href="./CSS/chart.css">
+  
+  <link rel="stylesheet" href="./CSS/AdminTemplete.css">
+  <link rel="stylesheet" type="text/css" href="./CSS/style.css">
+  
+  
+  <!-- custom javascript file -->
+  <!-- <script src="./JS/showGraphs.js"></script> -->
+
+
+ 
+  
+  <link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png"/>
+  
+ 
+<script>
+
+	$("document").ready(function() {
+		$("#print").hide();
+
+	});
+	/* function printDiv(pdiv) {
+	 var printContents = document
+	 .getElementById("printdiv").innerHTML;
+	 var originalContents = document.body.innerHTML;
+	 document.body.innerHTML = printContents;
+	 window.print();
+	 document.body.innerHTML = originalContents;
+	 }; */
+
+	function PrintDiv(pdiv) {
+		var divToPrint = document.getElementById('printdiv');
+		var popupWin = window.open('', '_blank', 'width=900,height=650');
+		popupWin.document.open();
+		popupWin.document.write('<html><body onload="window.print()">'
+				+ divToPrint.innerHTML + '</html>');
+		popupWin.document.close();
+
+	};
+	$(function() {
+		$("#accordion").accordion();
+	});
+
+	$(function() {
+		$("#datepicker").datepicker();
+	});
+</script>
+  
+</head>
+<body>
+	<div class="container-fluid ">
+		<div class="row headpart">
+		<div class="col-sm-2 icon">
+            <img src="./images/caprus logo.png" width="65px" height="65px">
+		</div>
+			<div class="col-sm-8 title_menu text-center">
+				<h1 align="right">EMPLOYEE MANAGEMENT SYSTEM</h1>
+			</div>
+			<div class="col-sm-2">
+				<div class="dropdown">
+					<span class="glyphicon glyphicon-cog icon-setting"
+						data-toggle="dropdown"></span>
+					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
+						<li><a href="#" id="admin-profile-link">Profile</a></li>
+						<li><a href="/EmployeeManagementSystemNew/getChangePasswordPage.do">Change password</a></li>
+						<li><a href="#" id="admin-logout-link">Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+		
+		     <!-- This division is the division on left for display links -->
+			<div class="col-sm-2 sidebar">
+			
+			 <div id="accordion">
+			<h3 style="">Manage Employee</h3>
+	    	<div>
+	    	<ul>
+	    	<li><a href="/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">Add Employee</a></li>
+	    	<li><a href="#" id="admin-view-update-emp-link">View/Update Employee</a></li>
+	    	</ul>
+			</div>
+			<h3>Reports</h3>
+			<div>
+						<ul>
+							<li><a href="/EmployeeManagementSystemNew/getDailyReportGenerationPage.do">Daily Reports</a></li>
+						</ul>
+						<li><a href="/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">Weekly Reports</a></li>
+						</ul>
+						<li><a href="/EmployeeManagementSystemNew/getMonthlyReportGenerationPage.do">Monthly Reports</a></li>
+						</ul>
+						<li><a href="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do">annually Reports</a></li>
+						</ul>
+					</div>
+			<h3>View Attendance</h3>
+			<div>
+			<ul>
+			<li>
+			<a href="/EmployeeManagementSystemNew/getTodayAttendancePage.do" id="daily-attendance-link">Daily Attendance</a></li>
+			<!-- <li>
+			<a href="#" id="weekly-productivity-link">Weekly Attendance</a></li>
+			<li>
+			<a href="#" id="monthly-productivity-link">Monthly Attendance</a></li> -->
+			</ul>
+			</div>
+			<h3>Productivity</h3>
+			<div>
+			<ul>
+			<li>
+			<!-- <a href="#">Daily Productivity</a></li> -->
+			<li>
+			<a href="/EmployeeManagementSystemNew/getWeeklyProductivityPage.do" id="weekly-productivity-link">Weekly Productivity</a></li>
+			<li>
+			<a href="/EmployeeManagementSystemNew/getMonthlyProductivityPage.do" id="monthly-productivity-link">Monthly Productivity</a></li>
+			<li>
+			<a href="/EmployeeManagementSystemNew/getAnnualProductivityPage.do"  id="anual-productivity-link">Annually Productivity</a></li>
+			</ul>
+			</div>
+			</div> 
+			
+			</div>
+			<!-- This division is the division on right for display content to show (Right division)-->
+			<div class="col-sm-10">

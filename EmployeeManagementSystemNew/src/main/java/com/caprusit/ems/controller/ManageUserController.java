@@ -42,6 +42,17 @@ public class ManageUserController {
 		return manageUserService.getEmployees();
 	}
 	
+	/**
+	 * This method is to return add employee page
+	 * */
+	@RequestMapping(value="/getAddEmployeePage",method=RequestMethod.GET)
+	public String getAddEmployeePage(){
+		logger.info("inside ManageUserController getAddEmployeePage()");	
+		return "AddEmployee";
+	}
+	
+    
+	
 	
 	@RequestMapping(value = "/getExcel", method = RequestMethod.GET)
 	 ModelAndView getExcel(HttpServletRequest request,

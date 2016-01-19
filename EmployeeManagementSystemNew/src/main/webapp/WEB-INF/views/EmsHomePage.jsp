@@ -71,7 +71,7 @@
 <!-- In-Time form -->
 <div class="container intime-margin" id="in-time-form">
 			
-			<form action="#" class="form-inTime" id="attendance-form">
+			<form action="#attendanceForm.do" class="form-inTime" id="attendance-form">
 			<h2 class="form-inTime-heading "><span class="glyphicon glyphicon-pencil"></span>Enter Employee Id</h2>
 			<!--text box for Employee id  -->			
 		    <div class="form-group  has-feedback" id="employee-id-div">
@@ -95,7 +95,7 @@
   <!-- Employee change password division -->
 <div class="container intime-margin" id="employee-change-passowrd-div">
 
-		<form action="#" class="form-inTime" id="emp-change-pass-form">
+		<form action="#EmployeeChangePassword.do" class="form-inTime" id="emp-change-pass-form">
 			<h2 class="form-inTime-heading "><span class="glyphicon glyphicon-pencil"></span>Change Password</h2>
 			
 			<!--text box for Employee id  -->			
@@ -167,7 +167,7 @@
           
         <div id="sign-in-form">
 
-	    <form action="#" class="form-signin" id="admin-login-form">	    
+	    <form action="#adminLogin.do" class="form-signin" id="admin-login-form">	    
 			 <!-- text box for admin id -->
 		    <div class="form-group  has-feedback " id="admin-login-adminid-div">
 		        <label>Admin ID</label> 

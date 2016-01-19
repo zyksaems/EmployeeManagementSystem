@@ -1,7 +1,7 @@
 
   $("document").ready(function(){
 	
-	  console.log("left menu controller");
+	  console.log("Admin left menu controller");
 	  
 	  /*variables to store  link ids*/
 	 var anualProductivity_link_id="#anual-productivity-link";
@@ -9,19 +9,23 @@
 	 var dailyAttendance_link_id="#daily-attendance-link";
 	 var weeklyProductivity_link_id="#weekly-productivity-link";	 
 	 var addEmployee_link_id="#admin-add-employee-link";
-	var viewUpdate_link_id="#admin-view-update-emp-link";
+	 var viewUpdate_link_id="#admin-view-update-emp-link";
 	 
 	 /*variables to store  division ids*/
-	var anualReportSelect_div_id="#anual-report-select-div"
+	 var anualReportSelect_div_id="#anual-report-select-div"
 	 var monthlyReportSelect_div_id="#monthly-report-select-div";
 	 var dailyAttendance_div_id="#daily-attendance-div";
 	 var weeklyAttendance_div_id="#weekly-productivity-div";
 	 var addEmployeeMainDiv_id="#add-employee-main-division";	 
-	var addEmployee_div_id="#add-employee-main-division";
-	var viewUpdate_div_id="#admin-view-update-emp-link";
+	 var addEmployee_div_id="#add-employee-main-division";
+	 var viewUpdate_div_id="#admin-view-update-emp-link";
 	 
+	 /*variables for stoting reports div id's */
+	 var dailyReportDiv_id="#daily-attendance-div";
 	
-	 showOneDivision(addEmployee_div_id);
+
+	
+	 //showOneDivision(addEmployee_div_id);
 		
 	 /*
 	  * This method executes when click on weekly productivity link
@@ -83,6 +87,7 @@
 		 (link_id == weeklyProductivity_link_id)?$(weeklyAttendance_div_id).show():$(weeklyAttendance_div_id).hide();
 		 (link_id == addEmployee_link_id)?$(addEmployee_div_id).show():$(addEmployee_div_id).hide();
 		 (link_id == viewUpdate_link_id)?$(viewUpdate_div_id).show():$(viewUpdate_div_id).hide();
+		 $(dailyReportDiv_id).hide();
 		 
 	 };//END -- function showOneDivision(link_id)
 	 

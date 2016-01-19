@@ -8,6 +8,8 @@ var todayAttendanceDetails;
 	var showChartDiv="#showChart";
 	var validationMsg='#validationMsg';
 	var showTableDetails='#showTableDetails';
+	var backButton_one_id="#show-piechart-back-button";
+	var backButton_two_id="#show-piechart-back-button2";
 	
 	
 	
@@ -19,7 +21,7 @@ var todayAttendanceDetails;
 	var clickOnPieChart="#clickOnPieChart";
 		
 	/*var dailyAttendance_link_id="#daily-attendance-div";*/
-	 var dailyAttendance_link_id="#daily-attendance-link";
+	var dailyAttendance_link_id="#daily-attendance-link";
 	var weeklyAttendance_link_id="#weekly-attendance-graph-link";
 	var monthlyAttendance_link_id="#monthly-attendance-graph-link";
 	
@@ -197,9 +199,11 @@ $("document").ready(function(){
 	
 	setDefaultValues();
 	console.log("called set default values function");
+	displayTodayAttendance();
+	
 	
 	/*	for display pie chart  for daily attendance*/
-$(dailyAttendance_link_id).click(function() {
+   function displayTodayAttendance() {
 			
 	$(showTableDetails).hide();
 	
@@ -259,9 +263,24 @@ $(dailyAttendance_link_id).click(function() {
 		 console.log("presenties out side: ------------------"+numberOfPresentiesForPie);
 		 console.log("absenties for pie out side--------: "+numberOfAbsentiesForPie);
 	
-	}); // END -- $(dailyAttendance_link_id).click()
+	}; // END -- $(dailyAttendance_link_id).click()
 
-
+	/*function for back button */
+   $(backButton_one_id).click(function(){
+	   hideTables();	   
+   }); // END -- $(dailyAttendance_link_id).click() show-piechart-back-button2
+   
+   /*function for back button */
+   $(backButton_two_id).click(function(){
+   	   hideTables();	   
+   }); // END -- $(dailyAttendance_link_id).click() 
+   
+   /*function to hide tables */
+   function hideTables(){
+	   $("#pie-holder").show();		 	
+   	   $("#showTableDetails").hide();
+   	   $("#showAbsentDetails").hide();
+   };// END -- hideTables()
 
 /*function for displaying pie chart*/
 function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie){
@@ -427,356 +446,4 @@ function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie){
 	
 }; // END --   displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie)
 
-	
-	/*for display Bar chart*/
-  $(monthlyAttendance_link_id).click( function(){
-	    console.log("bar graph printing..");
-		 showTableDetails=false;	
-		 showTable=false;
-		 /*function call to display one division*/
-		 displayOnlyOneDivision(barChartDiv);
-		 
-		 $("#showLineChartForm").hide();
-		 
-			$("#showTableDetails").hide();
-			
-			$(lineChartDiv).hide();
-			
-			 $("#showAbsentDetails").hide();
-		 
-		$("#bar-holder").show();
-		$("#barLegend").show();
-		
-		
-		var barChartData = {
-				labels : ["January","February","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"],
-				datasets : [
-					{
-						label:"present",
-						fillColor : "#0085b3",
-						strokeColor : "#002633",
-						highlightFill: "#4dd1ff",
-						highlightStroke: "#005f80",
-						data:[100,150,250,90,40,140,170,120,120,200,150,170]
-					},
-					{   label:"absent",
-						fillColor : "#b30000",
-						strokeColor : "#800000",
-						highlightFill : "#cc0000",
-						highlightStroke : "#330000",
-						data : [15,18,19,12,19,15,17,14,2,4,18,12]
-					}
-				]
-
-			}
-		
-		var ctx = document.getElementById("barChart").getContext("2d");
-		window.myBar = new Chart(ctx).Bar(barChartData, {
-			responsive : true
-		});
-		
-		document.getElementById('barLegend').innerHTML = myBar.generateLegend();
-		 legend = myBar.generateLegend();
-
-	});// END --  $(monthlyAttendance_link_id).click()
-  
-	  
-   /*function executes when click on weekly attendance*/
-  $(weeklyAttendance_link_id).click(function(){
-	  
-	  /*display pieChartDiv division*/
-		displayOnlyOneDivision(lineChartDiv);
-		
-		$("#showTableDetails").hide();
-		
-		 $("#showAbsentDetails").hide();
-		
-		$(lineChartDiv).hide();
-		
-		$("#showLineChartForm").show();
-	  
-   });// END -- $(weeklyAttendance_link_id).click()
-  
-  
-  /*function calls when click on show button*/
-  $("#showLine").click(function(){
-	  
-	   console.log("in show line button click function");
-	   
-	   var employeeId=$("#employeeId").val();
-	   
-		$("#showTableDetails").hide();
-	   
-		 $("#showAbsentDetails").hide();
-		 
-	   var msgAndId=checkId(employeeId);
-	 /*  console.log("validation 1:"+JSON.stringify(msgAndId));*/
-	   var msg=msgAndId.msg;
-	   
-	 /*  $("#validationMsg").text(JSON.stringify(msgAndId.msg));*/
-	   
-	   $("#validationMsg").text(msg);
-		
-		  $(validationMsg).show();
-	   
-		if(msgAndId.status==1){
-			
-			/*	var msgAndId=checkId(employeeId);*/
-		   var startDate=$("#weeklyDate").val();
-		   //startDate=new Date(startDate);
-		
-		/*after successful validation*/
-		$.ajax({
-            url:"/EmployeeManagementSystemNew/getWeeklyReportOfEmployeeByIdAndWeek.do?employeeId="+employeeId+"&weekDate="+startDate,
-            type: 'POST',
-            dataType: "json",
-         contentType: "application/json; charset=utf-8",
-            success: function(data)
-            {
-                console.log("data returned from server for add single emoloyee:"+JSON.stringify( data));
-                var weeklyData=data;
-			    displayLine(weeklyData);
-                
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-                
-             /*   console.log('ERRORS: ' + textStatus);*/
-                // STOP LOADING SPINNER
-              
-            }
-        });//END -- $.ajax()
-		
-		} // END of if
-  });
-  
-  /*function for validating id*/
-  
-  function checkId(id){
-	  
-	  console.log("inside checkId() function");
-	  
-	  var maxLength=6,minLength=5;
-	  
-	  var msgAndId={msg:" ",status:0};
-	  
-	  if(id.length<=maxLength && id.length>minLength){
-		  msgAndId.msg="";
-		  if(id.match(/^[0-9]*$/)){
-			 
-			  $("#validationMsg").hide();
-			  
-			  msgAndId.msg="";
-			  msgAndId.status=1;	  
-		  }else{
-			  msgAndId.status=0;
-			  msgAndId.msg="only digits are allowed ";
-			  $(lineChartDiv).hide();
-		  }
-	  }
-	  else{
-		  msgAndId.status=0;
-		  msgAndId.msg="Id length must be 6 ";
-		  $(lineChartDiv).hide();
-	  }
-	  
-	  console.log("validation MSG:"+JSON.stringify(msgAndId));
-	  
-	  return msgAndId;
-  } // END --  function checkId() method
-  
-  
-  /*function to display line chart*/
-  function displayLine(data){
- 	 
- 	 /*display pieChartDiv division*/
-		displayOnlyOneDivision(lineChartDiv);
- 	 
- 	/* showOrHideRemainingDivisions("showCharts");*/
- 	 console.log("Inside  displayLine()  method");  
- 	 
- 	 $(lineChartDiv).show();
- 	 $("#lineLegend").show();
- 	 
- 		/*showLineChartForm=true;
-       showLineChartInlineForm=false;*/
- 		
- 		var weeklyData = data;
- 	 console.log("data in  displayLine() after parsing:  "+JSON.stringify(data));  
- 	 
- 	 console.log("last day "+weeklyData.lastDay); 
-	     console.log( typeof weeklyData); 
-	     console.log("dayAndWork "+weeklyData.dayAndWork.Saturday);
-	     console.log("start day "+weeklyData.startDay);
-	     
-
-	     var displayLabels=[];
-	     
-     days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-     
-      var flag;
-      var start;
-      
-      var work=[];
-      var total=[];
-      var temp;
-      
-      temp=weeklyData.dayAndWork.Monday;
-      if(temp==undefined){
-      	
-      	work[0]=0.0;
-      	total[0]=0.0
-      }else{
-      	
-      	work[0]=temp;
-      	total[0]=weeklyData.oneDayHours;
-      }
-       
-      temp=weeklyData.dayAndWork.Tuesday;
-      if(temp==undefined){
-      	
-      	work[1]=0.0;
-      	total[1]=0.0
-      }else{
-      	
-      	work[1]=temp;
-      	total[1]=weeklyData.oneDayHours;
-      }
-       
-      temp=weeklyData.dayAndWork.Wednesday;
-      if(temp==undefined){
-      	
-      	work[2]=0.0;
-      	total[2]=0.0
-      }else{
-      	
-      	work[2]=temp;
-      	total[2]=weeklyData.oneDayHours;
-      }
-    
-      temp=weeklyData.dayAndWork.Thursday;
-      if(temp==undefined){
-      	
-      	work[3]=0.0;
-      	total[3]=0.0
-      }else{
-      	
-      	work[3]=temp;
-      	total[3]=weeklyData.oneDayHours;
-      }
-    
-      temp=weeklyData.dayAndWork.Friday;
-      if(temp==undefined){
-      	
-      	work[4]=0.0;
-      	total[4]=0.0
-      }else{
-      	
-      	work[4]=temp;
-      	total[4]=weeklyData.oneDayHours;
-      }
-    
-      temp=weeklyData.dayAndWork.Saturday;
-      if(temp==undefined){
-      	
-      	work[5]=0.0;
-      	total[5]=0.0
-      }else{
-      	
-      	work[5]=temp;
-      	total[5]=weeklyData.oneDayHours;
-      }
-    
-      temp=weeklyData.dayAndWork.Sunday;
-      if(temp==undefined){
-      	
-      	work[6]=0.0;
-      	total[6]=0.0
-      }else{
-      	
-      	work[6]=temp;
-      	total[6]=weeklyData.oneDayHours;
-      }
-    
-      
-      var work1=[],total1=[];
-      for(var i=0;i<7;i++){
-     		 
-     	 if(weeklyData.startDay==days[i]){
-             start=i;
-     	 }
-     	 if(weeklyData.startDay==days[i]){
-     		 end=i;
-     	 }
-      }
-      
-      for(var j=start; j<7;j++){
-     	 displayLabels.push(days[j]);
-     	 work1.push(work[j]);
-     	 total1.push(total[j]);
-      }
-      
-      for(var k=0; k<end; k++){
-     	 displayLabels.push(days[k]);
-     	 work1.push(work[k]);
-     	 total1.push(total[k]);
-      }
-
-     lineChartData = {
-		labels : displayLabels,
-		datasets : [
-			{
-				label: "Total Hours",
-				fillColor : "#CCF2FF",
-				strokeColor : "#1ac4ff",
-				pointColor : "#0085b3",
-				pointStrokeColor : "#005f80",
-				pointHighlightFill : "#FFFFFF",
-				pointHighlightStroke : "#000000",
-				data : total1
-			},
-			{
-				label: "Working hours",
-				fillColor : "rgb(255,179,179)",
-				strokeColor:"rgb(230,0,0)",
-				pointColor : "#b30000",
-				pointStrokeColor :"	#804d4d",
-				pointHighlightFill : "#FFFFFF",
-				pointHighlightStroke : "#660033",
-				data :work1
-			}
-		]
-
-	}
-  if(window.myLine!=null){
- 	 window.myLine.destroy();
-  }
-	var ctx = document.getElementById("lineChart").getContext("2d");
-	myLine = new Chart(ctx).Line(lineChartData, {
-		responsive: true
-	});
-
-	/*myLine.removeData();*/
-	document.getElementById('lineLegend').innerHTML = myLine.generateLegend();
-	/*legend = Line.generateLegend();*/
-
-}; // End of -  displayLine(data)
-
-	  
 });// End of -  $("document").ready()
-
-/* 
- * This function is to display only one division and hides remaining divisions
- * This function displays division which you sent as parameter
- */
-function displayOnlyOneDivision(divId){
-	
-	console.log("hide/show page divisions method ()  idv ID  receved"+divId);
-	(divId == pieChartDiv)? $(pieChartDiv).show() && $("#pieLegend").show() : $(pieChartDiv).hide() && $("#pieLegend").hide();
-	(divId == barChartDiv)? $(barChartDiv).show() && $("#barLegend").show(): $(barChartDiv).hide() && $("#barLegend").hide();
-	(divId == lineChartDiv)? $(lineChartDiv).show() && $("#lineLegend").show(): $(barChartDiv).hide() && $("#lineLegend").hide();
-	
-};// END -- diplayOnlyOneDivision(divId)
-
-
-
