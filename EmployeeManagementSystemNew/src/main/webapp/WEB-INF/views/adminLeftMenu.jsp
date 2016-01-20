@@ -1,8 +1,9 @@
 
   <link rel="stylesheet" type="text/css" href="./CSS/style.css">
-  
+  <title>EMS</title>
+<link rel="shortcut icon" type="image/x-icon"
+	href="./images/caprus logo.png" />
    <script src="./jquery/jquery-2.1.4.js"></script>
-  <!-- <script src="./js1/jquery-1.3.2.min.js"></script> -->
   <script src="./jquery/jquery-ui.js"></script>
    <script src="./bootstrap/bootstrap.min.js"></script> 
   <link rel="stylesheet"  href="./bootstrap/bootstrap.min.css">
@@ -37,40 +38,8 @@
   
   <link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png"/>
   
- 
-<script>
+   <script src="./JS/AdminTemplete.js"></script>
 
-	$("document").ready(function() {
-		$("#print").hide();
-
-	});
-	/* function printDiv(pdiv) {
-	 var printContents = document
-	 .getElementById("printdiv").innerHTML;
-	 var originalContents = document.body.innerHTML;
-	 document.body.innerHTML = printContents;
-	 window.print();
-	 document.body.innerHTML = originalContents;
-	 }; */
-
-	function PrintDiv(pdiv) {
-		var divToPrint = document.getElementById('printdiv');
-		var popupWin = window.open('', '_blank', 'width=900,height=650');
-		popupWin.document.open();
-		popupWin.document.write('<html><body onload="window.print()">'
-				+ divToPrint.innerHTML + '</html>');
-		popupWin.document.close();
-
-	};
-	$(function() {
-		$("#accordion").accordion();
-	});
-
-	$(function() {
-		$("#datepicker").datepicker();
-	});
-</script>
-  
 </head>
 <body>
 	<div class="container-fluid ">
@@ -79,7 +48,7 @@
             <img src="./images/caprus logo.png" width="65px" height="65px">
 		</div>
 			<div class="col-sm-8 title_menu text-center">
-				<h1 align="right">EMPLOYEE MANAGEMENT SYSTEM</h1>
+				<h1 align="center">EMPLOYEE MANAGEMENT SYSTEM</h1>
 			</div>
 			<div class="col-sm-2">
 				<div class="dropdown">
@@ -93,7 +62,7 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<div class="row">
 		
 		     <!-- This division is the division on left for display links -->
@@ -104,7 +73,7 @@
 	    	<div>
 	    	<ul>
 	    	<li><a href="/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">Add Employee</a></li>
-	    	<li><a href="/EmployeeManagementSystemNew/ViewUser.do" id="admin-view-update-emp-link">View/Update Employee</a></li>
+	    	<li><a href="#" id="admin-view-update-emp-link">View/Update Employee</a></li>
 	    	</ul>
 			</div>
 			<h3>Reports</h3>
@@ -144,7 +113,7 @@
 			</ul>
 			</div>
 			</div> 
-			
+	</div>
 			</div>
 			<!-- This division is the division on right for display content to show (Right division)-->
 			<div class="col-sm-10">

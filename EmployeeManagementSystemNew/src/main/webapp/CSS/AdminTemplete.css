@@ -80,12 +80,11 @@ th {
 
 .generateposition {
 	width: auto;
-	height: 60px;
-	left: 13%;
-	top: 13%;
+	height: auto;
+	left: 18%;
+	top: 11%;
 	position: absolute;
 	padding-top: 13px;
-	background-color: #F5F5F5;
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -93,7 +92,7 @@ th {
 .generateposition1 {
 	width: auto;
 	height: auto;
-	left: 12.5%;
+	left: 18%;
 	top: 21%;
 	position: absolute;
 	padding-top: 13px;
@@ -112,4 +111,33 @@ select {
 	width: 250px;
 	height: 35px;
 	border-radius: 5px;
+}
+
+.abtlikebox{background: ; float: right;height:auto;padding: 0 5px 10px 46px;width: 315px;z-index:  99999;position:fixed;right:-268px;top:10%;}
+.abtlikebox div{ padding: 5px 0px 10px 8px; margin-right:-8px; border:3px solid  #3b5998; background:#fafafa;}
+#fixed1 {
+	text-decoration: none;
+	position: relative;
+	top:30px;
+	right:118px;
+	width: 120px;
+	height: 30px;
+	border: 3px solid #bebebe;
+} 
+#searchcriteria{
+	width: 1350px;
+    height: 25px;
+    padding: 0px 0px 0px 10px;
+     background-color:#6495ed;
+     color:white;
+}
+#main{
+	width: auto;
+    height: auto;
+    padding-top:20px;
+    padding-bottom:5px;
+    padding-left:20px;
+    padding-right:20px;
+     background-color:WhiteSmoke;
+     
 }
