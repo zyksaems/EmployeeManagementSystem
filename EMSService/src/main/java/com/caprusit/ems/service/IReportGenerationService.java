@@ -32,9 +32,9 @@ public interface IReportGenerationService {
 	
     String getDailyReportOfIndividual(int employeeId, Date attendanceDate) ;
     
-    String getEmployeeMonthlyProductivity(int employeeId,int year) ;
+    String getEmployeeAnnualProductivity(int employeeId,int year) ;
     
-    String getAllEmployeeMonthlyProductivity(int year) ;
+    String getAllEmployeeAnnualProductivity(int year) ;
 	
 	List<Integer> getAutoCompleteInfo(int empid);
 
@@ -53,4 +53,10 @@ public interface IReportGenerationService {
 	String getAllEmployeeReportForYearByYearDate(String yearDate);
 
 	String getWeeklyReportOfEmployeeByIdAndWeek(int employeeId, String weekDate) throws ParseException;
+
+	String getWeeklyReportOfAllEmployeeByWeek(String week);
+
+	String getMonthlyProductivityOfEmployeeByIdAndMonth(int employeeId, String month);
+
+	String getMonthlyProductivityOfAllEmployeeByMonth(String month);
 }

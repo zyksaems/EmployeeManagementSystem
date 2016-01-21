@@ -22,6 +22,7 @@ $(function() {
 	    console.log("emp id: "+empId+"    dtae: "+newday);
 	    
 	    $("#emp_id").text(empId);
+	  
 		if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		{
 			console.log(" getReportByIdAndDate ");
@@ -39,6 +40,15 @@ $(function() {
 			console.log("response : "+data);
 			   console.log("response for  getReportByIdAndDate"+JSON.stringify(data));
                 var len = data.employeeReport.length;
+                var empName=data.empName;
+                var empDesignation=data.empDesignation;
+                
+                console.log("Emp Name:"+empName);
+                console.log("Emp Designation:"+empDesignation);
+                
+                $("#emp_name").text(empName);
+                
+                $("#emp_designation").text(empDesignation);
                 
                 console.log("data length: "+len);
                 var txt = "";

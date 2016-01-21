@@ -29,6 +29,19 @@ $(function() {
 		 
 		request.done(function( data ) {
 			
+			console.log("Data in monthly productivity:"+JSON.stringify(data));
+			
+			var data1=data;
+			var data=data.monthlyWorkingDetails;
+			
+			var empName=data1.employeeName;
+			var empDesignation=data1.employeeDesignation;
+			console.log("Emp Name:"+empName);
+			console.log("Emp Designation:"+empDesignation);
+			
+			$("#emp_name").text(empName);
+            
+            $("#emp_designation").text(empDesignation);
 			
 			var companyproduct=0;
 			var empproduct=0;

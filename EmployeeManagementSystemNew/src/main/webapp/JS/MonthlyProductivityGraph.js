@@ -1,13 +1,13 @@
 
   $(document).ready(function(){
-	
+	console.log("Inside MonthlyProductivityGraph function");
 	var overAllProductivityButton_id="#overAll-monthly-productivity-button";
 	var individualProductivityButton_id="#individual-monthly-productivity-button";
 	var overAllProductivityForm_id="#over-all-monthly-productivity-form";
 	var individualProductivityForm_id="#individual-monthly-productivity-form";
 	var monthlyReportEmployeeId_id="#monthly-productivity-employeeId";
-	var individualReportYear_id="#individual-monthly-productivity-year";
-	var overAllproductivityYear_id="#over-all-monthly-productivity-year";
+	var individualReportMonthly_id="#individual-monthly-productivity";
+	var overAllproductivityMonthly_id="#over-all-monthly-productivity";
 	
 	var showIndividualMonthlyReportButton_id="#show-individual-monthly-productivity-button";
 	var showOverAllMonthlyReportButton_id="#show-over-all-monthly-productivity-button";
@@ -16,7 +16,7 @@
 	var overAllMonthlyProductivityMsg_id="#over-all-monthly-productivity-msg";
 	
 	var invalidEmpoyeeId_msg="Invalid employee ID";
-	var invalidyear_msg="Invalid year"; 
+	var invalidMonth_msg="Invalid month"; 
 	
 	var productivityTypeMsg_id="#monthly-productivity-type-msg";
 	
@@ -25,31 +25,31 @@
 	var year;
 	
 	var appplicationName="EmployeeManagementSystemNew";
-	var individualProductivity_url="getEmployeeAnnualProductivity.do";
-	var overAllProductivity_url="getAllEmployeeAnnualProductivity.do";
+	var individualProductivity_url="getMonthlyProductivityOfEmployeeByIdAndMonth.do";
+	var overAllProductivity_url="getMonthlyProductivityOfAllEmployeeByMonth.do";
 	var employeeIdReqParam="employeeId";
-	var yearReqParam="year";
+	var monthReqParam="month";
 	
 	
 	/*This function to show individual productivity graph*/
 	 $(showIndividualMonthlyReportButton_id).click(function(){
 		 $(productivityTypeMsg_id).text("Individual Productivity");
 		 employeeId=$(monthlyReportEmployeeId_id).val();
-		 year=$(individualReportYear_id).val();
+		 month=$(individualReportMonthly_id).val();
 		 if(employeeId.length != employeeIdLength){
 			 $(individualMonthlyProductivityMsg_id).text(invalidEmpoyeeId_msg);
 			 $("#bar-holder").hide();
 		   	 $("#barLegend").hide();
 		 }
-		 else if(year > new Date().getFullYear() || year < 2015 || year == undefined){
-		    $(individualMonthlyProductivityMsg_id).text(invalidyear_msg);
+		 else if(month > new Date().getMonth() || month < 11 || month == undefined){
+		    $(individualMonthlyProductivityMsg_id).text(invalidMonth_msg);
 		    $("#bar-holder").hide();
 		   	$("#barLegend").hide();
 		 }
 	     else{
 	    	 $(individualMonthlyProductivityMsg_id).text("");
 		      var url="/"+appplicationName+"/"+individualProductivity_url+"?"+
-		                             employeeIdReqParam+"="+employeeId+"&"+yearReqParam+"="+year;
+		                             employeeIdReqParam+"="+employeeId+"&"+monthReqParam+"="+month;
 	    	/* var url="/"+appplicationName+"/"+individualProductivity_url+"?"+yearReqParam+"="+year;*/
 	    	  makeAjaxCallToGetMonthlyProductivity(url);
 	     }
@@ -59,16 +59,16 @@
 	 /*This function to show over all  productivity graph*/
 	 $(showOverAllMonthlyReportButton_id).click(function(){
 		 $(productivityTypeMsg_id).text("OverAll Productivity");
-		 year=$(overAllproductivityYear_id).val();
-		 console.log("yerr over all: "+year);
-		 if(year > new Date().getFullYear() || year < 2015 || year == undefined){
-		    $(overAllMonthlyProductivityMsg_id).text(invalidyear_msg);
+		 month=$(overAllproductivityMonthly_id).val();
+		 console.log("Month over all: "+month);
+		 if(month > new Date().getMonth() || month < 11 || month == undefined){
+		    $(overAllMonthlyProductivityMsg_id).text(invalidMonth_msg);
 		    $("#bar-holder").hide();
 		   	$("#barLegend").hide();
 		 }
 	     else{
 	    	 $(overAllMonthlyProductivityMsg_id).text("");
-	    	  var url="/"+appplicationName+"/"+overAllProductivity_url+"?"+yearReqParam+"="+year;
+	    	  var url="/"+appplicationName+"/"+overAllProductivity_url+"?"+monthReqParam+"="+month;
 	    	  makeAjaxCallToGetMonthlyProductivity(url);
 	     }
 		 
@@ -79,7 +79,7 @@
 	  setDefaultValues();
 	  $(individualProductivityForm_id).hide();
 	 
-	 /*This function to show over all productivity form*/
+	 /*This function to show over all monthly productivity form*/
 	 $(overAllProductivityButton_id).click(function(){
 		 console.log("over all button clivked");
 		 setDefaultValues();
@@ -88,9 +88,9 @@
 		 
 	 });//END -- $(anualProductivity_link_id).click()
 	 
-	 /*This function to show individual productivity form*/
+	 /*This function to show individual monthly productivity form*/
 	 $(individualProductivityButton_id).click(function(){
-		 console.log("individual button clivked");
+		 console.log("individual button clicked");
 		 setDefaultValues();
 		 $(overAllProductivityForm_id).hide();
 		 $(individualProductivityForm_id).show();
@@ -110,7 +110,7 @@
 	 });
 	 
 	  /**
-	   * This function to make ajax call to get productvity details
+	   * This function to make ajax call to get productivity details
 	   */
 	  function  makeAjaxCallToGetMonthlyProductivity(url){
 		   
@@ -122,14 +122,11 @@
   	        success: function(data)
   	        {
   	        	console.log("data returned from server for add single emoloyee:"+ JSON.stringify(data));
-  	        	 if(data.employeeName == undefined){
-  	        		 console.log("bname undefined");
-  	        		
-  	        	 }  
-  	        	 else{
-  	        		 console.log("name defined")
-  	        	 }
-  	        	printBarChart(data.workingHoursArray,data.nonWorkingHoursArray);
+
+  	        	  var workingHours =[data.workingHours];
+  	              var nonWorkingHours=[data.nonWorkingHours];
+
+  	              printBarChart(workingHours,nonWorkingHours,data.monthName);
   	        },
   	        error: function(jqXHR, textStatus, errorThrown)
   	        {
@@ -148,8 +145,8 @@
 	     */
 	   function setDefaultValues(){
 			 $(monthlyReportEmployeeId_id).val("");
-			 $(individualReportYear_id).val("");
-			 $(overAllproductivityYear_id).val("");
+			 $(individualReportMonthly_id).val("");
+			 $(overAllproductivityMonthly_id).val("");
 			 $(overAllMonthlyProductivityMsg_id).text("");
 			 $(individualMonthlyProductivityMsg_id).text("");
 			 $("#bar-holder").hide();
@@ -158,14 +155,13 @@
 		 }; //END -- setDefaultValues()
 	   
 		/*function to print bar chart*/
-		function printBarChart(presentData,absentData){
-   		console.log("data received for monthly graph  present: "+presentData+"  absentdata: "+absentData);
+		function printBarChart(presentData,absentData,monthName){
+   		console.log("data received for monthly graph  present: "+presentData+"  absentdata: "+absentData+" mon name: "+monthName);
    		$("#bar-holder").show();
    		$("#barLegend").show();
    		var barChartData = {
-   				labels : ["January","February","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"],
-   				datasets : [
-   					{
+   				labels : [monthName],
+   				datasets :[	{
    						label:"Working Hours",
    						fillColor : "#0085b3",
    						strokeColor : "#002633",
@@ -182,12 +178,13 @@
    					}
    				]
 
-   			}
+   			};
+   		
    		if(window.myBar!=null){
    			 console.log("destroying bar graph");
 		    	 window.myBar.destroy();
 		}
-   		var ctx = document.getElementById("barChart").getContext("2d");
+   		var ctx = document.getElementById("barChartMonthly").getContext("2d");
    		window.myBar = new Chart(ctx).Bar(barChartData, {
    			responsive : true
    		});

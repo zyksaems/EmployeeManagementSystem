@@ -203,31 +203,31 @@ public class ReportGenerationController {
 	  }
 	 
 	 /**
-	  * This method is to find individual employee productibity 
+	  * This method is to find individual employee productivity 
 	  * for given year  
 	  */
-	 @RequestMapping(value = "/getEmployeeMonthlyProductivity", method = RequestMethod.POST)
-	  public @ResponseBody String getEmoplotyeeMonthlyReport(@RequestParam("employeeId") int employeeId,
+	 @RequestMapping(value = "/getEmployeeAnnualProductivity", method = RequestMethod.POST)
+	  public @ResponseBody String getEmployeeAnnualProductivity(@RequestParam("employeeId") int employeeId,
 	    @RequestParam("year") int year) 
 	 {
-	   logger.info("inside ReportGenerationController getEmoplotyeeMonthlyReport()");
+	   logger.info("inside ReportGenerationController getEmployeeAnnualProductivity()");
 	   logger.info("data received: employee id: "+employeeId+"  year: "+year);
 	   
-	   return reportGenerationService.getEmployeeMonthlyProductivity(employeeId, year);
+	   return reportGenerationService.getEmployeeAnnualProductivity(employeeId, year);
 	   
 	  }
 	 
 	 /**
-	  * This method is to find all employee productibity 
+	  * This method is to find all employee productivity 
 	  * for given year  
 	  */
-	 @RequestMapping(value = "/getAllEmployeeMonthlyProductivity", method = RequestMethod.POST)
-	  public @ResponseBody String getAllEmoplotyeeMonthlyReport(@RequestParam("year") int year) 
+	 @RequestMapping(value = "/getAllEmployeeAnnualProductivity", method = RequestMethod.POST)
+	  public @ResponseBody String getAllEmployeeAnnualProductivity(@RequestParam("year") int year) 
 	 {
-	   logger.info("inside ReportGenerationController getAllEmoplotyeeMonthlyReport()");
+	   logger.info("inside ReportGenerationController getAllEmployeeAnnualProductivity()");
 	   logger.info("data received:  year: "+year);
 	   
-	   return reportGenerationService.getAllEmployeeMonthlyProductivity(year);
+	   return reportGenerationService.getAllEmployeeAnnualProductivity(year);
 	   
 	  }
 	 

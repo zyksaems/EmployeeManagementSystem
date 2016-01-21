@@ -16,6 +16,11 @@
 	<jsp:include page="AdminTemplate.jsp"></jsp:include>
 	<div id="anual-report-select-div">
 	<div class="row generateposition">
+	<div id="searchcriteria">
+		<h4>
+			<b>Search criteria</b>
+		</h4>
+	</div><br /><br />
 		<label>select type:</label> <select id="select"
 			onchange="getDisable()">
 			<option title="" value="">--Select--</option>
@@ -26,6 +31,12 @@
 		<button class="btn btn-primary" id="annualReports">submit</button>
 	</div>
 	<div class="row generateposition1"> 
+	<div id="searchcriteria">
+		<h4>
+			<b>Search Results</b>
+		</h4>
+	</div>
+	<div id="main">
 		<div id="printdiv">
 		<h3 id="title" align="center">
 				<font color="#6495ed">Caprus IT Annually Attendance Reports
@@ -60,7 +71,7 @@
 				</thead>
 			</table>
 		</div>
-		<font color="red"><p aling="center" id="res"></p></font> <br />
+		<font color="red"><p aling="center" id="res"></p></font> </div><br />
 		<br />
 		<button id="print" class='btn btn-primary'>print</button>
 	</div>

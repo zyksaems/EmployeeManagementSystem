@@ -1,61 +1,92 @@
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="adminLeftMenu.jsp"></jsp:include>
-			<script src="./JS/weeklyProductivityChart.js"></script>
-			    <!-- division for charts and graphs -->
-			   
-			           <!-- daily attendance div -->
-			           <div  id="showChart" >
-			           <div class="row">
-  					   <div class="col-sm-9">
-  					      <!-- for line chart -->
-  					     <div style="width: auto;"  id="line-holder">
-                               <div class="row pageHeading alert alert-info" >Weekly Productivity</div> 
-			                    <div>
-				                    <canvas id="lineChart" height="auto" width="auto" style="margin-left: 5%"></canvas> 
-			                    </div>			 
-		                 </div>
-		              
-  						<div id="lineLegend" class="chart-legend" > </div>
-			               
-			    </div> <!-- END -- charts div (col-sm-9) -->
-			    <div class="col-sm-1"></div>
-			    <!-- This division for displaying forms for graphs -->
-			    <div class="col-sm-2">
-			         <div id="weekly-productivity-div">
-			            <form class="form-vertical" role="form" action="#">
-                              <div class="form-group">
-                                  <label class=" col-sm-10 control-label" >Enter EmployeeId</label> 
-                                  <div class="col-sm-10">
-                                     <input type="text" class="form-control" id="employeeId">
-                                  </div>
-                              </div>            
-                              <div class="form-group "  >
-                                 <label class=" col-sm-10 control-label" >select Date</label>
-                                 <div class="col-sm-10">
-                                     <input type="week" class="form-control"  id="weeklyDate">
-                                 </div>
-                              </div>
-                              <div class="form-group "  >
-                                 <div class="col-sm-10">
-                                   <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  id="showLine">Show</button>
-                                 </div>              
-                                 <div class="form-group " style="color: red" >
-                                   <label class=" col-sm-10 control-label" id="validationMsg"></label>
-                                 </div>              
-                             </div>           
-                          </form>			         
-			         </div><!-- End -- weekly productivity form  -->
-			    
-			    
-			    
-			    </div><!-- END -- chart's forms div (col-sm-2) -->
-			                  
-			    
-			    </div><!-- END -- division for charts and graphs -->
+<script src="./JS/WeeklyProductivityGraph.js"></script>
 			
-			</div> <!-- END -- (show chart division) -->
-
-		
+ <!-- Start of WeeklyProductivity division -->
+ 
+  <div class="row">
+			     <div class="col-sm-8">
+			           <div style="width: auto ;" id="line-holder">
+			               <div class="row  pageHeading alert alert-info"><b><p class="text-center" id="weekly-productivity-type-msg"></p></b></div>
+			               <canvas id="lineChart" height="auto" width="auto" style="margin-left: 5%"></canvas>
+		 	  
+                       </div>
+			     </div>
+			     <div class="col-sm-1"></div>
+			     <div class="col-sm-2" style="background-color: ">
+			    <!-- bar chart form (monthly report) -->
+                <div ng-show="showWeeklyReportForm" id="weekly-productivity-select-div">
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                     <br>
+                       <button class="btn btn-primary btn-Text btn-sm" id="overAll-weekly-productivity-button">OverAll</button>
+                       <button class="btn btn-primary btn-Text btn-sm" id="individual-weekly-productivity-button">Individual</button>
+                   </div>
+                   <div class="col-sm-1"></div>
+              
+               </div>
+  
+        <form class="form-vertical" role="form" ng-show="showIndividualWeeklyForm" id="individual-weekly-productivity-form">
+            <div class="form-group " style="color: red" >              
+               <label class=" col-sm-12 control-label text-center" >Individual Productivity</label>
+           </div>            
+           <div class="form-group">
+                <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" id="weekly-productivity-employeeId" ng-model="WeeklyReportEmployeeId" maxlength="6">
+              </div>
+            </div>            
+             <div class="form-group ">
+                 <label class=" col-sm-12 control-label" >Enter Week</label>
+              <div class="col-sm-12">
+                     <input type="week" class="form-control"  ng-model="MonthlyReport" id="individual-weekly-productivity">
+              </div>
+            </div>                        
+            <div class="form-group "  >
+              <div class="col-sm-12">
+                  <br>
+                  <button class=" form-control btn btn-info btn-Text btn-Primary-Color"  ng-click="showEmployeeWeeklyReport()" id="show-individual-weekly-productivity-button">Show</button>
+              </div>
+            </div>
+            <div class="form-group "  >
+              <div class="col-sm-12">
+                  <br>
+                  <p class="text-center text-danger weeklyErrorMsg" id="individual-weekly-productivity-msg"></p>
+              </div>
+            </div>
+            
+       </form>
+       <form class="form-vertical" role="form" ng-show="!showIndividualWeeklyForm" id="over-all-weekly-productivity-form">
+              <div class="form-group " style="color: red" >              
+                <label class=" col-sm-12 control-label text-center">Over all Productivity</label>
+              </div>         
+              <div class="form-group ">
+                 <label class=" col-sm-12 control-label" >Enter Week</label>
+                 <div class="col-sm-12">
+                     <input type="week" class="form-control"  id="over-all-weekly-productivity"  ng-model="AllWeeklyReport">
+                 </div>
+              </div>                        
+              <div class="form-group "  >
+                 <div class="col-sm-12">
+                   <br>
+                   <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  id="show-over-all-weekly-productivity-button" ng-click="showAllEmployeeWeeklyReport()">Show</button>
+                 </div>
+              </div>
+              <div class="form-group "  >
+                <div class="col-sm-12">
+                  <br>
+                  <p class="text-center text-danger weeklyErrorMsg" id="over-all-weekly-productivity-msg"></p>
+                </div>
+              </div>
+            
+        </form>
+        
+        <div id="lineLegend" class="chart-legend" ></div>
+     </div>
+     </div>
+     
+     </div> <!--  END -- (WeeklyProductivity division) -->
 
 <!-- </body> -->
 <jsp:include page="footer.jsp"></jsp:include>

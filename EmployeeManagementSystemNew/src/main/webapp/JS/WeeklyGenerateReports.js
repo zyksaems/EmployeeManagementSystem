@@ -26,6 +26,18 @@
 		});
 		 
 		request.done(function( data ) {
+			var data1=data;
+			var data=data.weeklyWorkingDetails;
+			
+			var empName=data1.employeeName;
+			var empDesignation=data1.employeeDesignation;
+			console.log("Emp Name:"+empName);
+			console.log("Emp Designation:"+empDesignation);
+			
+			$("#emp_name").text(empName);
+            
+            $("#emp_designation").text(empDesignation);
+			
 			var companyproduct=0;
 			var empproduct=0;
                 var len = data.length;

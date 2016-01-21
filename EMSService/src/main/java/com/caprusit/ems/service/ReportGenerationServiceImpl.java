@@ -2,6 +2,7 @@ package com.caprusit.ems.service;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -349,7 +350,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * This method is to calculate individual employee 
      * monthly productivity based on given year
      */
-	public String getEmployeeMonthlyProductivity(int employeeId, int year) {
+	public String getEmployeeAnnualProductivity(int employeeId, int year) {
 
 		  logger.info("inside ReportGenerationServiceImpl getEmployeeMonthlyProductivity(-,-) method");
 		  
@@ -395,7 +396,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * This method is to calculate All employee 
      * monthly productivity based on given year
      */
-	public String getAllEmployeeMonthlyProductivity(int year) {
+	public String getAllEmployeeAnnualProductivity(int year) {
 		
 		 logger.info("inside ReportGenerationServiceImpl getAllEmployeeMonthlyProductivity(-) method");
 		
@@ -451,7 +452,16 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		
 		logger.info("inside ReportGenerationServiceImpl getEmployeeReportForWeekByIdAndWeekDate(-,-) method");
 		
-		Date startDate=null,endDate=null;
+		  String employeeName=null,employeeDesignation=null;
+			Date startDate=null,endDate=null;
+		
+		 List<Object> employeeDetails=reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
+	        logger.info("employee details: "+employeeDetails);
+	        if(employeeDetails.get(0)!= null ){
+	        	Object[] details=(Object[])employeeDetails.get(0);
+	        	employeeDesignation=(String)details[3];
+	        	employeeName=details[1]+" "+details[2];
+	        }
 		
 		/*Calling  getFromDateAndToDateFromWeekDate(-) method to get fromDate and toDate based on given string weekDate*/
 		   
@@ -459,8 +469,16 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 
 		startDate= dateValues.get("startDate");
 		endDate=dateValues.get("endDate");
+
+		List<Attendance> weeklyWorkingDetails=reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, startDate, endDate);
 		
-		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, startDate, endDate));
+		  Map<String,Object> employeeWeeklyReportMap=new HashMap<String, Object>(); 
+		  employeeWeeklyReportMap.put("weeklyWorkingDetails", weeklyWorkingDetails);
+		  employeeWeeklyReportMap.put("employeeName",employeeName );
+		  employeeWeeklyReportMap.put("employeeDesignation", employeeDesignation);
+		logger.info("Weelkly details:"+employeeWeeklyReportMap);
+		  
+		return JsonUtility.convertToJson(employeeWeeklyReportMap);
 	}
 	
 	/**
@@ -498,6 +516,8 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	     String month_year=monthdate[0];
 	     String month_monthnumber=monthdate[1];
 	     
+		 String employeeName=null,employeeDesignation=null;
+	     
 	     int month_parseyear=Integer.parseInt(month_year);
 	     int month_parsemonthnumber=Integer.parseInt(month_monthnumber);
 	     
@@ -514,8 +534,25 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	     Date toDate=calendar.getTime();
 	     logger.info("From Date is :" +fromDate);
 	     logger.info("To date is:"+toDate);
+	     
+	     List<Object> employeeDetails=reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
+	        logger.info("employee details: "+employeeDetails);
+	        if(employeeDetails.get(0)!= null ){
+	        	Object[] details=(Object[])employeeDetails.get(0);
+	        	employeeDesignation=(String)details[3];
+	        	employeeName=details[1]+" "+details[2];
+	        }
+	        List<Attendance> monthlyWorkingDetails=reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, fromDate, toDate);
+			
+			  Map<String,Object> employeeMonthlyReportMap=new HashMap<String, Object>(); 
+			  employeeMonthlyReportMap.put("monthlyWorkingDetails", monthlyWorkingDetails);
+			  employeeMonthlyReportMap.put("employeeName",employeeName );
+			  employeeMonthlyReportMap.put("employeeDesignation", employeeDesignation);
+			  
+			logger.info("Monthly details:"+employeeMonthlyReportMap);
+			  
+			return JsonUtility.convertToJson(employeeMonthlyReportMap);
 		
-		return JsonUtility.convertToJson(reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, fromDate, toDate));
 	}
 	
 	
@@ -568,6 +605,8 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 			int yearDate= Integer.parseInt(year);
 			logger.info("Entered Year: "+yearDate);
 		
+			String employeeName=null,employeeDesignation=null;
+			
 		    Calendar calendarStart=Calendar.getInstance();
 		    calendarStart.set(Calendar.YEAR,yearDate);
 		    
@@ -587,8 +626,24 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		    // returning the last date
 		    Date endDate=calendarEnd.getTime();
 		    logger.info("End Date:"+endDate);
-		
-		    return JsonUtility.convertToJson(reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, startDate, endDate));
+		    
+		    List<Object> employeeDetails=reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
+	        logger.info("employee details: "+employeeDetails);
+	        if(employeeDetails.get(0)!= null ){
+	        	Object[] details=(Object[])employeeDetails.get(0);
+	        	employeeDesignation=(String)details[3];
+	        	employeeName=details[1]+" "+details[2];
+	        }
+	        List<Attendance> annuallyWorkingDetails=reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, startDate, endDate);
+			
+			  Map<String,Object> employeeAnnuallyReportMap=new HashMap<String, Object>(); 
+			  employeeAnnuallyReportMap.put("annuallyWorkingDetails", annuallyWorkingDetails);
+			  employeeAnnuallyReportMap.put("employeeName",employeeName );
+			  employeeAnnuallyReportMap.put("employeeDesignation", employeeDesignation);
+			  
+			logger.info("Annual Report details:"+employeeAnnuallyReportMap);
+			  
+			return JsonUtility.convertToJson(employeeAnnuallyReportMap);
 	}
 	
 	/**
@@ -706,6 +761,85 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		    return JsonUtility.convertToJson(graphDetails);
 	}
 	
+	/**
+     * getWeeklyReportOfAllEmployeeByWeek(-) method take string weekDate as parameters ,
+     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-)
+     * method  to get all employee working details for particular week and display using line chart.
+     */
+	
+	@SuppressWarnings("unchecked")
+	public String getWeeklyReportOfAllEmployeeByWeek(String weekDate) {
+	
+		logger.info("inside ReportGenerationServiceImpl getWeeklyReportOfAllEmployeeByWeek(-,-) method");
+		
+		Date startDate=null, endDate=null;
+		
+	   Double workingHours=0.0,totalAvailableHours=0.0;
+	   int onDayHours=workingHoursPerDay;
+	   Double totalWorkingHours=0.0;
+	   String dayNames[] = new DateFormatSymbols().getWeekdays();
+		      
+	   Calendar cal = Calendar.getInstance();
+		
+	   /*Calling  getFromDateAndToDateFromWeekDate(-) method to get fromDate and toDate based on given string weekDate*/
+	   
+		Map<String,Date> dateValues= getFromDateAndToDateFromWeekDate(weekDate);
+
+		startDate= dateValues.get("startDate");
+		endDate=dateValues.get("endDate");
+		
+		logger.info("Inside getWeeklyReportOfAllEmployeeByWeek(-)  Date:"+startDate);
+		logger.info(" Inside getWeeklyReportOfAllEmployeeByWeek(-)  End date:"+endDate);
+		    
+		    List<Attendance> attendanceDetails= new ArrayList<Attendance>(); 
+		    
+		    List<Attendance> workingDetails=reportGenerationDAO.getEmployeesReportBetweenDates(startDate, endDate);
+		    
+		     Map<String,Object> allMap = new HashMap<String, Object>();
+		     allMap.put("ListOfLine", workingDetails);
+		     allMap.put("LastDate",endDate);
+		     
+		   
+		     
+		    attendanceDetails=(List<Attendance>) allMap.get("ListOfLine");
+		    endDate =(Date) allMap.get("LastDate");
+		    logger.info("Attendance List is:"+attendanceDetails);
+		  
+		    Map<String,Double> dayAndWork=new HashMap<String, Double>();
+		    
+		    cal.setTime(startDate);
+		     String startDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
+		     cal.setTime(endDate);
+		     String lastDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
+		              
+		     List<String> presentDays=new ArrayList<String>();
+		     
+		    for(int i=0; i<attendanceDetails.size();i++){
+		    	startDate=attendanceDetails.get(i).getAttendanceDate();
+		     cal.setTime(startDate);
+
+		     workingHours=attendanceDetails.get(i).getWorkingHours();
+		     dayAndWork.put(dayNames[cal.get(Calendar.DAY_OF_WEEK)],workingHours);
+		     presentDays.add(dayNames[cal.get(Calendar.DAY_OF_WEEK)]);
+		     
+		     totalWorkingHours+=workingHours;
+		       
+		     totalAvailableHours+=onDayHours;    
+		      }
+		   
+		    Map<String,Object> graphDetails= new HashMap<String, Object>();
+		    graphDetails.put("dayAndWork",dayAndWork);
+		    graphDetails.put("totalWorkingHours",totalWorkingHours);
+		    graphDetails.put("oneDayHours",onDayHours);
+		    graphDetails.put("totalAvailableHours",totalAvailableHours);
+		    graphDetails.put("startDay",startDay);
+		    graphDetails.put("lastDay",lastDay);
+		    graphDetails.put("presentDays", presentDays);
+		    
+		    return JsonUtility.convertToJson(graphDetails);
+	}
+	
+	
 	
 	/**
      * This getFromDateAndToDateFromWeekDate(-) method provides fromDate and toDate in java.util.Date format
@@ -744,4 +878,116 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	    
 	    return dates;
 	}
+	
+	
+	/*
+ 	 *  getMonthlyProductivityOfEmployeeByIdAndMonth(-,-) method  will take employeeId, month as parameters 
+ 	 *  and based on given month , we calculate firstDate and lastDate of the month.
+ 	 *  By passing employeeId, firstDate, lastDate to the getEmployeeWorkingDetailsByDates(-,-,-) method 
+ 	 *  get the working details of an employee.
+	 */
+	public String getMonthlyProductivityOfEmployeeByIdAndMonth(int employeeId, String month) {
+		logger.info("Inside ReportGenerationServiceImpl getMonthlyProductivityOfEmployeeByIdAndMonth(-,-) method	");
+		
+		 String monthdate[]=month.split("-");
+	     String month_year=monthdate[0];
+	     String month_monthnumber=monthdate[1];
+	     int listSize;
+	     double actualWorkingHours=daysPerMonth*workingHoursPerDay;
+	     int month_parseyear=Integer.parseInt(month_year);
+	     int month_parsemonthnumber=Integer.parseInt(month_monthnumber);
+	     
+	     Calendar calendar = Calendar.getInstance();
+	     calendar.clear();
+	     calendar.set(Calendar.DAY_OF_MONTH, 1);
+	     calendar.set(Calendar.MONTH, month_parsemonthnumber-1);
+	     calendar.set(Calendar.YEAR, month_parseyear);
+
+	     Date fromDate = calendar.getTime();
+	     calendar.set(Calendar.DAY_OF_MONTH,
+	    		  calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+	     
+	     Date toDate=calendar.getTime();
+	     
+	     String monthName=new SimpleDateFormat("MMMM").format(fromDate);
+	     
+	     logger.info(" getMonthlyProductivityOfEmployeeByIdAndMonth From Date is :" +fromDate);
+	     logger.info(" getMonthlyProductivityOfEmployeeByIdAndMonth   To date is:"+toDate);
+	     logger.info(" getMonthlyProductivityOfEmployeeByIdAndMonth   Month Name is:"+monthName);
+
+	     List<Attendance> employeeMonthlyData=reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId,fromDate,toDate);
+        listSize=employeeMonthlyData.size();
+        logger.info("attendance details received for monthly individual employee results: "+employeeMonthlyData);
+        logger.info("monthly employee report data size: "+listSize);
+        
+		Attendance attendanceObj;	
+		double TotalWorkingHours=0.0;
+		for(int i=0;i<listSize;i++){
+        	attendanceObj=employeeMonthlyData.get(i);
+        	TotalWorkingHours+=attendanceObj.getWorkingHours();
+        }        
+        Map<String,Object> employeeMonthlyReportMap=new HashMap<String, Object>(); 
+        employeeMonthlyReportMap.put("workingHours", TotalWorkingHours);
+        employeeMonthlyReportMap.put("nonWorkingHours", actualWorkingHours-TotalWorkingHours);
+        employeeMonthlyReportMap.put("monthName",monthName);
+        
+		return JsonUtility.convertToJson(employeeMonthlyReportMap);
+		
+	}
+
+	
+	/*
+ 	 *  getMonthlyProductivityOfAllEmployeeByMonth(-,-) method  will take  month as parameter
+ 	 *  and based on given month , we calculate firstDate and lastDate of the month.
+ 	 *  By passing  firstDate, lastDate to the getEmployeesReportBetweenDates(-,-) method 
+ 	 *  get the working details of all employee.
+	 */
+	public String getMonthlyProductivityOfAllEmployeeByMonth(String month) {
+		logger.info("Inside ReportGenerationServiceImpl getMonthlyProductivityOfAllEmployeeByMonth(-,-) method	");
+		
+		 String monthdate[]=month.split("-");
+	     String month_year=monthdate[0];
+	     String month_monthnumber=monthdate[1];
+	     int listSize;
+	     double actualWorkingHours=daysPerMonth*workingHoursPerDay;
+	     int month_parseyear=Integer.parseInt(month_year);
+	     int month_parsemonthnumber=Integer.parseInt(month_monthnumber);
+	     
+	     Calendar calendar = Calendar.getInstance();
+	     calendar.clear();
+	     calendar.set(Calendar.DAY_OF_MONTH, 1);
+	     calendar.set(Calendar.MONTH, month_parsemonthnumber-1);
+	     calendar.set(Calendar.YEAR, month_parseyear);
+
+	     Date fromDate = calendar.getTime();
+	     calendar.set(Calendar.DAY_OF_MONTH,
+	    		  calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+	     
+	     Date toDate=calendar.getTime();
+	     
+	     String monthName=new SimpleDateFormat("MMMM").format(fromDate);
+	     
+	     logger.info(" getMonthlyProductivityOfEmployeeByIdAndMonth From Date is :" +fromDate);
+	     logger.info(" getMonthlyProductivityOfEmployeeByIdAndMonth   To date is:"+toDate);
+	     logger.info(" getMonthlyProductivityOfEmployeeByIdAndMonth   Month Name is:"+monthName);
+
+	     List<Attendance> employeeMonthlyData=reportGenerationDAO.getEmployeesReportBetweenDates(fromDate,toDate);
+       listSize=employeeMonthlyData.size();
+       logger.info("attendance details received for monthly all employee results: "+employeeMonthlyData);
+       logger.info("monthly all employee report data size: "+listSize);
+       
+		Attendance attendanceObj;	
+		double TotalWorkingHours=0.0;
+		for(int i=0;i<listSize;i++){
+       	attendanceObj=employeeMonthlyData.get(i);
+       	TotalWorkingHours+=attendanceObj.getWorkingHours();
+       }        
+       Map<String,Object> employeeMonthlyReportMap=new HashMap<String, Object>(); 
+       employeeMonthlyReportMap.put("workingHours", TotalWorkingHours);
+       employeeMonthlyReportMap.put("nonWorkingHours", actualWorkingHours-TotalWorkingHours);
+       employeeMonthlyReportMap.put("monthName",monthName);
+       
+		return JsonUtility.convertToJson(employeeMonthlyReportMap);
+	}
+	
 }

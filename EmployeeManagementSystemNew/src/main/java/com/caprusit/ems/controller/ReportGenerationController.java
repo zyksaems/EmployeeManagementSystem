@@ -47,6 +47,15 @@ public class ReportGenerationController {
 	}
 	
 	/**
+	 * This method returns monthly productivity page
+	 */	
+	@RequestMapping(value = "/getMonthlyProductivityPage", method = RequestMethod.GET)
+	public String getMonthlyProductivityPage() {
+		logger.info("inside ReportGenerationController getMonthlyProductivityPage()");		
+		return "MonthlyProductivityGraph";
+	}
+	
+	/**
 	 * This method returns Today attendance page
 	 */	
 	@RequestMapping(value = "/getTodayAttendancePage", method = RequestMethod.GET)
@@ -285,11 +294,23 @@ public class ReportGenerationController {
 		 * */
 		 @RequestMapping(value = "/getWeeklyReportOfEmployeeByIdAndWeek", method = RequestMethod.POST)
 		  public @ResponseBody String getWeeklyReportOfEmployeeByIdAndWeek(@RequestParam("employeeId") int employeeId,
-		    @RequestParam("weekDate") String weekDate) throws ParseException {
+		    @RequestParam("week") String week) throws ParseException {
 		   logger.info("inside ReportGenerationController getWeeklyReportOfEmployeeByIdAndWeek()");
 
-		   return reportGenerationService.getWeeklyReportOfEmployeeByIdAndWeek(employeeId, weekDate);
+		   return reportGenerationService.getWeeklyReportOfEmployeeByIdAndWeek(employeeId, week);
 		  }
+	 
+		 
+		 /**
+			 * getWeeklyReportOfAllEmployeeByWeek(-) method display the working details of an employee for a week using line chart.
+			 * @throws ParseException 
+			 * */
+			 @RequestMapping(value = "/getWeeklyReportOfAllEmployeeByWeek", method = RequestMethod.POST)
+			  public @ResponseBody String getWeeklyReportOfAllEmployeeByWeek(@RequestParam("week") String week) throws ParseException {
+			   logger.info("inside ReportGenerationController getWeeklyReportOfEmployeeByIdAndWeek()");
+
+			   return reportGenerationService.getWeeklyReportOfAllEmployeeByWeek(week);
+			  }
 	 
 	 /**
 		 * getEmployeeReportForWeekByIdAndWeekDate(-,-) method takes employeeId,weekDate as a
@@ -400,32 +421,68 @@ public class ReportGenerationController {
 					.getAllEmployeeReportForYearByYearDate(yearDate);
 		}	
 		
+		
 		/**
-		  * This method is to find individual employee productibity 
+		 * getMonthlyProductivityOfEmployeeByIdAndMonth(-) method takes emoployeeId, month as a
+		 * inputs and displays all employees working details during given period of
+		 * time.
+		 * @throws Exception 
+		 */
+		@RequestMapping(value = "/getMonthlyProductivityOfEmployeeByIdAndMonth", method = RequestMethod.POST)
+		public @ResponseBody String getMonthlyProductivityOfEmployeeByIdAndMonth(@RequestParam("employeeId") int employeeId,@RequestParam("month") String month){
+			logger.info("inside ReportGenerationController getMonthlyProductivityOfEmployeeByIdAndMonth()");
+			
+			logger.info("Month in getMonthlyProductivityOfEmployeeByIdAndMonth : "+month);
+			
+			return reportGenerationService
+					.getMonthlyProductivityOfEmployeeByIdAndMonth(employeeId,month);
+		}	
+		
+		/**
+		 * getAllEmployeeReportForMonthByMonth(-) method takes month as a
+		 * inputs and displays all employees working details during given period of
+		 * time.
+		 * @throws Exception 
+		 */
+		@RequestMapping(value = "/getMonthlyProductivityOfAllEmployeeByMonth", method = RequestMethod.POST)
+		public @ResponseBody String getMonthlyProductivityOfAllEmployeeByMonth(@RequestParam("month") String month){
+			logger.info("inside ReportGenerationController getMonthlyProductivityOfAllEmployeeByMonth()");
+			
+			logger.info("Month in getMonthlyProductivityOfAllEmployeeByMonth : "+month);
+			
+			return reportGenerationService
+					.getMonthlyProductivityOfAllEmployeeByMonth(month);
+		}	
+		
+		
+		
+		
+		/**
+		  * This method is to find individual employee productivity 
 		  * for given year  
 		  */
-		 @RequestMapping(value = "/getEmployeeMonthlyProductivity", method = RequestMethod.POST)
-		  public @ResponseBody String getEmoplotyeeMonthlyReport(@RequestParam("employeeId") int employeeId,
+		 @RequestMapping(value = "/getEmployeeAnnualProductivity", method = RequestMethod.POST)
+		  public @ResponseBody String getEmployeeAnnualProductivity(@RequestParam("employeeId") int employeeId,
 		    @RequestParam("year") int year) 
 		 {
-		   logger.info("inside ReportGenerationController getEmoplotyeeMonthlyReport()");
+		   logger.info("inside ReportGenerationController getEmployeeAnnualProductivity()");
 		   logger.info("data received: employee id: "+employeeId+"  year: "+year);
 		   
-		   return reportGenerationService.getEmployeeMonthlyProductivity(employeeId, year);
+		   return reportGenerationService.getEmployeeAnnualProductivity(employeeId, year);
 		   
 		  }
 		 
 		 /**
-		  * This method is to find all employee productibity 
+		  * This method is to find all employee productivity 
 		  * for given year  
 		  */
-		 @RequestMapping(value = "/getAllEmployeeMonthlyProductivity", method = RequestMethod.POST)
-		  public @ResponseBody String getAllEmoplotyeeMonthlyReport(@RequestParam("year") int year) 
+		 @RequestMapping(value = "/getAllEmployeeAnnualProductivity", method = RequestMethod.POST)
+		  public @ResponseBody String getAllEmployeeAnnualProductivity(@RequestParam("year") int year) 
 		 {
-		   logger.info("inside ReportGenerationController getAllEmoplotyeeMonthlyReport()");
+		   logger.info("inside ReportGenerationController getAllEmployeeAnnualProductivity()");
 		   logger.info("data received:  year: "+year);
 		   
-		   return reportGenerationService.getAllEmployeeMonthlyProductivity(year);
+		   return reportGenerationService.getAllEmployeeAnnualProductivity(year);
 		   
 		  }
 }

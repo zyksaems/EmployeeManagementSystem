@@ -9,7 +9,7 @@
   <link rel="stylesheet"  href="./bootstrap/bootstrap.min.css">
   <link rel="stylesheet"  href="./jquery/jquery-ui.css">
   
-  <link rel="stylesheet"  href="./CSS/AdminTemplate.css">
+  <link rel="stylesheet"  href="./CSS/AdminTemplete.css">
   
   <!-- js for admin division hide and show functionality -->
   <script src="./JS/Admin_leftMenuControll.js"></script>
