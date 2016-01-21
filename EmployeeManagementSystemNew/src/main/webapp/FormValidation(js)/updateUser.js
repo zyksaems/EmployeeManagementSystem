@@ -223,7 +223,7 @@
                     	message:'Mobile No Should Be Of 10 Digits'
                       },
                       regexp: {
-                          regexp: /^[0-9]+$/,
+                          regexp: /^[789]\d{9}$/,
                           message: 'Only Numbers Are Allowed'
                       }
                   }
@@ -298,7 +298,7 @@
                       	message:'Department id should be of one digit or two digit'
                         },
                       regexp: {
-                          regexp: /^[0-4]+$/,
+                          regexp: /^1[0-4]+$/,
                           message: 'Department Id should be 10 or 11 or 12 or 13 or 14'
                       }
                       
