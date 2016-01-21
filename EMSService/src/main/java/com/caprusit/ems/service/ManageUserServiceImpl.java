@@ -155,6 +155,7 @@ public List<EmployeeD> getEmployees2() {
 
 
 	public List<EmployeeD> getEmployeeOneTime(int i){
+		
 		List<Employee> employees=manageUserDAO.getEmployeeOneTime(i);
 		
 		Iterator<Employee> iterator=employees.iterator(); 
@@ -179,6 +180,7 @@ public List<EmployeeD> getEmployees2() {
 		
 		return employeeDList;
 	}
+	
 	public String updateEmployee2(Employee e){
 		System.out.println("Inside home service");
 		Integer rows=manageUserDAO.updateEmployee2(e);

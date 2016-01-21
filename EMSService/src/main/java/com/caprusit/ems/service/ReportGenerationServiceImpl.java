@@ -402,7 +402,8 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		
 		 double[] workingHoursArray=new double[12];
          double[] nonWorkingHoursArray=new double[12];
-         double actualWorkingHours=daysPerMonth*workingHoursPerDay;
+         int noOfEmployees=reportGenerationDAO.getNumberOfEmployees();
+         double actualWorkingHours=daysPerMonth*workingHoursPerDay*noOfEmployees;
          
 		 Calendar calendar=Calendar.getInstance();
 		 calendar.set(year, 0, 1);
@@ -434,10 +435,13 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	}
 	/*This method is to calculate monthly non working hours*/
 	private void calculateNonWorkingHours(double[] nonWorkingHoursArray,double workingHoursPerMonth,double[] workingHoursArray){
-		
+		double workedHours;
         for(int i=0;i<12;i++){
-        	
-        	nonWorkingHoursArray[i]=workingHoursPerMonth-workingHoursArray[i];
+        	workedHours=workingHoursPerMonth-workingHoursArray[i];
+        	if(workedHours > 0)
+        	  nonWorkingHoursArray[i]=workedHours;
+        	else
+        	  nonWorkingHoursArray[i]=0.0;
         	
         }
 	}
@@ -949,7 +953,8 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	     String month_year=monthdate[0];
 	     String month_monthnumber=monthdate[1];
 	     int listSize;
-	     double actualWorkingHours=daysPerMonth*workingHoursPerDay;
+	     int noOfEmployees=reportGenerationDAO.getNumberOfEmployees();
+	     double actualWorkingHours=daysPerMonth*workingHoursPerDay*noOfEmployees;
 	     int month_parseyear=Integer.parseInt(month_year);
 	     int month_parsemonthnumber=Integer.parseInt(month_monthnumber);
 	     

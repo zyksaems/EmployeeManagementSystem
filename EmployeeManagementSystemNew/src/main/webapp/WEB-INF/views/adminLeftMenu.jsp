@@ -1,44 +1,22 @@
 
-  <link rel="stylesheet" type="text/css" href="./CSS/style.css">
   <title>EMS</title>
-<link rel="shortcut icon" type="image/x-icon"
-	href="./images/caprus logo.png" />
+
    <script src="./jquery/jquery-2.1.4.js"></script>
-  <script src="./jquery/jquery-ui.js"></script>
+   <script src="./jquery/jquery-ui.js"></script>
    <script src="./bootstrap/bootstrap.min.js"></script> 
+   
   <link rel="stylesheet"  href="./bootstrap/bootstrap.min.css">
   <link rel="stylesheet"  href="./jquery/jquery-ui.css">
   
-  <link rel="stylesheet"  href="./CSS/AdminTemplete.css">
-  
-  <!-- js for admin division hide and show functionality -->
-  <script src="./JS/Admin_leftMenuControll.js"></script>
-    
-  <script src="./JS/Admin_logout.js"></script>
-  
-  <!-- css and js for add employee through excel and manually -->
-  <script src="./JS/Admin_addEmployee.js"></script>
-  <link rel="stylesheet" href="./CSS/Admin_addEmployee.css">
-  
-  <!-- Chart.Js library  -->
-  <script src="./chartJS/Chart.js"></script>
-  
-    <!-- custom css -->
-  <link rel="stylesheet" href="./CSS/chart.css">
-  
-  <link rel="stylesheet" href="./CSS/AdminTemplete.css">
+  <link rel="stylesheet" href="./CSS/AdminTemplete.css"> 
   <link rel="stylesheet" type="text/css" href="./CSS/style.css">
   
-  
-  <!-- custom javascript file -->
-  <!-- <script src="./JS/showGraphs.js"></script> -->
-
-
+  <link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png" />
+    
+  <script src="./JS/Admin_logout.js"></script>
+  <script src="./JS/autoCompleteEmployeeId.js"></script>
+  <script src="./JS/AdminTemplete.js"></script>
  
-  
-  <link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png"/>
-  
-   <script src="./JS/AdminTemplete.js"></script>
 
 </head>
 <body>
@@ -103,8 +81,6 @@
 			<div>
 			<ul>
 			<li>
-			<!-- <a href="#">Daily Productivity</a></li> -->
-			<li>
 			<a href="/EmployeeManagementSystemNew/getWeeklyProductivityPage.do" id="weekly-productivity-link">Weekly Productivity</a></li>
 			<li>
 			<a href="/EmployeeManagementSystemNew/getMonthlyProductivityPage.do" id="monthly-productivity-link">Monthly Productivity</a></li>
@@ -113,7 +89,7 @@
 			</ul>
 			</div>
 			</div> 
-	</div>
+	<!-- </div> -->
 			</div>
 			<!-- This division is the division on right for display content to show (Right division)-->
 			<div class="col-sm-10">

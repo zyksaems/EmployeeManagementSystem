@@ -1,34 +1,23 @@
 	
+
+    /**
+     * 
+     * This function is to print division
+     */
+    function PrintDiv(divId){
+			
+    	       //console.log("in print division function")
+			   var divToPrint=document.getElementById(divId);
+			   newWin= window.open("");
+			   newWin.document.write(divToPrint.outerHTML);
+			   newWin.print();
+			   newWin.close();
+	};
+
+
 	$(function() {
 		
 		var employeeids=[];
-	    $("#id").autocomplete({
-	  	  source :function(request, response) {
-	  		 var id_value=document.getElementById("id").value;
-	  	      
-	  	      if(id_value.length==1){
-	  	       employeeids=[];
-	    				$.ajax({
-	            			url : "/EmployeeManagementSystemNew/getAutoCompleteInfo.do",
-						type : "POST",
-						data : {
-							employeeId : request.term
-						},
-						dataType : "json",
-						success : function(data) {
-						/* 	response(data); */
-							$.each(data, function(key, value){
-								employeeids.push(value+ "");
-							});
-							response(employeeids);
-						}
-					});
-	  	    }
-	  	      else{
-	  	     response(employeeids);
-	  	      }
-				}
-			});
 		
 		$("#table").hide();
 		 $("#table1").hide();
@@ -37,13 +26,10 @@
 		$("#emp_work_hours").text(0);
 		
 		$("#print").click(function(){
-			
-			   var divToPrint=document.getElementById("printdiv");
-			   newWin= window.open("");
-			   newWin.document.write(divToPrint.outerHTML);
-			   newWin.print();
-			   newWin.close();
-			});
+		    /*function call to print div*/
+			PrintDiv("printdiv");
+			  
+		});
 		
 		$("#accordion").accordion();
 	
@@ -68,3 +54,14 @@
 		});
 		
 	});
+	
+	/* This function executes when DOM loads completely */
+	$(document).ready(function(){
+		
+		console.log("in admin template ready(function())");
+		
+		/*function call to apply auto complete functionality to employee id text field*/ 
+		autoFillDataToTextField("#id",3);
+		
+	});// END -- $(document).ready(function())
+	

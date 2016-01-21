@@ -1,6 +1,9 @@
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="header.jsp"></jsp:include> 
 <jsp:include page="adminLeftMenu.jsp"></jsp:include>
 
+    <script src="./JS/Admin_addEmployee.js"></script>
+    <link rel="stylesheet" href="./CSS/Admin_addEmployee.css"> 
+    
 			         <!-- This division for add employee manually and through excel file-->
 			        <div  class="row addEmployeeMainDivision" id="add-employee-main-division" > 
                          <div class="row" >  <!--  id="importEmployeeDataDiv" -->
@@ -111,4 +114,5 @@
                     </div>  <!--  END -- Add employee manual division -->       
                 </div> <!-- END -- add employee main division -->
                 
-<jsp:include page="footer.jsp"></jsp:include>
+ <jsp:include page="footer.jsp"></jsp:include> 
+ 

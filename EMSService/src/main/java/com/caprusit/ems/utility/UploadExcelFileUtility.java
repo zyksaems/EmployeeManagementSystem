@@ -13,14 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.domain.Employee;
-import com.caprusit.ems.service.SecurityServiceImpl;
 
 public class UploadExcelFileUtility {
 
     @Autowired
 	private IManageUserDAO manageUserDAO;
 
-	private Logger logger = Logger.getLogger(SecurityServiceImpl.class);
+	private Logger logger = Logger.getLogger(UploadExcelFileUtility.class);
 
 	int firstCellNum, lastCellNum, count, exceptionRowNumber = -1, exceptionColNumber = -1;
 

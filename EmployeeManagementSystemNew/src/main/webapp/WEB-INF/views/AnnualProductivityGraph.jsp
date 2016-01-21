@@ -1,7 +1,11 @@
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="adminLeftMenu.jsp"></jsp:include>
+
+     <!-- Chart.Js library  -->
+     <script src="./chartJS/Chart.js"></script> 
 	
-	 <script src="./JS/Admin_annualProductivity.js"></script>	
+	 <script src="./JS/Admin_annualProductivity.js"></script>
+	 	
      <div class="row">
 			     <div class="col-sm-9">
 			           <div style="width: auto ;" id="bar-holder">
@@ -25,20 +29,20 @@
               
                </div>
   
-        <form class="form-vertical" role="form" ng-show="showIndividualMonthlyForm" id="individual-monthly-productivity-form">
+        <form class="form-vertical" role="form" id="individual-monthly-productivity-form">
             <div class="form-group " style="color: red" >              
                <label class=" col-sm-12 control-label text-center" >Individual Productivity</label>
            </div>            
            <div class="form-group">
                 <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
               <div class="col-sm-12">
-                  <input type="text" class="form-control" id="monthly-productivity-employeeId" ng-model="MonthlyReportEmployeeId">
+                  <input type="text" class="form-control" maxlength="6" id="monthly-productivity-employeeId" >
               </div>
             </div>            
              <div class="form-group ">
                  <label class=" col-sm-12 control-label" >Enter year</label>
               <div class="col-sm-12">
-                     <input type="text" class="form-control"  maxlength="4" ng-model="MonthlyReportYear" id="individual-monthly-productivity-year">
+                     <input type="text" class="form-control"  maxlength="4"  id="individual-monthly-productivity-year">
               </div>
             </div>                        
             <div class="form-group "  >

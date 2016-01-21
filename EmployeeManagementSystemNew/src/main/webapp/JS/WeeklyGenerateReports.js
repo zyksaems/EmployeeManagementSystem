@@ -16,8 +16,16 @@
 		var empId = $( "#id" ).val();
 		var day1=$("#week").val();
 		$("#emp_id").text(empId);
-		if($( "#select" ).val()=="single" && empId!="" && day1!="")
-		{
+		
+		 if( !validateEmployeeId(empId) && $("#select").val()=="single"){
+	            
+				$("#res").text("Invalid Employee ID");
+				$( "#res" ).show();
+				console.log("break statement executing ");
+				
+	         }
+		 else if($( "#select" ).val()=="single" && empId!="" && day1!="")
+		 {
 			var request = $.ajax({
 		  url: "/EmployeeManagementSystemNew/getEmployeeReportForWeekByIdAndWeekDate.do",
 		  method: "POST",

@@ -1,4 +1,4 @@
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="header.jsp"></jsp:include> 
 <jsp:include page="adminLeftMenu.jsp"></jsp:include>
 			
 			   
@@ -14,4 +14,4 @@
      </div>
  </div>
  
-<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="footer.jsp"></jsp:include> 

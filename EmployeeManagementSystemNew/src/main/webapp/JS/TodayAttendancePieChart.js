@@ -1,12 +1,11 @@
-var todayAttendanceDetails;
+    
+    var todayAttendanceDetails;
 	var activePoints=[];
-	
+	var  todayDateString=(""+new Date()+"").substr(4,12);
+	console.log("date string: "+todayDateString);
 	/*creating variables to store division id's */
 	var  pieChartDiv="#pie-holder";
-	var barChartDiv="#bar-holder";
-	var lineChartDiv="#line-holder";
-	var showChartDiv="#showChart";
-	var validationMsg='#validationMsg';
+	
 	var showTableDetails='#showTableDetails';
 	var backButton_one_id="#show-piechart-back-button";
 	var backButton_two_id="#show-piechart-back-button2";
@@ -21,23 +20,9 @@ var todayAttendanceDetails;
 	var clickOnPieChart="#clickOnPieChart";
 		
 	/*var dailyAttendance_link_id="#daily-attendance-div";*/
-	var dailyAttendance_link_id="#daily-attendance-link";
-	var weeklyAttendance_link_id="#weekly-attendance-graph-link";
-	var monthlyAttendance_link_id="#monthly-attendance-graph-link";
 	
-	function setDefaultValues(){
-		console.log("in set default values method()")
-		$("#bar-holder").hide();
-		$("#barLegend").hide();
-		$("#line-holder").hide();
-		$("#lineLegend").hide();
-	    $("#pie-holder").hide();
-		$("#pieLegend").hide();
-		$("#showLineChartForm").hide();
-		$("#showTableDetails").hide();
-		$("#showAbsentDetails").hide();
-		$("#validationMsg").hide();
-	}
+	
+	
 	
 	/*first display showChart division as default division*/
 	/*function call to hide remaining divisions*/
@@ -136,13 +121,13 @@ var todayAttendanceDetails;
 					    	        	
 					    	        	console.log("selected label   present");
 					    	        	
-					    	        	$("#listName") .text("Present Employees Details");
+					    	        	$("#listName") .text("Employees Present on "+todayDateString);
 					    	        	
 					    	        	 $("#showAbsentDetails").hide();
 					    	        	
 					    	        	$(pieChartDiv).hide() ;
 					    				 $("#pieLegend").hide();
-					    				 $("#showTableDetails").show();
+					    				 $(showTableDetails).show();
 
 					    				 var len = todayAttendancePieDetails.length;
 					    	                var txt = "";
@@ -169,11 +154,11 @@ var todayAttendanceDetails;
 					   				$("#pieLegend").hide();
 					   				
 
-					   			    	$("#showTableDetails").hide();
+					   			    	$(showTableDetails).hide();
 					    				 
 					    				 $("#showAbsentDetails").show();
 					    				 
-					    				 $("#listName1") .text(" Absent Employees Details");
+					    				 $("#listName1") .text("Employees Absent on "+todayDateString);
 					    				 
 					    				  var len = allAbsentEmpData.length;
 					    	                var txt = "";
@@ -197,7 +182,11 @@ var todayAttendanceDetails;
 	
 $("document").ready(function(){
 	
-	setDefaultValues();
+	
+	var dailyAttendance_legend_id="#daily-attendance-legend-div";
+	var todayAttendanceHeading_id="#today-attendance-heading";
+	var todayAttendanceInfoDetails_id="#today-attendance-info-detils";
+	
 	console.log("called set default values function");
 	displayTodayAttendance();
 	
@@ -206,16 +195,13 @@ $("document").ready(function(){
    function displayTodayAttendance() {
 			
 	$(showTableDetails).hide();
+	$(dailyAttendance_legend_id).show();
 	
-	 $("#showAbsentDetails").hide();
+	$(todayAttendanceHeading_id).text("Attendance Date: "+todayDateString);
 	
-	 /*function call to display one division*/
-	 displayOnlyOneDivision(pieChartDiv);
+	console.log("in displayTodayAttendance()");
+	 $("#showAbsentDetails").hide();		 
 	 
-			 $(pieChartDiv).show() ;
-			 $("#pieLegend").show();
-			 
-			 $(lineChartDiv).hide();
 		
 		var todayAttendance;
 		var numberOfPresentiesForPie;
@@ -227,7 +213,7 @@ $("document").ready(function(){
             url:"/EmployeeManagementSystemNew/getTodayReport.do",
             type: 'GET',
             dataType: "json",
-         contentType: "application/json; charset=utf-8",
+            contentType: "application/json; charset=utf-8",
             success: function(data)
             {
 			    console.log("reply from get today attendance: "+ JSON.stringify(data));
@@ -240,13 +226,8 @@ $("document").ready(function(){
     		    console.log("presenties in  pie: "+numberOfPresentiesForPie);
     		    numberOfAbsentiesForPie=todayAttendance.totalEmployees- numberOfPresentiesForPie;
     		    console.log("absenties for pie: "+numberOfAbsentiesForPie);
-    		    
-    			console.log("data from method: "+todayAttendance);
-    			console.log("no of presenties: "+todayAttendance.noOfPresenties);
-    			console.log("employee details:"+todayAttendance.employeeDetails[1].firstName );
-    			console.log("total employee :"+todayAttendance.totalEmployees );
-    			
-    		    
+    		    $(todayAttendanceInfoDetails_id).html("<b>Number of presenties: "+numberOfPresentiesForPie+"<br> Number of absenties: "+numberOfAbsentiesForPie+"</b>");
+   		    
     		   /*	function call for showing pie chart*/    			
     			displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie);
                 
@@ -258,10 +239,6 @@ $("document").ready(function(){
             }
             
         });//END -- $.ajax()
-		
-         console.log("out side the function static values");
-		 console.log("presenties out side: ------------------"+numberOfPresentiesForPie);
-		 console.log("absenties for pie out side--------: "+numberOfAbsentiesForPie);
 	
 	}; // END -- $(dailyAttendance_link_id).click()
 
@@ -277,17 +254,14 @@ $("document").ready(function(){
    
    /*function to hide tables */
    function hideTables(){
-	   $("#pie-holder").show();		 	
-   	   $("#showTableDetails").hide();
+	   $("#pie-holder").show();		
+	   $(dailyAttendance_legend_id).show();
+   	   $(showTableDetails).hide();
    	   $("#showAbsentDetails").hide();
    };// END -- hideTables()
 
-/*function for displaying pie chart*/
-function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie){
-	
-	
-	$("#showLineChartForm").hide();
-	
+   /*function for displaying pie chart*/
+   function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie){			
 	console.log("in display pie chart");
 	var pieData = [
 					{
@@ -305,7 +279,7 @@ function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie){
 						name:"a"
 					}
 				   ];
-	var options = {}
+	var options = {};
 	  if(window.myPie!=null){
 		    consol.log("pie graph destroying");
 	    	 window.myPie.destroy();
@@ -315,39 +289,23 @@ function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie){
 
 	 myPieChart = new Chart(ctx).Pie(pieData,options);
 
-	document.getElementById('pieLegend').innerHTML = myPieChart.generateLegend();
+	 
+	 $(dailyAttendance_legend_id).show();
 
-	legend = myPieChart.generateLegend();
-	
-   var activePoints =myPieChart.getSegmentsAtEvent(event);
 
    
 /* After clicking on pie chart  */
 	
 	$("#pieChart").click(function(event){
-		
+		//$("#daily-attendance-legend-div").hide();
 		$(pieChartDiv).hide();
+		$(dailyAttendance_legend_id).hide();
+		$("#daily-absent-table").prop({border:1});
+		$("#daily-present-table").prop({border:1});
 		
 				console.log("Inside onClickOnPieChart () function");
 				 
-					   var activePoints = myPieChart.getSegmentsAtEvent(event);
-					  
-					   
-					   alert("Active Points RAHUL:"+activePoints[0].value);
-								   
-								   console.log("new points......1 "+activePoints[0].value);
-								   console.log("new points......1 "+activePoints[0].label);
-								
-								
-								   console.log("new points......2 "+activePoints[0].value);
-								   console.log("new points......2 "+activePoints[0].label);
-								
-							
-								
-							   
-								$scope.sortType = 'name'; // set the default sort type
-								$scope.sortReverse  = false;  // set the default sort order
-								$scope.search= '';     // set the default search/filter term
+					   var activePoints = myPieChart.getSegmentsAtEvent(event);							 
 								
 								var presentiesList=todayAttendanceDetails.presentiesList;
 								var empDetails= todayAttendanceDetails.employeeDetails;

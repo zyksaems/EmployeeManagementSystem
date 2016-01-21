@@ -1,5 +1,6 @@
 
   $(document).ready(function(){
+	  
 	console.log("Inside MonthlyProductivityGraph function");
 	var overAllProductivityButton_id="#overAll-monthly-productivity-button";
 	var individualProductivityButton_id="#individual-monthly-productivity-button";
@@ -14,15 +15,17 @@
 	
 	var individualMonthlyProductivityMsg_id="#individual-monthly-productivity-msg";
 	var overAllMonthlyProductivityMsg_id="#over-all-monthly-productivity-msg";
+	var barChartDiv_id="#bar-holder";
 	
 	var invalidEmpoyeeId_msg="Invalid employee ID";
+	var shortEmployeeId_msg="Short employee ID";
 	var invalidMonth_msg="Invalid month"; 
 	
 	var productivityTypeMsg_id="#monthly-productivity-type-msg";
 	
 	var employeeId;
 	var employeeIdLength=6;
-	var year;
+
 	
 	var appplicationName="EmployeeManagementSystemNew";
 	var individualProductivity_url="getMonthlyProductivityOfEmployeeByIdAndMonth.do";
@@ -30,21 +33,26 @@
 	var employeeIdReqParam="employeeId";
 	var monthReqParam="month";
 	
+	/*function call to set auto complete to employee id text field*/
+	autoFillDataToTextField(monthlyReportEmployeeId_id,3);
 	
 	/*This function to show individual productivity graph*/
 	 $(showIndividualMonthlyReportButton_id).click(function(){
 		 $(productivityTypeMsg_id).text("Individual Productivity");
 		 employeeId=$(monthlyReportEmployeeId_id).val();
 		 month=$(individualReportMonthly_id).val();
-		 if(employeeId.length != employeeIdLength){
-			 $(individualMonthlyProductivityMsg_id).text(invalidEmpoyeeId_msg);
-			 $("#bar-holder").hide();
-		   	 $("#barLegend").hide();
+		 
+		 if(employeeId.length < employeeIdLength){			 
+			 $(individualMonthlyProductivityMsg_id).text(shortEmployeeId_msg);
+			 $(barChartDiv_id).hide();			   	 
 		 }
+		 else if( !validateEmployeeId(employeeId)){
+			 $(individualMonthlyProductivityMsg_id).text(invalidEmpoyeeId_msg);
+			 $(barChartDiv_id).hide();
+         }
 		 else if(month > new Date().getMonth() || month < 11 || month == undefined){
 		    $(individualMonthlyProductivityMsg_id).text(invalidMonth_msg);
-		    $("#bar-holder").hide();
-		   	$("#barLegend").hide();
+		    $(barChartDiv_id).hide();
 		 }
 	     else{
 	    	 $(individualMonthlyProductivityMsg_id).text("");
@@ -63,8 +71,7 @@
 		 console.log("Month over all: "+month);
 		 if(month > new Date().getMonth() || month < 11 || month == undefined){
 		    $(overAllMonthlyProductivityMsg_id).text(invalidMonth_msg);
-		    $("#bar-holder").hide();
-		   	$("#barLegend").hide();
+		    $(barChartDiv_id).hide();
 		 }
 	     else{
 	    	 $(overAllMonthlyProductivityMsg_id).text("");
@@ -149,16 +156,14 @@
 			 $(overAllproductivityMonthly_id).val("");
 			 $(overAllMonthlyProductivityMsg_id).text("");
 			 $(individualMonthlyProductivityMsg_id).text("");
-			 $("#bar-holder").hide();
-		   	 $("#barLegend").hide();
+			 $(barChartDiv_id).hide();
 			 
 		 }; //END -- setDefaultValues()
 	   
 		/*function to print bar chart*/
 		function printBarChart(presentData,absentData,monthName){
    		console.log("data received for monthly graph  present: "+presentData+"  absentdata: "+absentData+" mon name: "+monthName);
-   		$("#bar-holder").show();
-   		$("#barLegend").show();
+   		$(barChartDiv_id).show();
    		var barChartData = {
    				labels : [monthName],
    				datasets :[	{

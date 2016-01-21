@@ -15,8 +15,11 @@
 	var individualMonthlyProductivityMsg_id="#individual-monthly-productivity-msg";
 	var overAllMonthlyProductivityMsg_id="#over-all-monthly-productivity-msg";
 	
+	var barGraphDiv_id="#bar-holder";
+	
 	var invalidEmpoyeeId_msg="Invalid employee ID";
 	var invalidyear_msg="Invalid year"; 
+	var shortEmpoyeeId_msg="Short employee ID"
 	
 	var productivityTypeMsg_id="#monthly-productivity-type-msg";
 	
@@ -30,21 +33,26 @@
 	var employeeIdReqParam="employeeId";
 	var yearReqParam="year";
 	
+	/*function call to apply auto complete functionality to employee id text field*/ 
+	autoFillDataToTextField(monthlyReportEmployeeId_id,3);
+	
 	
 	/*This function to show individual productivity graph*/
 	 $(showIndividualMonthlyReportButton_id).click(function(){
 		 $(productivityTypeMsg_id).text("Individual Productivity");
 		 employeeId=$(monthlyReportEmployeeId_id).val();
 		 year=$(individualReportYear_id).val();
-		 if(employeeId.length != employeeIdLength){
+		 if(employeeId.length < employeeIdLength){
+			 $(individualMonthlyProductivityMsg_id).text(shortEmpoyeeId_msg);
+			 $(barGraphDiv_id).hide();
+		 }
+		 else if( !validateEmployeeId(employeeId)){
 			 $(individualMonthlyProductivityMsg_id).text(invalidEmpoyeeId_msg);
-			 $("#bar-holder").hide();
-		   	 $("#barLegend").hide();
+			 $(barGraphDiv_id).hide();
 		 }
 		 else if(year > new Date().getFullYear() || year < 2015 || year == undefined){
 		    $(individualMonthlyProductivityMsg_id).text(invalidyear_msg);
-		    $("#bar-holder").hide();
-		   	$("#barLegend").hide();
+		    $(barGraphDiv_id).hide();
 		 }
 	     else{
 	    	 $(individualMonthlyProductivityMsg_id).text("");
@@ -63,8 +71,7 @@
 		 console.log("yerr over all: "+year);
 		 if(year > new Date().getFullYear() || year < 2015 || year == undefined){
 		    $(overAllMonthlyProductivityMsg_id).text(invalidyear_msg);
-		    $("#bar-holder").hide();
-		   	$("#barLegend").hide();
+		    $(barGraphDiv_id).hide();
 		 }
 	     else{
 	    	 $(overAllMonthlyProductivityMsg_id).text("");
@@ -147,21 +154,20 @@
 		 * This function is to set default values
 	     */
 	   function setDefaultValues(){
+		   
 			 $(monthlyReportEmployeeId_id).val("");
 			 $(individualReportYear_id).val("");
 			 $(overAllproductivityYear_id).val("");
 			 $(overAllMonthlyProductivityMsg_id).text("");
 			 $(individualMonthlyProductivityMsg_id).text("");
-			 $("#bar-holder").hide();
-		   	 $("#barLegend").hide();
+			 $(barGraphDiv_id).hide();
 			 
 		 }; //END -- setDefaultValues()
 	   
 		/*function to print bar chart*/
 		function printBarChart(presentData,absentData){
    		console.log("data received for monthly graph  present: "+presentData+"  absentdata: "+absentData);
-   		$("#bar-holder").show();
-   		$("#barLegend").show();
+   		$(barGraphDiv_id).show();
    		var barChartData = {
    				labels : ["January","February","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"],
    				datasets : [
@@ -194,10 +200,7 @@
    		
    		//document.getElementById('barLegend').innerHTML = myBar.generateLegend();
    		//$scope.legend = Bar.generateLegend();
-   		$("#barLegend").html( myBar.generateLegend());
    		
-   		$("#bar-holder").show();
-   		$("#barLegend").show();
 
 		}; // END -- printBarChart(presentData,absentData)
 	 

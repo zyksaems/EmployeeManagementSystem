@@ -1,21 +1,26 @@
 $(function() {
 	
+	
+	
 	$("#dayreports").click(function()
 	{
+		var empId = $( "#id" ).val();
+		
+		
 
 		 $("#table").hide();
 		 $("#table1").hide();
 		 $( "#print" ).hide();
-		$("#title").hide();
-		$("#Employee_Details").hide();
-		$( "#res" ).hide();
+		 $("#title").hide();
+		 $("#Employee_Details").hide();
+		 $( "#res" ).hide();
 		
 		$("#company_work_hours").text(0);
 		$("#emp_work_hours").text(0);
 		
 		 $("#remove").remove();
         
-		var empId = $( "#id" ).val();
+		
 		var day1=$("#datepicker").val();
 		var newday=new Date(day1);
 		var newdayMilli=newday.getTime();
@@ -23,7 +28,14 @@ $(function() {
 	    
 	    $("#emp_id").text(empId);
 	  
-		if($( "#select" ).val()=="single" && empId!="" && day1!="")
+	    if( !validateEmployeeId(empId) && $("#select").val()=="single"){
+            
+			$("#res").text("Invalid Employee ID");
+			$( "#res" ).show();
+			console.log("break statement executing ");
+			
+         }
+	    else if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		{
 			console.log(" getReportByIdAndDate ");
 		var request = $.ajax({
@@ -159,3 +171,4 @@ $(function() {
 		}
 		
 	}
+	

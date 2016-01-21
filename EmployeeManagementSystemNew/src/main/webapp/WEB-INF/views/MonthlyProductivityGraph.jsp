@@ -1,12 +1,22 @@
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="adminLeftMenu.jsp"></jsp:include>
 	
+	  <!-- Chart.Js library  -->
+     <script src="./chartJS/Chart.js"></script> 
+     
 	 <script src="./JS/MonthlyProductivityGraph.js"></script>	
+	 
      <div class="row">
-			     <div class="col-sm-8">
-			           <div style="width: auto ;" id="bar-holder">
+			     <div class="col-sm-9">
+			           <div style="width: auto ;" id="bar-holder" >
 			               <div class="row  pageHeading alert alert-info"><b><p class="text-center" id="monthly-productivity-type-msg"></p></b></div>
-			               <canvas id="barChartMonthly" height="auto" width="auto" style="margin-left: 5%"></canvas>
+			               <div class="row">
+			                   <div class="col-sm-4"></div>
+			                   <div class="col-sm-4">
+			                       <canvas id="barChartMonthly" height="auto" width="auto" style="margin-left: 5%"></canvas>
+			                    </div>
+			                    <div class="col-sm-4"></div>
+			               </div>
 		 	  
                        </div>
 			     </div>
@@ -25,26 +35,26 @@
               
                </div>
   
-        <form class="form-vertical" role="form" ng-show="showIndividualMonthlyForm" id="individual-monthly-productivity-form">
+        <form class="form-vertical" role="form"  id="individual-monthly-productivity-form">
             <div class="form-group " style="color: red" >              
                <label class=" col-sm-12 control-label text-center" >Individual Productivity</label>
            </div>            
            <div class="form-group">
                 <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
               <div class="col-sm-12">
-                  <input type="text" class="form-control" id="monthly-productivity-employeeId" ng-model="MonthlyReportEmployeeId" maxlength="6">
+                  <input type="text" class="form-control" id="monthly-productivity-employeeId"  maxlength="6">
               </div>
             </div>            
              <div class="form-group ">
                  <label class=" col-sm-12 control-label" >Enter Month</label>
               <div class="col-sm-12">
-                     <input type="month" class="form-control"  maxlength="4" ng-model="MonthlyReport" id="individual-monthly-productivity">
+                     <input type="month" class="form-control"  maxlength="4"  id="individual-monthly-productivity">
               </div>
             </div>                        
             <div class="form-group "  >
               <div class="col-sm-12">
                   <br>
-                  <button class=" form-control btn btn-info btn-Text btn-Primary-Color"  ng-click="showEmployeeMonthlyReport()" id="show-individual-monthly-productivity-button">Show</button>
+                  <button class=" form-control btn btn-info btn-Text btn-Primary-Color"   id="show-individual-monthly-productivity-button">Show</button>
               </div>
             </div>
             <div class="form-group "  >
@@ -55,20 +65,20 @@
             </div>
             
        </form>
-       <form class="form-vertical" role="form" ng-show="!showIndividualMonthlyForm" id="over-all-monthly-productivity-form">
+       <form class="form-vertical" role="form"  id="over-all-monthly-productivity-form">
               <div class="form-group " style="color: red" >              
                 <label class=" col-sm-12 control-label text-center">Over all Productivity</label>
               </div>         
               <div class="form-group ">
                  <label class=" col-sm-12 control-label" >Enter Month</label>
                  <div class="col-sm-12">
-                     <input type="month" class="form-control"  id="over-all-monthly-productivity" maxlength="4" ng-model="AllMonthlyReport">
+                     <input type="month" class="form-control"  id="over-all-monthly-productivity" maxlength="4" >
                  </div>
               </div>                        
               <div class="form-group "  >
                  <div class="col-sm-12">
                    <br>
-                   <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  id="show-over-all-monthly-productivity-button" ng-click="showAllEmployeeMonthlyReport()">Show</button>
+                   <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  id="show-over-all-monthly-productivity-button" >Show</button>
                  </div>
               </div>
               <div class="form-group "  >

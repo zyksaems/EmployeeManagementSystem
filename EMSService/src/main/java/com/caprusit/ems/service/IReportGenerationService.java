@@ -35,7 +35,7 @@ public interface IReportGenerationService {
     String getEmployeeAnnualProductivity(int employeeId,int year) ;
     
     String getAllEmployeeAnnualProductivity(int year) ;
-	
+    
 	List<Integer> getAutoCompleteInfo(int empid);
 
 	List<String> getAutoCompleteInfo(String employeeId);

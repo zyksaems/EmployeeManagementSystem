@@ -7,6 +7,8 @@ $("document").ready(
 				
 				/* variable for storing all employee ids along with name (json object array) */
 				var allEmployeeIdsArray=[];
+				/* variable for storing all lemployee ids (json array) */
+				var pureEmployeeIdsArray=[];
 				/* variable for storing all logged out employee ids (json array) */
 				var loggedOutEmployeeIdsArray=[];
 				/* variable for storing all logged in employee ids (json array) */
@@ -148,6 +150,16 @@ $("document").ready(
 						   console.log("All employee ids array length: "+data.length);
 						   allEmployeeIdsArray=data;
 						   $("#allEmployeeArray").text("All employees: "+JSON.stringify(allEmployeeIdsArray));
+						   
+						   $.map(allEmployeeIdsArray, function (value, key) {
+
+								pureEmployeeIdsArray.push(''+value.empId);
+					       });
+						   /*writing pure employee ids array to local storage*/ 
+						   localStorage.setItem("employeeidsarray", pureEmployeeIdsArray);
+						   
+						   console.log("local read"+localStorage.getItem("employeeidsarray"));
+						   
 						},"json");
 				}//END -- getAllEmpployeeIds()
 				
