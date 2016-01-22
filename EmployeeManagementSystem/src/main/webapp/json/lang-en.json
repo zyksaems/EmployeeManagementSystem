@@ -97,6 +97,8 @@
 "RESULT_PER_PAGE" : "Results Per Page:",
 "OF":"of",
 "OVER_ALL_REPORT":"Overall Report",
-"INDIVIDUAL_REPORT":"Individual Report"
+"INDIVIDUAL_REPORT":"Individual Report",
+"ENTER_YEAR":"Enter Year",
+"INVALID_YEAR":"Invalid Year"
 }
   

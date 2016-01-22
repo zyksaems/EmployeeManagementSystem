@@ -98,5 +98,7 @@
 "RESULT_PER_PAGE":"Resultaten per pagina:",
 "OF":"van",
 "OVER_ALL_REPORT":"algemeen verslag",
-"INDIVIDUAL_REPORT":"individueel rapport"
+"INDIVIDUAL_REPORT":"individueel rapport",
+"ENTER_YEAR":"Voer Jaar",
+"INVALID_YEAR":"ongeldige jaar"
 }

@@ -44,9 +44,9 @@ public class ManageUserController {
 	
 	
 	@RequestMapping(value = "/getExcel", method = RequestMethod.GET)
-	 ModelAndView getExcel(HttpServletRequest request,
+	public ModelAndView getExcel(HttpServletRequest request,
 	   HttpServletResponse response) throws Exception {
-	  System.out.println("Calling generateExcel()...");
+	  logger.info("Calling generateExcel()...");
 	  List<Employee> employees =manageUserService.getAllEmployee();	  
 	  logger.info("in controller employee list : "+ employees);
 	  ModelAndView modelAndView = new ModelAndView("excelView", "employees",employees);

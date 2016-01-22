@@ -9,12 +9,6 @@
   <!-- setting icon to page -->
   <link rel="shortcut icon" type="image/x-icon" href="images/faviconlogo.png"/>
   
-  <!--  Jars for enabling  I18N -->
-  <script src="https://rawgithub.com/PascalPrecht/bower-angular-translate/master/angular-translate.min.js"></script>
-  
-   <!--  Jars to include external JSON files for I18N -->
-  <script src="https://rawgithub.com/PascalPrecht/bower-angular-translate-loader-static-files/master/angular-translate-loader-static-files.js"></script>
-  
   <script src="./jquery/jquery-2.1.4.js"></script>
   
   <!-- Bootstrap main script(library) file -->
@@ -83,7 +77,7 @@
     <p>${errorMsg}</p>
 	    <p ng-init="adminIdForNewPassword=${resetPasswordAdminId}"></p>	    
 		<div class="row" ng-show="showAdminResetPasswordDiv">
-		    <p class="adminResetPasswordHeading" translate="Reset_Your_Password"></p>
+		    <p class="adminResetPasswordHeading">Reset your Password</p>
 			<div class="col-sm-4"></div>
 			<div class="col-sm-4 adminResetPasswordDiv">
 				<div class="row usernameText">your username:{{adminIdForNewPassword}}</div>
@@ -98,18 +92,18 @@
 						<input type="password" class="form-control passwordTextBox" ng-model="adminConfirmNewPassword" placeholder="Confirm  new Password">
 					</div>
 					<div class="form-group">
-						<button type="submit" ng-click="setAdminNewPassword()" class=" btn btn-info" translate='RESET_PASSWORD'></button>
+						<button type="submit" ng-click="setAdminNewPassword()" class=" btn btn-info">Reset Password</button>
 					</div>
 					</div>
 					<div class="col-sm-3"></div>
 				</form>
 				</div>
-				<div class="row adminResetPasswordSuccessMsg"><p>{{adminSetNewPasswordSuccessMsg | translate}}</p></div>
+				<div class="row adminResetPasswordSuccessMsg"><p>{{adminSetNewPasswordSuccessMsg}}</p></div>
 			</div>
 			<div class="col-sm-4"></div>
 		</div>
 		<div class="row" ng-hide="showAdminResetPasswordDiv">
-		     <p class="resetSuccesmsg">{{adminSetNewPasswordSuccessMsg | translate}}</p>
+		     <p class="resetSuccesmsg">{{adminSetNewPasswordSuccessMsg}}</p>
 		</div>
 	
 </div>
@@ -126,7 +120,7 @@
           <div class="row"> 
             <div class="col-sm-2"></div>
             <div class="col-sm-8">
-              <h3 class="AdminLoginFormHeading" ><label translate='Admin_Login'></label></h3>
+              <h3 class="AdminLoginFormHeading" >Admin Login</h3>
             </div>
             <div class="col-sm-2"></div>
           </div>
@@ -138,38 +132,38 @@
             <div class="col-sm-2"></div>
             <div class="col-sm-8">
               <form role="form">
-                  <div class="form-group">                      
+                  <div class="form-group">
                      <!-- <label for="email">Admin ID:</label> -->
                      <input type="text" maxlength="15" class="form-control" placeholder="Please Enter AdminId" 
-                        uib-popover="{{userNamePropoverMsg | translate}}" popover-is-open="enableUsernamePropover" ng-change="AdminIdValidation()" ng-model="Admin.userName">
+                        uib-popover="{{userNamePropoverMsg}}" popover-is-open="enableUsernamePropover" ng-change="AdminIdValidation()" ng-model="Admin.userName">
                   </div>
                   <div class="form-group">
                      <!-- <label for="pwd">Password:</label> -->
                      <input type="{{adminPasswordType}}" maxlength="30" class="form-control" placeholder="Please Enter Password" 
-                          uib-popover="{{passwordPropoverMsg | translate}}"  popover-is-open="enablePasswordPropover" ng-change="passwordValidation()" ng-model="Admin.password">
+                          uib-popover="{{passwordPropoverMsg}}"  popover-is-open="enablePasswordPropover" ng-change="passwordValidation()" ng-model="Admin.password">
                   </div>
                   <div class="form-group">
                      <div class="row">
                          <div class="col-sm-6">
-                              <input type="checkbox" ng-model="showPassword" ng-click="showAdminPassword()"><label translate="SHOW_PASSWORD"></label>
+                              <input type="checkbox" ng-model="showPassword" ng-click="showAdminPassword()">Show password
                          </div>
                          <div class="col-sm-6 te">
-                              <a href="" class="forgotPassword text-right" ng-click="adminForgotPassword()"><label translate="FORGOT_PASSWORD"></label></a>
+                              <a href="" class="forgotPassword text-right" ng-click="adminForgotPassword()">Forgot password?</a>
                          </div>
                      </div>
                   </div>
                   <div class="row">
                       <div class="col-sm-2"></div>
                       <div class="col-sm-4">
-                         <button class="btn btn-info btn-Text btn-Primary-Color" ng-disabled="loginButtonDisable" ng-click="AdminLogin()" translate='SIGN_IN'></button>
+                         <button class="btn btn-info btn-Text btn-Primary-Color" ng-disabled="loginButtonDisable" ng-click="AdminLogin()">sign-In</button>
                       </div>
                       <div class="col-sm-6">
                           
-                         <button class="btn btn-danger btn-Text" " ng-click="closeModal()" translate='CANCEL'></button>
+                         <button class="btn btn-danger btn-Text" " ng-click="closeModal()">cancel</button>
                       </div> 
                  </div>                                 
               </form>
-              <div class="row"><div class="col-sm-12"><p class="text-center adminLoginValidationMsg">{{adminLoginSuccessMsg | translate}}</p></div></div>
+              <div class="row"><div class="col-sm-12"><p class="text-center adminLoginValidationMsg">{{adminLoginSuccessMsg}}</p></div></div>
              </div>
             <!-- <div class="col-sm-12"><button class="btn btn-sm btn-danger btn-Text" style="float:right;" ng-click="closeModal()">cancel</button></div> -->
          </div>
@@ -184,7 +178,7 @@
         
 
           <div class="jumbotron" id="jumbotron1"	 ng-show="showforgotPasswordDiv">
-                         <p align="center"><font color="green">{{successmsg | translate}}</font></p>
+                         <p align="center"><font color="green">{{successmsg}}</font></p>
 			<form role="form" ng-submit="getForgotPassword()">
 				<div id="forgotDiv1" ng-hide="hide1">
 					<img
@@ -194,11 +188,11 @@
                 
 				<div class="form-group" >
                            <div id="forgotDiv2" ng-hide="hide1">
-					<h2>{{'FORGOT_PASSWORD'| translate}}</h2><br />
+					<h2>Forgot your password?</h2><br />
                       <p><font color="red">{{failedmsg}}</font></p>
                <div class="row" ng-class="{'has-error' : !adminid}">
                     <div class="col-xs-9">
-					<label class='control-label' translate='ENTER_ID'></label>
+					<label class='control-label'>ENTER ID</label>
                      <input type="number" ng-model="adminid" class="form-control" 
                             placeholder="enter id" uib-tooltip="please enter valid 6 digits id" 
                          tooltip-placement="bottom" tooltip-trigger="mouseenter" size="6"
@@ -208,7 +202,7 @@
                 </div>
                    <div class="row" ng-class="{'has-error' : !email}">
 					<div class="col-xs-9">
-					<label class='control-label' translate='ENTER_EMAIL_ADDRESS'></label>
+					<label class='control-label'>ENTER EMAIL ADDRESS</label>
 					<input type="email" ng-model="email" class="form-control"
 						placeholder="enter your email address"
 						uib-tooltip="please enter valid email address"
@@ -218,9 +212,9 @@
 						required /></div><br />
                        </div>
 					<br /><br />
-					<button id="btn1" type="submit" class="btn btn-primary" ng-disabled="!email || !adminid"  translate='SUBMIT'></button>
+					<button id="btn1" type="submit" class="btn btn-primary" ng-disabled="!email || !adminid" >submit</button>
 </div>					
- <br /><a href=""  ng-click="adminForgotPassword()" translate='BACK_TO'></a>		
+ <br /><a href=""  ng-click="adminForgotPassword()">back to login</a>		
           </div>
 			</form>
 		</div>
@@ -242,7 +236,7 @@
              
           </div>
           <div class="modal-footer">                      
-                <button class="btn btn-sm btn-danger" ng-click="closeModal()" translate='ClOSE'></button>                                             
+                <button class="btn btn-sm btn-danger" ng-click="closeModal()">close</button>                                             
            </div>
          
        </div>
@@ -255,7 +249,7 @@
   
     <div class="col-sm-10" ></div>
     <div class="col-sm-2" >
-       <button type="button" ng-show="showAdminLoginButton"  class="btn-group-justified btn btn-info btn-Text btn-Primary-Color"  ng-click="showAdminLoginModal()" translate="Admin_Login"></button>  <!-- style="margin-left: 69%"  -->
+       <button type="button" ng-show="showAdminLoginButton"  class="btn-group-justified btn btn-info btn-Text btn-Primary-Color"  ng-click="showAdminLoginModal()">Admin Login</button>  <!-- style="margin-left: 69%"  -->
      </div>
      <!-- <div class="col-sm-1"></div>  -->
   </div>
@@ -267,7 +261,7 @@
   
        <form role="form" class="form-horizontal  attendanceDiv" name="myForm" ng-submit="redirect(empId)" method="post" novalidate align="center">
            <div class="form-group">			
-				<p class="enterText" ng-model="employeeIdLength" translate="ENTER_EMPLOYEE_ID"></p>			
+				<p class="enterText" ng-model="employeeIdLength">Enter Employee ID</p>			
 		   </div>
 		   <div class="form-group">			
 				<input type="text" ng-class="cssClass" name="empId" ng-model="empId" autocomplete="off"
@@ -276,16 +270,16 @@
 		   </div>
 		   <div class="form-group msgDiv">			
 				<p class="msg" ng-sipt
-				how="showInvalidMsg">{{invalidMsg | translate}}</p>			
+				how="showInvalidMsg">{{invalidMsg}}</p>			
 		   </div>
 		   <div class="form-group ">			
-				<Button  class="btn btn-info btn-Text btn-Primary-Color" ng-disabled="buttonDisable">{{buttonText | translate}}</Button>  <!-- id="loginButton" -->			
+				<Button  class="btn btn-info btn-Text btn-Primary-Color" ng-disabled="buttonDisable">{{buttonText}}</Button>  <!-- id="loginButton" -->			
 		   </div>
          
 		 </form>
 		 <div class="row"> <div class="col-sm-12"></div> </div>
 		 <div class="row"> <div class="col-sm-12"></div> </div>
-		 <div class="row"> <p class="errorOrSuccessMessageOnPage">{{errorOrSuccessMessageOnPage | translate}}</div>
+		 <div class="row"> <p class="errorOrSuccessMessageOnPage">{{errorOrSuccessMessageOnPage}}</div>
 		 
 		 <div class="row" ng-hide="true"><p>  all empIds: {{jsondata}}</p>
 		
@@ -300,44 +294,29 @@
   <div class="row" ng-show="showAdminDashBoard"> <!-- ng-show="showAdminDashBoard" -->
     <div class="col-sm-2" >
       <uib-accordion close-others="oneAtATime">
-        <uib-accordion-group class="panel-heading panelBG"   is-Open="true"  >
-        <uib-accordion-heading >
-        <p translate="Manage_Employee"></p>
-        </uib-accordion-heading>
-            <div><a href="" class="linkColor" ng-click="addEmployeeDetails()" translate="ADD_EMPLOYEE"> </a> </div><br> 
-            <div><a href="" class="linkColor" ng-click="viewOrUpdateEmployee()" translate="VIEW_UPDATE_EMPLOYEE"></a></div>
-            <div><a href="getExcel.do" class="linkColor" ng-click="viewOrUpdateEmplo" >download excel file</a></div>
+        <uib-accordion-group class="panel-heading panelBG" heading="Manage Employee" is-Open="true"  >
+            <div><a href="" class="linkColor" ng-click="addEmployeeDetails()"> Add Employee</a> </div><br> 
+            <div><a href="" class="linkColor" ng-click="viewOrUpdateEmployee()">View / Update Employee</a></div>
         </uib-accordion-group>
-        <uib-accordion-group class="panel-heading panelBG" >
-         <uib-accordion-heading >
-        <p translate="REPORTS"></p>
-        </uib-accordion-heading>
+        <uib-accordion-group class="panel-heading panelBG" heading="Reports"  >
             <uib-accordion close-others="oneAtATime">
-               <div><a href="" class="linkColor" ng-click="redirectToGenerateReportPAge()" translate="GENERATE_REPORT"></a></div>
+               <div><a href="" class="linkColor" ng-click="redirectToGenerateReportPAge()">Generate Report</a></div>
             </uib-accordion>
        </uib-accordion-group>
        
-        <uib-accordion-group class="panel-heading panelBG " ><!-- is-open="!showInitialAccordion" -->
-         <uib-accordion-heading >      
-        <p translate="View_Attendance"></p>
-        </uib-accordion-heading>
-            <div ><a href="" class="linkColor" ng-click="showPie()" translate="DAILY_ATTENDANCE"></a></div>
+        <uib-accordion-group class="panel-heading panelBG " heading="View Attendance" ><!-- is-open="!showInitialAccordion" -->
+            <div ><a href="" class="linkColor" ng-click="showPie()">Daily Attendance</a></div>
         </uib-accordion-group>
-        <uib-accordion-group class="panel-heading panelBG " ><!-- is-open="!showInitialAccordion" -->
-         <uib-accordion-heading >
-        <p translate="PRODUCTIVITY"></p>
-        </uib-accordion-heading>
-            <div ><a href="" class="linkColor" ng-click="showLineForm()"></a></div>
-            <div ><a href="" class="linkColor" ng-click="showLineForm()" translate="WEEKLY_PRODUCTIVITY"></a></div>
-            <div ><a href="" class="linkColor" ng-click="showBar()" translate="ANNUAL_PRODUCTIVITY"></a></div>
+        <uib-accordion-group class="panel-heading panelBG " heading="Productivity" ><!-- is-open="!showInitialAccordion" -->
+            <div ><a href="" class="linkColor" ng-click="showLineForm()">Weekly Productivity</a></div>
+            <div ><a href="" class="linkColor" ng-click="showBar()">Monthly Productivity</a></div>
         </uib-accordion-group>
-                       <uib-accordion-group class="panel-heading panelBG "  ><!-- is-open="!showInitialAccordion" -->
-         <uib-accordion-heading >
-        <p translate="SETTINGS"></p>
-        </uib-accordion-heading>
-            <div><a href="" class="linkColor" ng-click="adminChangePasswordDivEnable()" translate="CHANGE_PASSWORD"></a> </div><br> 
+                              
+                              
+        <uib-accordion-group class="panel-heading panelBG " heading="Settings" ><!-- is-open="!showInitialAccordion" -->
+            <div><a href="" class="linkColor" ng-click="adminChangePasswordDivEnable()">Change Password</a> </div><br> 
             <!-- <div><a href="" class="linkColor" ng-click="addNewAdministratorDivEnable()">Add Administrator</a> </div><br>  -->
-            <div ><a href="" class="linkColor" ng-click="logOut()" translate="LOGOUT"></a></div>
+            <div ><a href="" class="linkColor" ng-click="logOut()">Logout</a></div>
         </uib-accordion-group>
      </uib-accordion>
    </div>
@@ -354,9 +333,9 @@
          <div class="row" >  <!--  id="importEmployeeDataDiv" -->
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                  <p class="AddEmpText" translate='ADD_EMPLOYEE'></p>   <!-- id="AddEmpText" -->           
-                  <Button class="btn btn-md btn-warning"ng-click="showFromExcelDiv()" translate='FROM_EXCEL'></Button>  <!--  id="excelbutton" -->
-                  <button class="btn btn-md btn-warning" ng-click="showAddEmployeeDiv()" translate='MANUALLY'></button>   <!-- id="manualButton" -->
+                  <p class="AddEmpText">Add employee(s)</p>   <!-- id="AddEmpText" -->           
+                  <Button class="btn btn-md btn-warning"ng-click="showFromExcelDiv()">From excel</Button>  <!--  id="excelbutton" -->
+                  <button class="btn btn-md btn-warning" ng-click="showAddEmployeeDiv()">Manually</button>   <!-- id="manualButton" -->
              </div>
             <div class="col-sm-4"></div>   
         </div>
@@ -364,10 +343,10 @@
         
             <div class="col-md-4"></div>
             <div class="col-sm-4  selectExcelFileDiv">
-                  <p class="excelDivText" translate='Select_Excel'></p>  <!-- id="excelDivText" -->
+                  <p class="excelDivText" >Select Excel file location</p>  <!-- id="excelDivText" -->
                   <input type="file" class="btn btn-md btn-default"  ng-model="excelFilePath" onchange="angular.element(this).scope().file_changed(this)" value="Browse" />              
-                  <button  class="btn btn-md btn-info info" ng-click="uploadFile()" translate='UPLOAD'></button>   <!-- id="uploadButton" -->
-                  <p class="EmployeeSuccessMsg">{{fileUploadSuccessMsg | translate}}</p>
+                  <button  class="btn btn-md btn-info info" ng-click="uploadFile()">upload</button>   <!-- id="uploadButton" -->
+                  <p class="EmployeeSuccessMsg">{{fileUploadSuccessMsg}}</p>
              </div>
             <div class="col-sm-5"></div>   
         </div>
@@ -377,15 +356,15 @@
                 <div class="col-sm-3 addSingleEmployeeDiv">                  
                     <form role="form">
                       <div class="form-group">
-                         <label for="email" translate="EMPLOYEE_ID"></label>
+                         <label for="email">Employee Id:</label>
                          <input type="text" class="form-control" ng-model="empId" required >
                       </div>
                       <div class="form-group">
-                         <label for="pwd" translate="FNAME"></label>
+                         <label for="pwd">First Name:</label>
                          <input type="text" class="form-control" ng-model="empFirstName" required>
                       </div>
                       <div class="form-group">
-                         <label for="pwd" translate="LNAME"></label>
+                         <label for="pwd">Last Name:</label>
                          <input type="text" class="form-control" ng-model="empLastName" required>
                       </div>
                    
@@ -393,31 +372,31 @@
                <div class="col-sm-3 addSingleEmployeeDiv">
                        
                       <div class="form-group">
-                         <label for="email" translate="DOB"></label>
+                         <label for="email">Date of Birth:</label>
                          <input type="date" class="form-control" ng-model="DOB" required >
                       </div>
                       <div class="form-group">
-                         <label for="pwd" translate="MOB"></label>
+                         <label for="pwd">Mobile No:</label>
                          <input type="text" class="form-control" ng-model="mobile" required>
                       </div>
                       <div class="form-group">
-                         <label for="pwd" translate="EMAIL"></label>
+                         <label for="pwd">Email ID:</label>
                          <input type="text" class="form-control" ng-model="emailId" required>
                       </div>
                </div>
               <div class="col-sm-3 addSingleEmployeeDiv">
                       <div class="form-group">
-                         <label for="email" translate="DESIGNATION"></label>
+                         <label for="email">Designation:</label>
                          <input type="text" class="form-control" ng-model="designation" required >
                       </div>
                       <div class="form-group">
-                         <label for="pwd" translate="ROLE"></label>
+                         <label for="pwd">Role ID:</label>
                          <select class="form-control" ng-model="roleId" required>
                             <option ng-repeat="role in roleArray" value="{{role.roleId}}">{{role.roleId}} ( {{role.roleType}} )</option> 
                          </select>
                       </div>
                       <div class="form-group">
-                         <label for="pwd" translate="DEPARTMENT"></label>
+                         <label for="pwd">Department ID:</label>
                          <select class="form-control" ng-model="deptId" required>
                             <option ng-repeat="dept in deptArray" value="{{dept.deptId}}">{{dept.deptId}} ( {{dept.deptName}} )</option>  
                          </select>        
@@ -429,10 +408,10 @@
               <div class="col-sm-4"></div>
               <div class="col-sm-4">
                   <div class="row">
-                      <button type="submit" class="btn btn-info" ng-click="addEmployee()" translate="Save"></button> 
+                      <button type="submit" class="btn btn-info" ng-click="addEmployee()" >Save Employee</button> 
                    </div>                                 
                    <div class="row">
-                       <span id="EmployeeSuccessMsg">{{addEmployeeSuccessMsg|translate}}</span>   
+                       <span id="EmployeeSuccessMsg">{{addEmployeeSuccessMsg}}</span>   
                     </div>                
               </div>             
               <div class="col-sm-4"></div>    
@@ -444,27 +423,23 @@
    <div class="row editOrUpdateEmployeeDivision" ng-show="showViewOrUpdateEmployeeDiv">
     <div class="row">
        <div class="col-sm-3">
-          <label>{{"SEARCH"|translate}}</label>
-          <form>
-            <input type="text" ng-model="search" placeholder="search Employee"  class="form-control" ng-disabled="disableSearchBoxForEmployee">
-          </form>
+          <label>Search:</label>
+          <input type="text" ng-model="search" placeholder="search Employee"  class="form-control" ng-disabled="disableSearchBoxForEmployee">
        </div>
        <div class="col-sm-1"></div>
        <div class="col-sm-3">
-       <form>
-             <label>{{"PAGE"|translate}}</label><select class="form-control" ng-model="itemsPerPage" ng-change="changePaginationDisplayResults()">
+             <label>Number of rows  per page:</label><select class="form-control" ng-model="itemsPerPage" ng-change="changePaginationDisplayResults()">
                  <option value="10" selected>10</option>
                  <option value="25">25</option>
                  <option value="50">50</option>
             </select>
-           </form>
         </div>
         <div class="col-sm-1"></div>
         <div class="col-sm-4">
           <uib-pagination total-items="totalPaginationEmployeesCount" ng-model="currentPaginationPage" ng-change="chanePagination()" 
 
                    max-size="4" class="pagination-md" boundary-links="true" rotate="false" num-pages="numberOfPaginationPages"></uib-pagination>
-       
+  
         </div>        
     </div>
     <div class="table-responsive" id="viewEmployeeDetails">
@@ -515,8 +490,7 @@
     </tr>
     </thead>
     <tbody>
- 
-   <tr  ng-class-even="'success'" ng-class-odd="'active'" ng- ng-repeat="employee in AllEmployees | filter:search	| orderBy:sortKey:reverse"> 
+   <tr  ng-class-even="'success'" ng-class-odd="'active'" ng-repeat="employee in AllEmployees | filter:search	| orderBy:sortKey:reverse"> 
        
          <td> {{ employee.employeeId }}<input type="text" ng-hide="true" ng-model="editEmp[$index].employeeId"></td>
          <td ng-hide="showdecisonArray[$index]">{{ employee.firstName }}</td> <td ng-hide="!showdecisonArray[$index]">
@@ -543,13 +517,15 @@
          <!--  <td>{{$index}}</td> -->
           <td>
               <button class="btn btn-sm btn-info" ng-click="editEmployee(employee.employeeId,$index)">{{buttonTextArray[$index]}}</button><br>
-              <button class="btn btn-sm btn-danger" ng-if="buttonTextArray[$index]=='Save'" ng-click="cancelEditEmployee(employee.employeeId,$index)" translate="CANCEL"></button>
+              <button class="btn btn-sm btn-danger" ng-if="buttonTextArray[$index]=='Save'" ng-click="cancelEditEmployee(employee.employeeId,$index)">cancel</button>
           </td> 
     
        </tbody>
-    
     </table>
-    <!-- This division for print  view employee division -->
+    
+    
+      
+     <!-- This division for print  view employee division -->
     <div ng-hide="true" id="print-view-employee-div"> 
              
           <p align="center"><b>Employee Details</b></p>
@@ -582,7 +558,6 @@
               <td>{{ employee.deptId }}</td> 
            </tr>    
        </tbody>
-       
      </table>
       <p align="right" ng-if="numberOfPaginationPages <= 1">page 1 0f 1 </p>
       <p align="right" ng-if="numberOfPaginationPages > 1">page {{currentPaginationPage}} 0f {{numberOfPaginationPages}} </p>     
@@ -593,12 +568,14 @@
 
  <div class="row">
     
-    <div class="col-sm-5"> <button class="btn btn-primary btn-sm custom-width" ng-click="showExcelView()" >excel view</button>  <!-- translate='Excel_View' --></div>
+    <div class="col-sm-5"> </div>
  
     <div class="col-sm-7">
-    					<!-- <button class="btn btn-primary btn-sm custom-width" ng-click="showExcel()" translate='Excel_View'></button> -->
-                       <button class="btn btn-primary btn-sm custom-width" ng-click="printViewEmployeeDiv('print-view-employee-div')" translate="PRINT"></button>
-                       <!-- <button class="btn btn-primary btn-sm custom-width" ng-click="showExcelView()" translate='Excel_View'></button> -->
+    				   <button class="btn btn-primary btn-sm custom-width" ng-click="showExcel()">Excel View</button>
+                       <button class="btn btn-primary btn-sm custom-width" ng-click="printViewEmployeeDiv('print-view-employee-div')">Print</button>
+                       <br>   <br>                   
+                       <p ng-if="numberOfPaginationPages <= 1">page 1 0f 1 </p>
+                       <p ng-if="numberOfPaginationPages > 1">page {{currentPaginationPage}} 0f {{numberOfPaginationPages}}</p>
        
     </div>
  </div>
@@ -640,7 +617,7 @@
    <div class="row" id="changePasswordMainDiv" ng-show="showAdminChangePasswordDiv"> <!-- ng-show="showChangePasswodDiv" -->
 	 
 	     <div class="jumbotron" id="jumbotron2"  ng-hide="hide">
-     <p><font color="red">{{msg1 | translate}}</font></p>
+     <p><font color="red">{{msg1}}</font></p>
 		<div class='row'>
 			<div class="col-xs-6 col-md-4">
 				<img src="http://s11.postimg.org/89jw5zva7/editicon.png" width="80"
@@ -652,7 +629,7 @@
 						<div class='col-sm-12'>
 							<div class="form-group"
 								ng-class="{'has-error' : !currentpassword}">
-								<label class='control-label' translate="Current_Password"></label> <input
+								<label class='control-label'>Current password</label> <input
 									class='form-control' type='password' ng-model="currentpassword"
 									type="password"
 									uib-tooltip="check caps lock before enter password"
@@ -665,7 +642,7 @@
 					<div class='row'>
 						<div class='col-sm-12'>
 							<div class="form-group" ng-class="{'has-error' : !pwd}">
-								<label class='control-label' translate="New_Password"></label>
+								<label class='control-label'>New password</label>
 								<!-- <input autocomplete='off' class='form-control' size='20' type='text'> -->
 								<input ng-model="password" type="password"
 									ng-change="getConfirm()"
@@ -680,7 +657,7 @@
 					<div class='row'>
 						<div class='col-sm-12'>
 							<div class="form-group" ng-class="{'has-error' : !repwd}">
-								<label class='control-label' translate="Confirm_Password"></label> <input
+								<label class='control-label'>Confirm password</label> <input
 									class='form-control' ng-model="repassword" type='password'
 									ng-change="getConfirm1()"
 									uib-tooltip="New password and confirm password must be same"
@@ -694,8 +671,8 @@
 						<div class='col-md-12'>
 							<button class='btn btn-primary'
 								ng-click="getChangePassword()"
-								ng-disabled="!pwd ||!currentpassword || !repwd" translate="Save"></button>
-							<button class='btn btn-primary' ng-click="getClear()" translate="Reset"></button>
+								ng-disabled="!pwd ||!currentpassword || !repwd">Save</button>
+							<button class='btn btn-primary' ng-click="getClear()">reset</button>
 						</div>
 					</div>
 				</form>
@@ -712,15 +689,15 @@
 	  <div id="showGenerateReport" ng-show="showGenerateReportDiv" >
 	 
 	 <div id="d1">
-		<h2 >{{"Caprus_IT_Staff_Attendance_Report"|translate}}</h2>
+		<h2 >Caprus IT Staff Attendance Report</h2>
 	</div>
 	<div id="searchcriteria">
 		<h4>
-			<b><label translate='SEARCH_CRITERIA'></label></b>
+			<b>Search criteria</b>
 		</h4>
 	</div>
 	<br>
-	<label class='control-label'>{{"SEL_TYPE"|translate}}</label>
+	<label class='control-label'>Select type :</label>
 	<select ng-model="sel" ng-change="getDis()" >
 		<option title="" value="">--Select--</option>
 		<option value="single">Single</option>
@@ -730,7 +707,7 @@
 		uib-typeahead="state for state in employeeids |filter:id"
 		placeholder="search employee by id/name" ng-disabled="f1"
 		ng-keyup="getCheck()">&nbsp;&nbsp;
-	<label class='control-label'>{{"REPORT_TYPE"|translate}}</label>
+	<label class='control-label'>Select Report type :</label>
 	<select ng-model="sel1" ng-change="getStatu()">
 		<option title="" value="">--Select Report Type--</option>
 		<option value="none">Total Records</option>
@@ -740,11 +717,11 @@
 		<option value="annual">Annual</option> -->
 		<option value="dates">Select From and To Date</option>
 	</select>&nbsp;
-	<p ng-hide="hide11">{{"FROM_DATE"|translate}}</p>
+	<p ng-hide="hide11">From Date</p>
 	<input id="dateid" type="date" ng-model="from" ng-hide="hide11">&nbsp;
-	<p ng-hide="hide12">{{"TO_DATE"|translate}}</p>
+	<p ng-hide="hide12">To Date</p>
 	<input id="dateid" type="date" ng-model="to" ng-hide="hide12">
-	<button class='btn btn-primary' ng-click="getAttendance()">{{"SUBMIT"|translate}}</button>
+	<button class='btn btn-primary' ng-click="getAttendance()">submit</button>
 	<div  id="fixed" class="btn-group"  uib-dropdown uib-keyboard-nav>
 	<p  id="simple-btn-keyboard-nav" uib-dropdown-toggle><b>Productivity Info</b></p>
 	<p id="production"  class="uib-dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
@@ -755,20 +732,20 @@
 	</div>
 	<div id="searchcriteria">
 		<h4>
-			<b>{{"SEARCH_RESULT"|translate}}</b>
+			<b>Search Results</b>
 		</h4>
 	</div>
 	<div id="main1">
-		<p ng-hide="hide4" align="center"><font size='4' color={{color1}} translate="No_Matches_Found"></font></p>
+		<p ng-hide="hide4" align="center"><font size='4' color={{color1}}>No Matches Found</font></p>
 		<div id="pdiv">
 			<div ng-hide="res">
-				<font color="red">{{result | translate}}{{criteria}}</font>
+				<font color="red">{{result}}</font>
 			</div>
 			<div ng-hide="hide1" id="nameofemp">
 				<ul>
-					<li>{{"EMPLOYEE_ID"|translate}}</li>
-					<li>{{"EMPLOYEE_NAME"|translate}}</li>
-					<li>{{"EMPLOYEE_DESIG"|translate}}</li>
+					<li>Employee Id</li>
+					<li>Employee Name</li>
+					<li>Employee Designation</li>
 				</ul>
 			</div>
 			<div ng-hide="hide1" id="nameofemp1">
@@ -779,7 +756,7 @@
 				</ul>
 			</div>
 			<div id="resultperpage">
-				<label ng-hide="newhide1">{{"RESULT_PER_PAGE"|translate}}</label><select ng-model="viewby"
+				<label ng-hide="newhide1">Results Per Page:</label><select ng-model="viewby"
 					ng-change="setItemsPerPage(viewby)" ng-hide="newhide1">
 					<option title="">5</option>
 					<option>10</option>
@@ -855,7 +832,7 @@
 	</div>
 	<div id="printbtn">
 		<br>
-		<button class='btn btn-primary' ng-click="printDiv('pdiv');" translate="PRINT"></button>
+		<button class='btn btn-primary' ng-click="printDiv('pdiv');">print</button>
 	</div>
 	 
 	 </div> <!-- end of generate reports -->
@@ -868,19 +845,18 @@
      
      <div  id="pie-holder" style="margin-top:%">
     
-           <div class="row pageHeading alert alert-info" style="margin-bottom: 2%" translate="DAILY_ATTENDANCE"></div>
+           <div class="row pageHeading alert alert-info" style="margin-bottom: 2%">Daily Attendance</div>
 		   <canvas id="pieChart" width="400" height="400" ng-click="clickOnPie($event)" style="margin-left: 25%"></canvas>
 			
     </div>
     
-    <!-- New Changes need to be done of annual productivity for I18N  -->
     <div style="width: auto ;" id="bar-holder">
-			<div class="row  pageHeading alert alert-info">{{"ANNUAL_PRODUCTIVITY"| translate}} {{annualProductivityEmployeeName}}  {{"OF" | translate}}      {{"DESIGNATION"| translate}} {{employeeDesignation}}</div>
+			<div class="row  pageHeading alert alert-info">Monthly Productivity {{monthlyProductivityEmployeeDetails}}</div>
 			<canvas id="barChart" height="auto" width="auto" style="margin-left: 5%"></canvas>
 		 	  
     </div> 
       <div style="width: auto" ; id="line-holder">
-            <div class="row pageHeading alert alert-info" translate="WEEKLY_PRODUCTIVITY"></div>
+            <div class="row pageHeading alert alert-info" >Weekly Productivity</div>
 			<div>
 				<canvas id="lineChart" height="auto" width="auto" style="margin-left: 5%"></canvas>
 			</div>
@@ -905,14 +881,14 @@
            </div>
             
             <div class="form-group">
-                <label class=" col-sm-12 control-label" >{{"ENTER_EMPLOYEE_ID"|translate}}</label> 
+                <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
               <div class="col-sm-12">
                      <input type="text" class="form-control" id="" ng-model="employeeId">
               </div>
             </div>
             
             <div class="form-group "  >
-                 <label class=" col-sm-12 control-label" >{{"SEL_DATE"|translate}}</label>
+                 <label class=" col-sm-12 control-label" >select Date</label>
               <div class="col-sm-12">
                      <input type="date" class="form-control"  ng-model="weeklyDate">
               </div>
@@ -921,7 +897,7 @@
             
             <div class="form-group "  >
               <div class="col-sm-12">
-                     <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showLine()">{{"SHOW"|translate}}</button>
+                     <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showLine()">Show</button>
               </div>
             </div>
             
@@ -934,8 +910,8 @@
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
              <br>
-            <button class="btn btn-primary btn-Text" ng-click="AllEmployeeMonthlyReport()">{{"OVER_ALL_REPORT" | translate}}</button>
-            <button class="btn btn-primary btn-Text" ng-click="individualMonthlyReport()">{{"INDIVIDUAL_REPORT" | translate}}</button>
+            <button class="btn btn-primary btn-Text" ng-click="AllEmployeeMonthlyReport()">Over all Report</button>
+            <button class="btn btn-primary btn-Text" ng-click="individualMonthlyReport()">Invidual Report</button>
         </div>
         <div class="col-sm-1"></div>
               
@@ -943,16 +919,16 @@
   
         <form class="form-vertical" role="form" ng-show="showIndividualMonthlyForm">
             <div class="form-group " style="color: red" >              
-               <label class=" col-sm-12 control-label text-center" >{{"INDIVIDUAL_REPORT" | translate}}</label>
+               <label class=" col-sm-12 control-label text-center" >Individual Report</label>
            </div>            
            <div class="form-group">
-                <label class=" col-sm-12 control-label" >{{"ENTER_EMPLOYEE_ID"|translate}}</label> 
+                <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
               <div class="col-sm-12">
                   <input type="text" class="form-control" id="" ng-model="MonthlyReportEmployeeId">
               </div>
             </div>            
              <div class="form-group ">
-                 <label class=" col-sm-12 control-label" >{{"SEL_DATE"|translate}}</label>  <!--  modify Date to Year-->
+                 <label class=" col-sm-12 control-label" >Enter year</label>
               <div class="col-sm-12">
                      <input type="text" class="form-control"  maxlength="4" ng-model="MonthlyReportYear">
               </div>
@@ -960,7 +936,7 @@
             <div class="form-group "  >
               <div class="col-sm-12">
                   <br	>
-                  <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showEmployeeAnnualReport()">{{"SHOW"|translate}}</button>
+                  <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showEmployeeMonthlyReport()">Show</button>
               </div>
             </div>
             <div class="form-group "  >
@@ -973,10 +949,10 @@
        </form>
        <form class="form-vertical" role="form" ng-show="!showIndividualMonthlyForm">
               <div class="form-group " style="color: red" >              
-                <label class=" col-sm-12 control-label text-center">{{"OVER_ALL_REPORT" | translate}}</label>
+                <label class=" col-sm-12 control-label text-center">Over all Report</label>
               </div>         
               <div class="form-group ">
-                 <label class=" col-sm-12 control-label" >{{"ENTER_YEAR"|translate}}</label>
+                 <label class=" col-sm-12 control-label" >Enter year</label>
                  <div class="col-sm-12">
                      <input type="text" class="form-control"  maxlength="4" ng-model="AllMonthlyReportYear">
                  </div>
@@ -984,7 +960,7 @@
               <div class="form-group "  >
                  <div class="col-sm-12">
                    <br>
-                   <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showAllEmployeeMonthlyReport()" translate="SHOW"></button>
+                   <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showAllEmployeeMonthlyReport()">Show</button>
                  </div>
               </div>
               <div class="form-group "  >
@@ -1134,6 +1110,10 @@
     </c:otherwise>
  </c:choose>
   
+     
+  
+ 
+  
   
   <!--footer Part  -->
   <!-- <div class="row" style=" margin-top: 300px;">
@@ -1145,12 +1125,6 @@
 </div> <!-- END of container division -->
 
 
-<div ng-controller="LanguageController">
-     <button class="btn btn-primary" ng-click="changeLanguage('de')" translate="BUTTON_TEXT_DE"></button>
-     <button class="btn btn-primary" ng-click="changeLanguage('en')" translate="BUTTON_TEXT_EN"></button>
-     <button class="btn btn-primary" ng-click="changeLanguage('hi')" translate="BUTTON_TEXT_HI"></button>
- 
-</div>
   </body>
 </html>
 

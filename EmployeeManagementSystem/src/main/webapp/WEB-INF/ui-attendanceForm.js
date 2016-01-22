@@ -1,43 +1,38 @@
-var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap','pascalprecht.translate']);
 
-app.controller('LanguageController', function($scope,$translate,$rootScope){
-	 $scope.changeLanguage = function (key) {
-		 $rootScope.languageKey=key;
-		 console.log("ROOT SCOPE  languge -- ctrl: "+$rootScope.languageKey);
-		  $translate.use(key);
-		  console.log("ROOT SCOPE  languge -- ctrl: "+$rootScope.languageKey);
-		  };    
-	
-	});
-
-
-app.config(function($translateProvider) {
-	/* 
-	 * using external file i.e json file which reads all the labels and its corresponding values 
-	 * depending upon the language you choose
-	 * 
-	 */ 
-	
-	$translateProvider.useStaticFilesLoader({
-	    prefix: 'json/lang-',
-	    suffix: '.json'
-	  });
-	
-	/*
-	 * This $translateProvider.preferredLanguage('en') function is used to set the default 
-	 * language of the browser as "English" or you can set as per your requirement.
-	 */
-$translateProvider.preferredLanguage('en');
+/* window.onbeforeunload = function(event)
+    {
+        
+	    console.log("relaod  event: "+event);
+	    //return confirm("Please logout first");
+	    
+	    confirm("Please logout first");
+	    
+	    return "Please logout first";
+	    
+         //return false;	    
+    }; */
 
 
-});
 
-
-	app.controller('ValidController', function($scope, $http,$window,$uibModal, $log,$translate,$rootScope) {
+var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
+	app.controller('ValidController', function($scope, $http,$window,$uibModal, $log) {
 		
-		$rootScope.languageKey='en';
-		 console.log("ROOT SCOPE  languge -- validation  ctrl: "+$rootScope.languageKey);
 		
+		 window.onbeforeunload = function(event)
+		    {
+		        
+			    console.log("relaod  event: "+JSON.stringify(event));
+			    //return confirm("Please logout first");
+			    
+			    confirm("Please logout first");
+			    
+			    return "Please logout first";
+			    
+		         //return false;	    
+		    }; 
+		    
+		    
+		    
 		/*error or success message after specific functions*/
 		$scope.errorOrSuccessMessageOnPage="";
 		
@@ -131,14 +126,9 @@ $translateProvider.preferredLanguage('en');
 	   					}).success(function(data, status, headers, config) {
 	   	                    if(data==1)
 	   	                    	{
-							  if($rootScope.languageKey =="de"){
-									alert("wachtwoord is met succes changed.Please inloggen nieuw");
-								}
-							  else{
-		   	                    		alert("password is successfully changed.Please login new");
-									}
-							  
-	   						  $scope.showAdminDashBoard=false;
+	   	                    	
+	   							alert("password has been successfully changed.please login newly");
+	   							$scope.showAdminDashBoard=false;
 	   						  $scope.showAdminLoginButton=false;
 	   						  var modalInstance = $uibModal.open({
 	   						        animation: true,
@@ -169,7 +159,7 @@ $translateProvider.preferredLanguage('en');
 	   					      });
 	   	                    	}else
 	   	                    		{
-	   	                    		$scope.msg1="MSG1";
+	   	                    		$scope.msg1="current password and old password must same.";
 	   	                    		}
 	   	     }).error(function(data, status, headers, config) {
 	   	    	   $scope.msg1="Some internal problem occured try again.";
@@ -247,10 +237,6 @@ $translateProvider.preferredLanguage('en');
 		var loginSuccess=1;
 		var logoutSuccess=2;
 		var status=10;
-		var deLoginText="Bent U blijft om in te loggen";
-		var enLoginText="Are You continue to log-In";
-	    var enLogoutText= "Are You Continue To Logout";
-	    var deLogoutText= "Bent u doorgaat met Afmelden";
 
 		/* set initial values */
 		function defaultValues() {
@@ -260,7 +246,7 @@ $translateProvider.preferredLanguage('en');
 			$scope.showAttendanceForm=true;
 			$scope.cssClass = "first";
 			$scope.buttonDisable = true;
-			$scope.buttonText = "IN_TIME";
+			$scope.buttonText = "In-Time";
 		}
 
 		/* set default values  */
@@ -329,18 +315,18 @@ $translateProvider.preferredLanguage('en');
 			  if(serachInJsonObjectArray($scope.empId, json)){
 				  
 				  if (serachInArray($scope.empId, jsonLoggedOut)) {
-					  $scope.invalidMsg = "ATTENDANCE_POSTED_MSG";
-						$scope.buttonText = "INVALID";
+						$scope.invalidMsg = "Today your attendance posted";
 						$scope.showInvalidMsg = true;
 						$scope.cssClass = "error";
 						$scope.buttonDisable = true;
+						$scope.buttonText = "invalid";
 					
 					} else if (serachInArray($scope.empId, jsonLoggedIn)) {
 						$scope.invalidMsg = "";
 						$scope.showInvalidMsg = false;
 						$scope.cssClass = "ok";
 						$scope.buttonDisable = false;
-						$scope.buttonText = "OUT_TIME";
+						$scope.buttonText = "Out-Time";
 						status=1;
 
 					} else if ($scope.empId.length == employeeIdLength) {
@@ -350,16 +336,16 @@ $translateProvider.preferredLanguage('en');
 							$scope.showInvalidMsg = false;
 							$scope.cssClass = "ok";
 							$scope.buttonDisable = false;
-							$scope.buttonText = "IN_TIME";
+							$scope.buttonText = "In-Time";
 							status=0;
 
 						} else {
 							
-							$scope.invalidMsg = "INVALID_EMP_ID";
-					    	$scope.buttonText = "IN_TIME";
+							$scope.invalidMsg = "Invalid Employee Id";
 							$scope.showInvalidMsg = true;
 							$scope.cssClass = "error";
 							$scope.buttonDisable = true;
+							$scope.buttonText = "In-Time";
 
 						}
 
@@ -367,11 +353,11 @@ $translateProvider.preferredLanguage('en');
 				  
 			  }else{
 				  
-				  	$scope.invalidMsg = "INVALID_EMP_ID";
-					$scope.buttonText = "IN_TIME";
+				    $scope.invalidMsg = "Invalid Employee Id";
 					$scope.showInvalidMsg = true;
 					$scope.cssClass = "error";
 					$scope.buttonDisable = true;
+					$scope.buttonText = "In-Time";
 				  
 			  }
 				
@@ -380,7 +366,7 @@ $translateProvider.preferredLanguage('en');
 				$scope.cssClass = "error";
 				$scope.showInvalidMsg = false;
 				$scope.buttonDisable = true;
-				$scope.invalidMsg = "INVALID_EMP_ID";
+				$scope.invalidMsg = "Invalid Employee Id";
 
 			}
 
@@ -392,7 +378,7 @@ $translateProvider.preferredLanguage('en');
 			if(status == 0){
 				swal({
 					title :EmployeeName ,
-					text :  ($rootScope.languageKey=='de')? deLoginText : enLoginText,
+					text : "Are You continue to log-In",
 					imageUrl: "images/welcome4.jpg",
 					showCancelButton : true,
 					confirmButtonColor : "green",
@@ -412,21 +398,11 @@ $translateProvider.preferredLanguage('en');
 					              if(res == loginSuccess){
 					            	  jsonLoggedIn[jsonLoggedIn.length] = empId;
 								      $scope.loggedInIds = jsonLoggedIn;
-								   
-						                if($rootScope.languageKey =="de"){
-						                	 swal("OK", "Succes volledig Ingelogde in", "success");									
-						           }
-						                else{
-										    	  swal("OK", "Success fully Logged-in", "success");														
-						                }
+					            	  swal("OK", "Success fully Logged-in", "success");
 					              }
 					              else
-						                if($rootScope.languageKey =="de"){
-						                	swal("Probleem opgetreden !","Probeer het nog eens","error");									
-						           }
-						                else{
-							            		  swal("Problem occured!","Try Again","error");							
-						                }
+					            	  swal("Problem occured!","Try Again","error");
+
 					       });
 					       sendId.error(function(data, status, headers, config) {
 					       alert("failure message: " + JSON.stringify({
@@ -438,12 +414,8 @@ $translateProvider.preferredLanguage('en');
 						
 						
 					} else 
-			                if($rootScope.languageKey =="de"){
-			                	swal("U bent afgewezen !","Probeer het nog eens","error");						
-			           }
-			                else{
-			                	 swal("You are rejected !", "try Again", "error");
-			                }
+						swal("You are rejected !", "try Again", "error");
+					
 				});
 				
 				console.log("in");
@@ -452,7 +424,7 @@ $translateProvider.preferredLanguage('en');
 				console.log("emp name now logging out : "+EmployeeName);
 				swal({
 					title : EmployeeName ,
-					text : ($rootScope.languageKey=='de')? deLogoutText : enLogoutText,
+					text : "Are You Continue To Logout",
 					imageUrl: "images/bye2.jpg",
 					showCancelButton : true,
 					confirmButtonColor : "green",
@@ -471,20 +443,11 @@ $translateProvider.preferredLanguage('en');
 					              if(res == logoutSuccess){
 					            	 jsonLoggedOut[jsonLoggedOut.length] = empId;
 									$scope.jsonLoggedOut = jsonLoggedOut;
-						                if($rootScope.languageKey =="de"){
-						                	 swal("OK", "Succes volledig Ingelogde out", "success");									
-						           }
-						                else{
-						              	  swal("OK", "Success fully Logged-out", "success");	
-						                }
+					            	  swal("OK", "Success fully Logged-out", "success");
 					              }
 					              else
-						                if($rootScope.languageKey =="de"){
-						                	swal("Probleem opgetreden !","Probeer het nog eens","error");									
-						           }		
-						                else{
-						                	  swal("Problem occured!","Try Again","error");							
-						                }
+					            	  swal("Problem occured!","Try Again","error");
+
 					       });
 					       sendId.error(function(data, status, headers, config) {
 					       alert("failure message: " + JSON.stringify({
@@ -495,12 +458,7 @@ $translateProvider.preferredLanguage('en');
 						
 						
 					} else {
-			                if($rootScope.languageKey =="de"){
-			                	swal("U bent afgewezen !","","error");						
-			           }
-			                else{
-			                	 swal("You are rejected !", "", "error");
-			                }
+						swal("You are rejected !", "", "error");
 					}
 				});
 
@@ -540,7 +498,60 @@ $translateProvider.preferredLanguage('en');
 		}
 
 		
-	
+		/* function to check admin values (length)
+		function adminValidation(){
+			
+			var empId=parseInt($scope.adminId);
+			console.log("parse int: "+empId );
+			if($scope.adminId.length > 2 && $scope.adminId.length < 20 &&$scope.adminPassword.length >2 && $scope.adminPassword.length < 20 && empId >= 100){
+				$scope.adminInvalidMsg="";
+				console.log("inside if");
+				
+				return true;
+			}
+			else{
+				$scope.adminInvalidMsg="Invalid Details";
+				$scope.adminPassword='';
+				console.log("inside else(adminvalidation())");
+				return false;
+			}
+			
+		};*/
+		
+		
+		/* fuction to check credentials of admin  
+		$scope.redirectToAdminHome=function(){
+			if(adminValidation()){
+			    var admin={adminId:$scope.adminId,password:$scope.adminPassword};
+			    console.log("admin object "+admin);
+			    var adminHome = $http.post('/EmployeeManagementSystem/adminHome.do',admin);
+			    adminHome.success(function(data, status, headers, config) {
+				
+			    	if(data == 1){
+			    		console.log("login success");
+			    		$window.location.href = '/EmployeeManagementSystem/adminHomePage.do';
+			    	
+			    	}
+			    	else{
+			            
+						$scope.adminPassword='';
+						$scope.adminInvalidMsg=(data == 0)? "Invalid Password" : "Invalid AdminID & password";
+			    	}
+				    console.log("reply from admin login: "+data);
+
+			    });
+			    adminHome.error(function(data, status, headers, config) {
+			    	$scope.adminPassword='';
+				    alert("failure message: " + JSON.stringify({
+					    data : data
+				    }));
+				    alert("invalid AdminID");
+				    $scope.adminInvalidMsg="Invalid AdminID";
+			    });
+			}
+			
+			
+		};*/
 		
 		/*logOut function */
 		$scope.showCharts=true;
@@ -829,7 +840,7 @@ $translateProvider.preferredLanguage('en');
 			$scope.AllemployeeMonthlyReportMsg="";
 			
 			$scope.showIndividualMonthlyForm=false;
-			$scope.annualProductivityEmployeeDetails="";
+			$scope.monthlyProductivityEmployeeDetails="";
 			$("#bar-holder").hide();
     		$("#barLegend").hide();
 			
@@ -841,7 +852,7 @@ $translateProvider.preferredLanguage('en');
 			console.log("year : "+year);
 			if(year > new Date().getFullYear() || year < 2015 || year == undefined){
 				
-				$scope.AllemployeeMonthlyReportMsg="INVALID_YEAR";
+				$scope.AllemployeeMonthlyReportMsg="Invalid year";
 				$("#bar-holder").hide();
 	    		$("#barLegend").hide();
 			}
@@ -875,7 +886,7 @@ $translateProvider.preferredLanguage('en');
 		};
 		
 		/*This function is for employee monthly report*/
-		$scope.showEmployeeAnnualReport=function(){
+		$scope.showEmployeeMonthlyReport=function(){
 			
 			var employeeId=$scope.MonthlyReportEmployeeId;
 			var year=$scope.MonthlyReportYear;
@@ -894,8 +905,7 @@ $translateProvider.preferredLanguage('en');
 					$scope.loggedInIds = data;*/
 					console.log("Employee monthly report data returned from server: "+data);
 					console.log("parsed data: "+JSON.stringify(data));
-					$scope.annualProductivityEmployeeName=data.employeeName;
-					$scope.employeeDesignation=data.employeeDesignation;
+					$scope.monthlyProductivityEmployeeDetails="Of "+data.employeeName+" , Designation: "+data.employeeDesignation;
 					printBarChart(data.workingHoursArray,data.nonWorkingHoursArray);
 
 				});
@@ -912,7 +922,7 @@ $translateProvider.preferredLanguage('en');
 	    		$("#barLegend").hide();
 			}
 			
-		};// END --  showEmployeeAnnualReport()
+		};// END --  showEmployeeMonthlyReport()
 		
 		/*function to print bar chart*/
 		function printBarChart(presentData,absentData){
@@ -1344,7 +1354,7 @@ $translateProvider.preferredLanguage('en');
 		                    
 		                }).error(function(data, status) {
 		                    console.log("Error ... data: " +data+" status: "+status);
-		                    $scope.fileUploadSuccessMsg="PROBLEM_OCCURED";	
+		                    $scope.fileUploadSuccessMsg="Problem ocuured!";
 		            });
 			   }
 			   else{
@@ -1353,7 +1363,7 @@ $translateProvider.preferredLanguage('en');
 			   }
 			}
 			else{
-				 $scope.fileUploadSuccessMsg="SELECT_FILE";
+				$scope.fileUploadSuccessMsg="Please select file ";
 			}
 			 
 			
@@ -1408,16 +1418,16 @@ $translateProvider.preferredLanguage('en');
 				    	 response.success(function(data, status, headers, config) {
 				         if(data == -1 ){
 				        	 console.log("your session expired--");
-				        	 $scope.errorOrSuccessMessageOnPage="SESSION_EXPIRED_MSG";								   
+				        	 $scope.errorOrSuccessMessageOnPage="Your Session Expired.. Please login again";								   
 							  $scope.showAdminDashBoard=false;
 							  $scope.showAdminLoginButton=true;
 				         }
 				    	 else if(data == 1){
 				    			 employeeDefaultDetails();
-				    			 $scope.addEmployeeSuccessMsg="EMP_ADD_MSG";
+				    			 $scope.addEmployeeSuccessMsg="Employee Successfully Added!";
 				    		 }
 				    		 else{
-				    			 $scope.addEmployeeSuccessMsg="EMP_ADD_FAIL_MSG";		  
+				    			 $scope.addEmployeeSuccessMsg="failed! Try Again";
 				    		 }
 
 					    });
@@ -1428,19 +1438,19 @@ $translateProvider.preferredLanguage('en');
 					  });
 				}
 				else
-					$scope.addEmployeeSuccessMsg="INVALID_EMAIL";
+					 $scope.addEmployeeSuccessMsg="Invalid emailId!";
 				}
 				else{
 					
 					console.log("bad request");
-					$scope.addEmployeeSuccessMsg="LONG_REQ";
+					$scope.addEmployeeSuccessMsg="Request too long !";
 				}
 				
 			}
 			else{
 				
 				console.log("invalid employee details");
-				$scope.addEmployeeSuccessMsg="INVALID_EMP_DETAILS";
+				$scope.addEmployeeSuccessMsg="Invalid employee details";
 			}
 			
 			console.log("manually add emp : add emp()");
@@ -1452,10 +1462,19 @@ $translateProvider.preferredLanguage('en');
 		
 	/*	function for redirect to report generation page*/
 		$scope.redirectToGenerateReportPAge=function(){
-			
+			/*$scope.showAddEmployeeMainDiv=false;	
+			$scope.showExcelDiv = false;
+			$scope.showManuallyEnterDiv=false;
+			$scope.showChangePasswodDivValue=false;
+			$scope.showTableDetails=false;	
+			$scope.showCharts=false;
+			$scope.showAdminChangePasswordDiv=false;
+			console.log("redirecting to generate ");
+			$scope.showGenerateReportDiv = !$scope.showGenerateReportDiv;
+			$scope.showGenerateReportDiv*/
 			showOrHideRemainingDivisions("showGenerateReportDiv");
 			
-		
+			/*$window.location.href="/EmployeeManagementSystem/generateReportHome.do";*/
 		}
 		
 		
@@ -1534,7 +1553,44 @@ $translateProvider.preferredLanguage('en');
 					     data : data
 				     }));
 			     });
+			  
+			  /* $resource('http://localhost:8080//EmployeeManagementSystem/getAllEmployee.do').query().$promise.then(function(persons) {
+				  totalPersonsArray = persons;
+				  $scope.test=persons;
+				  $scope.totalPaginationEmployeesCount=persons.length;
+				  
+				   default values for showing text boxes for edit 
+			      editDecisionArray=new Array(persons.length);
+			      editDecisionArray.fill(false);
+			      
+			      buttonTextArray=new Array(persons.length);
+			      buttonTextArray.fill("Edit");
+			      
+			      employeeEditArray=new Array(persons.length);
+			      employeeEditArray.fill(employeeObject);
+			  
+			      
+			      $scope.editEmp=employeeEditArray;
+			      
+			      $scope.buttonTextArray=buttonTextArray;
+			      
+			      $scope.showdecisonArray=editDecisionArray;
+				  
+				  var stop=(persons.length >= 10) ? 10: persons.length;
+				 
+				  for(var i=0;i< stop;i++){
+					  totalPersonsArray[i].dob=new Date(Date.parse(totalPersonsArray[i].dob));
+					 // console.log(" dob: "+totalPersonsArray[i].dob);
+					  tempArray[i] = totalPersonsArray[i];
+				  }
+				  $scope.AllEmployees=tempArray;
+				  $scope.numberOfPaginationPages=(persons.length)/$scope.itemsPerPage;
+			  });*/
 			 
+
+			/*   $scope.pageChanged = function() {
+			    $log.log('Page changed to: ' + $scope.bigCurrentPage);
+			  }; */
 
 			  $scope.currentPaginationPage=1;
 			  
@@ -1684,25 +1740,46 @@ $translateProvider.preferredLanguage('en');
 			  /* function  for prinnting view Employee division */
 			  
 			  $scope.printViewEmployeeDiv=function(divId){	  
-					
+				
 				  console.log("print function called..");
 				  if( editingEmployee == true){
 					  openModalOfEditingEmployee();
 				  }
-				  else{					  			
-					/* function call to print division*/
-					  printDivision(divId);
+				  else{
 					  
+				     /* var printContents = document.getElementById("viewEmployeeDetails").innerHTML;
+			          var originalContents = document.body.innerHTML;
+			          document.body.innerHTML = printContents;			          
+			          window.print();
+			          document.body.innerHTML = originalContents;*/
+			         
+					  /*var divToPrint=document.getElementById(divId);
+					   newWin= window.open("");
+					   newWin.document.write(divToPrint.innerHTML);
+					   newWin.print();
+					   newWin.close();*/
+					  
+					  console.log("print function called..---- 1");
+					   var divToPrint=document.getElementById(divId);
+					   console.log("print function called..---- 2");
+					   newWin= window.open("");
+					   console.log("print function called..---- 3");
+					   newWin.document.write(divToPrint.innerHTML);
+					   console.log("print function called..---- 4");
+					   newWin.print();
+					   console.log("print () ----");
+					   newWin.close();
+					   console.log("print.close () ----");
 				  }
 			      
-			  };// END -- $scope.printViewEmployeeDiv()
+			  };
 			  
-			 
+			  
 			  
 			 /*  function for showing modal for currently editing employee */
 			  function openModalOfEditingEmployee(){
 				  
-				  
+				  console.log("in openModal() function");
 				  var modalInstance = $uibModal.open({
 				        animation: true,
 				        templateUrl: 'AlredyEditingEmployee.html',
@@ -1762,9 +1839,74 @@ $translateProvider.preferredLanguage('en');
 			   $scope.pwd=false;
 	    	   $scope.repwd=false;
 			showOrHideRemainingDivisions("showAdminChangePasswordDiv");
-		};
+		}
 		
-
+		/* $scope.changeAdminPassword=function(){
+			
+			if($scope.cpwd!=null  && $scope.npwd!=null && $scope.rpwd!=null)
+			{
+				if($scope.cpwd.length < 3 || $scope.npwd.length < 3 || $scope.rpwd.length < 3 ){
+					$scope.changePasswordSuccessMsg="Please fill all fields with minimum 3 characters";
+				}
+				else if($scope.cpwd!=$scope.npwd)
+				{
+					if($scope.npwd==$scope.rpwd )
+					{
+		               console.log(" ok -changing password");
+						$scope.changePasswordSuccessMsg="";
+							$http({
+							method : 'POST',
+							url : 'changePassword.do?cpwd='+$scope.cpwd+'&&npwd='+$scope.npwd	            	            
+						   }).success(function(data, status, headers, config) {	     
+								//$scope.hide=true;
+							   console.log("data returned from change password:"+data);
+							   if(data == "sessionExpired!"){
+								   $scope.errorOrSuccessMessageOnPage="Your Session Expired.. Please login again";								   
+								   $scope.showAdminDashBoard=false;
+								   $scope.showAdminLoginButton=true;
+								   $scope.cpwd="";
+								   $scope.npwd='';
+								   $scope.rpwd='';
+                                   console.log(" session expired -- login again--");
+							   }
+							   else if(data == 1){
+								   $scope.errorOrSuccessMessageOnPage="Password Successfully changed .. Please login with new Password";
+								   $scope.showAdminChangePasswordDiv=false;
+								   $scope.showAdminDashBoard=false;
+								   $scope.showAdminLoginButton=true;
+								   $scope.cpwd="";
+								   $scope.npwd='';
+								   $scope.rpwd='';
+								   console.log(" password changed  -- login again--");
+							   }
+							   else{
+								  $scope.changePasswordSuccessMsg=(data == 0)? "Your Current password is wrong":"problem occured try again!" ;
+								  console.log("password change response:"+data);
+								  $scope.cpwd="";
+								  $scope.npwd='';
+								  $scope.rpwd='';
+						      }
+								//$scope.msg=request.getParametersByName("status") ;	    	    	
+		                   }).error(function(data, status, headers, config) {
+		    	              $scope.hide=true;
+		    	              $scope.msg1="Some internal problem occured try again.";
+		    	   
+		                  });
+				}
+			    else{
+				  $scope.changePasswordSuccessMsg="new password and confirm password must Match";
+			    }
+		     }
+			 else{
+				$scope.changePasswordSuccessMsg="current password and new password should not be same";
+			}
+		 }
+		else
+		{
+			$scope.changePasswordSuccessMsg="fields should not be empty";
+		}
+		}
+		*/
 		
 	  /* END -----  function for admin change password    --- END */
 		
@@ -1800,8 +1942,7 @@ $translateProvider.preferredLanguage('en');
 		    		 
 		    	 });
 	  }).error(function(data, status, headers, config) {
-		  $scope.result ="INTERNAL_PROBLEM_ERROR" ;
-		 	 $scope.criteria=" id auto";
+	 	 $scope.result ="error occured due to internal proble please try again id auto" ;
 	 	 });
 			}
 		};
@@ -1915,8 +2056,7 @@ $translateProvider.preferredLanguage('en');
 												$scope.hide3 = true;
 												$scope.res = false;
 												$scope.newhide1 = true;
-												$scope.result = "INTERNAL_PROBLEM_ERROR";
-												$scope.criteria=" none";
+												$scope.result = "error occured due to some internal problem please try again none.";
 											});
 						}/* Total Records */
 
@@ -1984,8 +2124,7 @@ $translateProvider.preferredLanguage('en');
 												$scope.res = false;
 												$scope.newhide1 = true;
 												$scope.hide4 = true;
-												$scope.result = "INTERNAL_PROBLEM_ERROR" ;
-											    $scope.criteria=" day";
+												$scope.result = "error occured due to some internal problem please try again day.";
 											});
 
 						}/* end of day */
@@ -2054,8 +2193,7 @@ $translateProvider.preferredLanguage('en');
 												$scope.res = false;
 												$scope.newhide1 = true;
 												$scope.hide4 = true;
-												$scope.result = "INTERNAL_PROBLEM_ERROR" ;
-												$scope.criteria=" dates";
+												$scope.result = "error occured due to some internal problem please try again dates.";
 											});
 
 						}/* end of from date and to date */
@@ -2128,8 +2266,7 @@ $translateProvider.preferredLanguage('en');
 												$scope.res = false;
 												$scope.newhide1 = true;
 												$scope.hide4 = true;
-												$scope.result = "INTERNAL_PROBLEM_ERROR";
-												$scope.criteria=" none";
+												$scope.result = "error occured due to some internal problem please try again none.";
 											});
 						}/* none */
 
@@ -2197,8 +2334,7 @@ $translateProvider.preferredLanguage('en');
 												$scope.res = false;
 												$scope.newhide1 = true;
 												$scope.hide4 = true;
-												$scope.result = "INTERNAL_PROBLEM_ERROR";
-											    $scope.criteria=" day";
+												$scope.result = "error occured due to some internal problem please try again day.";
 											});
 
 						}/* day */
@@ -2267,8 +2403,7 @@ $translateProvider.preferredLanguage('en');
 												$scope.hide4 = true;
 												$scope.res = false;
 												$scope.newhide1 = true;
-												$scope.result = "INTERNAL_PROBLEM_ERROR" ;
-												 $scope.criteria=" dates";
+												$scope.result = "error occured due to some internal problem please try again dates.";
 											});
 
 						}
@@ -2282,8 +2417,7 @@ $translateProvider.preferredLanguage('en');
 					$scope.hide3 = true;
 					$scope.newhide1 = true;
 					$scope.res = false;
-					$scope.result = "RESULT";
-					$scope.criteria="";
+					$scope.result = "if you select single id field should not be empty.";
 				}
 			}
 
@@ -2352,8 +2486,7 @@ $translateProvider.preferredLanguage('en');
 										$scope.hide4 = true;
 										$scope.res = false;
 										$scope.newhide1 = true;
-										$scope.result = "INTERNAL_PROBLEM_ERROR";
-										$scope.criteria=" all none";
+										$scope.result = "error occured due to some internal problem please try again all none.";
 									});
 
 				}/* end of Total Records */
@@ -2416,8 +2549,7 @@ $translateProvider.preferredLanguage('en');
 										$scope.hide4 = true;
 										$scope.res = false;
 										$scope.newhide1 = true;
-										$scope.result = "INTERNAL_PROBLEM_ERROR";
-										$scope.criteria=" all day";
+										$scope.result = "error occured due to some internal problem please try again all day.";
 									});
 				}/* day */
 
@@ -2480,34 +2612,12 @@ $translateProvider.preferredLanguage('en');
 										$scope.hide4 = true;
 										$scope.res = false;
 										$scope.newhide1 = true;
-										$scope.result = "INTERNAL_PROBLEM_ERROR";
-										$scope.criteria=" all dates";
+										$scope.result = "error occured due to some internal problem please try again dates all dates.";
 									});
 				}
 			}
-		};// END --  $scope.getAtteandance()
-		
-		$scope.printDiv=function(divId){
-			console.log("in print ... ");
-			/*function call to printDivision(divId)*/
-			printDivision(divId);
 		};
 		
-		
-		 /**
-		   * This function is to print the divisions
-		   * Takes division id to be print
-		   */
-		  function  printDivision(divId){
-			  
-			  console.log("print function called..---- 1");
-			   var divToPrint=document.getElementById(divId);
-			   newWin= window.open("");					  
-			   newWin.document.write(divToPrint.innerHTML);					   
-			   newWin.print();					  
-			   newWin.close();
-			   
-		  };// END -- printDivision(divId)
 		
 		/* --------  BEGIN ----functionality for reset admin password ----  BEGIN ---------*/
 		
@@ -2519,11 +2629,11 @@ $translateProvider.preferredLanguage('en');
 		
 		$scope.setAdminNewPassword=function(){
 			if($scope.adminNewPassword.length < adminNewPasswordMinLength){
-				$scope.adminSetNewPasswordSuccessMsg="SET_PASSWORD_MSG1";			
+		      	$scope.adminSetNewPasswordSuccessMsg="Password  too  short";
 			}
 			else if($scope.adminNewPassword != $scope.adminConfirmNewPassword){
 				
-				$scope.adminSetNewPasswordSuccessMsg="SET_PASSWORD_MSG2";
+				$scope.adminSetNewPasswordSuccessMsg="New password and Confirm password not matched";
 				
 			}
 			else{
@@ -2533,7 +2643,7 @@ $translateProvider.preferredLanguage('en');
 				.success(function(data, status, headers, config) {
 					if(data == 1){
 						$scope.showAdminResetPasswordDiv=false;
-						$scope.adminSetNewPasswordSuccessMsg="SET_PASSWORD_MSG3";
+						$scope.adminSetNewPasswordSuccessMsg="password sucessfully updated";
 					}
 						
 			     })
@@ -2549,6 +2659,15 @@ $translateProvider.preferredLanguage('en');
 		
 		/* --------  END ----functionality for reset admin password ----  END ---------*/
 		
+		
+		/*function for adding new Administrator
+		
+		$scope.addNewAdministratorDivEnable=function(){
+			
+			
+		}*/
+		
+		/*  END--- function for adding new Administrator ---- END*/
 
 	});// end of main controlller --
 	
@@ -2587,7 +2706,7 @@ $translateProvider.preferredLanguage('en');
 	
 	
 	/*this controlller is for showing admin login page as modal*/
-	angular.module('ui.ems.app').controller('AdminLoginController', function ($scope,$http, $uibModalInstance,$rootScope) {
+	angular.module('ui.ems.app').controller('AdminLoginController', function ($scope,$http, $uibModalInstance) {
 		 
 		 var usernameFlag;	 
 		 var passwordFlag;	
@@ -2622,7 +2741,7 @@ $translateProvider.preferredLanguage('en');
 		 /* function for show password */
 		  $scope.showAdminPassword=function(){
 			  
-			  $scope.adminPasswordType=($scope.showPassword)?"PWD_TYPE_TEXT":"PWD_TYPE_PWD";
+			  $scope.adminPasswordType=($scope.showPassword)?"text":"password";
 		  };
 		  
 		  /* function for admin id validation */
@@ -2631,12 +2750,7 @@ $translateProvider.preferredLanguage('en');
 			  if($scope.Admin.userName.match(/^[0-9]*$/)){
 			     if($scope.Admin.userName.length != adminIdLength){
 			       $scope.enableUsernamePropover=true;
-								if($rootScope.languageKey =="de"){
-					     $scope.userNamePropoverMsg="Admin Id lengte moet zijn"+adminIdLength;
-								}
-								else{
-									 $scope.userNamePropoverMsg="Admin Id length must be "+adminIdLength;
-								}
+			       $scope.userNamePropoverMsg="Admin Id length must be "+adminIdLength;
 			       $scope.loginButtonDisable=true;
 			       usernameFlag=false;
 			     }
@@ -2652,7 +2766,7 @@ $translateProvider.preferredLanguage('en');
 				  usernameFlag=false;
 				  $scope.loginButtonDisable=true;
 				  $scope.enableUsernamePropover=true;
-				  $scope.userNamePropoverMsg="UNAME_POPOVER_MSG";    
+			      $scope.userNamePropoverMsg="Only Digits allowed";
 			      
 			      
 			  }
@@ -2665,14 +2779,7 @@ $translateProvider.preferredLanguage('en');
 		  $scope.passwordValidation=function(){
 			  $scope.enableUsernamePropover=false;
 			if($scope.Admin.password.length < passwordLength){
-					
-					if($rootScope.languageKey =="de"){
-						$scope.passwordPropoverMsg="wachtwoord bevat tenminsteast "+passwordLength+" karakters";
-					}
-					else{
-						$scope.passwordPropoverMsg="password contains atleast "+passwordLength+" characters";
-					}
-					
+				$scope.passwordPropoverMsg="password contains atleast "+passwordLength+" charecters";
 				$scope.enablePasswordPropover=true;
 				$scope.loginButtonDisable=true;
 				passwordFlag=false;
@@ -2756,23 +2863,23 @@ $translateProvider.preferredLanguage('en');
 
 					})
 					.success(
-							function(data, status, headers,config) {
+							function(data, status, headers,	config) {
 								if(data== 1){
 								$scope.hide1=true;
-									$scope.successmsg ="SUCCESSMSG";							
-												}
+								$scope.successmsg ="Reset password link sent to  your mail, please check your mail";
+								}
 								else if(data == 0){
-										$scope.failedmsg="FAILEDMSGFORMAIL";
+									$scope.failedmsg="You entered wrong mail Id";
 								}
 								else{
-												$scope.failedmsg="FAILEDMSGFORADMINID";
-										}
+									$scope.failedmsg="You entered Invalid adminId";
+								}
 							})
-					.error(    
+					.error(
 							function(data, status, headers,
 									config) {
 
-								$scope.failedmsg = "INTERNAL_PROBLEM_ERROR"
+								$scope.failedmsg = "Some internal problem occured try again.";
 	   	      	});
 			
 		}; 
@@ -2781,14 +2888,8 @@ $translateProvider.preferredLanguage('en');
 		   * Function to show all employees detail in excel sheet format
 		   */
 		  $scope.showExcel=function(){
-			  
 				console.log("in showExcel()");
-				$window.location.href="/EmployeeManagementSystem/getExcel.do";
-		  };
-		  
-		  $scope.showExcelView=function(){
-				console.log("in showExcel view ()");
-				$window.location.href="/EmployeeManagementSystem/getExcel.do";
+				$window.location.href="/EmployeeManagementSystem/getExcel";
 		  };
 		
 	/*  END ---	function for forgot Password ------END ---*/
@@ -2823,6 +2924,6 @@ app.controller('CurrentlyEditingEmployeeController', function ($scope, $uibModal
 		$scope.closeModal=function(){
 		
 		   $uibModalInstance.close(true);
-		}
+		};
 		
 	});
