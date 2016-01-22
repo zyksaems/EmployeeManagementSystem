@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Employee;
-import com.caprusit.ems.domain.EmployeeD;
 import com.caprusit.ems.domain.JsonEmployee;
 import com.caprusit.ems.service.IManageUserService;
 
@@ -123,37 +121,32 @@ public class ManageUserController {
 		
 		return manageUserService.updateEmployee(emp);
 	}
+	/**
+	 * This method is to redirect the UpdateUser view page
+	 * Here all employee details are displayed and updating each employee details.
+	 * */
 	@RequestMapping(value = "ViewUser")
 	public String  updateUser() {
 		
 		return "UpdateUser";
 		
 	}
-	@RequestMapping(value = "Controller")
-	public @ResponseBody List<EmployeeD>  home( ) {
+	/**
+	 * This method is to collect all employees data 
+	 * */
+	@RequestMapping(value = "getAllEmployeeData")
+	public @ResponseBody List<JsonEmployee>  getAllEmployeeData( ) {
 		
-		List<EmployeeD> employees=manageUserService.getEmployees2();
-		
-		System.out.println(employees);
-		
-		return employees;
-		
-	}
-	@RequestMapping(value = "Controller.do"+"/"+"{employeeid}")
-	public @ResponseBody List<EmployeeD>  edit(@PathVariable("employeeid")int employeeid) {
-		
-		System.out.println(employeeid);
-		
-		List<EmployeeD> employees=manageUserService.getEmployeeOneTime(employeeid);
-		
-		System.out.println(employees);
+		List<JsonEmployee> employees=manageUserService.getAllEmployeesData();
 		
 		return employees;
 		
 	}
-	@RequestMapping(value = "sendObj", method = RequestMethod.POST)
-	public @ResponseBody String  getEmployeeJson(@ModelAttribute JsonEmployee employeeJson) throws ParseException {
-		
+	/**
+	 * This method is to send selected employee details into service for storing into database 
+	 * */
+	@RequestMapping(value = "sendObject", method = RequestMethod.POST)
+	public @ResponseBody String  sendEmployeeJson(@ModelAttribute JsonEmployee employeeJson) throws ParseException {
 		
 		Employee employee=new Employee();
 		
@@ -174,21 +167,8 @@ public class ManageUserController {
 		employee.setStatus(employeeJson.getStatus());
 		employee.setDeptId(Integer.parseInt(employeeJson.getDeptId()));
 		
-		
-		
-		
-		System.out.println("inside Home controller");
-		String message=manageUserService.updateEmployee2(employee);
-		System.out.println("outside Home controller");
-		
-		
-		
-		System.out.println("Employee from Json data == "+employee);
-		return message;
-		
-		
-		
-	}
-
+		String message=manageUserService.updateEmployeeData(employee);
 	
+		return message;	
+	}
 }

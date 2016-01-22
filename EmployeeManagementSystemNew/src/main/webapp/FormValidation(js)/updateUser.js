@@ -1,13 +1,17 @@
  var editEmployeeIndex;
+ 
+ /*Function for getting index of each table row*/
   function editEmployee(index){
 	  
 	  editEmployeeIndex=index;
   };
   
+  
+  /*For pagination of Employee Details table*/
   $.fn.pageMe = function(opts){
 	    var $this = this,
 	        defaults = {
-	            perPage: 7,
+	            perPage: 10,
 	            showPrevNext: false,
 	            hidePageNumbers: false
 	        },
@@ -104,7 +108,7 @@
 	        pager.children().eq(page+1).addClass("active");
 	    
 	    }
-	};
+	};/*END of pagination function*/
   
   $("document").ready(function() {
 	  	  
@@ -124,6 +128,7 @@
 					
 				});
 	  
+	 /* For showing each field data in Updating form*/
 	  function fillTableData(){
 		  
 		  var table = $('#tablebody');
@@ -140,7 +145,9 @@
 		  	$('#tablebody').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:21});
 		  	$("#myPager").show();
 		  	
-	  }
+	  }/*END of fillTableData()*/
+	  
+	  /*For searching specific employee*/
 	  
 	  function searchTable(inputVal)
 	  {
@@ -172,13 +179,16 @@
 	  			
 	  			
 	  		}
-	  	});
+	  	});/*END of searchTable()*/
+	  	
 	  	console.log("pagination");
 	  	$("#myPager").hide();
 	  }
 			
 	  var allEmployeeDetais=[];
-
+	  
+	  
+	  /*Validation of each field in Edit form*/
 	     
 	  $('#frm').formValidation({
           framework: 'bootstrap',
@@ -224,7 +234,7 @@
                       },
                       regexp: {
                           regexp: /^[789]\d{9}$/,
-                          message: 'Only Numbers Are Allowed'
+                          message: 'Enter a Valid Mobile No'
                       }
                   }
               },
@@ -307,15 +317,16 @@
              
           }
           
-      });   
+      });/*END-Validation of each field in Edit form*/   
 	  
 	  /* function call to get employee data */
 	   getEmployees();
 	  
+	   /*Function to get all Employees*/
 	  function getEmployees(){
 		  console.log("getEmployee()...");
 		  var request = $.ajax({
-			  url: "/EmployeeManagementSystemNew/Controller.do",
+			  url: "/EmployeeManagementSystemNew/getAllEmployeeData.do",
 			  method: "GET",
 			  dataType: "json"
 			});
@@ -363,7 +374,7 @@
 	              		  $('#table').tablesorter(); 
 	              		});
 	              	  
-	              	  $('#tablebody').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:21});
+	              	  $('#tablebody').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:15});
 	                }
 				else{
 					document.getElementById("res").innerHTML="NO MATCH FOUND";
@@ -377,7 +388,7 @@
 				
 	    };// END -- function getEmployees()
 	    
-	    
+	   /* Function to fill data in edit form*/
 	    function fillEditEmployeeForm(index){
 	    	
 	    	var empObj=allEmployeeDetais[index];
@@ -394,11 +405,14 @@
 	    	$("#employee-deptid").val(empObj.deptId); 
 	    	
 	    	$("#employee-id-header").text(empObj.employeeId);
-	    };
+	    	
+	    };/*END- Function to fill data in edit form*/
+	    
 	    $("#save-eidit-employee").click(function(){
 	    	onSave();
 	    });
 	    
+	   /* Function to save data*/
 	    function onSave(){
 	    	 var empObj={employeeId:null,firstName:null,lastName:null,dob:null,mobileNo:null,emailId:null,designation:null,rollId:null,status:null,deptId:null};
 	    	
@@ -419,17 +433,19 @@
 	    	
 	    	$.ajax({
 			        type: "POST",
-			        url: "/EmployeeManagementSystemNew/sendObj.do",
+			        url: "/EmployeeManagementSystemNew/sendObject.do",
 			        data:empObj,
 			        success: function(msg) {
 			            alert("Updated");
 			        },
 			        error: function(msg) {
-			        alert('error '+msg);
+			    
 			        
 			        }
 			    });
-	    };
+	    	
+	    };/*END-Function to save data*/
+	    
   });// END -- $("document").ready()
   
   

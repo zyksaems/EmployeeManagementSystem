@@ -19,23 +19,20 @@
 <link rel="stylesheet" href="FormValidation(css)/updateUser.css">
 <link rel="stylesheet" href="FormValidation(css)/jquery-ui.css">
 <link rel="stylesheet" href="FormValidation(css)/font-awesome.min.css">
-<link rel="shortcut icon" type="image/x-icon"
-	href="images/caprus logo.png" />
+<link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png" />
 
 
 <link rel="stylesheet" href="./jquery/jquery-ui.css">
 <script src="./jquery/jquery-ui.js"></script>
 <link rel="stylesheet" href="./CSS/style.css">
-<!-- boottrap css-->
-<!-- <link rel="stylesheet" href="./bootstrap/bootstrap.min.css"> -->
+
 
 <!-- custom css -->
 
 <link rel="stylesheet" href="./CSS/homepage.css">
 <link rel="stylesheet" href="./CSS/header2.css">
 <link rel="stylesheet" href="./CSS/footer.css">
-<!-- <link rel="stylesheet" href="./CSS/AdminTemplete.css"> -->
-<!--   <link rel="stylesheet" type="text/css" href="./CSS/style.css"> -->
+
 
 
 <script>
@@ -44,6 +41,8 @@
 		$("#printButton").click(function(){
 			var divToPrint=document.getElementById("printTable");
 			   newWin= window.open("");
+			   newWin.document.write("<div style='text-align:center;font-size: 20px'><b>EMPLOYEE DETAILS</b></div>");
+			   newWin.document.write("<br><br>");
 			   newWin.document.write(divToPrint.outerHTML);
 			   newWin.print();
 			   newWin.close();
@@ -130,9 +129,10 @@
 		</div>
 		
 		<div style="overflow-x: auto;" class="table-responsive">
-			<div class="jumbotron" align="center">
+			<div class="empdetail" align="center">
 				<h2>Employee Details</h2>
 				</div>
+				<hr>
 				<nav  role="navigation" title="Search">
 
 					<div class="col-sm-11 col-md-11" align="left">
@@ -150,20 +150,20 @@
 					</div><button id="printButton" class="btn btn-default btn-info active">Print</button>
 				</nav>
 				<div id="printTable">
-				<table id="table" class="tablesorter ws_data_table table table-hover" >
+				<table id="table"  border="1"  class="tablesorter ws_data_table table table-hover" >
 					<thead  style="color:balck">
 						<tr>
-							<th><b>Emp Id</b></th>
-							<th><b>First Name</b></th>
-							<th><b>Last Name</b></th>
-							<th><b>Date Of Birth</b></th>
-							<th><b>Mobile No</b></th>
-							<th><b>Email Id</b></th>
-							<th><b>Designation</b></th>
-							<th><b>Role Id</b></th>
-							<th><b>Status</b></th>
-							<th><b>Dept Id</b></th>
-							<th><b>Action</b></th>
+							<th><b>EMPLOYEE ID</b></th>
+							<th><b>FIRST NAME</b></th>
+							<th><b>LAST NAME</b></th>
+							<th><b>DATE OF BIRTH</b></th>
+							<th><b>MOBILE NO</b></th>
+							<th><b>EMAIL ID</b></th>
+							<th><b>DESIGNATION</b></th>
+							<th><b>ROLE ID</b></th>
+							<th><b>STATUS</b></th>
+							<th><b>DEPARTMANT ID</b></th>
+							<th><b>ACTION</b></th>
 						</tr>
 					</thead>
 				</table>

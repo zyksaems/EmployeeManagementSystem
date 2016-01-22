@@ -2,6 +2,8 @@ package com.caprusit.ems.dao;
 
 import java.util.List;
 
+
+
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -12,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 
 import com.caprusit.ems.domain.Employee;
 
@@ -83,7 +86,9 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		session.close();
 		return 1;
 	}
-    public List<Employee> getEmployees2() {
+    
+    
+    public List<Employee> getAllEmployeesData() {
 		Session session = sessionFactory.openSession();
 		String sql = "SELECT * FROM PRAKASH.EMPLOYEE_TABLE";
 		SQLQuery query = session.createSQLQuery(sql);
@@ -93,18 +98,8 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		session.close();
 		return results;
 	}
-	public List<Employee> getEmployeeOneTime(int i){
-		Session session = sessionFactory.openSession();
-		String sql = "SELECT * FROM PRAKASH.EMPLOYEE_TABLE where EMPLOYEEID="+i;
-		SQLQuery query = session.createSQLQuery(sql);
-		query.addEntity(Employee.class);
-		@SuppressWarnings("unchecked")
-		List<Employee> results = query.list();		
-		session.close();
-		return results;
-
-	}
-	public Integer updateEmployee2(Employee e){
+	
+	public Integer updateEmployeeData(Employee e){
 		Session session = sessionFactory.openSession();
 		Transaction ts = session.beginTransaction();
 		session.update(e);
@@ -114,6 +109,9 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		
 
 	}
+	
+
+	
 	
 }
 

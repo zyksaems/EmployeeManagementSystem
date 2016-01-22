@@ -21,4 +21,13 @@ thead{
 th{
 	height:60px;
 	font-size: 14px;
+	text-align: center;
+	
 }
+tr{
+	border: 0px;
+}
+td{
+	text-align: center;
+}
+

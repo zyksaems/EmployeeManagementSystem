@@ -8,7 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.caprusit.ems.domain.Employee;
-import com.caprusit.ems.domain.EmployeeD;
+
+import com.caprusit.ems.domain.JsonEmployee;
 
 @Service("UserService")
 @Transactional
@@ -32,8 +33,8 @@ public interface IManageUserService {
 
 	public int updateEmployee(Employee employee);
 	
-	public List<EmployeeD> getEmployees2();
-	public List<EmployeeD> getEmployeeOneTime(int i);
-	public String updateEmployee2(Employee e);
+	public List<JsonEmployee> getAllEmployeesData();
+	
+	public String updateEmployeeData(Employee e);
 
 }

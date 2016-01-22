@@ -17,7 +17,7 @@
 	function getEmployeeIdsFromLocal(){
 		
 		localValue=localStorage.getItem("employeeidsarray");
-		//console.log("local value in second script: "+localValue);
+		console.log("local value in second script: "+localValue);
 		//console.log("type of local value in second script: "+typeof localValue);		
 		employeeIdsArray=localValue.split(',');
 		//console.log("employeeIds array: "+employeeIdsArray);
