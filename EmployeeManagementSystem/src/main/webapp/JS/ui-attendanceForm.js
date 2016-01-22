@@ -1,6 +1,42 @@
-var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
-	app.controller('ValidController', function($scope, $http,$window,$uibModal, $log) {
+var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap','pascalprecht.translate']);
+
+app.controller('LanguageController', function($scope,$translate,$rootScope){
+	 $scope.changeLanguage = function (key) {
+		 $rootScope.languageKey=key;
+		 console.log("ROOT SCOPE  languge -- ctrl: "+$rootScope.languageKey);
+		  $translate.use(key);
+		  console.log("ROOT SCOPE  languge -- ctrl: "+$rootScope.languageKey);
+		  };    
+	
+	});
+
+
+app.config(function($translateProvider) {
+	/* 
+	 * using external file i.e json file which reads all the labels and its corresponding values 
+	 * depending upon the language you choose
+	 * 
+	 */ 
+	
+	$translateProvider.useStaticFilesLoader({
+	    prefix: 'json/lang-',
+	    suffix: '.json'
+	  });
+	
+	/*
+	 * This $translateProvider.preferredLanguage('en') function is used to set the default 
+	 * language of the browser as "English" or you can set as per your requirement.
+	 */
+$translateProvider.preferredLanguage('en');
+
+
+});
+
+
+	app.controller('ValidController', function($scope, $http,$window,$uibModal, $log,$translate,$rootScope) {
 		
+		$rootScope.languageKey='en';
+		 console.log("ROOT SCOPE  languge -- validation  ctrl: "+$rootScope.languageKey);
 		
 		/*error or success message after specific functions*/
 		$scope.errorOrSuccessMessageOnPage="";
@@ -95,9 +131,14 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 	   					}).success(function(data, status, headers, config) {
 	   	                    if(data==1)
 	   	                    	{
-	   	                    	
-	   							alert("password has been successfully changed.please login newly");
-	   							$scope.showAdminDashBoard=false;
+							  if($rootScope.languageKey =="de"){
+									alert("wachtwoord is met succes changed.Please inloggen nieuw");
+								}
+							  else{
+		   	                    		alert("password is successfully changed.Please login new");
+									}
+							  
+	   						  $scope.showAdminDashBoard=false;
 	   						  $scope.showAdminLoginButton=false;
 	   						  var modalInstance = $uibModal.open({
 	   						        animation: true,
@@ -128,7 +169,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 	   					      });
 	   	                    	}else
 	   	                    		{
-	   	                    		$scope.msg1="current password and old password must same.";
+	   	                    		$scope.msg1="MSG1";
 	   	                    		}
 	   	     }).error(function(data, status, headers, config) {
 	   	    	   $scope.msg1="Some internal problem occured try again.";
@@ -206,6 +247,10 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		var loginSuccess=1;
 		var logoutSuccess=2;
 		var status=10;
+		var deLoginText="Bent U blijft om in te loggen";
+		var enLoginText="Are You continue to log-In";
+	    var enLogoutText= "Are You Continue To Logout";
+	    var deLogoutText= "Bent u doorgaat met Afmelden";
 
 		/* set initial values */
 		function defaultValues() {
@@ -215,7 +260,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			$scope.showAttendanceForm=true;
 			$scope.cssClass = "first";
 			$scope.buttonDisable = true;
-			$scope.buttonText = "In-Time";
+			$scope.buttonText = "IN_TIME";
 		}
 
 		/* set default values  */
@@ -284,18 +329,18 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			  if(serachInJsonObjectArray($scope.empId, json)){
 				  
 				  if (serachInArray($scope.empId, jsonLoggedOut)) {
-						$scope.invalidMsg = "Today your attendance posted";
+					  $scope.invalidMsg = "ATTENDANCE_POSTED_MSG";
+						$scope.buttonText = "INVALID";
 						$scope.showInvalidMsg = true;
 						$scope.cssClass = "error";
 						$scope.buttonDisable = true;
-						$scope.buttonText = "invalid";
 					
 					} else if (serachInArray($scope.empId, jsonLoggedIn)) {
 						$scope.invalidMsg = "";
 						$scope.showInvalidMsg = false;
 						$scope.cssClass = "ok";
 						$scope.buttonDisable = false;
-						$scope.buttonText = "Out-Time";
+						$scope.buttonText = "OUT_TIME";
 						status=1;
 
 					} else if ($scope.empId.length == employeeIdLength) {
@@ -305,16 +350,16 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 							$scope.showInvalidMsg = false;
 							$scope.cssClass = "ok";
 							$scope.buttonDisable = false;
-							$scope.buttonText = "In-Time";
+							$scope.buttonText = "IN_TIME";
 							status=0;
 
 						} else {
 							
-							$scope.invalidMsg = "Invalid Employee Id";
+							$scope.invalidMsg = "INVALID_EMP_ID";
+					    	$scope.buttonText = "IN_TIME";
 							$scope.showInvalidMsg = true;
 							$scope.cssClass = "error";
 							$scope.buttonDisable = true;
-							$scope.buttonText = "In-Time";
 
 						}
 
@@ -322,11 +367,11 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 				  
 			  }else{
 				  
-				    $scope.invalidMsg = "Invalid Employee Id";
+				  	$scope.invalidMsg = "INVALID_EMP_ID";
+					$scope.buttonText = "IN_TIME";
 					$scope.showInvalidMsg = true;
 					$scope.cssClass = "error";
 					$scope.buttonDisable = true;
-					$scope.buttonText = "In-Time";
 				  
 			  }
 				
@@ -335,7 +380,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 				$scope.cssClass = "error";
 				$scope.showInvalidMsg = false;
 				$scope.buttonDisable = true;
-				$scope.invalidMsg = "Invalid Employee Id";
+				$scope.invalidMsg = "INVALID_EMP_ID";
 
 			}
 
@@ -347,7 +392,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			if(status == 0){
 				swal({
 					title :EmployeeName ,
-					text : "Are You continue to log-In",
+					text :  ($rootScope.languageKey=='de')? deLoginText : enLoginText,
 					imageUrl: "images/welcome4.jpg",
 					showCancelButton : true,
 					confirmButtonColor : "green",
@@ -367,11 +412,21 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 					              if(res == loginSuccess){
 					            	  jsonLoggedIn[jsonLoggedIn.length] = empId;
 								      $scope.loggedInIds = jsonLoggedIn;
-					            	  swal("OK", "Success fully Logged-in", "success");
+								   
+						                if($rootScope.languageKey =="de"){
+						                	 swal("OK", "Succes volledig Ingelogde in", "success");									
+						           }
+						                else{
+										    	  swal("OK", "Success fully Logged-in", "success");														
+						                }
 					              }
 					              else
-					            	  swal("Problem occured!","Try Again","error");
-
+						                if($rootScope.languageKey =="de"){
+						                	swal("Probleem opgetreden !","Probeer het nog eens","error");									
+						           }
+						                else{
+							            		  swal("Problem occured!","Try Again","error");							
+						                }
 					       });
 					       sendId.error(function(data, status, headers, config) {
 					       alert("failure message: " + JSON.stringify({
@@ -383,8 +438,12 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 						
 						
 					} else 
-						swal("You are rejected !", "try Again", "error");
-					
+			                if($rootScope.languageKey =="de"){
+			                	swal("U bent afgewezen !","Probeer het nog eens","error");						
+			           }
+			                else{
+			                	 swal("You are rejected !", "try Again", "error");
+			                }
 				});
 				
 				console.log("in");
@@ -393,7 +452,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 				console.log("emp name now logging out : "+EmployeeName);
 				swal({
 					title : EmployeeName ,
-					text : "Are You Continue To Logout",
+					text : ($rootScope.languageKey=='de')? deLogoutText : enLogoutText,
 					imageUrl: "images/bye2.jpg",
 					showCancelButton : true,
 					confirmButtonColor : "green",
@@ -412,11 +471,20 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 					              if(res == logoutSuccess){
 					            	 jsonLoggedOut[jsonLoggedOut.length] = empId;
 									$scope.jsonLoggedOut = jsonLoggedOut;
-					            	  swal("OK", "Success fully Logged-out", "success");
+						                if($rootScope.languageKey =="de"){
+						                	 swal("OK", "Succes volledig Ingelogde out", "success");									
+						           }
+						                else{
+						              	  swal("OK", "Success fully Logged-out", "success");	
+						                }
 					              }
 					              else
-					            	  swal("Problem occured!","Try Again","error");
-
+						                if($rootScope.languageKey =="de"){
+						                	swal("Probleem opgetreden !","Probeer het nog eens","error");									
+						           }		
+						                else{
+						                	  swal("Problem occured!","Try Again","error");							
+						                }
 					       });
 					       sendId.error(function(data, status, headers, config) {
 					       alert("failure message: " + JSON.stringify({
@@ -427,7 +495,12 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 						
 						
 					} else {
-						swal("You are rejected !", "", "error");
+			                if($rootScope.languageKey =="de"){
+			                	swal("U bent afgewezen !","","error");						
+			           }
+			                else{
+			                	 swal("You are rejected !", "", "error");
+			                }
 					}
 				});
 
@@ -809,7 +882,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			$scope.AllemployeeMonthlyReportMsg="";
 			
 			$scope.showIndividualMonthlyForm=false;
-			$scope.monthlyProductivityEmployeeDetails="";
+			$scope.annualProductivityEmployeeDetails="";
 			$("#bar-holder").hide();
     		$("#barLegend").hide();
 			
@@ -827,7 +900,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			}
 			else{
 				$scope.AllemployeeMonthlyReportMsg="";
-				var allEmplyeeMonthlyData = $http.post('/EmployeeManagementSystem/getAllEmployeeMonthlyProductivity.do?year='+year);
+				var allEmplyeeMonthlyData = $http.post('/EmployeeManagementSystem/getAllEmployeeAnnualProductivity.do?year='+year);
 				allEmplyeeMonthlyData.success(function(data, status, headers, config) {
 					/*jsonLoggedIn = data;
 					$scope.loggedInIds = data;*/
@@ -855,7 +928,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		};
 		
 		/*This function is for employee monthly report*/
-		$scope.showEmployeeMonthlyReport=function(){
+		$scope.showEmployeeAnnualReport=function(){
 			
 			var employeeId=$scope.MonthlyReportEmployeeId;
 			var year=$scope.MonthlyReportYear;
@@ -868,13 +941,14 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			}
 			else if(serachInJsonObjectArray(employeeId, json)){
 				$scope.employeeMonthlyReportMsg="";
-				var emplyeeMonthlyData = $http.post('/EmployeeManagementSystem/getEmployeeMonthlyProductivity.do?employeeId='+employeeId+'&&year='+year);
+				var emplyeeMonthlyData = $http.post('/EmployeeManagementSystem/getEmployeeAnnualProductivity.do?employeeId='+employeeId+'&&year='+year);
 				emplyeeMonthlyData.success(function(data, status, headers, config) {
 					/*jsonLoggedIn = data;
 					$scope.loggedInIds = data;*/
 					console.log("Employee monthly report data returned from server: "+data);
 					console.log("parsed data: "+JSON.stringify(data));
-					$scope.monthlyProductivityEmployeeDetails="Of "+data.employeeName+" , Designation: "+data.employeeDesignation;
+					$scope.annualProductivityEmployeeName=data.employeeName;
+					$scope.employeeDesignation=data.employeeDesignation;
 					printBarChart(data.workingHoursArray,data.nonWorkingHoursArray);
 
 				});
@@ -891,7 +965,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 	    		$("#barLegend").hide();
 			}
 			
-		};// END --  showEmployeeMonthlyReport()
+		};// END --  showEmployeeAnnualReport()
 		
 		/*function to print bar chart*/
 		function printBarChart(presentData,absentData){
@@ -1323,7 +1397,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		                    
 		                }).error(function(data, status) {
 		                    console.log("Error ... data: " +data+" status: "+status);
-		                    $scope.fileUploadSuccessMsg="Problem ocuured!";
+		                    $scope.fileUploadSuccessMsg="PROBLEM_OCCURED";	
 		            });
 			   }
 			   else{
@@ -1332,7 +1406,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			   }
 			}
 			else{
-				$scope.fileUploadSuccessMsg="Please select file ";
+				 $scope.fileUploadSuccessMsg="SELECT_FILE";
 			}
 			 
 			
@@ -1387,16 +1461,16 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 				    	 response.success(function(data, status, headers, config) {
 				         if(data == -1 ){
 				        	 console.log("your session expired--");
-				        	 $scope.errorOrSuccessMessageOnPage="Your Session Expired.. Please login again";								   
+				        	 $scope.errorOrSuccessMessageOnPage="SESSION_EXPIRED_MSG";								   
 							  $scope.showAdminDashBoard=false;
 							  $scope.showAdminLoginButton=true;
 				         }
 				    	 else if(data == 1){
 				    			 employeeDefaultDetails();
-				    			 $scope.addEmployeeSuccessMsg="Employee Successfully Added!";
+				    			 $scope.addEmployeeSuccessMsg="EMP_ADD_MSG";
 				    		 }
 				    		 else{
-				    			 $scope.addEmployeeSuccessMsg="failed! Try Again";
+				    			 $scope.addEmployeeSuccessMsg="EMP_ADD_FAIL_MSG";		  
 				    		 }
 
 					    });
@@ -1407,19 +1481,19 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 					  });
 				}
 				else
-					 $scope.addEmployeeSuccessMsg="Invalid emailId!";
+					$scope.addEmployeeSuccessMsg="INVALID_EMAIL";
 				}
 				else{
 					
 					console.log("bad request");
-					$scope.addEmployeeSuccessMsg="Request too long !";
+					$scope.addEmployeeSuccessMsg="LONG_REQ";
 				}
 				
 			}
 			else{
 				
 				console.log("invalid employee details");
-				$scope.addEmployeeSuccessMsg="Invalid employee details";
+				$scope.addEmployeeSuccessMsg="INVALID_EMP_DETAILS";
 			}
 			
 			console.log("manually add emp : add emp()");
@@ -1893,7 +1967,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		    		 
 		    	 });
 	  }).error(function(data, status, headers, config) {
-	 	 $scope.result ="error occured due to internal proble please try again id auto" ;
+		  $scope.result ="INTERNAL_PROBLEM_ERROR" ;
+		 	 $scope.criteria=" id auto";
 	 	 });
 			}
 		};
@@ -2007,7 +2082,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 												$scope.hide3 = true;
 												$scope.res = false;
 												$scope.newhide1 = true;
-												$scope.result = "error occured due to some internal problem please try again none.";
+												$scope.result = "INTERNAL_PROBLEM_ERROR";
+												$scope.criteria=" none";
 											});
 						}/* Total Records */
 
@@ -2075,7 +2151,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 												$scope.res = false;
 												$scope.newhide1 = true;
 												$scope.hide4 = true;
-												$scope.result = "error occured due to some internal problem please try again day.";
+												$scope.result = "INTERNAL_PROBLEM_ERROR" ;
+											    $scope.criteria=" day";
 											});
 
 						}/* end of day */
@@ -2144,7 +2221,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 												$scope.res = false;
 												$scope.newhide1 = true;
 												$scope.hide4 = true;
-												$scope.result = "error occured due to some internal problem please try again dates.";
+												$scope.result = "INTERNAL_PROBLEM_ERROR" ;
+												$scope.criteria=" dates";
 											});
 
 						}/* end of from date and to date */
@@ -2217,7 +2295,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 												$scope.res = false;
 												$scope.newhide1 = true;
 												$scope.hide4 = true;
-												$scope.result = "error occured due to some internal problem please try again none.";
+												$scope.result = "INTERNAL_PROBLEM_ERROR";
+												$scope.criteria=" none";
 											});
 						}/* none */
 
@@ -2285,7 +2364,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 												$scope.res = false;
 												$scope.newhide1 = true;
 												$scope.hide4 = true;
-												$scope.result = "error occured due to some internal problem please try again day.";
+												$scope.result = "INTERNAL_PROBLEM_ERROR";
+											    $scope.criteria=" day";
 											});
 
 						}/* day */
@@ -2354,7 +2434,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 												$scope.hide4 = true;
 												$scope.res = false;
 												$scope.newhide1 = true;
-												$scope.result = "error occured due to some internal problem please try again dates.";
+												$scope.result = "INTERNAL_PROBLEM_ERROR" ;
+												 $scope.criteria=" dates";
 											});
 
 						}
@@ -2368,7 +2449,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 					$scope.hide3 = true;
 					$scope.newhide1 = true;
 					$scope.res = false;
-					$scope.result = "if you select single id field should not be empty.";
+					$scope.result = "RESULT";
+					$scope.criteria="";
 				}
 			}
 
@@ -2437,7 +2519,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 										$scope.hide4 = true;
 										$scope.res = false;
 										$scope.newhide1 = true;
-										$scope.result = "error occured due to some internal problem please try again all none.";
+										$scope.result = "INTERNAL_PROBLEM_ERROR";
+										$scope.criteria=" all none";
 									});
 
 				}/* end of Total Records */
@@ -2500,7 +2583,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 										$scope.hide4 = true;
 										$scope.res = false;
 										$scope.newhide1 = true;
-										$scope.result = "error occured due to some internal problem please try again all day.";
+										$scope.result = "INTERNAL_PROBLEM_ERROR";
+										$scope.criteria=" all day";
 									});
 				}/* day */
 
@@ -2563,7 +2647,8 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 										$scope.hide4 = true;
 										$scope.res = false;
 										$scope.newhide1 = true;
-										$scope.result = "error occured due to some internal problem please try again dates all dates.";
+										$scope.result = "INTERNAL_PROBLEM_ERROR";
+										$scope.criteria=" all dates";
 									});
 				}
 			}
@@ -2580,11 +2665,11 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		
 		$scope.setAdminNewPassword=function(){
 			if($scope.adminNewPassword.length < adminNewPasswordMinLength){
-		      	$scope.adminSetNewPasswordSuccessMsg="Password  too  short";
+				$scope.adminSetNewPasswordSuccessMsg="SET_PASSWORD_MSG1";			
 			}
 			else if($scope.adminNewPassword != $scope.adminConfirmNewPassword){
 				
-				$scope.adminSetNewPasswordSuccessMsg="New password and Confirm password not matched";
+				$scope.adminSetNewPasswordSuccessMsg="SET_PASSWORD_MSG2";
 				
 			}
 			else{
@@ -2594,7 +2679,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 				.success(function(data, status, headers, config) {
 					if(data == 1){
 						$scope.showAdminResetPasswordDiv=false;
-						$scope.adminSetNewPasswordSuccessMsg="password sucessfully updated";
+						$scope.adminSetNewPasswordSuccessMsg="SET_PASSWORD_MSG3";
 					}
 						
 			     })
@@ -2677,7 +2762,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		     usernameFlag =false;
 		     passwordFlag =false;
 		     $scope.loginButtonDisable=true;
-		     $scope.adminPasswordType="password";
+		     $scope.adminPasswordType="PWD_TYPE_PWD";
 
 		     $scope.showPassword=false;
 		  
@@ -2692,7 +2777,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		 /* function for show password */
 		  $scope.showAdminPassword=function(){
 			  
-			  $scope.adminPasswordType=($scope.showPassword)?"text":"password";
+			  $scope.adminPasswordType=($scope.showPassword)?"PWD_TYPE_TEXT":"PWD_TYPE_PWD";
 		  };
 		  
 		  /* function for admin id validation */
@@ -2701,7 +2786,12 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 			  if($scope.Admin.userName.match(/^[0-9]*$/)){
 			     if($scope.Admin.userName.length != adminIdLength){
 			       $scope.enableUsernamePropover=true;
-			       $scope.userNamePropoverMsg="Admin Id length must be "+adminIdLength;
+								if($rootScope.languageKey =="de"){
+					     $scope.userNamePropoverMsg="Admin Id lengte moet zijn"+adminIdLength;
+								}
+								else{
+									 $scope.userNamePropoverMsg="Admin Id length must be "+adminIdLength;
+								}
 			       $scope.loginButtonDisable=true;
 			       usernameFlag=false;
 			     }
@@ -2717,7 +2807,7 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 				  usernameFlag=false;
 				  $scope.loginButtonDisable=true;
 				  $scope.enableUsernamePropover=true;
-			      $scope.userNamePropoverMsg="Only Digits allowed";
+				  $scope.userNamePropoverMsg="UNAME_POPOVER_MSG";    
 			      
 			      
 			  }
@@ -2730,7 +2820,14 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 		  $scope.passwordValidation=function(){
 			  $scope.enableUsernamePropover=false;
 			if($scope.Admin.password.length < passwordLength){
-				$scope.passwordPropoverMsg="password contains atleast "+passwordLength+" charecters";
+					
+					if($rootScope.languageKey =="de"){
+						$scope.passwordPropoverMsg="wachtwoord bevat tenminsteast "+passwordLength+" karakters";
+					}
+					else{
+						$scope.passwordPropoverMsg="password contains atleast "+passwordLength+" characters";
+					}
+					
 				$scope.enablePasswordPropover=true;
 				$scope.loginButtonDisable=true;
 				passwordFlag=false;
@@ -2814,23 +2911,23 @@ var app = angular.module('ui.ems.app', ['ngAnimate', 'ui.bootstrap']);
 
 					})
 					.success(
-							function(data, status, headers,	config) {
+							function(data, status, headers,config) {
 								if(data== 1){
 								$scope.hide1=true;
-								$scope.successmsg ="Reset password link sent to  your mail, please check your mail";
-								}
+									$scope.successmsg ="SUCCESSMSG";							
+												}
 								else if(data == 0){
-									$scope.failedmsg="You entered wrong mail Id";
+										$scope.failedmsg="FAILEDMSGFORMAIL";
 								}
 								else{
-									$scope.failedmsg="You entered Invalid adminId";
-								}
+												$scope.failedmsg="FAILEDMSGFORADMINID";
+										}
 							})
-					.error(
+					.error(    
 							function(data, status, headers,
 									config) {
 
-								$scope.failedmsg = "Some internal problem occured try again.";
+								$scope.failedmsg = "INTERNAL_PROBLEM_ERROR"
 	   	      	});
 			
 		}; 
