@@ -1,6 +1,16 @@
 package com.caprusit.ems.domain;
 
-public class JsonEmployee {
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+
+@Entity
+public class JsonEmployee implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String employeeId;
 	private String firstName;
 	private String lastName;

@@ -14,10 +14,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.domain.Employee;
-import com.caprusit.ems.domain.EmployeeD;
+import com.caprusit.ems.domain.JsonEmployee;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
 import com.google.gson.Gson;
 
@@ -49,7 +51,7 @@ public class ManageUserServiceImpl implements IManageUserService {
 	}
 
 	public List<Employee> getAllEmployee() {
-		
+
 		List<Employee> employeeList = manageUserDAO.getEmployees();
 		return employeeList;
 	}
@@ -85,8 +87,7 @@ public class ManageUserServiceImpl implements IManageUserService {
 		((ManageUserServiceImpl) manageUserDAO).updateUser(user);
 	}
 
-	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream,
-			String fileName) {
+	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream, String fileName) {
 
 		logger.info("in upload file(service)");
 		Workbook workbook = null;
@@ -111,84 +112,57 @@ public class ManageUserServiceImpl implements IManageUserService {
 		return excelFileUtility.saveExcelFileData(workbook);
 
 	}
-	
+
 	public int addSingleEmployee(Employee emp, String milliseconds) {
 		emp.setDob(new Date(Long.valueOf(milliseconds)));
 		// return securityDAO.saveEmployee(emp);
 		logger.info("employee in service: " + emp);
-		return  manageUserDAO.saveEmployee(emp);
+		return manageUserDAO.saveEmployee(emp);
 	}
-	
-    public int updateEmployee(Employee employee){
-		
+
+	public int updateEmployee(Employee employee) {
+
 		return manageUserDAO.updateEmployee(employee);
-		
-	}
-public List<EmployeeD> getEmployees2() {
-		
-		List<Employee> employees=manageUserDAO.getEmployees2();
-		
-		
-		Iterator<Employee> iterator=employees.iterator(); 
-		List<EmployeeD> employeeDList=new ArrayList();
-		while(iterator.hasNext()){
-			Employee employee=iterator.next();
-			EmployeeD employeeD=new EmployeeD();
-			employeeD.setEmployeeId(employee.getEmployeeId());
-			employeeD.setFirstName(employee.getFirstName());
-			employeeD.setLastName(employee.getLastName());
-			employeeD.setDob(new SimpleDateFormat("yyyy-MM-dd").format(employee.getDob()));
-			employeeD.setMobileNo(employee.getMobileNo());
-			employeeD.setEmailId(employee.getEmailId());
-			employeeD.setDesignation(employee.getDesignation());
-			employeeD.setRollId(employee.getRollId());
-			employeeD.setStatus(employee.getStatus());
-			employeeD.setDeptId(employee.getDeptId());
-			
-			employeeDList.add(employeeD);
-		      
-		}
-		
-		return employeeDList;
-		
-	}
 
-
-	public List<EmployeeD> getEmployeeOneTime(int i){
-		
-		List<Employee> employees=manageUserDAO.getEmployeeOneTime(i);
-		
-		Iterator<Employee> iterator=employees.iterator(); 
-		List<EmployeeD> employeeDList=new ArrayList();
-		while(iterator.hasNext()){
-			Employee employee=iterator.next();
-			EmployeeD employeeD=new EmployeeD();
-			employeeD.setEmployeeId(employee.getEmployeeId());
-			employeeD.setFirstName(employee.getFirstName());
-			employeeD.setLastName(employee.getLastName());
-			employeeD.setDob(new SimpleDateFormat("yyyy-MM-dd").format(employee.getDob()));
-			employeeD.setMobileNo(employee.getMobileNo());
-			employeeD.setEmailId(employee.getEmailId());
-			employeeD.setDesignation(employee.getDesignation());
-			employeeD.setRollId(employee.getRollId());
-			employeeD.setStatus(employee.getStatus());
-			employeeD.setDeptId(employee.getDeptId());
-			
-			employeeDList.add(employeeD);
-		      
-		}
-		
-		return employeeDList;
 	}
-	
-	public String updateEmployee2(Employee e){
+	@Transactional(propagation=Propagation.REQUIRED , readOnly=true)
+	public List<JsonEmployee> getAllEmployeesData() {
+
+		List<Employee> employees = manageUserDAO.getAllEmployeesData();
+
+		Iterator<Employee> iterator = employees.iterator();
+		List<JsonEmployee> employeejsonList = new ArrayList<JsonEmployee>();
+		while (iterator.hasNext()) {
+			Employee employee = iterator.next();
+			JsonEmployee employeejson = new JsonEmployee();
+			employeejson.setEmployeeId(employee.getEmployeeId()+"");
+			employeejson.setFirstName(employee.getFirstName());
+			employeejson.setLastName(employee.getLastName());
+			employeejson.setDob(new SimpleDateFormat("yyyy-MM-dd").format(employee.getDob()));
+			employeejson.setMobileNo(employee.getMobileNo());
+			employeejson.setEmailId(employee.getEmailId());
+			employeejson.setDesignation(employee.getDesignation());
+			employeejson.setRollId(employee.getRollId()+"");
+			employeejson.setStatus(employee.getStatus()+"");
+			employeejson.setDeptId(employee.getDeptId()+"");
+
+			employeejsonList.add(employeejson);
+
+		}
+
+		return employeejsonList;
+
+	}
+	@Transactional(propagation=Propagation.NESTED)
+	public String updateEmployeeData(Employee e) {
 		System.out.println("Inside home service");
-		Integer rows=manageUserDAO.updateEmployee2(e);
+		Integer rows = manageUserDAO.updateEmployeeData(e);
 		System.out.println("inside home service");
-		String message="Updated rows are ( "+rows+")";
-		
+		String message = "Updated rows are ( " + rows + ")";
+
 		return message;
 	}
 
+	
 
 }
