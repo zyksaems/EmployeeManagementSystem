@@ -162,7 +162,7 @@
 							<th><b>DESIGNATION</b></th>
 							<th><b>ROLE ID</b></th>
 							<th><b>STATUS</b></th>
-							<th><b>DEPARTMANT ID</b></th>
+							<th><b>DEPARTMENT</b></th>
 							<th><b>ACTION</b></th>
 						</tr>
 					</thead>
