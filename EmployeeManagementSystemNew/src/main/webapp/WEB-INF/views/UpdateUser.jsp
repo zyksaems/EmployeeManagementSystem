@@ -28,7 +28,7 @@
 
 
 <!-- custom css -->
-
+<script src="./JS/Admin_logout.js"></script>
 <link rel="stylesheet" href="./CSS/homepage.css">
 <link rel="stylesheet" href="./CSS/header2.css">
 <link rel="stylesheet" href="./CSS/footer.css">

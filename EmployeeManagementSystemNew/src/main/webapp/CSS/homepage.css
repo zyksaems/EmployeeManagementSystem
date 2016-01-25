@@ -1,8 +1,22 @@
-
 .ems-footer{
-	
-	
 	margin-top: 14%;
 }
+#forgotpassword_button {
+	right:20px;
+	float: right;
+}
 
-  
+#forgotpasshref {
+	float: left;
+}
+  #email1{
+  width: 350px;
+  height: 50px;
+  }
+  #empid{
+  width: 390px;
+  height: 50px;
+  }
+  .email_symbal{
+  height: 30px;
+  }
