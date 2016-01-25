@@ -836,31 +836,8 @@ $("document").ready(
 	/* END---------------------- employee change password functionality ------------------------------- END */	
 			   
 				
-
-				// start of  forgot password page action code 
-
-				$("#forgotpassword_button").click(function(){
-					
-					var id=document.getElementById("empid").value;
-					var email=document.getElementById("email1").value;
-					
-					 $.ajax({
-				        type: 'POST',
-				        url: 'forgotpassword',
-				        data:{empid:id,empemail1:email} ,
-				        success: function (data) {
-				 
-				        	$("#hide1").hide();
-				        	document.getElementById("res").innerHTML="Reset password page link sent to  your mail, please check your mail";
-				        	 
-				        },
-				        error: function (Response, Status, Error) {
-				        
-				        	document.getElementById("res1").innerHTML="please try again"  }
-				    }) 
-					
-				});// end of forgot password page
+                
 				
 				
 				
-			});/*  END -- ready() */
+});/*  END -- ready() */

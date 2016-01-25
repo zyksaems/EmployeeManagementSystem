@@ -436,7 +436,7 @@
 			        url: "/EmployeeManagementSystemNew/sendObject.do",
 			        data:empObj,
 			        success: function(msg) {
-			            alert("Updated");
+			            //alert("Updated");
 			        },
 			        error: function(msg) {
 			    

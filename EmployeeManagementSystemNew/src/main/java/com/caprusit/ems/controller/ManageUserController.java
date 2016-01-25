@@ -129,6 +129,7 @@ public class ManageUserController {
 	public String  updateUser() {
 		
 		return "UpdateUser";
+		//return "ViewOrUpdate";
 		
 	}
 	/**

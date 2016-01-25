@@ -128,7 +128,7 @@ public class SecurityController {
 	
 		logger.info("port number of server: "+request.getServerPort());
 		logger.info("name of server: "+request.getServerName());
-		String url="http://"+request.getServerName()+":"+request.getServerPort()+"/EmployeeManagementSystem/getResetPasswordPage.do?id="+adminId+"&&pas="+ Calendar.getInstance().getTimeInMillis();
+		String url="http://"+request.getServerName()+":"+request.getServerPort()+"/EmployeeManagementSystemNew/getResetPasswordPage.do?id="+adminId+"&&pas="+ Calendar.getInstance().getTimeInMillis();
 		logger.info("url created for reset password : "+url);
 		logger.info("in admin forgot password:  id: " + adminId + "    email: "+ emailId);
 		logger.info("reset admin id set(/forgotPasswordHome): "+resetPasswordAdminSet);
@@ -141,13 +141,13 @@ public class SecurityController {
 	 * In this JSP page admin can reset his password
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/ResetPasswordPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/getResetPasswordPage", method = RequestMethod.GET)
 	public ModelAndView getResetPAsswordPage(HttpServletRequest request,@RequestParam("id") int adminId,@RequestParam("pas") long milliSeconds){
 		logger.info("admin id received for reset password  :"+adminId);
 		ServletContext servletContext= request.getSession().getServletContext();
 		long currentMilliSeconds=Calendar.getInstance().getTimeInMillis();
 		Set<Integer> resetAdminIdSet=(Set<Integer>) servletContext.getAttribute("resetPaswordAdminIdList");
-		ModelAndView resetAdminModelAndVlew=(resetAdminIdSet != null && resetAdminIdSet.contains(adminId) && (currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000) )?new ModelAndView("NewAdminDashboard","resetPasswordAdminId",adminId):new ModelAndView("NewAdminDashboard","errorMsg","Sorry, This link expired");
+		ModelAndView resetAdminModelAndVlew=(resetAdminIdSet != null && resetAdminIdSet.contains(adminId) && (currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000) )?new ModelAndView("ResetPasswordPage","resetPasswordAdminId",adminId):new ModelAndView("ResetPasswordPage","errorMsg","Sorry, This link is expired!!");
 		logger.info("model and view created for reset password: "+resetAdminModelAndVlew);
 		logger.info("condition for time checking:   "+(currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000 ));
 		logger.info("condition for time checking    currentTime:-   "+currentMilliSeconds );

@@ -13,10 +13,11 @@
 
 <!-- custom javascript file with jQuery code-->
 <script src="./JS/homepage.js"></script>
-<!-- <script src="./testHome/js/AttendanceForm.js"></script> -->
-<!-- <script src="./testHome/js/Admin_AdminSignin.js"></script>  -->
+
 <script src="./JS/AttendanceForm.js"></script>
+
 <script src="./JS/Admin_login.js"></script>
+
 <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png" />
 <!-- boottrap css-->
 <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
@@ -247,8 +248,8 @@
 						</form>
 						<!-- forgot password form -->
 						   <font color="green"><p id="res"></p></font> 
-						<form class="form" action="#" id="forgot-password-form">
-						<fieldset>
+						<form class="form-signin" action="#" id="forgot-password-form">
+						
 							<div class="form-group has-feedback" id="Forgot_password_div">
 								<label>Admin ID</label> <input type="text"
 									class="form-control text-center" id="empid"
@@ -272,17 +273,19 @@
 										id="forgotpassword-email-span"></span>
 								</div>
 							</div>
-							
-								<button class="btn btn-primary" align="center" id="forgotpassword_button">send</button>
-						
-						</fieldset>
+							<div class="row">
+						        <button class="btn btn-primary" id="forgotpassword_button">send</button><br>
+						    </div>
+                            <font color="red"><p class="text-center" id="validation_res"></p></font>
 					</form>
 					</div>
-					<font color="red"><p id="validation_res"></p></font>
+					
 				</div>
 				<div class="modal-footer ">
-				<a id="forgotpasshref" href="#">back to login</a>
-					<button type="button" class="btn btn-warning " data-dismiss="modal">Close</button>
+				    <div class="col-sm-3"><a id="back-to-login" href="#">back to login</a></div>
+				    <div class="col-sm-7"></div>
+				    <div class="col-sm-2"><button type="button" class="btn btn-warning " data-dismiss="modal">Close</button></div>
+				    					
 				</div>
 			</div>  <!-- Content -->
 		</div>

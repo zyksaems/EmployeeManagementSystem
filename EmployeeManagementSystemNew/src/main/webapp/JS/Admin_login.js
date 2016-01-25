@@ -18,6 +18,11 @@ $("document").ready(function(){
 	var adminLoginForm_id="#admin-login-form";
 	var adminForgotPasswordLink_id="#admin-login-forgot-password";
 	var forgotPasswordForm_id="#forgot-password-form";
+	var backToLogin_id="#back-to-login";
+	var forgotPassword_button_id="#forgotpassword_button";
+	var adminID_id="#empid";
+	var email_id="#email1";
+	var forgotPassword_msg_id="#validation_res";
 	
 	
 	/* variable for employee id length (number) */
@@ -51,7 +56,7 @@ $("document").ready(function(){
 	var adminLoginPass="";
 	
 	var userGlyphicon_class="glyphicon-user";
-	var pencilGlyphicon_class="glyphicon-lock";
+	var lockGlyphicon_class="glyphicon-lock";
 	
 	var modalHeader_id="#model-header";
 	var modalHeaderName_id="#modal-header-text";
@@ -78,20 +83,23 @@ $("document").ready(function(){
 		$(admin_show_pass_id).prop('checked',false);
 		
 		
+		
 	}; // END -- setDefaultValues()
 	
-	
+	/*function call to hide modals*/
 	hideModals();
 	
 	function hideModals(){
 	
 	    $(forgotPasswordForm_id).hide();
 	    $(adminLoginForm_id).show();
-	     $("#forgotpasshref").hide();
-	   $(modalHeader_id).addClass(userGlyphicon_class);
-	   $(modalHeader_id).text("Admin sign-in");
+	    $(modalHeader_id).addClass(userGlyphicon_class); //userGlyphicon_class
+	    $(modalHeader_id).text("Admin signin");
+
+	    $(backToLogin_id).hide();
 	
-	}
+	};
+	
 	
 	/*
 	 * This function executes when keyup(admin Id)
@@ -172,23 +180,6 @@ $("document").ready(function(){
 		
 	});// END -- $(admin_show_pass_id).click()
 		
-	/*
-	 * This function executes when forgot password link clicks
-	 */
-	$(adminForgotPasswordLink_id).click(function(){
-		
-		var isChecked=$(admin_show_pass_id).prop('checked');
-		if(isChecked){
-			
-			$(adminPass_val_id).prop('type',"text");
-		}
-		else{
-			$(adminPass_val_id).prop('type',"password");
-		}
-
-		
-	});// END -- $(adminForgotPasswordLink_id).click()
-	
 	
 	 /*
 	 * This function to stop reloading page
@@ -285,63 +276,73 @@ $("document").ready(function(){
     	window.location.href="/"+applicationName+"/"+adminHomePageRequest;
 		
 	};// END -- getAdminHomePage()
+	
+	
 
 	/*forgot password functionality code*/
 	
+    $(forgotPasswordForm_id).submit(function(){
+		
+		return false;
+		
+	});
 
 	$(adminForgotPasswordLink_id).click(function(){
 		
 		$(adminLoginForm_id).hide();
 		$(forgotPasswordForm_id).show();
-		$("#forgotpasshref").show();
-		$(modalHeader_id).addClass(pencilGlyphicon_class);
+		$(backToLogin_id).show();
+		$(modalHeader_id).removeClass(userGlyphicon_class).addClass(lockGlyphicon_class);
 		$(modalHeader_id).text("forgot Password");
 		
 	});
-	$("#forgotpasshref").click(function(){
-		 $(forgotPasswordForm_id).hide();
+	
+	$(backToLogin_id).click(function(){
+		    $(forgotPasswordForm_id).hide();
 		    $(adminLoginForm_id).show();
-		     $("#forgotpasshref").hide();
-		   $(modalHeader_id).addClass(userGlyphicon_class);
-		   $(modalHeader_id).text("Admin sign-in");		
+		    $(backToLogin_id).hide();
+		    $("#res").hide();
+		    $(modalHeader_id).removeClass(lockGlyphicon_class).addClass(userGlyphicon_class);
+		    $(modalHeader_id).text("Admin sign-in");		
 	});
 	
 
-	$("#forgotpassword_button").click(function(){
+	$(forgotPassword_button_id).click(function(){
 		
-		var id=document.getElementById("empid").value;
-		var email=document.getElementById("email1").value;
-		if(id=="" && email==""){
+		var id=$(adminID_id).val();
+		var email=$(email_id).val();
 		
+		if(id !="" && email !=""){
+			$(forgotPassword_msg_id).text("Please wait...");
 		 $.ajax({
 	        type: 'POST',
 	        url: 'forgotPasswordHome.do',
 	        data:{id:id,email:email} ,
 	        success: function (data) {
-	 if(data==1)
-		 {
-	        	$("#validation_res").hide();
+	       if(data==1)
+		   {
+	        	$(forgotPassword_msg_id).hide();
 	        	$(forgotPasswordForm_id).hide();
-	        	document.getElementById("res").innerHTML="Reset password page link sent to  your mail, please check your mail";
-		 }
-	 else if(data==0)
-		 {
+	        	$("#res").text("Reset password page link sent to  your mail, please check your mail");
+		   }
+	       else if(data==0)
+		   {
 		 
-     	document.getElementById("validation_res").innerHTML="Entered wrong mail id.please enter valid mail id";
-		 }
-	 else{
+     	     $(forgotPassword_msg_id).text("Entered wrong email id, please enter valid mail id");
+		   }
+	       else{
 		
-	     	document.getElementById("validation_res").innerHTML="Incorrect admin id.please enter valid admin id";
-	 }
+		      $(forgotPassword_msg_id).text("Incorrect admin id.please enter valid admin id");
+	        }
 	        },
 	        error: function (Response, Status, Error) {
 	        
-	        	document.getElementById("validation_res").innerHTML="please try again";  }
-	    }) 
+	        	$(forgotPassword_msg_id).text("please try again");  }
+	    });
 		}
 		else
 			{
-			document.getElementById("validation_res").innerHTML="fields should not be empty";
+			$(forgotPassword_msg_id).text("fields should not be empty");
 			}
 	});
 	/*end of forgot password page*/

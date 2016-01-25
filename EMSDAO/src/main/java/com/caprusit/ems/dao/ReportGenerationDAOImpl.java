@@ -36,7 +36,8 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		
 		Session session = sessionFactory.openSession();
 		
-		SQLQuery query = session.createSQLQuery("select employeeid from PRAKASH.employee_table where employeeid like '"+employeeId+"%'");
+		String hql ="select employeeId from com.caprusit.ems.domain.Employee where employeeId like '"+employeeId+"%'";
+		Query query= session.createQuery(hql); 		  
 		List<Integer> pusList = query.list();
 		logger.info("info list in dao: "+pusList);
 		
@@ -48,7 +49,9 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 	logger.info("inside ReportGenerationDAOImpl getAutoCompleteInfo()");
 
 		Session session = sessionFactory.openSession();
-		SQLQuery query = session.createSQLQuery("select firstname,lastname from employee_table where firstname like '"+employeeId+"%'");
+		
+		String hql ="select firstName, lastName from com.caprusit.ems.domain.Employee where firstName like '"+employeeId+"%'";
+		Query query= session.createQuery(hql); 
 		List<String>pusList = query.list();
 		return pusList;
 	}

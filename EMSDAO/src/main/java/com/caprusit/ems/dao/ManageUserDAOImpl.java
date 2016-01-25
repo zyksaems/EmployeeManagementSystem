@@ -90,11 +90,8 @@ public class ManageUserDAOImpl implements IManageUserDAO{
     
     public List<Employee> getAllEmployeesData() {
 		Session session = sessionFactory.openSession();
-		String sql = "SELECT * FROM PRAKASH.EMPLOYEE_TABLE";
-		SQLQuery query = session.createSQLQuery(sql);
-		query.addEntity(Employee.class);
-		@SuppressWarnings("unchecked")
-		List<Employee> results = query.list();		
+		Criteria allEmployeeCriteria=session.createCriteria(Employee.class);	
+		List<Employee> results = allEmployeeCriteria.list();		
 		session.close();
 		return results;
 	}
