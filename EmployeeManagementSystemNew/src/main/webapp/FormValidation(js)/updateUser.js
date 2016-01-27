@@ -36,7 +36,7 @@
 	    pager.data("curr",0);
 	    
 	    if (settings.showPrevNext){
-	        $('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
+	        $('<li><a href="#" class="prev_link"><<</a></li>').appendTo(pager);
 	    }
 	    
 	    var curr = 0;
@@ -46,7 +46,7 @@
 	    }
 	    
 	    if (settings.showPrevNext){
-	        $('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
+	        $('<li><a href="#" class="next_link">>></a></li>').appendTo(pager);
 	    }
 	    
 	    pager.find('.page_link:first').addClass('active');
@@ -268,7 +268,7 @@
               rollid: {
                   validators: {
                       notEmpty: {
-                          message: 'Role Id Is Required'
+                          message: '1="Software Engineer",2="System Analyst",3="Web Developer",4="Software Tester"'
                       },
                       stringLength:{
                       	max:1 ,
@@ -284,7 +284,7 @@
               status: {
                   validators: {
                       notEmpty: {
-                          message: 'Status Is Required'
+                          message: '0="Inactive" 1="Active"'
                       },
                       stringLength:{
                       	max:1  ,
@@ -300,7 +300,7 @@
               deptid: {
                   validators: {
                       notEmpty: {
-                          message: 'Department Id Is Required'
+                          message: '10="Production" 11="Development" 12="Testing" 13="Sales" 14="HRM"'
                       },
                       stringLength:{
                     	min:2,
@@ -436,7 +436,7 @@
 			        url: "/EmployeeManagementSystemNew/sendObject.do",
 			        data:empObj,
 			        success: function(msg) {
-			            //alert("Updated");
+			          /*  alert("Updated");*/
 			        },
 			        error: function(msg) {
 			    
