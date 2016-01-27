@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.domain.EmployeeForDate;
 import com.caprusit.ems.domain.JsonEmployee;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
 import com.google.gson.Gson;
@@ -128,12 +129,12 @@ public class ManageUserServiceImpl implements IManageUserService {
 	@Transactional(propagation=Propagation.REQUIRED , readOnly=true)
 	public List<JsonEmployee> getAllEmployeesData() {
 
-		List<Employee> employees = manageUserDAO.getAllEmployeesData();
+		List<EmployeeForDate> employees = manageUserDAO.getAllEmployeesData();
 
-		Iterator<Employee> iterator = employees.iterator();
+		Iterator<EmployeeForDate> iterator = employees.iterator();
 		List<JsonEmployee> employeejsonList = new ArrayList<JsonEmployee>();
 		while (iterator.hasNext()) {
-			Employee employee = iterator.next();
+			EmployeeForDate employee = iterator.next();
 			JsonEmployee employeejson = new JsonEmployee();
 			employeejson.setEmployeeId(employee.getEmployeeId()+"");
 			employeejson.setFirstName(employee.getFirstName());
@@ -142,9 +143,9 @@ public class ManageUserServiceImpl implements IManageUserService {
 			employeejson.setMobileNo(employee.getMobileNo());
 			employeejson.setEmailId(employee.getEmailId());
 			employeejson.setDesignation(employee.getDesignation());
-			employeejson.setRollId(employee.getRollId()+"");
-			employeejson.setStatus(employee.getStatus()+"");
-			employeejson.setDeptId(employee.getDeptId()+"");
+			employeejson.setRollId(employee.getRoleType());
+			employeejson.setStatus(employee.getStatus());
+			employeejson.setDeptId(employee.getDeptName());
 
 			employeejsonList.add(employeejson);
 

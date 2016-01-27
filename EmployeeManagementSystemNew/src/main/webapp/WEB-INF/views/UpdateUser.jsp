@@ -160,7 +160,7 @@
 							<th><b>MOBILE NO</b></th>
 							<th><b>EMAIL ID</b></th>
 							<th><b>DESIGNATION</b></th>
-							<th><b>ROLE ID</b></th>
+							<th><b>ROLE </b></th>
 							<th><b>STATUS</b></th>
 							<th><b>DEPARTMENT</b></th>
 							<th><b>ACTION</b></th>

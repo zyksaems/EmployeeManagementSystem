@@ -1,22 +1,22 @@
 package com.caprusit.ems.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-
-
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.domain.EmployeeForDate;
 
 @Repository
 public class ManageUserDAOImpl implements IManageUserDAO{
@@ -88,12 +88,64 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 	}
     
     
-    public List<Employee> getAllEmployeesData() {
+    public List<EmployeeForDate> getAllEmployeesData() {
 		Session session = sessionFactory.openSession();
-		Criteria allEmployeeCriteria=session.createCriteria(Employee.class);	
-		List<Employee> results = allEmployeeCriteria.list();		
-		session.close();
-		return results;
+		String str1="select E.employeeId,E.firstName,E.lastName,E.dob,E.mobileNo,E.emailId,E.designation,R.roleType,E.status,D.deptName  from  Employee as E , Role as R,Department as D  where R.roleId=E.rollId and D.deptId=E.deptId";
+		Query qry= session.createQuery(str1);
+
+		List<Object[]> l = qry.list();
+		Iterator<Object[]> it=l.iterator();
+		
+		List<EmployeeForDate> list=new ArrayList<EmployeeForDate>();
+		
+		int length=l.size();
+		EmployeeForDate[] err=new EmployeeForDate[length];
+		System.out.println("by annotation");
+		
+		System.out.println("=======================================================");
+
+		while(it.hasNext())
+		{
+			EmployeeForDate epf=new EmployeeForDate();
+			Object[] rows = (Object[])it.next();
+			
+				int id= (Integer) rows[0];
+				String fname=(String)rows[1];
+				String lname=(String)rows[2];
+				Date dob=(Date)rows[3];
+				String mobileno=(String)rows[4];
+				String email=(String)rows[5];
+				String designation=(String)rows[6];
+				String roletype=(String)rows[7];
+				String status=(String)rows[8];
+				String deptname=(String)rows[9];
+				
+				epf.setEmployeeId(id);
+				epf.setFirstName(fname);
+				epf.setLastName(lname);
+				epf.setDob(dob);
+				epf.setMobileNo(mobileno);
+				epf.setEmailId(email);
+				epf.setDesignation(designation);
+				epf.setRoleType(roletype);
+				epf.setStatus(status);
+				epf.setDeptName(deptname);
+				
+				//System.out.println(epf);
+				
+				list.add(epf);
+			
+			/*Object rows[] = (Object[])it.next();
+			System.out.println(rows[0]+ "||" +rows[1]+"||"+rows[2]+"||"+rows[3]+ "||" +rows[4]+"||"+rows[5]+"||"+rows[6]+ "||" +rows[7]+"||"+rows[8]+"||"+rows[9]);*/
+		}
+		System.out.println("by employeeformatdate ");
+		Iterator<EmployeeForDate> list2=list.iterator();
+		
+		while(list2.hasNext()){
+			System.out.println(list2.next());
+		}
+				session.close();
+		return list;
 	}
 	
 	public Integer updateEmployeeData(Employee e){

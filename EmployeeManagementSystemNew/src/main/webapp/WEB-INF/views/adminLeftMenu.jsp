@@ -63,7 +63,7 @@
 						</ul>
 						<li><a href="/EmployeeManagementSystemNew/getMonthlyReportGenerationPage.do">Monthly Reports</a></li>
 						</ul>
-						<li><a href="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do">annually Reports</a></li>
+						<li><a href="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do">Annual Reports</a></li>
 						</ul>
 					</div>
 			<h3>View Attendance</h3>
@@ -85,7 +85,7 @@
 			<li>
 			<a href="/EmployeeManagementSystemNew/getMonthlyProductivityPage.do" id="monthly-productivity-link">Monthly Productivity</a></li>
 			<li>
-			<a href="/EmployeeManagementSystemNew/getAnnualProductivityPage.do"  id="anual-productivity-link">Annually Productivity</a></li>
+			<a href="/EmployeeManagementSystemNew/getAnnualProductivityPage.do"  id="anual-productivity-link">Annual Productivity</a></li>
 			</ul>
 			</div>
 			</div> 

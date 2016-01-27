@@ -3,6 +3,7 @@ package com.caprusit.ems.dao;
 import java.util.List;
 
 import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.domain.EmployeeForDate;
 
 public interface IManageUserDAO {
 	
@@ -17,7 +18,7 @@ public interface IManageUserDAO {
 
 	public int updateEmployee(Employee emp);
 	
-	public List<Employee> getAllEmployeesData();
+	public List<EmployeeForDate> getAllEmployeesData();
 	
 	public Integer updateEmployeeData(Employee e);
 
