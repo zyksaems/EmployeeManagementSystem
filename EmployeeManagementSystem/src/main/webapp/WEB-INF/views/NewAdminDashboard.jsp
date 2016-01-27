@@ -1024,7 +1024,7 @@
 
            </div>
             <div class="form-group">
-                <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
+                <label class=" col-sm-12 control-label" >{{"ENTER_EMPLOYEE_ID"|translate}}</label> 
               <div class="col-sm-12">
                      <input type="text" class="form-control" id="" ng-model="employeeId">
                       
@@ -1032,7 +1032,7 @@
             </div>
             
             <div class="form-group "  >
-                 <label class=" col-sm-12 control-label" >select Date</label>
+                 <label class=" col-sm-12 control-label" >{{"SEL_DATE"|translate}}</label>
               <div class="col-sm-12">
                      <input type="date" class="form-control"  ng-model="weeklyDate">
               </div>
@@ -1041,7 +1041,7 @@
             
             <div class="form-group "  >
               <div class="col-sm-12">
-                     <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showLine()">Show</button>
+                     <button class=" form-control btn btn-info btn-Text btn-Primary-Color "  ng-click="showLine()">{{"SHOW"|translate}}</button>
               </div>
            </div>
           
@@ -1154,7 +1154,7 @@
 </div> <!-- END of container division -->
 
 
-<div ng-controller="LanguageController">
+<div ng-controller="LanguageController" style="margin-left: 15px">
      <button class="btn btn-primary" ng-click="changeLanguage('de')" translate="BUTTON_TEXT_DE"></button>
      <button class="btn btn-primary" ng-click="changeLanguage('en')" translate="BUTTON_TEXT_EN"></button>
      <button class="btn btn-primary" ng-click="changeLanguage('hi')" translate="BUTTON_TEXT_HI"></button>
