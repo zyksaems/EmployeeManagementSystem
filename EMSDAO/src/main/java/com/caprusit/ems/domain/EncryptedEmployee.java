@@ -12,6 +12,8 @@ import javax.persistence.Table;
 @Table(name = "PRAKASH.employeePassword_table")
 public class EncryptedEmployee implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	int employeeId;
 	

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class ChangePasswordRequest implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int userName;
 	private String currentPassword;
 	private String newPassword;

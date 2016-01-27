@@ -12,7 +12,6 @@ import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.EmployeeAttendanceRequest;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.User;
-import com.caprusit.ems.utility.EncryptionUtility;
 import com.caprusit.ems.utility.ValidatePasswordUtility;
 
 @Service

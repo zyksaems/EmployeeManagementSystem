@@ -97,9 +97,8 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		Iterator<Object[]> it=l.iterator();
 		
 		List<EmployeeForDate> list=new ArrayList<EmployeeForDate>();
+
 		
-		int length=l.size();
-		EmployeeForDate[] err=new EmployeeForDate[length];
 		System.out.println("by annotation");
 		
 		System.out.println("=======================================================");

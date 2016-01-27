@@ -47,7 +47,7 @@ public class EncryptionUtility {
 				
 				cipher=Cipher.getInstance("AES");
 				
-				cipher.init(cipher.DECRYPT_MODE, secreteKey);
+				cipher.init(Cipher.DECRYPT_MODE, secreteKey);
 				
 				byte[] decryptedPassword=cipher.doFinal(EncryptedPassword);
 				

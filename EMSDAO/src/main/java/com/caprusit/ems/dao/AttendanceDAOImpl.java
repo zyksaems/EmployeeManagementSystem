@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.caprusit.ems.domain.Attendance;
-import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.User;
 
 @Repository

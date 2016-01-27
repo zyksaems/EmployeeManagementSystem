@@ -1,7 +1,6 @@
 package com.caprusit.ems.dao;
 
 import com.caprusit.ems.domain.Attendance;
-import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.User;
 
 public interface IAttendanceDAO {
