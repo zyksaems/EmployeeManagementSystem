@@ -17,22 +17,23 @@ app.config(function($translateProvider) {
 	 * depending upon the language you choose
 	 * 
 	 */ 
+	 var language = window.navigator.systemLanguage || window.navigator.language;
+	  //alert("language  "+language);
 	
-	$translateProvider.useStaticFilesLoader({
-	    prefix: 'json/lang-',
-	    suffix: '.json'
-	  });
+	 $translateProvider
+	 .useStaticFilesLoader({
+   prefix: 'json/lang-',
+   suffix: '.json'
+	 })
+	 .registerAvailableLanguageKeys(['en', 'de','hi'], {
+     'en*': 'en',
+     'de*':'de',
+     'hi*': 'hi',
+     } 	)
+     .determinePreferredLanguage(language);  
+	});
 	
-	/*
-	 * This $translateProvider.preferredLanguage('en') function is used to set the default 
-	 * language of the browser as "English" or you can set as per your requirement.
-	 */
-$translateProvider.preferredLanguage('en');
-
-
-});
-
-
+	
 	app.controller('ValidController', function($scope, $http,$window,$uibModal, $log,$translate,$rootScope) {
 		
 		$rootScope.languageKey='en';
