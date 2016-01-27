@@ -1,0 +1,15 @@
+/* override the well default color style */ 
+    .well-custom{
+      /* background-color: #9932CC; */
+      color :white;
+       border-radius: 0;
+        background-color: #754714;
+       /*  opacity:0.9; */
+    }
+    
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      
+    }

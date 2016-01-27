@@ -42,6 +42,7 @@
        <link href="./css/Admin_Login.css" rel="stylesheet">
        <link href="./css/AttendanceForm.css" rel="stylesheet">
        <link href="./alertJS/alert.css" rel="stylesheet">
+       <link  href="./css/header.css"  rel="stylesheet">
        <link href="./css/Admin_changePassword.css" rel="stylesheet">
        <link href="./css/Admin_ViewOrEditEmployee.css" rel="stylesheet">
        <link rel="stylesheet" href="./css/Admin_addEmployeeDetails.css">
@@ -58,18 +59,26 @@
 
   <div class="container-fluid" ng-controller="ValidController">
   
-  <!-- Header  Part-->
-  <div class="row headerDiv"> 
+  <!-- EMS  Header -->
+  
+<div class="well-lg well-custom">
+  <div class="container text-center">
+    <h1><b><label  translate='EMS_Title'></label></b></h1>      
+  </div>
+</div>
+  
+  
+ <!--  <div class="row headerDiv"> 
     <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
       <uib-slide ng-repeat="slide in slides" active="slide.active">
-        <img ng-src="{{slide.image}}" style="margin: auto"> <!-- style="margin:auto;" -->
+        <img ng-src="{{slide.image}}" style="margin: auto"> style="margin:auto;"
         <div class="carousel-caption">
         </div>
       </uib-slide>
     </uib-carousel>
-
+ -->
   
-  </div>
+ 
   
   <c:choose>
     <c:when test="${errorMsg != null}">
