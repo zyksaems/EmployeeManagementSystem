@@ -63,13 +63,13 @@ $(function() {
          		   $("#Employee_Details").show();
        			 	
                 	var report= data.employeeReport[0];
-                	var endTime=(report.endTime == undefined)?"Not Logged Out":report.endTime;
+                	var endTime=(report.endTime == undefined)?"Not Logged Out":report.endTime.substr(12,23);
                 	$( "#print" ).show();
                 	$("#back").show();
                 	$("#tbody").show();
                 	txt+="<tbody id='remove'>"
                         
-                            txt += "<tr><td>"+report.attendanceDate+"</td><td>"+report.startTime+"</td><td>"+endTime+"</td><td>"+report.workingHours+"</td><td>"+report.dayIndicator+"</td></tr>";
+                            txt += "<tr><td>"+report.attendanceDate+"</td><td>"+report.startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+report.workingHours+"</td><td>"+report.dayIndicator+"</td></tr>";
                             companyproduct=companyproduct+9;
                             empproduct=empproduct+report.workingHours;
                 	txt+="</tbody>";
@@ -122,9 +122,9 @@ $(function() {
 		                	$("#tbody").show();
 		                	txt+="<tbody id='remove'>"
 		                    for(var i=0;i<len;i++){
-		                    	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime;
+		                    	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime.substr(12,23);
 		                    	
-		                            txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
+		                            txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
 		                            companyproduct=companyproduct+9;
 		                            empproduct=empproduct+data[i].workingHours;
 		                    }

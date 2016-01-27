@@ -64,9 +64,9 @@ $(function() {
                 	txt+="<tbody id='remove'>"
                         for(var i=0;i<len;i++){
                             
-                        		var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime;
+                        		var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime.substr(12,23);
                         	
-                                txt += "<tr><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
+                                txt += "<tr><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
                                 companyproduct=companyproduct+9;
                                 empproduct=empproduct+data[i].workingHours;
                         }
@@ -116,9 +116,9 @@ $(function() {
 		                	txt+="<tbody id='remove'>"
 			                    for(var i=0;i<len;i++){
 			                        	
-			                    		var endTime=(data[i].endTime == undefined)?"still working":data[i].endTime;
+			                    		var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime.substr(12,23);
 			                    	
-			                            txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
+			                            txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
 			                            companyproduct=companyproduct+9;
 			                            empproduct=empproduct+data[i].workingHours;
 			                    }
