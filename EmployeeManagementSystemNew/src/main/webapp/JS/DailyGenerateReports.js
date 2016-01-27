@@ -1,26 +1,19 @@
 $(function() {
-	
-	
-	
+	//Start of Daily Generate Reports functionality code
 	$("#dayreports").click(function()
 	{
 		var empId = $( "#id" ).val();
 		
-		
-
 		 $("#table").hide();
 		 $("#table1").hide();
 		 $( "#print" ).hide();
+		 $("#back").hide();
 		 $("#title").hide();
 		 $("#Employee_Details").hide();
 		 $( "#res" ).hide();
-		
 		$("#company_work_hours").text(0);
-		$("#emp_work_hours").text(0);
-		
+		$("#emp_work_hours").text(0);	
 		 $("#remove").remove();
-        
-		
 		var day1=$("#datepicker").val();
 		var newday=new Date(day1);
 		var newdayMilli=newday.getTime();
@@ -35,6 +28,7 @@ $(function() {
 			console.log("break statement executing ");
 			
          }
+	  //Result search for single employee in Daily generate report page
 	    else if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		{
 			console.log(" getReportByIdAndDate ");
@@ -72,6 +66,7 @@ $(function() {
                 	var report= data.employeeReport[0];
                 	var endTime=(report.endTime == undefined)?"Not Logged Out":report.endTime;
                 	$( "#print" ).show();
+                	$("#back").show();
                 	$("#tbody").show();
                 	txt+="<tbody id='remove'>"
                         
@@ -95,7 +90,8 @@ $(function() {
 			$( "#res" ).show();
 			$("#res").text("Error occured Please try again.");
 		});
-	}
+	}//End of Single
+		//Result search for All employee in Daily generate report page
 		else if($( "#select" ).val()=="all" && day1!="")
 			{
 				var day1=$("#datepicker").val();
@@ -123,6 +119,7 @@ $(function() {
 		                	$("#table").show();
 		                	$("#title").show();
 		                	$( "#print" ).show();
+		                	$("#back").show();
 		                	$("#tbody").show();
 		                	txt+="<tbody id='remove'>"
 		                    for(var i=0;i<len;i++){
@@ -156,10 +153,10 @@ $(function() {
 			$( "#res" ).show();
 			$("#res").text("field should not be empty.");
 		}
-	});
+	});//End of Daily Generate Reports functionality 
 	
 });
-	
+//disable and enable of Employee id field
 	function getDisable()
 	{
 		if($( "#select" ).val()=="all")

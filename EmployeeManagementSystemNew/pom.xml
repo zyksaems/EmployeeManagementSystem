@@ -80,7 +80,6 @@
 			<version>1</version>
 		</dependency>
 
-
 		<!-- java.persistance -->
 		<dependency>
 			<groupId>javax.persistence</groupId>

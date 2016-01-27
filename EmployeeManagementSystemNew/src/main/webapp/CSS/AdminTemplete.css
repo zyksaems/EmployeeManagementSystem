@@ -51,7 +51,12 @@ span:HOVER {
 }
 
 #print {
-	left: 50%;
+	left: 48%;
+	position: relative;
+}
+
+#back {
+	left: 46%;
 	position: relative;
 }
 

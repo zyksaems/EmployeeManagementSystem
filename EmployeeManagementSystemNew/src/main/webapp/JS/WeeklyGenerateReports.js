@@ -1,10 +1,11 @@
  $(function() {
+	//Start of Weekly Generate Reports functionality code
 	$("#weekreports").click(function()
 	{
-
 		 $("#table").hide();
 		 $("#table1").hide();
 		 $( "#print" ).hide();
+		 $("#back").hide();
 		$("#title").hide();
 		$("#Employee_Details").hide();
 		$( "#res" ).hide();
@@ -24,6 +25,7 @@
 				console.log("break statement executing ");
 				
 	         }
+		//Result search by single employee id
 		 else if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		 {
 			var request = $.ajax({
@@ -56,6 +58,7 @@
             		$("#Employee_Details").show();
                 	$("#table1").show();
                 	$( "#print" ).show();
+                	$("#back").show();
                 	$("#tbody").show();
                 	txt+="<tbody id='remove'>"
                     for(var i=0;i<len;i++){
@@ -83,7 +86,8 @@
 			$( "#res" ).show();
 			document.getElementById("res").innerHTML="Error occured due to some internal problem.please try again.";
 		});
-	}
+	}//End of single search
+			//Result search for all Employees in weekly generate report page
 		else if($( "#select" ).val()=="all" && day1!="")
 			{
 				var request = $.ajax({
@@ -103,6 +107,7 @@
 		                	$("#title").show();
 		                	$("#table").show();
 		                	$( "#print" ).show();
+		                	$("#back").show();
 		                	$("#tbody").show();
 		                	txt+="<tbody id='remove'>"
 		                    for(var i=0;i<len;i++){
@@ -135,9 +140,10 @@
 		else{
 			$( "#res" ).show();
 			document.getElementById("res").innerHTML="field should not be empty.";
-		}
+		}//END of Weekly Generate Reports functionality
 	});
 			});
+//disable and enable of Employee id field
 	function getDisable()
 	{
 		if($( "#select" ).val()=="all")

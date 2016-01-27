@@ -71,7 +71,7 @@
 		</div>
 		<font color="red"><p aling="center" id="res"></p></font> </div><br />
 		<br />
-		
+		<button id="back" class='btn btn-primary'>back</button>
 		<button id="print" class='btn btn-primary'
 			onclick="PrintDiv('printdiv');">print</button>
 	</div>

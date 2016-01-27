@@ -1,9 +1,4 @@
-	
-
-    /**
-     * 
-     * This function is to print division
-     */
+//Start of Print functionality
     function PrintDiv(divId){
 			
     	       //console.log("in print division function")
@@ -12,16 +7,12 @@
 			   newWin.document.write(divToPrint.outerHTML);
 			   newWin.print();
 			   newWin.close();
-	};
-
+	};//End of print 
 
 	$(function() {
-		
 		var employeeids=[];
-		
 		$("#table").hide();
 		 $("#table1").hide();
-		 
 		$("#company_work_hours").text(0);
 		$("#emp_work_hours").text(0);
 		
@@ -30,11 +21,28 @@
 			PrintDiv("printdiv");
 			  
 		});
+		$("#back").click(function() {
+			
+			$("#id").val("");
+			$("#datepicker").val("");
+			$("#month").val("");
+			$("#week").val("");
+			$("#year").val("");
+			$("#select").val("");
+			$("#res").hide();
+			$("#table").hide();
+			$("#table1").hide();
+			$("#company_work_hours").text(0);
+			$("#emp_work_hours").text(0);
+			$("#title").hide();
+			$("#Employee_Details").hide();
+			$("#back").hide();
+			$("#print").hide();
+		});
 		
 		$("#accordion").accordion();
-	
 		$("#datepicker").datepicker();
-		
+		$("#back").hide();
 		$("#print").hide();
 		$("#title").hide();
 		$("#Employee_Details").hide();
@@ -61,7 +69,7 @@
 		console.log("in admin template ready(function())");
 		
 		/*function call to apply auto complete functionality to employee id text field*/ 
-		autoFillDataToTextField("#id",3);
+		autoFillDataToTextField("#id",2);
 		
 	});// END -- $(document).ready(function())
 	

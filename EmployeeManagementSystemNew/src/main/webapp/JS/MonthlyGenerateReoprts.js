@@ -1,4 +1,5 @@
 $(function() {
+	//Start of Monthly Generate Reports functionality code
 	$("#monthreports").click(function()
 	{
 		 $("#table").hide();
@@ -7,13 +8,10 @@ $(function() {
 		$("#title").hide();
 		$("#Employee_Details").hide();
 		$( "#res" ).hide();
-		
+		$("#back").hide();
 		$("#company_work_hours").text(0);
 		$("#emp_work_hours").text(0);
-	
-		
 		 $("#remove").remove();
-        
 		var empId = $( "#id" ).val();
 		var day1=$("#month").val();
 		$("#emp_id").text(empId);
@@ -24,6 +22,7 @@ $(function() {
 				console.log("break statement executing ");
 				
 	     }
+		//Result search for single employee in Monthly generate report page
 		else if($( "#select" ).val()=="single" && empId!="" && day1!="")
 		{
 			var request = $.ajax({
@@ -61,6 +60,7 @@ $(function() {
                 	 $("#table1").show();
                 	 
                 	$( "#print" ).show();
+                	$("#back").show();
                 	$("#tbody").show();
                 	txt+="<tbody id='remove'>"
                         for(var i=0;i<len;i++){
@@ -88,7 +88,8 @@ $(function() {
 			$( "#res" ).show();
 			$("#res").text("Error occured due to some internal problem.please try again.");
 		});
-	}
+	}//End of single
+			//Result search for all employee in monthly generate page
 		else if($( "#select" ).val()=="all" && day1!="")
 			{
 				var request = $.ajax({
@@ -111,6 +112,7 @@ $(function() {
 		                	$("#table").show();
 		   
 		                	$( "#print" ).show();
+		                	$("#back").show();
 		                	$("#tbody").show();
 		                	txt+="<tbody id='remove'>"
 			                    for(var i=0;i<len;i++){
@@ -140,14 +142,14 @@ $(function() {
 					$("#res").text("Error occured due to some internal problem.please try again.");
 
 				});
-			}
+			}//End of all
 		else{
 			$( "#res" ).show();
 			$("#res").text("field should not be empty.");
-		}
+		}//End of Monthly Generate Reports functionality 
 	});
 			});
-
+//disable and enable of Employee id field
 	function getDisable()
 	{
 		if($( "#select" ).val()=="all")
