@@ -270,12 +270,22 @@
 										</td>
 									</tr>
 									<tr>
-										<td>Role Id</td>
+										<td>Role</td>
 										<td>
 											<div class="form-group">
 												<div class="col-sm-14">
-													<input type="text" class="form-control" name="rollid"
-														id="employee-rollid" />
+													
+														<select id="employee-rollid">
+														  <option value="1">Software Engineer</option>
+														  <option value="2" >System Analyst</option>
+														   <option value="3" >Business Analyst</option>
+														   <option value="4" >Technical Support</option>
+														   <option value="5" >Network Engineer</option>
+														   <option value="6" >Technical Consultant</option>
+														   <option value="7" >Technical Sales</option>
+														  <option value="8">Web Developer</option>
+														  <option value="9">Software Tester</option>
+														</select>
 												</div>
 											</div>
 										</td>
@@ -285,8 +295,12 @@
 										<td>
 											<div class="form-group">
 												<div class="col-sm-14">
-													<input type="text" class="form-control" name="status"
-														id="employee-status" />
+														
+														<select id="employee-status">
+														  <option value="0">Inactive</option>
+														  <option value="1"  selected>Active</option>
+														  
+														</select>
 												</div>
 											</div>
 
@@ -297,8 +311,17 @@
 										<td>
 											<div class="form-group">
 												<div class="col-sm-14">
-													<input type="text" class="form-control" name="deptid"
-														id="employee-deptid" />
+													<!-- <input type="text" class="form-control" name="deptid"
+														id="employee-deptid" /> -->
+														
+														<select id="employee-deptid">
+														
+														  <option value="10" selected>Production</option>
+														  <option value="11" >Development</option>
+														  <option value="12">Testing</option>
+														  <option value="13">Sales</option>
+														  <option value="14">HRM</option>
+														</select>
 												</div>
 											</div>
 

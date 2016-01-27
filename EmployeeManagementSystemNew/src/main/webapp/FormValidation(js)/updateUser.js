@@ -423,9 +423,20 @@
 	    	var mobileNo_new=document.getElementById("employee-mobileno").value;
 	    	var emailId_new=document.getElementById("employee-emailid").value;
 	    	var designation_new=document.getElementById("employee-designation").value;
-	        var	rollId_new=document.getElementById("employee-rollid").value;
-	    	var status_new=document.getElementById("employee-status").value;
-	    	var deptId_new=document.getElementById("employee-deptid").value;
+	    	
+	    	var e = document.getElementById("employee-rollid");
+	    	var rollId_new = e.options[e.selectedIndex].value;
+	    	
+	    	
+	    	var e1 = document.getElementById("employee-status");
+	    	var status_new = e1.options[e1.selectedIndex].value;
+	    	
+	    	
+	    	
+	    	var e2 = document.getElementById("employee-deptid");
+	    	var deptId_new= e2.options[e2.selectedIndex].value;
+	    	
+	    	
 	        
 	    	empObj={employeeId:employeeId_new,firstName:firstName_new,lastName:lastName_new,dob:dob_new,mobileNo:mobileNo_new,emailId:emailId_new,designation:designation_new,rollId:rollId_new,status:status_new,deptId:deptId_new}; 
 	    	  
