@@ -56,7 +56,6 @@
 					</tr>
 				</thead>
 			</table>
-			
 			 <table id="table1" border='2' class="table table-bordered table-striped">
 				<thead>
 					<tr>

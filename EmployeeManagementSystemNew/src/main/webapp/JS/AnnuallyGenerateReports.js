@@ -2,6 +2,7 @@ $(function() {
 	//Start of Annually Generate Reports functionality code
 	$("#annualReports").click(function()
 	{
+		
 		$("#table").hide();
 		 $("#table1").hide();
 		 $( "#print" ).hide();

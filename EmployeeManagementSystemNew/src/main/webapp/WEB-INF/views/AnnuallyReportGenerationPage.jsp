@@ -9,7 +9,6 @@
 	href="./images/caprus logo.png" />
 <script src="./jquery/jquery-2.1.4.js"></script>
 <script src="./jquery/jquery-ui.js"></script>
-
 <script src="./JS/AnnuallyGenerateReports.js"></script>
 </head>
 <body>

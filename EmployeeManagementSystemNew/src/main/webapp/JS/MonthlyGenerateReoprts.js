@@ -20,7 +20,6 @@ $(function() {
 				$("#res").text("Invalid Employee ID");
 				$( "#res" ).show();
 				console.log("break statement executing ");
-				
 	     }
 		//Result search for single employee in Monthly generate report page
 		else if($( "#select" ).val()=="single" && empId!="" && day1!="")

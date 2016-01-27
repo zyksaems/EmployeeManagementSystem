@@ -96,7 +96,6 @@
 				  data: {weekDate :day1},
 				  dataType: "json"
 				});
-				 
 				request.done(function(data) {
 					
 					var companyproduct=0;

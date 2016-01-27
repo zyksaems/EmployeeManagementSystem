@@ -3,7 +3,6 @@ $(function() {
 	$("#dayreports").click(function()
 	{
 		var empId = $( "#id" ).val();
-		
 		 $("#table").hide();
 		 $("#table1").hide();
 		 $( "#print" ).hide();

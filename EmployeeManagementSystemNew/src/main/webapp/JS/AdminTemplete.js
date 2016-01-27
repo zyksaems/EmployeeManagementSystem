@@ -9,6 +9,7 @@
 			   newWin.close();
 	};//End of print 
 
+	
 	$(function() {
 		var employeeids=[];
 		$("#table").hide();
