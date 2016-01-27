@@ -315,7 +315,7 @@
         </uib-accordion-heading>
             <div><a href="" class="linkColor" ng-click="addEmployeeDetails()" translate="ADD_EMPLOYEE"> </a> </div><br> 
             <div><a href="" class="linkColor" ng-click="viewOrUpdateEmployee()" translate="VIEW_UPDATE_EMPLOYEE"></a></div>
-            <div><a href="getExcel.do" class="linkColor" ng-click="viewOrUpdateEmplo" >download excel file</a></div>
+           <!--  <div><a href="getExcel.do" class="linkColor" ng-click="viewOrUpdateEmplo" >download excel file</a></div> -->
         </uib-accordion-group>
         <uib-accordion-group class="panel-heading panelBG" >
          <uib-accordion-heading >
@@ -602,7 +602,7 @@
 
  <div class="row">
     
-    <div class="col-sm-5"> <button class="btn btn-primary btn-sm custom-width" ng-click="showExcelView()" >excel view</button>  <!-- translate='Excel_View' --></div>
+   <!--  <div class="col-sm-5"> <button class="btn btn-primary btn-sm custom-width" ng-click="showExcelView()" >excel view</button>  translate='Excel_View'</div> -->
  
     <div class="col-sm-7">
     					<!-- <button class="btn btn-primary btn-sm custom-width" ng-click="showExcel()" translate='Excel_View'></button> -->

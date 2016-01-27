@@ -354,7 +354,7 @@
 	                            +data[i].emailId+"</td><td>"
 	                            +data[i].designation+"</td><td>"
 	                            +data[i].rollId+"</td><td>"
-	                            +data[i].status+"</td><td>"
+	                            +((data[i].status == 1) ? "Active":"Inactive" )+ "</td><td>"
 	                            +data[i].deptId+"</td><td><button type='button' class='btn btn-default btn-info active' onclick='editEmployee("+i+")' " +
 	                            		"data-toggle='modal' data-target='#editEmployeeModal'>Edit</button></td><tr>";	                            
 	                        
