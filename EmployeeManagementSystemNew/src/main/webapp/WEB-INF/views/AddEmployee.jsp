@@ -84,16 +84,30 @@
                                 <div class="form-group">
                                   <label for="pwd">Role ID:</label>
                                   <select class="form-control" id="add-employee-employee-role-val" required>
-                                     <option  value="4">4 (SE)</option> 
+                                     <!-- <option  value="4">4 (SE)</option> 
                                      <option  value="1">1 (MD)</option> 
                                      <option  value="2">2 (TL)</option> 
-                                     <option  value="3">3 (SSE)</option>                             
+                                     <option  value="3">3 (SSE)</option>   --> 
+                                     <option value="1">Software Engineer</option>
+									<option value="2" >System Analyst</option>
+									<option value="3" >Business Analyst</option>
+									<option value="4" >Technical Support</option>
+									<option value="5" >Network Engineer</option>
+									<option value="6" >Technical Consultant</option>
+									<option value="7" >Technical Sales</option>
+									<option value="8">Web Developer</option>
+									<option value="9">Software Tester</option>                          
                                   </select>
                                 </div>
                                 <div class="form-group">
                                   <label for="pwd">Department ID:</label>
                                   <select class="form-control" id="add-employee-employee-dept-val" required>
-                                    <option value="10">10 (production)</option>                              
+                                    <!-- <option value="10">10 (production)</option>     -->       
+                                     <option value="10" selected>Production</option>
+									<option value="11" >Development</option>
+									<option value="12">Testing</option>
+									<option value="13">Sales</option>
+									<option value="14">HRM</option>                   
                                   </select>        
                                 </div>               
                              </div>   

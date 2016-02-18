@@ -58,6 +58,9 @@ $(function() {
                     for(var i=0;i<len;i++){
                         
                     	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime.substr(12,23);
+                    	//console.log("workesd hours array "+(data[i].workingHours+"").split('.'));
+                    	workedHoursArray=(data[i].workingHours+"").split('.');
+                    	//console.log("array "+workedHoursArray+ "workesd hours  "+(workedHoursArray[0]+" "+ (parseInt(workedHoursArray[1])*60)).substring(0,4));
                     	
                             txt += "<tr><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";
                             companyproduct=companyproduct+9;

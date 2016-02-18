@@ -34,6 +34,7 @@ $(document).ready(function(){
 		
 		/*first hide chart*/ 
 		$(lineChart_div_id).hide();
+		 $("#lineLegend").hide();
 		
 		/*function call to apply auto complete functionality to employee id text field*/ 
 		autoFillDataToTextField(weeklyReportEmployeeId_id,3);
@@ -49,15 +50,18 @@ $(document).ready(function(){
 			 if(employeeId.length < employeeIdLength){
 				 $(individualWeeklyProductivityMsg_id).text(shortEmployeeId_msg);
 				 $(lineChart_div_id).hide();
+				 $("#lineLegend").hide();
 			   	 
 			 }
 			 else if( !validateEmployeeId(employeeId)){
 				 $(individualWeeklyProductivityMsg_id).text(invalidEmployeeId_msg);
 				 $(lineChart_div_id).hide();
+				 $("#lineLegend").hide();
 	         }
 			 else if( week == undefined || week.length < 8){
 			    $(individualWeeklyProductivityMsg_id).text(invalidWeek_msg);
 			    $(lineChart_div_id).hide();
+			    $("#lineLegend").hide();
 			 }
 		     else{
 		    	 $(individualWeeklyProductivityMsg_id).text("");
@@ -77,6 +81,7 @@ $(document).ready(function(){
 			 if(week == undefined || week.length < 8){
 			    $(overAllWeeklyProductivityMsg_id).text(invalidWeek_msg);
 			    $(lineChart_div_id).hide();
+			    $("#lineLegend").hide();
 			 }
 		     else{
 		    	 $(overAllWeeklyProductivityMsg_id).text("");
@@ -162,6 +167,7 @@ $(document).ready(function(){
 				 $(overAllWeeklyProductivityMsg_id).text("");
 				 $(individualWeeklyProductivityMsg_id).text("");
 				 $(lineChart_div_id).hide();
+				 $("#lineLegend").hide();
 				 
 			 }; //END -- setDefaultValues()
 		   
@@ -170,6 +176,7 @@ $(document).ready(function(){
 			 	 
 			 	 console.log("Inside  displayLine()  method");  
 			 	$(lineChart_div_id).show();
+			 	$("#lineLegend").show();
 			 	
 			 		var weeklyData = data;
 			 		console.log("data in  displayLine() after parsing:  "+JSON.stringify(data));  
@@ -297,22 +304,22 @@ $(document).ready(function(){
 					datasets : [
 						{
 							label: "Total Hours",
-							fillColor : "#CCF2FF",
-							strokeColor : "#1ac4ff",
-							pointColor : "#0085b3",
-							pointStrokeColor : "#005f80",
-							pointHighlightFill : "#FFFFFF",
-							pointHighlightStroke : "#000000",
-							data : total1
-						},
-						{
-							label: "Working hours",
 							fillColor : "rgb(255,179,179)",
 							strokeColor:"rgb(230,0,0)",
 							pointColor : "#b30000",
 							pointStrokeColor :"	#804d4d",
 							pointHighlightFill : "#FFFFFF",
 							pointHighlightStroke : "#660033",
+							data : total1
+						},
+						{
+							label: "Working hours",														
+							fillColor : "#CCF2FF",  
+							strokeColor : "#1ac4ff",
+							pointColor : "#0085b3",
+							pointStrokeColor : "#005f80",
+							pointHighlightFill : "#FFFFFF",
+							pointHighlightStroke : "#000000",
 							data :work1
 						}
 					]
@@ -327,7 +334,7 @@ $(document).ready(function(){
 				});
 
 				/*myLine.removeData();*/
-				document.getElementById('lineLegend').innerHTML = myLine.generateLegend();
+				//document.getElementById('lineLegend').innerHTML = myLine.generateLegend();
 				/*legend = Line.generateLegend();*/
 
 			}; // End of -  displayLine(data)

@@ -90,7 +90,14 @@
             
         </form>
         
-        <div id="barLegend" class="chart-legend" ></div>
+        <div id="barLegend" class="chart-legend" >
+            <div class="col-sm-8">			                            			          
+                  <canvas  width="20px" height="20px" id="today-attendance-present-canvas" style="background-color: #FF3366"></canvas>
+                  <span><b>Non worked hours</b></span> <br>
+                  <canvas  width="20px" height="20px" id="today-attendance-absent-canvas" style="background-color: #33CCFF "></canvas>
+                  <span><b>Worked hours</b></span>                                                     
+			</div>
+        </div>
      </div>
      </div>
      

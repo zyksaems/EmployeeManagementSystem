@@ -69,7 +69,7 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 
 		Session session = sessionFactory.openSession();
 		Transaction ts = session.beginTransaction();
-		session.saveOrUpdate(emp);
+		session.save(emp);
 		ts.commit();
 		session.close();
 		return 1;

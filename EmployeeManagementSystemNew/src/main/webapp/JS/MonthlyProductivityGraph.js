@@ -44,15 +44,18 @@
 		 
 		 if(employeeId.length < employeeIdLength){			 
 			 $(individualMonthlyProductivityMsg_id).text(shortEmployeeId_msg);
-			 $(barChartDiv_id).hide();			   	 
+			 $(barChartDiv_id).hide();	
+			 $("#barLegend").hide();
 		 }
 		 else if( !validateEmployeeId(employeeId)){
 			 $(individualMonthlyProductivityMsg_id).text(invalidEmpoyeeId_msg);
 			 $(barChartDiv_id).hide();
+			 $("#barLegend").hide();
          }
 		 else if(month > new Date().getMonth() || month < 11 || month == undefined){
 		    $(individualMonthlyProductivityMsg_id).text(invalidMonth_msg);
 		    $(barChartDiv_id).hide();
+		    $("#barLegend").hide();
 		 }
 	     else{
 	    	 $(individualMonthlyProductivityMsg_id).text("");
@@ -72,6 +75,7 @@
 		 if(month > new Date().getMonth() || month < 11 || month == undefined){
 		    $(overAllMonthlyProductivityMsg_id).text(invalidMonth_msg);
 		    $(barChartDiv_id).hide();
+		    $("#barLegend").hide();
 		 }
 	     else{
 	    	 $(overAllMonthlyProductivityMsg_id).text("");
@@ -157,6 +161,7 @@
 			 $(overAllMonthlyProductivityMsg_id).text("");
 			 $(individualMonthlyProductivityMsg_id).text("");
 			 $(barChartDiv_id).hide();
+			 $("#barLegend").hide();
 			 
 		 }; //END -- setDefaultValues()
 	   
@@ -164,6 +169,7 @@
 		function printBarChart(presentData,absentData,monthName){
    		console.log("data received for monthly graph  present: "+presentData+"  absentdata: "+absentData+" mon name: "+monthName);
    		$(barChartDiv_id).show();
+   		$("#barLegend").show();
    		var barChartData = {
    				labels : [monthName],
    				datasets :[	{
@@ -196,7 +202,7 @@
    		
    		//document.getElementById('barLegend').innerHTML = myBar.generateLegend();
    		//$scope.legend = Bar.generateLegend();
-   		$("#barLegend").html( myBar.generateLegend());
+   		//$("#barLegend").html( myBar.generateLegend());
    		
    		$("#bar-holder").show();
    		$("#barLegend").show();
