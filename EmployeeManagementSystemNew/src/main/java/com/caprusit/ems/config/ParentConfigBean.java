@@ -19,7 +19,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.Department;
 import com.caprusit.ems.domain.Employee;
-import com.caprusit.ems.domain.EncryptedAdmin;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.Role;
 import com.caprusit.ems.utility.EmailUtility;

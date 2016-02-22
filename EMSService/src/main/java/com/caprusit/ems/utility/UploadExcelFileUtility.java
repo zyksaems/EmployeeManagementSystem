@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.domain.EncryptedEmployee;
 
 public class UploadExcelFileUtility {
 
@@ -108,8 +109,17 @@ public class UploadExcelFileUtility {
 
 						}
 						System.out.println("employee object: " + employee);
-						if (count > 0)
-							manageUserDAO.saveEmployee(employee);
+						if (count > 0){
+							int id=manageUserDAO.saveEmployee(employee);
+							if(id == 1){
+								EncryptedEmployee encEmp=new EncryptedEmployee();
+								encEmp.setEmployeeId(employee.getEmployeeId());
+								encEmp.setEncryptedPassword(EncryptionUtility.encryptString(String.valueOf(employee.getEmployeeId())));
+								manageUserDAO.saveEncryptedEmployee(encEmp);
+							}
+							
+						}
+							
 						
 					}
 					/* workbook.close(); */

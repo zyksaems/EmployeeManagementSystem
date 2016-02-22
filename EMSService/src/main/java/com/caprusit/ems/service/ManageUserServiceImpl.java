@@ -20,9 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EmployeeForDate;
+import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.JsonEmployee;
+import com.caprusit.ems.utility.EncryptionUtility;
+import com.caprusit.ems.utility.JsonUtility;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
-import com.google.gson.Gson;
 
 @Service
 public class ManageUserServiceImpl implements IManageUserService {
@@ -41,14 +43,7 @@ public class ManageUserServiceImpl implements IManageUserService {
 
 		logger.info("inside ManageUserServiceImpl getEmployees()");
 		List<Employee> employeeList = manageUserDAO.getEmployees();
-		return convertToJson(employeeList);
-	}
-
-	public static String convertToJson(Object obj) {
-
-		Gson gson = new Gson();
-		return gson.toJson(obj);
-
+		return JsonUtility.convertToJson(employeeList);
 	}
 
 	public List<Employee> getAllEmployee() {
@@ -114,11 +109,26 @@ public class ManageUserServiceImpl implements IManageUserService {
 
 	}
 
+	/**
+	 * @param emp Employee object to be saved into database
+	 * @param milliseconds  Date of birth of employee in milliseconds
+	 * @return int returns 1 if employee successfully saved 
+	 *                     0 if employee not saved successfully
+	 */
 	public int addSingleEmployee(Employee emp, String milliseconds) {
 		emp.setDob(new Date(Long.valueOf(milliseconds)));
 		// return securityDAO.saveEmployee(emp);
 		logger.info("employee in service: " + emp);
-		return manageUserDAO.saveEmployee(emp);
+		// save employee object
+		int id=manageUserDAO.saveEmployee(emp);
+		if(id == 1){
+			EncryptedEmployee encEmp=new EncryptedEmployee();
+			encEmp.setEmployeeId(emp.getEmployeeId());
+			encEmp.setEncryptedPassword(EncryptionUtility.encryptString(String.valueOf(emp.getEmployeeId())));
+			//save EncryptedEmployee to save Encrypted password of employee
+			id=manageUserDAO.saveEncryptedEmployee(encEmp);
+		}
+		return (id >= 1)? 1 : 0;
 	}
 
 	public int updateEmployee(Employee employee) {

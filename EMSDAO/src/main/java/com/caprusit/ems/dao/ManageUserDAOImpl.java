@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EmployeeForDate;
+import com.caprusit.ems.domain.EncryptedEmployee;
 
 @Repository
 public class ManageUserDAOImpl implements IManageUserDAO{
@@ -69,7 +70,7 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 
 		Session session = sessionFactory.openSession();
 		Transaction ts = session.beginTransaction();
-		session.save(emp);
+		session.save(emp);		
 		ts.commit();
 		session.close();
 		return 1;
@@ -156,6 +157,22 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		return 1;
 		
 
+	}
+	
+	/**
+	 * This method is to save EnctyptedEmployee into database
+	 * 
+	 * @param encEmp EncryptedEmployee object to save into database
+	 * @return returns id of saved object
+	 */
+	public int saveEncryptedEmployee(EncryptedEmployee encEmp){
+		Session session = sessionFactory.openSession();
+		Transaction ts = session.beginTransaction();
+		Integer id=(Integer) session.save(encEmp);
+		ts.commit();
+		session.close();
+		
+		return id;
 	}
 	
 
