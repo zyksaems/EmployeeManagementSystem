@@ -1,4 +1,6 @@
  var editEmployeeIndex;
+ var setDept;
+ var setRoleId;
  
  /*Function for getting index of each table row*/
   function editEmployee(index){
@@ -8,7 +10,10 @@
   
   
   /*For pagination of Employee Details table*/
-  $.fn.pageMe = function(opts){
+  
+  //1st try
+  
+ /* $.fn.pageMe = function(opts){
 	    var $this = this,
 	        defaults = {
 	            perPage: 10,
@@ -108,7 +113,164 @@
 	        pager.children().eq(page+1).addClass("active");
 	    
 	    }
-	};/*END of pagination function*/
+	};*/
+  
+  //2nd try
+  
+  $.fn.pageMe = function(opts){
+	  var $this = this,
+	      defaults = {
+	          perPage: 10,
+	          showPrevNext: false,
+	         /* numbersPerPage: 10,*/
+	          hidePageNumbers: false,
+	          showFirstLast: true
+	      },
+	      settings = $.extend(defaults, opts);
+
+	  var listElement = $this;
+	  var perPage = settings.perPage; 
+	  var children = listElement.children();
+	  var pager = $('.pagination');
+
+	  if (typeof settings.childSelector!="undefined") {
+	      children = listElement.find(settings.childSelector);
+	  }
+
+	  if (typeof settings.pagerSelector!="undefined") {
+	      pager = $(settings.pagerSelector);
+	  }
+
+	  var numItems = children.size();
+	  var numPages = Math.ceil(numItems/perPage);
+
+	  pager.data("curr",0);
+
+	  if (settings.showFirstLast){
+	      $('<li><a href="#" class="first_link">First</a></li>').appendTo(pager);
+	  }     
+	  if (settings.showPrevNext){
+	      $('<li><a href="#" class="prev_link">Previous</a></li>').appendTo(pager);
+	  }
+
+	  var curr = 0;
+	  while(numPages > curr && (settings.hidePageNumbers==false)){
+	      $('<li><a href="#" class="page_link">'+(curr+1)+'</a></li>').appendTo(pager);
+	      curr++;
+	  }
+
+	  if (settings.numbersPerPage>1) {
+	     $('.page_link').hide();
+	     $('.page_link').slice(pager.data("curr"), settings.numbersPerPage).show();
+	  }
+
+	  if (settings.showPrevNext){
+	      $('<li><a href="#" class="next_link">Next</a></li>').appendTo(pager);
+	  }
+	  if (settings.showFirstLast){
+	      $('<li><a href="#" class="last_link">Last</a></li>').appendTo(pager);
+	  }  
+
+	  pager.find('.page_link:first').addClass('active');
+	  pager.find('.prev_link').hide();
+	  if (numPages<=1) {
+	      pager.find('.next_link').hide();
+	  }
+	  pager.children().eq(1).addClass("active");
+
+	  children.hide();
+	  children.slice(0, perPage).show();
+
+	  pager.find('li .page_link').click(function(){
+	      var clickedPage = $(this).html().valueOf()-1;
+	      goTo(clickedPage,perPage);
+	      return false;
+	  });
+	  pager.find('li .first_link').click(function(){
+	      first();
+	      return false;
+	  });  
+
+	  pager.find('li .prev_link').click(function(){
+	      previous();
+	      return false;
+	  });
+	  pager.find('li .next_link').click(function(){
+	      next();
+	      return false;
+	  });
+	  pager.find('li .last_link').click(function(){
+	      last();
+	      return false;
+	  });    
+	  function previous(){
+	      var goToPage = parseInt(pager.data("curr")) - 1;
+	      goTo(goToPage);
+	  }
+
+	  function next(){
+	      goToPage = parseInt(pager.data("curr")) + 1;
+	      goTo(goToPage);
+	  }
+
+	  function first(){
+	      var goToPage = 0;
+	      goTo(goToPage);
+	  } 
+
+	  function last(){
+	      var goToPage = numPages-1;
+	      goTo(goToPage);
+	  } 
+
+	  function goTo(page){
+	      var startAt = page * perPage,
+	          endOn = startAt + perPage;
+
+	      children.css('display','none').slice(startAt, endOn).show();
+
+	      if (page>=1) {
+	          pager.find('.prev_link').show();
+	      }
+	      else {
+	          pager.find('.prev_link').hide();
+	      }
+	      if (page<(numPages-1)) {
+	            pager.find('.next_link').show();
+	        }
+	        else {
+	            pager.find('.next_link').hide();
+	       }
+/*
+	  if (page < (numPages - settings.numbersPerPage)) {
+	          pager.find('.next_link').show();
+	      }
+	      else {
+	          pager.find('.next_link').hide();
+	      }*/
+
+	      pager.data("curr",page);
+
+	/*  if (settings.numbersPerPage > 1) {
+	      $('.page_link').hide();
+
+	      if (page < (numPages - settings.numbersPerPage)) {
+	          $('.page_link').slice(page, settings.numbersPerPage + page).show();
+	      }
+	      else {
+	          $('.page_link').slice(numPages-settings.numbersPerPage).show();
+	      }
+	  }*/
+
+	      pager.children().removeClass("active");
+	      pager.children().eq(page+2).addClass("active");
+
+	  }
+	  };
+  
+  
+  
+  /*END of pagination function*/
   
   $("document").ready(function() {
 	  	  
@@ -141,9 +303,9 @@
 		  		$(row).show();
 		  		
 		  	});
-		  	$("#myPager").empty();
-		  	$('#tablebody').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:21});
-		  	$("#myPager").show();
+		  $("#myPager").empty();
+		 $('#tablebody').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:12});
+		  $("#myPager").show();
 		  	
 	  }/*END of fillTableData()*/
 	  
@@ -259,7 +421,7 @@
                       message:'Designation should be of 2-25 characters'
                         },
                       regexp: {
-                          regexp: /^[a-zA-Z\s]+$/,
+                          regexp: /^[A-Z\s]+$/,
                           message: 'Only Alphabetical Characters Are Allowed'
                       }
                       
@@ -358,6 +520,7 @@
 	                            +data[i].deptId+"</td><td><button type='button' class='btn btn-default btn-info active' onclick='editEmployee("+i+")' " +
 	                            		"data-toggle='modal' data-target='#editEmployeeModal'>Edit</button></td><tr>";	                            
 	                        
+	                            
 	                    }
 	                    if(txt != ""){
 	                        $("#table").append("<tbody id='tablebody'>"+txt+"</tbody");
@@ -371,10 +534,13 @@
 	                    }
 
 	              	  $(function(){
-	              		  $('#table').tablesorter(); 
+	              		  $('#table').tablesorter({
+	              			  
+	              			theme:'blue'
+	              		  }); 
 	              		});
 	              	  
-	              	  $('#tablebody').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:15});
+	              	  $('#tablebody').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:12});
 	                }
 				else{
 					document.getElementById("res").innerHTML="NO MATCH FOUND";
@@ -422,10 +588,46 @@
 	    	var dob_new=document.getElementById("employee-dob").value;
 	    	var mobileNo_new=document.getElementById("employee-mobileno").value;
 	    	var emailId_new=document.getElementById("employee-emailid").value;
-	    	var designation_new=document.getElementById("employee-designation").value;
+	    	
+	    	var des = document.getElementById("employee-designation");
+	    	var designation_new=des.options[des.selectedIndex].value;
 	    	
 	    	var e = document.getElementById("employee-rollid");
 	    	var rollId_new = e.options[e.selectedIndex].value;
+	    	
+	    	if(rollId_new=="Admin"){
+	    		setRoleId=10;
+	    	}
+	    	if(rollId_new=="Software Engineer"){
+	    		setRoleId=1;
+	    	}
+			if(rollId_new=="System Analyst"){
+				setRoleId=2;
+			}
+			if(rollId_new=="Business Analyst"){
+				setRoleId=3;
+			}
+			if(rollId_new=="Technical Support"){
+				setRoleId=4;
+			}
+			if(rollId_new=="Network Engineer"){
+				setRoleId=5;
+			}
+			if(rollId_new=="Technical Consultant"){
+				setRoleId=6;
+			}
+			if(rollId_new=="Technical Sales"){
+				setRoleId=7;
+			}
+			if(rollId_new=="Web Developer"){
+				setRoleId=8;
+			}
+			if(rollId_new=="Software Tester"){
+				setRoleId=9;
+			}
+	    	
+	    	
+	    	
 	    	
 	    	
 	    	var e1 = document.getElementById("employee-status");
@@ -437,8 +639,37 @@
 	    	var deptId_new= e2.options[e2.selectedIndex].value;
 	    	
 	    	
+	    	if(deptId_new=="Production"){
+	    		setDept=10;
+	    	}
+	    	if(deptId_new=="Development"){
+	    		setDept=11;
+	    	}
+	    	if(deptId_new=="Testing"){
+	    		setDept=12;
+	    	}
+	    	if(deptId_new=="Sales"){
+	    		setDept=13;
+	    	}
+	    	if(deptId_new=="HRM"){
+	    		setDept=14;
+	    	}
+	    	
+	    	console.log("employeeId_new="+employeeId_new);
+	    	console.log("firstName_new="+firstName_new);
+	    	console.log("lastName_new="+lastName_new);
+	    	console.log("dob_new="+dob_new);
+	    	console.log("mobileNo_new="+mobileNo_new);
+	    	console.log("emailId_new="+emailId_new);
+	    	console.log("designation_new="+designation_new);
+	    	console.log("rollId_new="+rollId_new);
+	    	console.log("status_new="+status_new);
+	    	console.log("deptId_new="+deptId_new);
+	    	console.log("setDept="+setDept);
+	    	
+	    	
 	        
-	    	empObj={employeeId:employeeId_new,firstName:firstName_new,lastName:lastName_new,dob:dob_new,mobileNo:mobileNo_new,emailId:emailId_new,designation:designation_new,rollId:rollId_new,status:status_new,deptId:deptId_new}; 
+	    	empObj={employeeId:employeeId_new,firstName:firstName_new,lastName:lastName_new,dob:dob_new,mobileNo:mobileNo_new,emailId:emailId_new,designation:designation_new,rollId:setRoleId,status:status_new,deptId:setDept}; 
 	    	  
 	    	
 	    	

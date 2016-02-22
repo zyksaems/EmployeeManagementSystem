@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>EMS home page</title>
+<title>EMS Admin page</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -10,7 +10,7 @@
 <script src="FormValidation(js)/formValidation.js"></script>
 <script src="FormValidation(js)/bootstrap.js"></script>
 <script src="FormValidation(js)/updateUser.js"></script>
-<script src="FormValidation(js)/jquery.tablesorter.min.js"></script>
+<!-- <script src="FormValidation(js)/jquery.tablesorter.min.js"></script> -->
 <script src="FormValidation(js)/jquery-ui.js"></script>
 
 
@@ -27,6 +27,12 @@
 <link rel="stylesheet" href="./CSS/style.css">
 
 
+<link rel="stylesheet" href="./sorting/theme.blue.min.css">
+<link rel="stylesheet" href="./sorting/theme.default.min.css">
+<link rel="stylesheet" href="./sorting/bootstrap.css">
+
+
+<script src="./sorting/jquery.tablesorter.min.js"></script>
 <!-- custom css -->
 <script src="./JS/Admin_logout.js"></script>
 <link rel="stylesheet" href="./CSS/homepage.css">
@@ -59,14 +65,14 @@
             <img src="./images/caprus logo.png" width="65px" height="65px">
 		</div>
 			<div class="col-sm-8 title_menu text-center">
-				<h1 align="right">EMPLOYEE MANAGEMENT SYSTEM</h1>
+				<h1 align="center">EMPLOYEE MANAGEMENT SYSTEM</h1>
 			</div>
 			<div class="col-sm-2">
 				<div class="dropdown">
 					<span class="glyphicon glyphicon-cog icon-setting"
 						data-toggle="dropdown"></span>
 					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
-						<!-- <li><a href="#" id="admin-profile-link">Profile</a></li> -->
+						<li><a href="#" id="admin-profile-link">Profile</a></li>
 						<li><a href="/EmployeeManagementSystemNew/getChangePasswordPage.do">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>
@@ -133,8 +139,9 @@
 				<h2>Employee Details</h2>
 				</div>
 				<hr>
+				
 				<nav  role="navigation" title="Search">
-
+				<div class="wrapper">
 					<div class="col-sm-11 col-md-11" align="left">
 						<form class="navbar-form" role="search">
 							<div class="input-group">
@@ -147,30 +154,41 @@
 								</div>
 							</div>
 						</form>
-					</div><button id="printButton" class="btn btn-default btn-info active">Print</button>
-				</nav>
+					</div>
+					<div align="right">
+				<span class="pagination pagination-lg" id="myPager"></span>
+				</div>
+					</div>
+				</nav> 
+				
+				
+				
 				<div id="printTable">
 				<table id="table"  border="1"  class="tablesorter ws_data_table table table-hover" >
-					<thead  style="color:balck">
+					<thead  style="color:black" align="left">
 						<tr>
-							<th><b>EMPLOYEE ID</b></th>
-							<th><b>FIRST NAME</b></th>
-							<th><b>LAST NAME</b></th>
-							<th><b>DATE OF BIRTH</b></th>
-							<th><b>MOBILE NO</b></th>
-							<th><b>EMAIL ID</b></th>
-							<th><b>DESIGNATION</b></th>
-							<th><b>ROLE </b></th>
-							<th><b>STATUS</b></th>
-							<th><b>DEPARTMENT</b></th>
-							<th><b>ACTION</b></th>
+							<th height="50">EMPLOYEE ID</th>
+							<th height="50">FIRST NAME</th>
+							<th height="50">LAST NAME</th>
+							<th height="50" data-sorter="false">DATE OF BIRTH</th>
+							<th height="50" data-sorter="false">MOBILE NO</th>
+							<th height="50" data-sorter="false">EMAIL ID</th>
+							<th height="50">DESIGNATION</th>
+							<th height="50">ROLE</th>
+							<th height="50" data-sorter="false">STATUS</th>
+							<th height="50" data-sorter="false">DEPARTMENT</th>
+							<th height="50" data-sorter="false">ACTION</th>
 						</tr>
 					</thead>
 				</table>
 				</div>
-				<div class="col-md-12 text-center">
-					<ul class="pagination pagination-lg pager" id="myPager"></ul>
+				<div align="center">
+				<button id="printButton" class="btn btn-default btn-info active">Print</button>
 				</div>
+				
+				<!-- <div class="col-md-12 text-center">
+					<ul class="pagination pagination-lg" id="myPager"></ul>
+				</div> -->
 				
 			</div>
 		
@@ -263,8 +281,24 @@
 										<td>
 											<div class="form-group">
 												<div class="col-sm-14">
-													<input type="text" class="form-control" name="designation"
-														id="employee-designation" />
+													<!-- <input type="text" class="form-control" name="designation"
+														id="employee-designation" /> -->
+														
+														<select class="form-control" id="employee-designation">
+														
+															<option value="Project Manager">Project Manager</option>
+														  	<option value="Software Engineer">Software Engineer</option>
+														  	<option value="System Architect">System Architect</option>
+														   	<option value="Design Engineer">Design Engineer</option>
+														   	<option value="Team Lead">Team Lead</option>
+														   	<option value="Network Engineer">Network Engineer</option>
+														   	<option value="Technical Consultant">Technical Consultant</option>
+														   	<option value="Test Lead">Test Lead</option>
+														  	<option value="Application Developer">Application Developer</option>
+														  	<option value="Software Tester">Software Tester</option>
+														  
+														</select>
+														
 												</div>
 											</div>
 										</td>
@@ -275,7 +309,7 @@
 											<div class="form-group">
 												<div class="col-sm-14">
 													
-														<select id="employee-rollid">
+														<!-- <select id="employee-rollid">
 														  <option value="1">Software Engineer</option>
 														  <option value="2" >System Analyst</option>
 														   <option value="3" >Business Analyst</option>
@@ -285,6 +319,19 @@
 														   <option value="7" >Technical Sales</option>
 														  <option value="8">Web Developer</option>
 														  <option value="9">Software Tester</option>
+														</select> -->
+														
+														<select class="form-control" id="employee-rollid">
+														 <option value="Admin">Admin</option>
+														  <option value="Software Engineer">Software Engineer</option>
+														  <option value="System Analyst" >System Analyst</option>
+														   <option value="Business Analyst" >Business Analyst</option>
+														   <option value="Technical Support" >Technical Support</option>
+														   <option value="Network Engineer" >Network Engineer</option>
+														   <option value="Technical Consultant" >Technical Consultant</option>
+														   <option value="Technical Sales" >Technical Sales</option>
+														  <option value="Web Developer">Web Developer</option>
+														  <option value="Software Tester">Software Tester</option>
 														</select>
 												</div>
 											</div>
@@ -296,7 +343,7 @@
 											<div class="form-group">
 												<div class="col-sm-14">
 														
-														<select id="employee-status">
+														<select class="form-control" id="employee-status">
 														  <option value="0">Inactive</option>
 														  <option value="1"  selected>Active</option>
 														  
@@ -311,19 +358,34 @@
 										<td>
 											<div class="form-group">
 												<div class="col-sm-14">
-													<!-- <input type="text" class="form-control" name="deptid"
-														id="employee-deptid" /> -->
+													
+														<select class="form-control" id="employee-deptid">
 														
-														<select id="employee-deptid">
-														
-														  <option value="10" selected>Production</option>
+														  <!-- <option value="10" selected>Production</option>
 														  <option value="11" >Development</option>
 														  <option value="12">Testing</option>
 														  <option value="13">Sales</option>
-														  <option value="14">HRM</option>
+														  <option value="14">HRM</option> -->
+														   
+														   <option value="Production" selected>Production</option>
+														  <option value="Development" >Development</option>
+														  <option value="Testing">Testing</option>
+														  <option value="Sales">Sales</option>
+														  <option value="HRM">HRM</option>
+														  
 														</select>
 												</div>
 											</div>
+											 
+											<!-- <div class="form-group">
+											      <select class="form-control" id="sel1">
+											        <option>1</option>
+											        <option>2</option>
+											        <option>3</option>
+											        <option>4</option>
+											      </select>
+											   </div> -->
+
 
 										</td>
 									</tr>
@@ -331,10 +393,15 @@
 								<br><br>
 								<div class="modal-footer">
 								<div align="center">
+									<!-- <button type="submit"
+										class="btn btn-default  btn-warning active"
+										id="">
+										<span class="glyphicon glyphicon-lock"></span>Change Password
+									</button> -->
 									<button type="submit"
-										class="btn btn-default  btn-info active"
+										class="btn btn-default  btn-success active"
 										id="save-eidit-employee">
-										<span class="glyphicon glyphicon-off"></span>Save Changes
+										<span class="glyphicon glyphicon-ok"></span>Save Changes
 									</button>
 									<button type="submit" class="btn btn-default btn-danger active"
 										data-dismiss="modal">
