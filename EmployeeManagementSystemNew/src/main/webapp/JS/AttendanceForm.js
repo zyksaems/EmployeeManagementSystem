@@ -1,4 +1,32 @@
 	
+      /*variables to store id of elements( specially for forgot password)*/
+          var forgotpassword_id="#empid";
+          var forgotpassword_email_div="#forgot_password_email_div";
+          var forgotpassword_email="#email1";
+          var forgotpassword_email_span_id="#forgotpassword-email-span";
+          var forgotpassword_div="#Forgot_password_div";          
+          var forgotpassword_span_id="#forgotpassword-id-span";
+          
+      	/*variables for storing bootstrap css classes*/
+			var successClass="has-success";
+			var glyphiconOk="glyphicon-ok";
+			var errorCalss="has-error" ;
+			var glyphiconError="glyphicon-remove";
+      
+
+             /**
+	             * This function is to set default values to forgot password default values
+	             */
+	            function setForgotPasswordDefaulValues()
+	            {
+	            	  $(forgotpassword_id).val("");
+	            	  $(forgotpassword_email).val("");
+	            	  $(forgotpassword_div).removeClass(successClass).removeClass(errorCalss);
+		              $(forgotpassword_span_id).removeClass(glyphiconOk).removeClass(glyphiconError);
+	            	  $(forgotpassword_email_div).removeClass(successClass).removeClass(errorCalss);
+		              $(forgotpassword_email_span_id).removeClass(glyphiconOk).removeClass(glyphiconError);
+		              $("#res").text("");
+	            };
 
 $("document").ready(
 			function() {
@@ -82,12 +110,7 @@ $("document").ready(
 	        	var loggedInEmpIdsRequest="getLoggedInEmpIds.do";
 	        	/* variable for storing attendance request (String) */
 	        	var sendAttendanceRequest="secureLogin.do";
-	        	
-	        	/*variables for storing bootstrap css classes*/
-				var successClass="has-success";
-				var glyphiconOk="glyphicon-ok";
-				var errorCalss="has-error" ;
-				var glyphiconError="glyphicon-remove";
+	        
 				
 				/*variables for storing id of diviions and text boxes and buttons*/
 				 var employeeId_id="#employee-id-val";
@@ -343,7 +366,7 @@ $("document").ready(
 					  if(empPasswordLength < employeePasswordMinLength ){
 						  
 						  /*function call to set text box class to error*/
-						  setTextBoxClassError(employeePassword_div_id,employeePassword_span_id);
+						  //setTextBoxClassError(employeePassword_div_id,employeePassword_span_id);
 					  
 						  /*$(employeePassword_div_id).removeClass(successClass).addClass(errorCalss);
 						  $(employeePassword_span_id).removeClass(glyphiconOk).addClass(glyphiconError);*/  
@@ -353,7 +376,7 @@ $("document").ready(
 					  }
 					  else{
 						  /*function call to set text box class to ok*/
-						  setTextBoxClassOk(employeePassword_div_id,employeePassword_span_id);
+						 // setTextBoxClassOk(employeePassword_div_id,employeePassword_span_id);
 						  /*$(employeePassword_div_id).removeClass(errorCalss).addClass(successClass);
 						  $(employeePassword_span_id).removeClass(glyphiconError).addClass(glyphiconOk);*/
 						  employeePasswordFlag=true;
@@ -510,13 +533,8 @@ $("document").ready(
 	           var employeeChangePasswordForm_id="#emp-change-pass-form";
 	     
 	           
-	           var forgotpassword_div="#Forgot_password_div";
-	           var forgotpassword_id="#empid";
-	           var forgotpassword_span_id="#forgotpassword-id-span";
-	       
-	            var forgotpassword_email_div="#forgot_password_email_div";
-	            var forgotpassword_email="#email1";
-	            var forgotpassword_email_span_id="#forgotpassword-email-span";
+	         
+	            
 	           
 	           
 	            
@@ -586,18 +604,7 @@ $("document").ready(
 	            /* function call to set default values */
 	            setChangePasswordDefaultValues();
 	
-	            
-	            function setForgotPasswordDefaulValues()
-	            {
-	            	  $(forgotpassword_id).val("");
-	            	  $(forgotpassword_email).val("");
-	            	  $(forgotpassword_div).removeClass(successClass);
-		                $(forgotpassword_span_id).removeClass(glyphiconOk)
-	            	  $(forgotpassword_email_div).removeClass(successClass);
-		                $(forgotpassword_email_span_id).removeClass(glyphiconOk);
-		                 
-	            };
-	            
+	            /* function call to set default values for forgot password */
 	            setForgotPasswordDefaulValues();
 	            
 	            /*  function calls when change password employee id key up
@@ -631,12 +638,12 @@ $("document").ready(
 	            $(changePasswordEmployeeCurrentPass_id).keyup(function(){
 	            	$(employeeChangePasswordSuccessMsg_id).text("");
 	            	var length=$(changePasswordEmployeeCurrentPass_id).val().length;
-	            	if(length < employeePasswordMinLength){
+	            	/*if(length < employeePasswordMinLength){
 	            		setTextBoxClassError(changePasswordEmployeeCurrentPassDiv_id,changePasswordEmployeeCurrentPassSpan_id);
 	            	}
 	            	else{
 	            		setTextBoxClassOk(changePasswordEmployeeCurrentPassDiv_id,changePasswordEmployeeCurrentPassSpan_id);
-	            	}
+	            	}*/
 	            	
 	            });// END -- $(changePasswordEmployeeId_id).keyup()
 	            
@@ -647,12 +654,12 @@ $("document").ready(
 	            $(changePasswordEmployeeNewPass_id).keyup(function(){
 	            	$(employeeChangePasswordSuccessMsg_id).text("");
 	            	var length=$(changePasswordEmployeeNewPass_id).val().length;
-	            	if(length < employeePasswordMinLength){
+	            	/*if(length < employeePasswordMinLength){
 	            		setTextBoxClassError(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);
 	            	}
 	            	else{
 	            		setTextBoxClassOk(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);
-	            	}
+	            	}*/
 	            	
 	            });// END -- $(changePasswordEmployeeId_id).keyup()
 	            
@@ -664,13 +671,13 @@ $("document").ready(
 	            	$(employeeChangePasswordSuccessMsg_id).text("");
 	            	var confirmPassword=$(changePasswordEmployeeConfirmPass_id).val();
 	            	var newPassword=$(changePasswordEmployeeNewPass_id).val();
-	            	if(newPassword.length >= employeePasswordMinLength && confirmPassword == newPassword){
+	            	/*if(newPassword.length >= employeePasswordMinLength && confirmPassword == newPassword){
 	            		setTextBoxClassOk(changePasswordEmployeeConfirmPassDiv_id,changePasswordEmployeeConfirmPassSpan_id);
 	            		
 	            	}
 	            	else{
 	            		setTextBoxClassError(changePasswordEmployeeConfirmPassDiv_id,changePasswordEmployeeConfirmPassSpan_id);
-	            	}
+	            	}*/
 	            	
 	            });// END -- $(changePasswordEmployeeId_id).keyup()
 	            

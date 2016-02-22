@@ -14,4 +14,5 @@ public interface ISecurityService {
 	int resetPassword(Admin admin);
 
 	public int changeEmployeePassword(ChangePasswordRequest changePasswordData);
+
 }

@@ -2,6 +2,9 @@
 $("document").ready(function(){
 	
 	/*variables for storing ids*/
+	
+	var adminLogin_link_id="#admin-sign-in-link";
+	var attendance_form_id="#attendance-form";
 	var adminId_div_id="#admin-login-adminid-div";
 	var adminId_val_id="#admin-login-adminid-val";
 	var adminId_span_id="#admin-login-adminid-span";
@@ -17,6 +20,7 @@ $("document").ready(function(){
 	var adminLoginModal_id="#myModal";
 	var adminLoginForm_id="#admin-login-form";
 	var adminForgotPasswordLink_id="#admin-login-forgot-password";
+	var employeeForgotPasswordLink_Id="#employee-login-forgot-password";
 	var forgotPasswordForm_id="#forgot-password-form";
 	var backToLogin_id="#back-to-login";
 	var forgotPassword_button_id="#forgotpassword_button";
@@ -59,30 +63,30 @@ $("document").ready(function(){
 	var lockGlyphicon_class="glyphicon-lock";
 	
 	var modalHeader_id="#model-header";
-	var modalHeaderName_id="#modal-header-text";
-	
+
+	var employeeModalHeader_id="#employee-model-header";
 	
 	/*
 	 * This function for setting default values
 	 */
 	function setDefaultValues(){
 		
+		//console.log("in  set default values");
+		
 		adminIdFlag=false;
 		adminPassFlag=false;
-		$(adminId_val_id).val("");
+		$(adminId_val_id).val("");	
 		$(adminPass_val_id).val("");
-		$("#forgotpasshref").hide();
+		//$("#forgotpasshref").hide();	
+		$(adminId_div_id).removeClass(errorCalss).removeClass(successClass);
+		$(adminId_span_id).removeClass(glyphiconError).removeClass(glyphiconOk);
 		
-		$(adminId_div_id).removeClass(successClass);
-		$(adminId_span_id).removeClass(glyphiconOk);
-		
-		$(adminPass_div_id).removeClass(successClass);
-		$(adminPass_span_id).removeClass(glyphiconOk);
+		$(adminPass_div_id).removeClass(errorCalss).removeClass(successClass);
+		$(adminPass_span_id).removeClass(glyphiconError).removeClass(glyphiconOk);
 		
 		$(adminPass_val_id).prop('type',"password");
-		$(admin_show_pass_id).prop('checked',false);
-		
-		
+		$(admin_show_pass_id).prop('checked',false);		
+		$("#res").text("");
 		
 	}; // END -- setDefaultValues()
 	
@@ -90,15 +94,29 @@ $("document").ready(function(){
 	hideModals();
 	
 	function hideModals(){
-	
+		
 	    $(forgotPasswordForm_id).hide();
 	    $(adminLoginForm_id).show();
-	    $(modalHeader_id).addClass(userGlyphicon_class); //userGlyphicon_class
-	    $(modalHeader_id).text("Admin signin");
-
+	   /* function call to set modal heading as sign in*/
+	    setModalHeaderAsSignIn();
 	    $(backToLogin_id).hide();
 	
 	};
+	
+	/**
+	 * This function called when admin clicks login link
+	 */
+	$(adminLogin_link_id).click(function(){
+		/*function call to set default values*/
+		setDefaultValues();
+		$(admin_login_errorMsg_id).text("");
+		$(adminLoginModal_id).modal('show');
+       $(forgotPasswordForm_id).hide();
+       $(adminLoginForm_id).show();
+      /*  function call to set modal  header text as sign in*/
+       setModalHeaderAsSignIn();
+       
+	}); // END  --  
 	
 	
 	/*
@@ -129,11 +147,11 @@ $("document").ready(function(){
 		$(admin_login_errorMsg_id).text("");
 		var length=$(adminPass_val_id).val().length;
 		if(length < employeePasswordMinLength){
-			setTextBoxClassError(adminPass_div_id,adminPass_span_id);
+			//setTextBoxClassError(adminPass_div_id,adminPass_span_id);
 			adminPassFlag=false;
 		}
 		else{
-			setTextBoxClassOk(adminPass_div_id,adminPass_span_id);
+			//setTextBoxClassOk(adminPass_div_id,adminPass_span_id);
 			adminPassFlag=true;
 			adminLoginPass=$(adminPass_val_id).val();
 		}
@@ -141,7 +159,7 @@ $("document").ready(function(){
 	});// END -- $(adminId_val_id).keyup()
 	
 	/*
-	 * This function executes when sign in butto clicks
+	 * This function executes when sign in button clicks
 	 */
 	$(admin_login_button_id).click(function(){
 		var result_msg="";
@@ -210,7 +228,8 @@ $("document").ready(function(){
 		        	/* function call to set default values */
 		        	setDefaultValues();	
 		        	$(adminLoginModal_id).modal("hide");
-		        	/*function call to get amin homepage*/
+		        	$(employeeForgotPasswordModal_Id).modal("hide");
+		        	/*function call to get admin home page*/
 		        	getAdminHomePage();
 		        	
 		        }
@@ -256,7 +275,7 @@ $("document").ready(function(){
 		$(divId).removeClass(errorCalss).addClass(successClass);
 		$(spanId).removeClass(glyphiconError).addClass(glyphiconOk);
 		
-	}// END -- setTextBoxClassOk(divId,spanId)
+	};// END -- setTextBoxClassOk(divId,spanId)
 	
 	/*
 	 * This function is to set text box is wrong (incorrect input)
@@ -286,14 +305,57 @@ $("document").ready(function(){
 		return false;
 		
 	});
-
+  /**
+   * This function executes when admin clicks on forgot password link
+   */
 	$(adminForgotPasswordLink_id).click(function(){
+		
+		console.log("admin forgot password");
 		
 		$(adminLoginForm_id).hide();
 		$(forgotPasswordForm_id).show();
 		$(backToLogin_id).show();
+		$(forgotPassword_msg_id).text("");
+		/*function call to set header as forgot password*/
+		setModalHeaderAsForgotPassword();
+		/*function call to set default values for  forgot password*/
+		setForgotPasswordDefaulValues();// this function is in Attendanceform.js
+		
+	});
+	
+	/**
+	 * This function is to set modal heading as sign-in 
+	 */
+	function setModalHeaderAsSignIn(){
+        $(modalHeader_id).removeClass(lockGlyphicon_class).addClass(userGlyphicon_class); 
+        $(modalHeader_id).text("Admin signin");
+	};
+	
+	/**
+	 * This function is to set modal heading as forgot password
+	 */
+	function setModalHeaderAsForgotPassword(){
 		$(modalHeader_id).removeClass(userGlyphicon_class).addClass(lockGlyphicon_class);
 		$(modalHeader_id).text("forgot Password");
+	};
+	
+	
+	 /**
+	   * This function executes when employee clicks forgot password link
+	   */
+   $(employeeForgotPasswordLink_Id).click(function(){
+		
+	
+		$(adminLoginModal_id).modal('show');
+		$(forgotPasswordForm_id).show();
+		$(backToLogin_id).hide();
+		$(adminLoginForm_id).hide();
+		$(forgotPasswordForm_id).show();
+		$(forgotPassword_msg_id).text("");
+		/*function call to set modal heading as forgot password*/
+		setModalHeaderAsForgotPassword();
+		/*function call to set default values for  forgot password*/
+		setForgotPasswordDefaulValues();// this function is in Attendanceform.js
 		
 	});
 	
@@ -302,11 +364,10 @@ $("document").ready(function(){
 		    $(adminLoginForm_id).show();
 		    $(backToLogin_id).hide();
 		    $("#res").hide();
-		    $(modalHeader_id).removeClass(lockGlyphicon_class).addClass(userGlyphicon_class);
-		    $(modalHeader_id).text("Admin sign-in");		
+		  /* function call to set modal header as sign in*/
+		    setModalHeaderAsSignIn();
 	});
 	
-
 	$(forgotPassword_button_id).click(function(){
 		
 		var id=$(adminID_id).val();
@@ -321,9 +382,11 @@ $("document").ready(function(){
 	        success: function (data) {
 	       if(data==1)
 		   {
-	        	$(forgotPassword_msg_id).hide();
+	        	$(forgotPassword_msg_id).text("");
 	        	$(forgotPasswordForm_id).hide();
+	        	$("#res").show();
 	        	$("#res").text("Reset password page link sent to  your mail, please check your mail");
+	        	
 		   }
 	       else if(data==0)
 		   {
@@ -347,4 +410,4 @@ $("document").ready(function(){
 	});
 	/*end of forgot password page*/
 	
-});//// END -- $("document").ready(function())
+});// END -- $("document").ready(function())

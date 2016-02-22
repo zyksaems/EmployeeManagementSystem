@@ -58,7 +58,7 @@ public class ParentConfigBean {
 		
 		LocalSessionFactoryBean  factory= new LocalSessionFactoryBean ();
 		factory.setDataSource(getDataSource());
-		factory.setAnnotatedClasses(Employee.class,Attendance.class,EncryptedAdmin.class,Role.class,Department.class,EncryptedEmployee.class);
+		factory.setAnnotatedClasses(Employee.class,Attendance.class,Role.class,Department.class,EncryptedEmployee.class);
 		Properties p=new Properties();		
 	    p.load(new ClassPathResource("properties/hibernate.properties").getInputStream()); //load gives FileNotFound and IOException
 		factory.setHibernateProperties(p);

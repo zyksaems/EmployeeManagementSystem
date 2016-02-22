@@ -62,12 +62,6 @@
 	</div>
 	<!-- top menu -->
 	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar"></button>
-				<a class="navbar-brand" href="#">EMS</a>
-			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
 					<li class="" id="home-li"><a href="#" id="home-link"><span
@@ -81,19 +75,16 @@
 							class="glyphicon glyphicon-phone"></span>Contact</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li id="admin-login-li"><a href="#" id="sign-in-link"
-						data-toggle="modal" data-target="#myModal"><span
-							class="glyphicon glyphicon-log-in"></span> Admin Login</a></li>
+					<li id="admin-login-li"><a href="#" id="admin-sign-in-link">
+					<span  class="glyphicon glyphicon-log-in"></span> Admin Login</a></li>  <!-- data-toggle="modal" data-target="#myModal" -->
 				</ul>
 			</div>
-		</div>
 	</nav>
 
 	<!-- In-Time form -->
 	<div class="container intime-margin" id="in-time-form">
 
-		<form action="#attendanceForm.do" class="form-inTime"
-			id="attendance-form">
+		<form action="#attendanceForm.do" class="form-inTime" id="attendance-form">
 			<h2 class="form-inTime-heading ">
 				<span class="glyphicon glyphicon-pencil"></span>Enter Employee Id
 			</h2>
@@ -111,8 +102,10 @@
 					required> <span class="glyphicon form-control-feedback"
 					id="employee-password-span"></span>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block "
-				id="employeeAttendanceButton">In-Time</button>
+			<button class="btn btn-lg btn-primary btn-block " id="employeeAttendanceButton">In-Time</button>			
+			
+		    <br>  <p class="text-danger hand text-center"  id="employee-login-forgot-password" ><b>forgot password?</b></p>
+		
 			<h4 class="text-center" id="employeeLoginSuccessMsg"></h4>
 		</form>
 
@@ -141,7 +134,7 @@
 			<!-- textBox for employee current Password -->
 			<div class="form-group has-feedback "
 				id="change-password-employee-current-password-div">
-				<label>Cuurent Password</label> <input type="password"
+				<label>Current Password</label> <input type="password"
 					class="form-control text-center "
 					id="change-password-employee-current-password-val" required>
 				<span class="glyphicon form-control-feedback"
@@ -209,8 +202,7 @@
 				<div class="modal-body">
 					<div id="sign-in-form">
 
-						<form  action="#adminLogin.do" class="form-signin"
-							id="admin-login-form">
+						<form  action="#adminLogin.do" class="form-signin" id="admin-login-form">
 							<!-- text box for admin id -->
 							<div class="form-group  has-feedback "
 								id="admin-login-adminid-div">
@@ -230,7 +222,7 @@
 									id="admin-login-adminpass-span"></span>
 							</div>
 							<div class="checkbox form-group">
-								<label> <input type="checkbox" class=""
+									<label> <input type="checkbox" class=""
 									id="admin-login-show-adminpass"> Show Password
 								</label> <label> <a herf="" class="text-danger"
 									id="admin-login-forgot-password">forgot password?</a>
@@ -251,9 +243,9 @@
 						<form class="form-signin" action="#" id="forgot-password-form">
 						
 							<div class="form-group has-feedback" id="Forgot_password_div">
-								<label>Admin ID</label> <input type="text"
+								<label>Username</label> <input type="text"
 									class="form-control text-center" id="empid"
-									placeholder="admin id" title="please enter valid 6 digits."
+									placeholder="user id" title="please enter valid 6 digits."
 									autocomplete="off"> <span
 									class="glyphicon  form-control-feedback"
 									id="forgotpassword-id-span"></span>
@@ -282,7 +274,7 @@
 					
 				</div>
 				<div class="modal-footer ">
-				    <div class="col-sm-3"><a id="back-to-login" href="#">back to login</a></div>
+				    <div class="col-sm-3"><a id="back-to-login" href="#">Back to Login</a></div>
 				    <div class="col-sm-7"></div>
 				    <div class="col-sm-2"><button type="button" class="btn btn-warning " data-dismiss="modal">Close</button></div>
 				    					
@@ -290,6 +282,71 @@
 			</div>  <!-- Content -->
 		</div>
 	</div>
+	
+	<!--  employee forgot password modal -->
+  <!-- <div class="modal fade" id="employeeForgotPasswordModal" role="dialog">
+		<div class="modal-dialog">
+
+			Modal content
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h2 class="modal-title form-signin-heading text-center">
+						<span id="employee-model-header" class="glyphicon"></span> <span id="modal-header-text"></span>
+					</h2>
+				</div>
+				<div class="modal-body">
+					<div id="sign-in-form">
+					
+						forgot password form
+						   <font color="green"><p id="res"></p></font> 
+						<form class="form-signin" action="#" id="forgot-password-form">
+						
+							<div class="form-group has-feedback" id="Forgot_password_div">
+								<label>Employee Id</label> <input type="text"
+									class="form-control text-center" id="empid"
+									placeholder="employee id" title="please enter valid 6 digits."
+									autocomplete="off"> <span
+									class="glyphicon  form-control-feedback"
+									id="forgotpassword-id-span"></span>
+							</div>
+							<div class="form-group has-feedback"
+								id="forgot_password_email_div" >
+                                 <label>Email Address</label>
+								<div class="input-group" >
+						
+									<span class="input-group-addon"><i
+										class="glyphicon glyphicon-envelope color-blue email_symbal"></i></span>
+										<input
+										id="email1" placeholder="email address"
+										class="form-control text-center" type="email"
+										autocomplete="off"> <span
+										class="glyphicon  form-control-feedback"
+										id="forgotpassword-email-span"></span>
+								</div>
+							</div>
+							<div class="row">
+						        <button class="btn btn-primary" id="forgotpassword_button">send</button><br>
+						    </div>
+                            <font color="red"><p class="text-center" id="validation_res"></p></font>
+					</form>
+					</div>
+				</div>
+				
+				<div class="modal-footer ">
+				    <div class="col-sm-3" id="back-to-employee-attendance"><button type="button" class="btn btn-warning" >Back to Employee Attendance</div>
+				    <div class="col-sm-7"></div>
+				    
+				      <div class="col-sm-2" id="close-back-to-employee-attendance"><button type="button" class="btn btn-warning" >Close</div>
+				   <div id="close-back-to-employee-attendance">
+				   </div><button type="button" class="btn btn-warning" >Close</button></div>
+				   </div>
+				    					
+				</div>
+			</div> -->  <!-- Content -->
+		</div>
+	</div>
+	
 	<!-- footer -->
 	<footer class="container-fluid text-center navbar-fixed-bottom">
 		<p>Footer Text</p>

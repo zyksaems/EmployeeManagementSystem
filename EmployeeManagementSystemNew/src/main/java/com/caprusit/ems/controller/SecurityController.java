@@ -222,5 +222,4 @@ public class SecurityController {
         return  securityService.changeEmployeePassword(changePasswordData);
        
 	}
-
 }

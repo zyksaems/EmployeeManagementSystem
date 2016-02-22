@@ -6,10 +6,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.dao.ISecurityDAO;
 import com.caprusit.ems.domain.Admin;
 import com.caprusit.ems.domain.ChangePasswordRequest;
-import com.caprusit.ems.domain.EncryptedAdmin;
+import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.utility.EmailUtility;
 import com.caprusit.ems.utility.EncryptionUtility;
@@ -21,6 +22,10 @@ public class SecurityServiceImpl implements ISecurityService {
 
 	@Autowired
 	private ISecurityDAO securityDAO;
+	
+	@Autowired
+	IManageUserDAO manageUsaerDAO;
+	
 	@Autowired
 	private EmailUtility emailUtility;
 
@@ -40,16 +45,19 @@ public class SecurityServiceImpl implements ISecurityService {
 
 		String adminCurrentPassword=null;
 		int status=-1;
-		List<Object> adminPasswordList = securityDAO.getAdminCurrentPassword(new EncryptedAdmin(admin.getAdminId()));
+		Employee e=manageUsaerDAO.findById(admin.getAdminId());
+		logger.info("emplotyee :"+e);
+		if(e.getRollId() == 10){
+			EncryptedEmployee encEmployee = securityDAO.getEmployeeCurrentPassword(admin.getAdminId());
  
-		if(adminPasswordList != null && adminPasswordList.size() > 0){
+		      if(encEmployee != null ){
 			
-			adminCurrentPassword=EncryptionUtility.decryptPassword(admin.getPassword(), (byte[])adminPasswordList.get(0));
-			status = (adminCurrentPassword != null) ? 1 : 0;
-		}
+			             adminCurrentPassword=EncryptionUtility.decryptPassword(admin.getPassword(), encEmployee.getEncryptedPassword());
+			              status = (adminCurrentPassword != null) ? 1 : 0;
+		        }
 
-		logger.info("login status for admin: " + status);
-
+	          	   logger.info("login status for admin: " + status);
+		    }
 		return status;
 
 	}
@@ -80,7 +88,7 @@ public class SecurityServiceImpl implements ISecurityService {
 		}
 		return result;
 	}
-
+	
 	/**
 	 * This method is for change administrator functionality
 	 * Takes admin object and new password
@@ -90,14 +98,14 @@ public class SecurityServiceImpl implements ISecurityService {
 	 */
 	public int changePassword(Admin admin,String newPassword) {
 
-		List<Object> oldPaswordList=securityDAO.getAdminCurrentPassword(new EncryptedAdmin(admin.getAdminId()));
-        if(oldPaswordList != null && oldPaswordList.size() > 0){
-        	String oldPassword=EncryptionUtility.decryptPassword(admin.getPassword(),(byte [])oldPaswordList.get(0));
+		EncryptedEmployee encEmployee=securityDAO.getEmployeeCurrentPassword(admin.getAdminId());
+        if(encEmployee != null){
+        	String oldPassword=EncryptionUtility.decryptPassword(admin.getPassword(),encEmployee.getEncryptedPassword());
         	if(oldPassword != null){       		
-        		EncryptedAdmin encryptedAdmin=new EncryptedAdmin();
-        		encryptedAdmin.setAdminId(admin.getAdminId());
-        		encryptedAdmin.setPassword(EncryptionUtility.encryptString(newPassword));
-        		return securityDAO.changePassword(encryptedAdmin);
+        		EncryptedEmployee encryptedEmployee=new EncryptedEmployee();
+        		encryptedEmployee.setEmployeeId(admin.getAdminId());
+        		encryptedEmployee.setEncryptedPassword(EncryptionUtility.encryptString(newPassword));
+        		return securityDAO.changeEmployeePassword(encryptedEmployee);
         	}
         	else{
         		return 0;
@@ -112,21 +120,21 @@ public class SecurityServiceImpl implements ISecurityService {
 	/**
 	 * This method is to reset password incase of forgot password
 	 * Takes admin object
-	 * Returns 1 on successfull reset
+	 * Returns 1 on successful reset
 	 */
 	public int resetPassword(Admin admin) {
-		EncryptedAdmin encryptedAdmin=new EncryptedAdmin();
-		encryptedAdmin.setAdminId(admin.getAdminId());
-		encryptedAdmin.setPassword(EncryptionUtility.encryptString(admin.getPassword()));
-		return securityDAO.changePassword(encryptedAdmin);
+		EncryptedEmployee encryptedEmployee=new EncryptedEmployee();
+		encryptedEmployee.setEmployeeId(admin.getAdminId());
+		encryptedEmployee.setEncryptedPassword(EncryptionUtility.encryptString(admin.getPassword()));
+		return securityDAO.changeEmployeePassword(encryptedEmployee);
 	}
 	
 	/**
-	 * This method is for chane employee funtionality
+	 * This method is for change employee functionality
 	 * This method takes ChangePasswordrequest object
-	 * Returns 1 if successfully chaneged
+	 * Returns 1 if successfully changed
 	 * Returns 0 if current password is wrong
-	 * Returns -1 if any problem ocuured
+	 * Returns -1 if any problem occurred
 	 */
 	public int changeEmployeePassword(ChangePasswordRequest changePasswordData) {
         logger.info("in SecurityServiceImpl class -- changeEmployeePassword(ChangePasswordRequest changePasswordData)");
@@ -148,5 +156,4 @@ public class SecurityServiceImpl implements ISecurityService {
 		}
 		
 	}
-
 }
