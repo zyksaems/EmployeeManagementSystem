@@ -16,6 +16,7 @@ import com.cipher.decryption.Decryption;
 
 
 public class EmailUtility {
+	
 	private Properties props;
 	private String mailPassword, username;
 
@@ -35,7 +36,7 @@ public class EmailUtility {
 	 * sendMail() method takes mailId, password and recipient name as parameter
 	 * and send a mail to given mail Id with password information
 	 */
-	public void sendMail(String mailId, String url, String name) {
+	public void sendMail(String recipientMailId, String message, String recipientName,String subject) {
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, mailPassword);
@@ -43,14 +44,14 @@ public class EmailUtility {
 		});
 		try {
 			// Create a Message
-			Message message = new MimeMessage(session);
+			Message mimeMessage = new MimeMessage(session);
 			// Set sender and receiver
-			message.setFrom(new InternetAddress(username));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailId));
-			message.setSubject("Forgot Password ");
-			message.setText("Dear " + name + ",\n\n\n \t Your  Reset Password  link is  " + url + " \n\n\n \t NOTE: This link will expire in 1 minute \n\nRegards,\nCaprusIT Team.");
+			mimeMessage.setFrom(new InternetAddress(username));
+			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse("shankarrao.kota@caprusit.com"));
+			mimeMessage.setSubject(subject);
+			mimeMessage.setText("Dear " + recipientName+"," + message +" \n\nRegards,\nCaprusIT Team.");
 			// Transmit the mail
-			Transport.send(message);
+			Transport.send(mimeMessage);
 			System.out.println("Sent");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

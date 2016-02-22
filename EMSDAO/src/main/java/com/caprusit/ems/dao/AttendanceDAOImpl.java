@@ -3,12 +3,16 @@ package com.caprusit.ems.dao;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,8 +21,12 @@ import com.caprusit.ems.domain.User;
 
 @Repository
 public class AttendanceDAOImpl implements IAttendanceDAO {
+	
+	int workingHoursPerDay=4;
+	
 	@Autowired
 	private SessionFactory factory;
+	
 	private Logger logger= Logger.getLogger(AttendanceDAOImpl .class);
 	
 	/**
@@ -60,6 +68,53 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 		logger.info("operation upate end time: " + res);
 		logger.info("hors worked: " + res2);
 		return res + res2;
+	}
+	/**
+	 * This method is to find out employees who are not logged out
+	 * after they completed their work hours
+	 */
+    public List<Object> getStillWorkingEmployeeIds() {
+
+		Session session = factory.openSession();
+				
+		Criteria attendanceCriteria = session.createCriteria(Attendance.class);
+
+		Date today = Calendar.getInstance().getTime();
+
+		Date last = Calendar.getInstance().getTime();
+
+		@SuppressWarnings("unchecked")
+		List<Object> list = session
+				.createCriteria(Attendance.class)
+				.add(Restrictions.eq("attendanceDate", today))
+				.add(Restrictions.eqOrIsNull("endTime", null))
+				.add(Restrictions.le("startTime", getMinStartTime()))
+				.setProjection(
+						Projections.projectionList()
+								.add(Projections.property("employeeId"))
+								.add(Projections.property("startTime"))).list();
+
+		return list;
+	}
+
+	/**
+	 * This method is to set today date with 00:00:00 time
+	 * 
+	 */
+	private Date getMinStartTime() {
+
+		Calendar cal = Calendar.getInstance();
+
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int minutes = cal.get(Calendar.MINUTE);
+		cal.set(Calendar.HOUR_OF_DAY, (hour - workingHoursPerDay));
+		cal.set(Calendar.MINUTE, minutes);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+
+		System.out.println("min ligin time   :    "+cal.getTime());
+		return cal.getTime();
+
 	}
 
 	/**

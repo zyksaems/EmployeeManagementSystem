@@ -75,7 +75,8 @@ public class SecurityServiceImpl implements ISecurityService {
 		Object[] data = (Object[]) mailInfo.get(0);
 		if (data != null) {
 			if (data[1].equals(emailId)) {
-				emailUtility.sendMail(emailId, url, (String) data[0] + " " + (String) data[2]);
+				String message="\n\n\n \t Your  Reset Password  link is  " + url + " \n\n\n \t NOTE: This link will expire in 1 minute";
+				emailUtility.sendMail(emailId, message, (String) data[0] + " " + (String) data[2],"Forgot Password");
 				result = 1;
 				logger.info("Mail sent successfully to your  mail id");
 			} else {

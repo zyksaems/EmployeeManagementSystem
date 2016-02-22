@@ -1,10 +1,14 @@
 package com.caprusit.ems.config;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 
+import org.quartz.JobDetail;
+import org.quartz.Trigger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +17,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
+import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
@@ -101,6 +108,41 @@ public class ParentConfigBean {
 	@Bean 
 	public UploadExcelFileUtility getExcelFileUtility(){
 		return new UploadExcelFileUtility();
+	}
+	
+	//  beans for quartz scheduler
+	@Bean()
+	public MethodInvokingJobDetailFactoryBean getmethodinvokeFactoryBean(){
+		
+		MethodInvokingJobDetailFactoryBean bean=new MethodInvokingJobDetailFactoryBean();
+		
+		bean.setTargetBeanName("quartzScheduler");
+		bean.setTargetMethod("runSchedulerToRemindEmployees");
+		bean.setConcurrent(false);
+				
+		return bean;
+	}
+	
+	@Bean
+	@Autowired
+	public CronTriggerFactoryBean getCronTrigger(JobDetail methodJobDetail){
+		
+		CronTriggerFactoryBean bean=new CronTriggerFactoryBean();
+		
+		bean.setJobDetail(methodJobDetail);
+		bean.setCronExpression("0 0/20 19-23 ? * MON-FRI *");
+		
+		return bean;
+	}
+	
+	@Bean
+	@Autowired
+	public SchedulerFactoryBean getSchedulerFactoryBean(Trigger cronTrigger) throws IOException{
+		SchedulerFactoryBean bean=new SchedulerFactoryBean();
+ 
+		bean.setTriggers(cronTrigger);	 
+		return bean;
+		
 	}
 	
 }

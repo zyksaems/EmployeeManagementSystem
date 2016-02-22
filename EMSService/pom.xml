@@ -15,6 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hibernate-version>4.3.11.Final</hibernate-version>
 		<org.springframework-version>4.2.1.RELEASE</org.springframework-version>
+		<quartz.version>2.2.2</quartz.version>
 	</properties>
 
 	<dependencies>
@@ -65,6 +66,13 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>4.2.1.RELEASE</version>
+		</dependency>
+		
+		<!-- Quartz framework -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
 		</dependency>
 
 		<!-- Servlet -->
