@@ -228,7 +228,6 @@ $("document").ready(function(){
 		        	/* function call to set default values */
 		        	setDefaultValues();	
 		        	$(adminLoginModal_id).modal("hide");
-		        	$(employeeForgotPasswordModal_Id).modal("hide");
 		        	/*function call to get admin home page*/
 		        	getAdminHomePage();
 		        	
