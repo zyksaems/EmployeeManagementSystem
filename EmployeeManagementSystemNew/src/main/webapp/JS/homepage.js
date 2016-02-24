@@ -14,6 +14,8 @@ $(document).ready(function(){
 	var attendanceForm_id="#in-time-form";
 	var contactUsDiv_id="#contact-us-div";
 	
+	var homePageLink="/EmployeeManagementSystemNew/home.do";
+	
 	/*variables to store css classes*/
 	var active="active";
 	
@@ -27,8 +29,8 @@ $(document).ready(function(){
      * This function is to show attendance division when button clicks
      */
 	$(homeLink_id).click(function(){
-		// reload the page
-		 location.reload();
+		 // load the home page
+		 window.location.href=homePageLink;
 		/*functionc all to hide remaining divisions*/
 		//diplayOnlyOneDivision(attendanceForm_id);
 		

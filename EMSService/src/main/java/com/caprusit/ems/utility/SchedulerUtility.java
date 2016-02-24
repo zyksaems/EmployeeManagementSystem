@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.dao.IAttendanceDAO;
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.domain.Employee;
@@ -23,39 +24,22 @@ public class SchedulerUtility {
 	@Autowired
 	private EmailUtility emialUtility;
 	
-	private Long  prevousExecutingTime,currentTime,oneMin_mills=(long) 61494325;
-	
 	private Logger logger=Logger.getLogger(SchedulerUtility.class);
 	
-	public SchedulerUtility(){
-		prevousExecutingTime=System.nanoTime();
-	}
 	public void  runSchedulerToRemindEmployees(){
 		
-		logger.info("schduler executing time: "+new Date());
-	
-		currentTime=System.nanoTime();
-				
-			if((prevousExecutingTime + oneMin_mills) < currentTime ){
-				logger.info("+++++++++++++++++++++++++++++++++++   executing    +++++++++++++++++++++++++++++++++++");
-				logger.info("prevoius exeuting time: "+prevousExecutingTime);
-				logger.info("current executing time: "+currentTime);
-				prevousExecutingTime=currentTime;			
+		logger.info("quartz schduler executing time: "+new Date());			
+		
 				List<Object> li=attendanceDao.getStillWorkingEmployeeIds();						
 				for(Object o: li){
 					Object [] arr=(Object[]) o;
 					Employee emp=manageUserDao.findById((Integer)arr[0]);
-					String message="\n\n\n \t You are not logged out from office.Please log out if you want to leave \n\n\n \t NOTE: We will remind you in next 30 minutes";
-					emialUtility.sendMail(emp.getEmailId(), message, emp.getFirstName()+" "+emp.getLastName(),"Alert from EMS");							
-					logger.info("not logout alert mail sent to employee id "+arr[0] +"  email id: "+emp.getEmailId());
+					String message="\n\n\n \t You are not logged out from office.Please log out if you want to leave \n\n\n \t NOTE: We will remind you in next "+
+					                                  EmsConditions.NOT_LOGOUT_REMIND_TIME+" minutes";
+					//emialUtility.sendMail(emp.getEmailId(), message, emp.getFirstName()+" "+emp.getLastName(),"Alert from EMS");							
+					logger.info("Not log-out alert mail sent to employee id "+ arr[0] +"  email id:  "+emp.getEmailId());
 				}
-			}
-			else{
-				logger.info("--------------------------  cond filed     not executing ---------------------------------------");
-				logger.info("prevoius exeuting time: "+prevousExecutingTime);
-				logger.info("current executing time: "+currentTime);
-			}
-
+			
 		
 		
 	}

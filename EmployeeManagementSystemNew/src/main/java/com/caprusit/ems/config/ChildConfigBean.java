@@ -1,5 +1,6 @@
 package com.caprusit.ems.config;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +15,14 @@ import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.caprusit.ems")
+@ComponentScan(basePackages = {"com.caprusit.ems"})
 public class ChildConfigBean extends WebMvcConfigurerAdapter {
+	
+	private Logger logger=Logger.getLogger(ChildConfigBean.class);
 
 	@Bean
 	public ResourceBundleViewResolver resourceBundleViewResolver() {
+		logger.info("resource bundle view resolver bean is creating --  child ");
 		ResourceBundleViewResolver resolver = new ResourceBundleViewResolver();
 		resolver.setOrder(1);
 		resolver.setBasename("properties/excelView");
@@ -31,6 +35,7 @@ public class ChildConfigBean extends WebMvcConfigurerAdapter {
 	 * */
 	@Bean
 	public ViewResolver configureViewResolver() {
+		logger.info("internal resource view resolver bean is creating --  child");
 		InternalResourceViewResolver viewResolve = new InternalResourceViewResolver();
 		viewResolve.setOrder(2);
 		viewResolve.setPrefix("/WEB-INF/views/");

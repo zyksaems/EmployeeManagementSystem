@@ -6,6 +6,7 @@ import java.util.Properties;
 import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ import com.caprusit.ems.utility.UploadExcelFileUtility;
 @Configuration
 public class ParentConfigBean {
 	
+	private Logger logger=Logger.getLogger(ParentConfigBean.class);
+	
 	@Value("${driverClassName}")
 	private String driverClassName;
 
@@ -50,6 +53,7 @@ public class ParentConfigBean {
 	/*Bean creation for getting dataSource*/
 	@Bean(name = "dataSource")
 	public DataSource getDataSource() {
+		logger.info("data source bean is creating --  parent");
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(driverClassName);
 		dataSource.setUrl(url);
@@ -61,20 +65,20 @@ public class ParentConfigBean {
 	/*Bean creation for sessionFactory of Hibernate*/
 	@Bean(name="sessionFactory")
 	public LocalSessionFactoryBean getSessionFactory() throws Exception{
-		
+		logger.info("local session factory bean is creating --  parent");
 		LocalSessionFactoryBean  factory= new LocalSessionFactoryBean ();
 		factory.setDataSource(getDataSource());
 		factory.setAnnotatedClasses(Employee.class,Attendance.class,Role.class,Department.class,EncryptedEmployee.class);
 		Properties p=new Properties();		
 	    p.load(new ClassPathResource("properties/hibernate.properties").getInputStream()); //load gives FileNotFound and IOException
-		factory.setHibernateProperties(p);
-		System.out.println("local session factory created"+factory);		
+		factory.setHibernateProperties(p);	
 		return  factory;
 	}
 	
 	/*Bean for PropertyPlaceHolderConfigurer(for reading properties file and setting values to variables)*/
 	@Bean
 	public static PropertyPlaceholderConfigurer placeholderConfigurer() {
+		
 		PropertyPlaceholderConfigurer placeholderConfigurer = new PropertyPlaceholderConfigurer();
 		Resource resource = new ClassPathResource("properties/database.properties");
 		placeholderConfigurer.setLocation(resource);
@@ -85,6 +89,7 @@ public class ParentConfigBean {
 	/*Bean for utility class (sending email to administrator for forgot password purpose)*/
 	@Bean
 	public EmailUtility getEmailUtility() throws Exception{
+		logger.info("email utility bean is creating --  parent");
 		EmailUtility emailUtility= new EmailUtility();
 		emailUtility.setUsername("nichalrahul.murlidhar@caprusit.com");
 		emailUtility.setMailPassword("568691843030614591877879_19");
@@ -107,12 +112,17 @@ public class ParentConfigBean {
 	/*Bean for utility class(uploading excel file of employee details into dataBase)*/
 	@Bean 
 	public UploadExcelFileUtility getExcelFileUtility(){
+		logger.info("upload excel file utility bean is creating --  parent");
 		return new UploadExcelFileUtility();
 	}
 	
-	//  beans for quartz scheduler
+//  beans for quartz scheduler
 	@Bean()
 	public MethodInvokingJobDetailFactoryBean getmethodinvokeFactoryBean(){
+		
+		//logger.info("method invoking job detail factory  bean is creating --  parent");
+		
+		logger.info("method invoking job detail factory  bean is creating --  child");
 		
 		MethodInvokingJobDetailFactoryBean bean=new MethodInvokingJobDetailFactoryBean();
 		
@@ -127,10 +137,15 @@ public class ParentConfigBean {
 	@Autowired
 	public CronTriggerFactoryBean getCronTrigger(JobDetail methodJobDetail){
 		
+	   //logger.info("cron trigger factory  bean is creating --  parent");
+		
+		logger.info("cron trigger factory  bean is creating --  child");
+		
 		CronTriggerFactoryBean bean=new CronTriggerFactoryBean();
 		
 		bean.setJobDetail(methodJobDetail);
-		bean.setCronExpression("0 0/30 19-23 ? * MON-FRI *");
+		String cronExpression="0 * 11-23 ? * MON-FRI *";
+		bean.setCronExpression("0 * 11-23 ? * MON-FRI *");
 		
 		return bean;
 	}
@@ -138,11 +153,18 @@ public class ParentConfigBean {
 	@Bean
 	@Autowired
 	public SchedulerFactoryBean getSchedulerFactoryBean(Trigger cronTrigger) throws IOException{
-		SchedulerFactoryBean bean=new SchedulerFactoryBean();
+		
+		//logger.info("scheduler factory  bean is creating --  parent");
+		
+	     logger.info("scheduler factory  bean is creating --  child");
+	     
+		 SchedulerFactoryBean bean=new SchedulerFactoryBean();
  
-		bean.setTriggers(cronTrigger);	 
-		return bean;
+		 bean.setTriggers(cronTrigger);	 
+		 return bean;
 		
 	}
+	
+	
 	
 }

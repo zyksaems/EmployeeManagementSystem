@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Admin;
 import com.caprusit.ems.domain.ChangePasswordRequest;
@@ -38,7 +39,7 @@ public class SecurityController {
 	private Set<Integer> resetPasswordAdminSet=new HashSet<Integer>();
 	
 	/*This integer represents validity time in  minutes */
-	private int passwordLinkValidTime=10;
+	private int passwordLinkValidTime=EmsConditions.RESET_PASSSWORD_LINK_VALID_TIME;
 	private static int maxloginattempts=3;
 	private Logger logger = Logger.getLogger(SecurityController.class);
 	
@@ -168,9 +169,9 @@ public class SecurityController {
 		Set<Integer> resetAdminIdSet=(Set<Integer>) servletContext.getAttribute("resetPaswordAdminIdList");
 		ModelAndView resetAdminModelAndVlew=(resetAdminIdSet != null && resetAdminIdSet.contains(adminId) && (currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000) )?new ModelAndView("ResetPasswordPage","resetPasswordAdminId",adminId):new ModelAndView("ResetPasswordPage","errorMsg","Sorry, This link is expired!!");
 		logger.info("model and view created for reset password: "+resetAdminModelAndVlew);
-		logger.info("condition for time checking:   "+(currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000 ));
-		logger.info("condition for time checking    currentTime:-   "+currentMilliSeconds );
-		logger.info("condition for time checking    sent+: ++  "+	(currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000) );
+		//logger.info("condition for time checking:   "+(currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000 ));
+		//logger.info("condition for time checking    currentTime:-   "+currentMilliSeconds );
+		//logger.info("condition for time checking    sent+: ++  "+	(currentMilliSeconds <= milliSeconds+passwordLinkValidTime*60000) );
 	
 		logger.info("reset admin id set(/ResetPasswordPage): "+resetAdminIdSet);
 		return resetAdminModelAndVlew;

@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.dao.IReportGenerationDAO;
 import com.caprusit.ems.domain.Attendance;
@@ -28,7 +29,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	@Autowired
 	private IManageUserDAO manageUserDAO;
 	
-	 private int workingHoursPerDay=9,daysPerMonth=26;
+	 private int workingHoursPerDay=EmsConditions.WORKING_HOURS_PER_DAY,daysPerMonth=EmsConditions.WORKING_DAYS_PER_MONTH;
       
 	
 	private Logger logger = Logger.getLogger(ReportGenerationServiceImpl.class);

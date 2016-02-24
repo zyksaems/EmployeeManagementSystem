@@ -12,25 +12,23 @@ public class Initialiser implements WebApplicationInitializer {
 
 	@Override
 	public void onStartup(ServletContext servletContext) {
-		// Create the 'root' Spring application context
-		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		rootContext.register(ChildConfigBean.class);
-		rootContext.setServletContext(servletContext);
+		// Create the dispatcher servlet's Spring application context(parent container)
+	       AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
+		   //dispatcherContext.register(ParentConfigBean.class);
+		   
+		   // Create the 'root' Spring application context(child container)
+		   AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+		   rootContext.register(ChildConfigBean.class);
+		   rootContext.setServletContext(servletContext);
 
-		// Manage the lifecycle of the root application context
-		servletContext.addListener(new ContextLoaderListener(rootContext));
+		   // Manage the lifecycle of the root application context
+		   servletContext.addListener(new ContextLoaderListener(rootContext));
 
-		// Create the dispatcher servlet's Spring application context
-        AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-		dispatcherContext.register(ParentConfigBean.class);
-
-		// Register and map the dispatcher servlet
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet(
-				"dispatcher", new DispatcherServlet(dispatcherContext));
-		dispatcher.setLoadOnStartup(1);
-		dispatcher.addMapping("*.do");
-		servletContext.addListener(new SessionListener());
-
+			// Register and map the dispatcher servlet
+			ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
+			dispatcher.setLoadOnStartup(1);
+			dispatcher.addMapping("*.do");
+			servletContext.addListener(new SessionListener());
 	}
 
 }

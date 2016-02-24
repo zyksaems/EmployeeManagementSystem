@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.dao.ISecurityDAO;
 import com.caprusit.ems.domain.Admin;
@@ -75,7 +76,8 @@ public class SecurityServiceImpl implements ISecurityService {
 		Object[] data = (Object[]) mailInfo.get(0);
 		if (data != null) {
 			if (data[1].equals(emailId)) {
-				String message="\n\n\n \t Your  Reset Password  link is  " + url + " \n\n\n \t NOTE: This link will expire in 10 minutes";
+				String message="\n\n\n \t Your  Reset Password  link is  " + url + " \n\n\n \t NOTE: This link will expire in "+
+			                                                  EmsConditions.RESET_PASSSWORD_LINK_VALID_TIME+" minutes";
 				emailUtility.sendMail(emailId, message, (String) data[0] + " " + (String) data[2],"Forgot Password");
 				result = 1;
 				logger.info("Mail sent successfully to your  mail id");

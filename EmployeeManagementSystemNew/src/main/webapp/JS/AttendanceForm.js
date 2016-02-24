@@ -79,6 +79,8 @@ $("document").ready(
 				var loggedOutEmployeeIdsArray=[];
 				/* variable for storing all logged in employee ids (json array) */
 				var loggedInEmployeeIdsArray=[];
+				/*variable to store count of employee id search*/
+				var employeeIdSearchCount=0;
 				/* variable for storing login status of employee (boolean) */
 				var loggedOutstatus;
 				/* variable for storing logout status of employee (boolean) */
@@ -148,6 +150,8 @@ $("document").ready(
 	        	var loggedInEmpIdsRequest="getLoggedInEmpIds.do";
 	        	/* variable for storing attendance request (String) */
 	        	var sendAttendanceRequest="secureLogin.do";
+	        	
+	        	var homePageLink="/EmployeeManagementSystemNew/home.do";
 	        
 				
 				/*variables for storing id of diviions and text boxes and buttons*/
@@ -199,16 +203,24 @@ $("document").ready(
 				getLoggedOutEmpployeeIds();
 				getLoggedInEmpployeeIds(); 
 
+				/**
+				 * This function is to reload the home page
+				 */
+				function reloadHomePage(){	
+					//console.log("reloading home page");
+				    // load home page
+					window.location.href=homePageLink;
+					
+				}; //   END  --- reloadHomePage()
 				
-				
-				/* This funcion will make ajax call to get 
+			   /** This funcion will make ajax call to get 
 				 *  All employee ids along with name
 				 */
 				function getAllEmpployeeIds(){
 					
 					$.post("/"+applicationName+"/"+allEmployeeIdsRequest, function( data ) {
-						   console.log("All employee ids data: "+data);
-						   console.log("All employee ids array length: "+data.length);
+						  // console.log("All employee ids data: "+data);
+						  // console.log("All employee ids array length: "+data.length);
 						   allEmployeeIdsArray=data;
 						   $("#allEmployeeArray").text("All employees: "+JSON.stringify(allEmployeeIdsArray));
 						   
@@ -219,7 +231,7 @@ $("document").ready(
 						   /*writing pure employee ids array to local storage*/ 
 						   localStorage.setItem("employeeidsarray", pureEmployeeIdsArray);
 						   
-						   console.log("local read"+localStorage.getItem("employeeidsarray"));
+						  // console.log("local read"+localStorage.getItem("employeeidsarray"));
 						   
 						},"json");
 				}//END -- getAllEmpployeeIds()
@@ -230,7 +242,7 @@ $("document").ready(
 				function getLoggedOutEmpployeeIds(){
 					
 					$.post("/"+applicationName+"/"+loggedOutEmpIdsRequest, function( data ) {
-						   console.log("logged out  employee ids data: "+data);
+						  // console.log("logged out  employee ids data: "+data);
 						   loggedOutEmployeeIdsArray=data;
 						   $("#loggedOutEmpArray").text("logged-out employees: "+JSON.stringify(loggedOutEmployeeIdsArray));
 						},"json");
@@ -239,10 +251,11 @@ $("document").ready(
 				/* This funcion will make ajax call to get 
 				 * logged-in employee Ids
 				 */
-				function getLoggedInEmpployeeIds(){
+				function getLoggedInEmpployeeIds(){  
 					
 					$.post("/"+applicationName+"/"+loggedInEmpIdsRequest, function( data ) {
-						   console.log("logged in  employee ids data: "+data);
+						
+						  // console.log("logged in  employee ids data: "+data);
 						   loggedInEmployeeIdsArray=data;
 						   $("#loggedInEmpArray").text("logged-in employees: "+JSON.stringify(loggedInEmployeeIdsArray));
 						},"json");
@@ -285,20 +298,20 @@ $("document").ready(
 	             */			
 				$(employeeAttendanceButton_id).click(function(){
 					
-					console.log("button clicked??");
-					console.log("logged out status: "+loggedOutstatus);
-					console.log("logged in status: "+loggedInstatus);
+					//console.log("button clicked??");
+					//console.log("logged out status: "+loggedOutstatus);
+					//console.log("logged in status: "+loggedInstatus);
 					employeePassword=$(employeePassword_id).val();
 					employeeId=$(employeeId_id).val();
 					 if(loggedOutstatus == false && loggedInstatus == false){
-						console.log("logged in - intime");
+						//console.log("logged in - intime");
 					    attendanceObj={id:employeeId,type:attendanceLoginType,password:employeePassword};
 				    	/* function call to postAttendance() */
 					    postAttendance(attendanceObj);
 						
 					}
 					else if(loggedOutstatus == false && loggedInstatus == true){
-						console.log("logged out - out ime");
+						//console.log("logged out - out ime");
 						 attendanceObj={id:employeeId,type:attendanceLogoutType,password:employeePassword};
 						 /* function call to post attendance method */
 						 postAttendance(attendanceObj);
@@ -330,28 +343,23 @@ $("document").ready(
 
 					if (empIdLength == employeeIdMinLength) {
 						 employeeId=$(employeeId_id).val();
-						console.log(" ok");
-						if(serachInJsonObjectArray(employeeId, allEmployeeIdsArray)){
-							console.log("loggedInEmployeeIdsArray "+loggedInEmployeeIdsArray);
-							console.log("loggedOutEmployeeIdsArray "+loggedOutEmployeeIdsArray);
-							loggedOutstatus=serachInArray(employeeId, loggedOutEmployeeIdsArray);
-							loggedInstatus=serachInArray(employeeId, loggedInEmployeeIdsArray);
-							employeeIdFlag=true;
-							buttonText=(loggedOutstatus == false && loggedInstatus == false)?login:
-								 (loggedOutstatus == false && loggedInstatus == true)?logout:invalid;
+						//console.log(" ok");  serachInArray(employeeId, loggedOutEmployeeIdsArray) loggedInEmployeeIdsArray
+						if(((!serachInJsonObjectArray(employeeId, allEmployeeIdsArray)) ||  (!serachInArray(employeeId, loggedOutEmployeeIdsArray))  
+								|| ( !serachInArray(employeeId, loggedInEmployeeIdsArray))) && employeeIdSearchCount == 0){
+							console.log("employee not found -- getting al employee ids");
+							employeeIdSearchCount=1;
+							//function call to  get all employee ids
+							getAllEmpployeeIds();
+							getLoggedOutEmpployeeIds();
+							getLoggedInEmpployeeIds();
 							
-							console.log("logged out status:- "+loggedOutstatus);
-							console.log("logged in status:- "+loggedInstatus); 
-	
-							/*function call to set text box class to ok*/
-							setTextBoxClassOk(employeeId_div_id,employeeId_span_id);
-							/*$(employeeId_div_id).removeClass(errorCalss).addClass(successClass);
-							$(employeeId_span_id).removeClass(glyphiconError).addClass(glyphiconOk);*/
-							
-							$(employeeLoginSuccessMsg_id).text((buttonText == invalid)? attendancePostedMsg: "");
-							$( employeeAttendanceButton_id ).text(buttonText);
-							/* function call to deisable or enable button */
-							disableOrEnableAttendanceButton();
+							// call employee found 
+							EmployeeFound();
+							setTimeout(reloadHomePage, 10000);
+						}
+						else if(serachInJsonObjectArray(employeeId, allEmployeeIdsArray)){
+							// call employee found 
+							EmployeeFound();
 						}
 						else{
 							/*function call to set text box class to error*/
@@ -369,7 +377,7 @@ $("document").ready(
 						
 					}
 					else {
-						console.log(" error ");
+						//console.log(" error ");
 						/*function call to set text box class to error*/
 						setTextBoxClassError(employeeId_div_id,employeeId_span_id);
 						/*$(employeeId_div_id).removeClass(successClass).addClass(errorCalss);
@@ -381,6 +389,34 @@ $("document").ready(
 					}
 					
 				 };// END --changeCssClassOfEmpIdTextBox(empIdLength)
+				 
+				 /**
+				  * This function is to set values when employee found
+				  */
+				 function EmployeeFound(){
+					 
+					    //console.log("loggedInEmployeeIdsArray "+loggedInEmployeeIdsArray);
+						//console.log("loggedOutEmployeeIdsArray "+loggedOutEmployeeIdsArray);
+						loggedOutstatus=serachInArray(employeeId, loggedOutEmployeeIdsArray);  
+						loggedInstatus=serachInArray(employeeId, loggedInEmployeeIdsArray);
+						employeeIdFlag=true;
+						buttonText=(loggedOutstatus == false && loggedInstatus == false)?login:
+							 (loggedOutstatus == false && loggedInstatus == true)?logout:invalid;
+						
+						//console.log("logged out status:- "+loggedOutstatus);
+						//console.log("logged in status:- "+loggedInstatus); 
+
+						/*function call to set text box class to ok*/
+						setTextBoxClassOk(employeeId_div_id,employeeId_span_id);
+						/*$(employeeId_div_id).removeClass(errorCalss).addClass(successClass);
+						$(employeeId_span_id).removeClass(glyphiconError).addClass(glyphiconOk);*/
+						
+						$(employeeLoginSuccessMsg_id).text((buttonText == invalid)? attendancePostedMsg: "");
+						$( employeeAttendanceButton_id ).text(buttonText);
+						/* function call to deisable or enable button */
+						disableOrEnableAttendanceButton();
+						
+				 };// END  --  EmployeeFound()
 				 
 				 /* Function for disable / enable button
 			      * This function disables/enables the login button 
@@ -525,11 +561,11 @@ $("document").ready(
 					 //console.log("key in search "+key);
 					 //console.log("array for search :"+arr);
 						var length = arr.length;
-						console.log(" array length: "+length);
+						//console.log(" array length: "+length);
 						for (var i = 0; i < length; i++) {
 							if (key == arr[i].empId){					
 								employeeName=arr[i].empName;
-								console.log("emp name: "+employeeName);
+								//console.log("emp name: "+employeeName);
 								return true;
 							}
 							//console.log("i: "+i);

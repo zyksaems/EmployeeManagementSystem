@@ -16,13 +16,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.User;
 
 @Repository
 public class AttendanceDAOImpl implements IAttendanceDAO {
-	
-	int workingHoursPerDay=4;
 	
 	@Autowired
 	private SessionFactory factory;
@@ -104,15 +103,15 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 	private Date getMinStartTime() {
 
 		Calendar cal = Calendar.getInstance();
-
+		EmsConditions dssd;
 		int hour = cal.get(Calendar.HOUR_OF_DAY);
 		int minutes = cal.get(Calendar.MINUTE);
-		cal.set(Calendar.HOUR_OF_DAY, (hour - workingHoursPerDay));
+		cal.set(Calendar.HOUR_OF_DAY, (hour - EmsConditions.WORKING_HOURS_PER_DAY));
 		cal.set(Calendar.MINUTE, minutes);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 
-		System.out.println("min ligin time   :    "+cal.getTime());
+		logger.info("min login time   :    "+cal.getTime());
 		return cal.getTime();
 
 	}
