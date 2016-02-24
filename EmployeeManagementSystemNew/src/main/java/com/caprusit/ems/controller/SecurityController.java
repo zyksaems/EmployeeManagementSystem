@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Admin;
 import com.caprusit.ems.domain.ChangePasswordRequest;
+import com.caprusit.ems.service.ILoginFailedAttemptsService;
 import com.caprusit.ems.service.ISecurityService;
 import com.caprusit.ems.utility.JsonUtility;
 
@@ -30,11 +31,15 @@ public class SecurityController {
 	@Autowired
 	private ISecurityService securityService;
 	
+	
+	@Autowired
+	private ILoginFailedAttemptsService service;
+	
 	private Set<Integer> resetPasswordAdminSet=new HashSet<Integer>();
 	
 	/*This integer represents validity time in  minutes */
 	private int passwordLinkValidTime=10;
-
+	private static int maxloginattempts=3;
 	private Logger logger = Logger.getLogger(SecurityController.class);
 	
 	/**
@@ -49,9 +54,23 @@ public class SecurityController {
 
 		logger.info("in admin security controller");
 		int status = securityService.login(admin);
+		String url="";
 		if (status == 1)
+		{
 			request.getSession().setAttribute("adminId", admin.getAdminId());
-
+		}
+		else if(status==0){
+      	  int res=service.checkAttemptsCount(admin.getAdminId());
+    		if(res<maxloginattempts)
+    		{
+    			service.incrementAttemptCount(admin.getAdminId());
+    			status=0;
+    		}
+    		else{
+    		int updateres=service.LockUser(admin.getAdminId(),url);
+    		status=2;
+    		}
+        }
 		return status;
 	}
 	

@@ -25,6 +25,7 @@
 		$("#back").click(function() {
 			
 			$("#id").val("");
+			$( "#id" ).prop( "disabled", false );
 			$("#datepicker").val("");
 			$("#month").val("");
 			$("#week").val("");
@@ -35,9 +36,8 @@
 			$("#table1").hide();
 			$("#company_work_hours").text(0);
 			$("#emp_work_hours").text(0);
-			$("#title").hide();
-			$("#Employee_Details").hide();
 			$("#back").hide();
+			$("#back_div").hide();
 			$("#print").hide();
 		});
 		

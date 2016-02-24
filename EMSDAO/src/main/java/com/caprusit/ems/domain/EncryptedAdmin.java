@@ -21,6 +21,27 @@ public class EncryptedAdmin implements Serializable {
 	@Column(name = "password")
 	private byte[] password;
 	
+	@Column
+	private int locked;
+	public int getLocked() {
+		return locked;
+	}
+
+	public void setLocked(int locked) {
+		this.locked = locked;
+	}
+
+	public int getAttemptcount() {
+		return attemptcount;
+	}
+
+	public void setAttemptcount(int attemptcount) {
+		this.attemptcount = attemptcount;
+	}
+
+	@Column
+	private int attemptcount;
+	
 	public EncryptedAdmin(){}
 
 	public EncryptedAdmin(int adminId) {

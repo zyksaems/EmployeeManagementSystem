@@ -1,29 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>EMS</title>
-<link rel="shortcut icon" type="image/x-icon"
-	href="./images/caprus logo.png" />
-<script src="./jquery/jquery-2.1.4.js"></script>
-  <script src="./jquery/jquery-ui.js"></script>
-<script src="./JS/MonthlyGenerateReoprts.js"></script>
-<style>
-#page_result_div {
-	float: right;
-}
-
-#select_div {
-	float: right;
-}
-</style>
-
-</head>
-<body>
-	<jsp:include page="AdminTemplate.jsp"></jsp:include>
+   <jsp:include page="AdminTemplate.jsp"></jsp:include>
 	<div class="row generateposition" id="monthly-report-select-div">
+	<h3 align="center"><b>Monthly Attendance Reports</b></h3>
 	<div id="searchcriteria">
 		<h4>
 			<b>Search criteria</b>
@@ -45,6 +22,7 @@
 		</h4>
 	</div>
 	<div id="main">
+	<div id="back_div">
 		<div id="printdiv">
 		<h3 id="title" align="center">
 				<font color="#6495ed">Caprus IT Monthly Attendance Reports
@@ -55,35 +33,21 @@
 			Employee Name :&nbsp;&nbsp;<span id="emp_name"></span><br />
 			Employee Designation :&nbsp;&nbsp;<span id="emp_designation"></span>
 			</div>
+			<div id="table_pag_div">
 			 <table id="table" border='2' class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>empId</th>
-						<th>Date</th>
-						<th>StartTime</th>
-						<th>EndTime</th>
-						<th>WorkHours</th>
-						<th>DayIndicator</th>
-					</tr>
-				</thead>
 			</table>
+			</div>
+			<div id="table1_pag_div">
 				 <table id="table1" border='2' class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th>StartTime</th>
-						<th>EndTime</th>
-						<th>WorkHours</th>
-						<th>DayIndicator</th>
-					</tr>
-				</thead>
 			</table>
+			</div>
 		</div>
-		
+		</div>
 		<font color="red"><p aling="center" id="res"></p></font></div> <br /> <br />
 		<button id="back" class='btn btn-primary'>back</button>
 		<button id="print" class='btn btn-primary'
 			onclick="PrintDiv('printdiv')">print</button>
+			
+		
 	</div>
-</body>
-</html>
+   </div>

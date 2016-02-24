@@ -2,6 +2,8 @@
   <title>EMS</title>
 
    <script src="./jquery/jquery-2.1.4.js"></script>
+   <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
    <script src="./jquery/jquery-ui.js"></script>
    <script src="./bootstrap/bootstrap.min.js"></script> 
    
@@ -17,7 +19,20 @@
   <script src="./JS/autoCompleteEmployeeId.js"></script>
   <script src="./JS/AdminTemplete.js"></script>
  
+ <script src="./JS/MonthlyGenerateReoprts.js"></script>
+ <script src="./JS/WeeklyGenerateReports.js"></script>
+ <script src="./JS/DailyGenerateReports.js"></script>
+ <script src="./JS/AnnuallyGenerateReports.js"></script>
 
+<style>
+#page_result_div {
+	float: right;
+}
+
+#select_div {
+	float: right;
+}
+</style>
 </head>
 <body>
 	<div class="container-fluid ">

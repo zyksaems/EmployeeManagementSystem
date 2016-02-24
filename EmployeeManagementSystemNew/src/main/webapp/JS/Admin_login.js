@@ -238,6 +238,12 @@ $("document").ready(function(){
 		        	adminPasswordWrong();
 		        	
 		        }
+		        else if(result==2)
+	        	{
+	        	$(admin_login_errorMsg_id).text("you can't access please check your mail.");
+	        	/*$(adminLoginModal_id).hide();*/
+	        	alert("sorry your account is blocked due to three wrong attempts . please check your mail .");
+	        	}
 		        else{
 		        	$(admin_login_errorMsg_id).text(invalidAdminId_msg);
 		        	/*function call to set default values*/
