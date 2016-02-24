@@ -29,6 +29,7 @@ public class Initialiser implements WebApplicationInitializer {
 				"dispatcher", new DispatcherServlet(dispatcherContext));
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping("*.do");
+		servletContext.addListener(new SessionListener());
 
 	}
 
