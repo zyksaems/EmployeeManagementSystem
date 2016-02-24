@@ -41,6 +41,7 @@ public class ValidationDAOImpl implements ValidationDAO {
 
 		Criteria allEmployeeIdsCriteria = session.createCriteria(Employee.class);
 
+		allEmployeeIdsCriteria.add(Restrictions.eq("status", "1"));
 		Projection allEmployeeIdsProjection1 = Projections.property("employeeId");
 		Projection allEmployeeIdsProjection2 = Projections.property("firstName");
 		Projection allEmployeeIdsProjection3 = Projections.property("lastName");
