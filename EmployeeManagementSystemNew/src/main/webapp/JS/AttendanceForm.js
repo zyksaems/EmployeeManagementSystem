@@ -65,6 +65,44 @@
 	                
 	                
 	            };// END -- setEmployeeChangePasswordDefaultValues()
+	            
+	            /*variables for storing id of diviions and text boxes and buttons*/
+				 var employeeId_id="#employee-id-val";
+				 var employeePassword_id="#employee-password-val";
+				 var employeeId_div_id="#employee-id-div";
+				 var employeeId_span_id="#employee-id-span";
+				 var employeePassword_div_id="#employee-password-div";
+				 var employeePassword_span_id="#employee-password-span";
+				 var employeeAttendanceButton_id="#employeeAttendanceButton";
+				 var employeeLoginSuccessMsg_id="#employeeLoginSuccessMsg";
+				 
+				 /* variable for showing intime for button text (String)*/
+					var login="In-Time";
+				 
+				   /* 
+					* function for setting default values to attendance form 
+					*/
+					function setDefaultVales(){
+						
+						$(employeeId_id).val("");
+						$(employeePassword_id).val("");
+						$(employeeAttendanceButton_id).text(login);
+						$(employeeAttendanceButton_id).prop( "disabled", true );					
+						loggedInstatus=false;
+						loggedOutstatus=false;
+						employeeIdFlag=false;
+						employeePasswordFlag=false;
+						
+						/*remove success classes for divisions and set default classes*/
+						$(employeePassword_div_id).removeClass(errorCalss).removeClass(successClass);
+						$(employeePassword_span_id).removeClass(glyphiconOk).removeClass(glyphiconError);
+						$(employeeId_div_id).removeClass(errorCalss).removeClass(successClass);
+						$(employeeId_span_id).removeClass(glyphiconOk).removeClass(glyphiconError);
+						
+						
+						
+					}// END--setDefaultVales()
+				 
 
 $("document").ready(
 			function() {
@@ -110,8 +148,7 @@ $("document").ready(
 				var attendanceLoginType="login";
 				/* variable for attendance log out type (String)*/
 				var attendanceLogoutType="logout";
-				/* variable for showing intime for button text (String)*/
-				var login="In-Time";
+				
 				/* variable for showing out time for button text (String)*/
 				var logout="Out-Time";
 				/* variable for showing invalid  for button text (String)*/
@@ -153,42 +190,10 @@ $("document").ready(
 	        	
 	        	var homePageLink="/EmployeeManagementSystemNew/home.do";
 	        
-				
-				/*variables for storing id of diviions and text boxes and buttons*/
-				 var employeeId_id="#employee-id-val";
-				 var employeePassword_id="#employee-password-val";
-				 var employeeId_div_id="#employee-id-div";
-				 var employeeId_span_id="#employee-id-span";
-				 var employeePassword_div_id="#employee-password-div";
-				 var employeePassword_span_id="#employee-password-span";
-				 var employeeAttendanceButton_id="#employeeAttendanceButton";
-				 var employeeLoginSuccessMsg_id="#employeeLoginSuccessMsg";
 				 
 				 var attendanceForm_id="#attendance-form";
 
-			   /* 
-				* function for setting default values to attendance form 
-				*/
-				function setDefaultVales(){
-					
-					$(employeeId_id).val("");
-					$(employeePassword_id).val("");
-					$(employeeAttendanceButton_id).text(login);
-					$(employeeAttendanceButton_id).prop( "disabled", true );					
-					loggedInstatus=false;
-					loggedOutstatus=false;
-					employeeIdFlag=false;
-					employeePasswordFlag=false;
-					
-					/*remove success classes for divisions and set default classes*/
-					$(employeePassword_div_id).removeClass(successClass);
-					$(employeePassword_span_id).removeClass(glyphiconOk);
-					$(employeeId_div_id).removeClass(successClass);
-					$(employeeId_span_id).removeClass(glyphiconOk);
-					
-					
-					
-				}// END--setDefaultVales()
+			   
 				
 				/*setting employee id text box maxlength property*/
 				$(employeeId_id).prop( "maxlength", employeeIdMinLength );
@@ -427,6 +432,7 @@ $("document").ready(
 						
 						$(employeeLoginSuccessMsg_id).text((buttonText == invalid)? attendancePostedMsg: "");
 						$( employeeAttendanceButton_id ).text(buttonText);
+						setTimeout(setAttendanceSuccessMessage,5000,"");
 						/* function call to deisable or enable button */
 						disableOrEnableAttendanceButton();
 						
@@ -500,10 +506,12 @@ $("document").ready(
 						        	setAttendanceSuccessMessage(passwordIncorrectMsg);
 						        	/* function call to attendancepasswordWrong() */
 						        	attendancepasswordWrong();
+						        	setTimeout(setAttendanceSuccessMessage,5000,"");
 						        	
 						        }
 						        else{
 						        	$(employeeLoginSuccessMsg_id).text((attendanceObject.type == attendanceLoginType)? inTimeErrorMsg : outTimeErrorMsg );
+						        	setTimeout(setAttendanceSuccessMessage,5000,"");
 						        	
 						        }
 						     },

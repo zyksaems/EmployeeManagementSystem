@@ -361,6 +361,7 @@ $("document").ready(function(){
 		setModalHeaderAsForgotPassword();
 		/*function call to set default values for  forgot password*/
 		setForgotPasswordDefaulValues();// this function is in Attendanceform.js
+		setDefaultVales(); // this function is in Attendanceform.js
 		
 	});
 	

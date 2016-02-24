@@ -54,8 +54,8 @@ public class EncryptionUtility {
 				return new String(decryptedPassword);
 			} 
 			catch (Exception e) {
-				
-				e.printStackTrace();
+				logger.error("error while decrypting password: "+e.getMessage());
+				//e.printStackTrace();
 				
 			}
 			
@@ -84,11 +84,11 @@ public class EncryptionUtility {
 				
 				secreteKeyBuffer.append(key);
 			}
-			logger.info("buffer after append: "+secreteKeyBuffer);
+			//logger.info("buffer after append: "+secreteKeyBuffer);
 			
 			String finalSecreteKey=secreteKeyBuffer.substring(0, secreteKeyLength);
-			logger.info("final secrete key created: "+finalSecreteKey +"\n its length: "+finalSecreteKey.length());
-			logger.info("our calculated length is: "+secreteKeyLength);
+			//logger.info("final secrete key created: "+finalSecreteKey +"\n its length: "+finalSecreteKey.length());
+			//logger.info("our calculated length is: "+secreteKeyLength);
 			
 			return finalSecreteKey;
 		}
