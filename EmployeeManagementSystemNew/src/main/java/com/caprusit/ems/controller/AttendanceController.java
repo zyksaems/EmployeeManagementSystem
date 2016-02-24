@@ -10,12 +10,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.caprusit.ems.domain.EmployeeAttendanceRequest;
 import com.caprusit.ems.service.IAttendanceService;
+import com.caprusit.ems.service.ILoginFailedAttemptsService;
 
 @Controller
 public class AttendanceController {
 	
 	@Autowired
 	private IAttendanceService attendanceService;
+	
+	@Autowired
+	private ILoginFailedAttemptsService service;
+	
+	private static int maxloginattempts=3;
 	
 	private static Logger logger=Logger.getLogger(AttendanceController.class);
 
@@ -44,7 +50,7 @@ public class AttendanceController {
 		logger.info("inside attendance controlller -- postEmployeeAttendance()");
 		logger.info("attendance request received: "+attendanceRequest);
 		
-		return attendanceService.EmployeeLogInOrLogOut(attendanceRequest);
+		return	 attendanceService.EmployeeLogInOrLogOut(attendanceRequest);
 		
 	}
 

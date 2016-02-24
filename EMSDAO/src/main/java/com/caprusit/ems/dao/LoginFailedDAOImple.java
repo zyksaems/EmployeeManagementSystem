@@ -22,6 +22,7 @@ public class LoginFailedDAOImple implements LoginFailedAttemptsDAO{
 	public int checkAttemptsCount(int adminId) {
 		logger.info("in side checkLoginAttempts Methode() DAOImpl");
 		Session session = factory.openSession();
+		
 		SQLQuery qry=session.createSQLQuery("select attemptcount from PRAKASH.employeePassword_table where employeeid="+adminId);
 		qry.addScalar("attemptcount",IntegerType.INSTANCE);
 		

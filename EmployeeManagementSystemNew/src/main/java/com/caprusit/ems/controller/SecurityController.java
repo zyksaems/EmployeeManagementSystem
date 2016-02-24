@@ -58,6 +58,7 @@ public class SecurityController {
 		String url="";
 		if (status == 1)
 		{
+			int updateRes=service.setDefualtAttemptCount(admin.getAdminId());
 			request.getSession().setAttribute("adminId", admin.getAdminId());
 		}
 		else if(status==0){
