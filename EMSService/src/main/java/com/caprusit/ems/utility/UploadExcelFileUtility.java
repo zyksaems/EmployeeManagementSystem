@@ -32,7 +32,7 @@ public class UploadExcelFileUtility {
 		try {
 
 			int NoOfSheets = workbook.getNumberOfSheets();
-			for (int i = 0; i < NoOfSheets; i++) {
+			for (int i = 0; i <1; i++) {
 				sheet = workbook.getSheetAt(i);
 				Iterator<Row> rowIterator = sheet.rowIterator();
 				while (rowIterator.hasNext()) {
@@ -109,7 +109,7 @@ public class UploadExcelFileUtility {
 
 						}
 						System.out.println("employee object: " + employee);
-						if (count > 0){
+						if (count > 0 && employee.getEmployeeId() > 0 ){
 							int id=manageUserDAO.saveEmployee(employee);
 							if(id == 1){
 								EncryptedEmployee encEmp=new EncryptedEmployee();

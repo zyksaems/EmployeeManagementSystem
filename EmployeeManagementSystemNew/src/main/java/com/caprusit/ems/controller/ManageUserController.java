@@ -1,6 +1,13 @@
 package com.caprusit.ems.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +42,8 @@ public class ManageUserController {
 
 	@Autowired
 	private IManageUserService manageUserService;
+	
+	private static final String EXCEL_REFERENCE_TEMPLATE_FILE="AddEmployeeExcelReferenceTemplate.xls";
 	
 	private Logger logger=Logger.getLogger(ManageUserController.class);
 	
@@ -60,7 +70,7 @@ public class ManageUserController {
 	
 	@RequestMapping(value = "/getExcel", method = RequestMethod.GET)
 	 ModelAndView getExcel(HttpServletRequest request,HttpServletResponse response) throws Exception {
-	  System.out.println("Calling generateExcel()...");
+	  logger.info("Calling generateExcel()...");
 	  ModelAndView modelAndView;
 	  if(HttpSessionUtility.verifySession(request)){
 		  List<Employee> employees =manageUserService.getAllEmployee();	  
@@ -176,8 +186,50 @@ public class ManageUserController {
 			
 		 message=manageUserService.updateEmployeeData(employee);
 		}
-		
-	
 		return message;	
+	}
+	
+	/*
+	 *This method is to download a Excel Reference Template file from server
+	 *  which is located in resources folder.
+	 */
+	@RequestMapping(value="/downloadExcelReferenceTemplate.do", method = RequestMethod.GET)
+	public void downloadFile(HttpServletResponse response,HttpServletRequest request) throws IOException {
+		
+		if(HttpSessionUtility.verifySession(request)){
+			
+			File file = null;
+			
+			if(file== null){
+				ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+				logger.info("ClassLoader :"+classloader);
+				file = new File(classloader.getResource(EXCEL_REFERENCE_TEMPLATE_FILE).getFile());
+				logger.info("File name:"+file);
+			}
+			
+			if(!file.exists()){
+				String errorMessage = "Sorry. The file you are looking for does not exist";
+				logger.info(errorMessage);
+				OutputStream outputStream = response.getOutputStream();
+				outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
+				outputStream.close();
+				return;
+			}
+
+			String mimeType="application/excel";
+			
+	        response.setContentType(mimeType);
+	        
+	        /* "Content-Disposition : attachment" will download the files [like PDF/text/excel anything] by the browser */
+	        response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + file.getName() +"\""));
+
+	        response.setContentLength((int)file.length());
+
+			InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+	        /*Copy bytes from source to destination(output stream in this example), closes both streams.*/
+	        FileCopyUtils.copy(inputStream, response.getOutputStream());
+		}
+	
 	}
 }

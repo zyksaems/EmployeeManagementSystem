@@ -1,5 +1,8 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="header.jsp"></jsp:include> 
 <jsp:include page="adminLeftMenu.jsp"></jsp:include>
+
 
     <script src="./JS/Admin_addEmployee.js"></script>
     <link rel="stylesheet" href="./CSS/Admin_addEmployee.css"> 
@@ -12,10 +15,11 @@
                                 <div class="row"><p class="AddEmpHeadingText">Add employee(s)</p></div> 
                                 <div class="row">
                                   <div class="col-sm-1"></div> 
-                                  <div class="col-sm-10">
-                                     <Button class="btn btn-md btn-primary excelButtton" id="add-employee-excel-button">From excel</Button>
-                                     <button class="btn btn-md btn-primary" id="add-employee-manual-button">Manually</button>
-                                  </div> 
+                                  <div class="col-sm-11">
+                                     <Button class="btn btn-md btn-primary excelButtton" id="add-employee-excel-button">From excel</Button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                     <button class="btn btn-md btn-primary" id="add-employee-manual-button">Manually</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <a href="/EmployeeManagementSystemNew/downloadExcelReferenceTemplate.do">Refer Excel Template</a>
+                                   	</div>
                                   <div class="col-sm-1">  </div> 
                                 </div>                                                                       
                               </div>
