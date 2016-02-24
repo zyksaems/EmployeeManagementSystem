@@ -209,7 +209,10 @@ $("document").ready(
 				function reloadHomePage(){	
 					//console.log("reloading home page");
 				    // load home page
-					window.location.href=homePageLink;
+					//window.location.href=homePageLink;
+					getLoggedOutEmpployeeIds();
+					getLoggedInEmpployeeIds();
+					getAllEmpployeeIds();
 					
 				}; //   END  --- reloadHomePage()
 				
@@ -230,7 +233,7 @@ $("document").ready(
 					       });
 						   /*writing pure employee ids array to local storage*/ 
 						   localStorage.setItem("employeeidsarray", pureEmployeeIdsArray);
-						   
+						   console.log("completed -- getAllEmpployeeIds() ");
 						  // console.log("local read"+localStorage.getItem("employeeidsarray"));
 						   
 						},"json");
@@ -245,6 +248,7 @@ $("document").ready(
 						  // console.log("logged out  employee ids data: "+data);
 						   loggedOutEmployeeIdsArray=data;
 						   $("#loggedOutEmpArray").text("logged-out employees: "+JSON.stringify(loggedOutEmployeeIdsArray));
+						   console.log("completed -- getLoggedOutEmpployeeIds() ");
 						},"json");
 				}//END -- getAllEmpployeeIds()
 				
@@ -258,7 +262,9 @@ $("document").ready(
 						  // console.log("logged in  employee ids data: "+data);
 						   loggedInEmployeeIdsArray=data;
 						   $("#loggedInEmpArray").text("logged-in employees: "+JSON.stringify(loggedInEmployeeIdsArray));
+						   console.log("completed -- getLoggedInEmpployeeIds() ");
 						},"json");
+					
 				}//END -- getAllEmpployeeIds()
 				
 				
@@ -344,22 +350,30 @@ $("document").ready(
 					if (empIdLength == employeeIdMinLength) {
 						 employeeId=$(employeeId_id).val();
 						//console.log(" ok");  serachInArray(employeeId, loggedOutEmployeeIdsArray) loggedInEmployeeIdsArray
-						if(((!serachInJsonObjectArray(employeeId, allEmployeeIdsArray)) ||  (!serachInArray(employeeId, loggedOutEmployeeIdsArray))  
-								|| ( !serachInArray(employeeId, loggedInEmployeeIdsArray))) && employeeIdSearchCount == 0){
+						
+						if(serachInJsonObjectArray(employeeId, allEmployeeIdsArray)){
+							if( !serachInArray(employeeId, loggedOutEmployeeIdsArray) || !serachInArray(employeeId, loggedInEmployeeIdsArray) ){
+								getLoggedOutEmpployeeIds();
+								getLoggedInEmpployeeIds();
+								setTimeout(EmployeeFound, 500);
+								setTimeout(reloadHomePage, 10000);
+							 }
+							else{
+								// call employee found 
+								EmployeeFound();
+							}
+								
+							
+						}
+						else if(!serachInJsonObjectArray(employeeId, allEmployeeIdsArray) && employeeIdSearchCount == 0){
 							console.log("employee not found -- getting al employee ids");
 							employeeIdSearchCount=1;
 							//function call to  get all employee ids
 							getAllEmpployeeIds();
-							getLoggedOutEmpployeeIds();
-							getLoggedInEmpployeeIds();
 							
-							// call employee found 
-							EmployeeFound();
+							setTimeout(changeCssClassOfEmpIdTextBox, 500,employeeIdMinLength);
 							setTimeout(reloadHomePage, 10000);
-						}
-						else if(serachInJsonObjectArray(employeeId, allEmployeeIdsArray)){
-							// call employee found 
-							EmployeeFound();
+							
 						}
 						else{
 							/*function call to set text box class to error*/
@@ -475,19 +489,22 @@ $("document").ready(
 						    	console.log("data: "+data);
 						    	result=data;
 						        if(result == 1 || result == 2){
-						        	$(employeeLoginSuccessMsg_id).text((attendanceObject.type == attendanceLoginType)? inTimeSuccessMsg : outTimeSuccessMsg );
+						        	(attendanceObject.type == attendanceLoginType)? setAttendanceSuccessMessage(inTimeSuccessMsg) : setAttendanceSuccessMessage(outTimeSuccessMsg) ;
+						        	//$(employeeLoginSuccessMsg_id).text((attendanceObject.type == attendanceLoginType)? inTimeSuccessMsg : outTimeSuccessMsg );
 						        	(attendanceObject.type == attendanceLoginType)?loggedInEmployeeIdsArray.push(employeeId):loggedOutEmployeeIdsArray.push(employeeId);
 						        	/* function call to set default values */
 						        	setDefaultVales();
+						        	setTimeout(setAttendanceSuccessMessage,5000,"");
 						        }
 						        else if(result == 0){
-						        	$(employeeLoginSuccessMsg_id).text(passwordIncorrectMsg );
+						        	setAttendanceSuccessMessage(passwordIncorrectMsg);
 						        	/* function call to attendancepasswordWrong() */
 						        	attendancepasswordWrong();
 						        	
 						        }
 						        else{
 						        	$(employeeLoginSuccessMsg_id).text((attendanceObject.type == attendanceLoginType)? inTimeErrorMsg : outTimeErrorMsg );
+						        	
 						        }
 						     },
 					      error: function(data){
@@ -497,6 +514,16 @@ $("document").ready(
 						}); 
 					   console.log("retult: "+result);
 				  };// END -- postAttendance(attendance)
+				  /**
+				   * This function is to set attendance success/error
+				   * message
+				   */
+				  function setAttendanceSuccessMessage(message){
+					  //console.log("in attendance success or error message set methos")
+					  $(employeeLoginSuccessMsg_id).text(message);
+					  
+				  };//  END -- setAttendanceSuccessMessage(message)
+				  
 				  
 			   /*
 				* function to set some default values when password is wrong
