@@ -44,6 +44,7 @@ $("document").ready(function(){
 	var applicationName="EmployeeManagementSystemNew";
 	var adminLoginRequest="adminLogin.do";
 	var adminHomePageRequest="adminHomePage.do";
+	var employeeHomePageRequest="employeeHomePage.do";
 	
 	/*variables to store success/error messages*/
 	var shortAdminPass_msg="Password is short";
@@ -225,13 +226,13 @@ $("document").ready(function(){
 		    success: function(data){
 		    	console.log("data returned from server: "+data);
 		    	result=data;
-		        if(result == 1){
+		        if(result == 1 || result == 10){
 		        	$(admin_login_errorMsg_id).text("");
 		        	/* function call to set default values */
 		        	setDefaultValues();	
 		        	$(adminLoginModal_id).modal("hide");
 		        	/*function call to get admin home page*/
-		        	getAdminHomePage();
+		        	(result == 10 ) ? getAdminHomePage() : getEmployeeHomePage();
 		        	
 		        }
 		        else if(result == 0){
@@ -298,8 +299,17 @@ $("document").ready(function(){
 	 * This function is get the admin home page
 	 */
     function getAdminHomePage(){
-    	console.log("request to get admin home page");
+    	//console.log("request to get admin home page");
     	window.location.href="/"+applicationName+"/"+adminHomePageRequest;
+		
+	};// END -- getAdminHomePage()
+	
+	/*
+	 * This function is get the employee home page
+	 */
+    function getEmployeeHomePage(){
+    	console.log("request to get employee home page");
+    	window.location.href="/"+applicationName+"/"+employeeHomePageRequest;
 		
 	};// END -- getAdminHomePage()
 	
@@ -335,7 +345,7 @@ $("document").ready(function(){
 	 */
 	function setModalHeaderAsSignIn(){
         $(modalHeader_id).removeClass(lockGlyphicon_class).addClass(userGlyphicon_class); 
-        $(modalHeader_id).text("Admin signin");
+        $(modalHeader_id).text(" EMS Login");
 	};
 	
 	/**
@@ -343,7 +353,7 @@ $("document").ready(function(){
 	 */
 	function setModalHeaderAsForgotPassword(){
 		$(modalHeader_id).removeClass(userGlyphicon_class).addClass(lockGlyphicon_class);
-		$(modalHeader_id).text("forgot Password");
+		$(modalHeader_id).text(" Forgot Password");
 	};
 	
 	

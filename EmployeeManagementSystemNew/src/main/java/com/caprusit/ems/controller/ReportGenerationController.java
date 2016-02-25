@@ -35,7 +35,7 @@ public class ReportGenerationController {
 	public String getDailyReportGenerationPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getDailyReportGenerationPage()");
 		// verify admin is logged in or not
-		return (HttpSessionUtility.verifySession(request)) ? "DailyGenerateReports" : "EmsHomePage";
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "DailyGenerateReports" : "EmsHomePage";
 		
 	}
 	
@@ -46,7 +46,7 @@ public class ReportGenerationController {
 	public String getWeeklyProductivityPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getWeeklyProductivityPage()");				
 		// verify admin is logged in or not
-		return (HttpSessionUtility.verifySession(request)) ? "WeeklyProductivityGraph" : "EmsHomePage";
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "WeeklyProductivityGraph" : "EmsHomePage";
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class ReportGenerationController {
 	public String getMonthlyProductivityPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getMonthlyProductivityPage()");		
 		// verify admin is logged in or not
-	   return (HttpSessionUtility.verifySession(request)) ? "MonthlyProductivityGraph" : "EmsHomePage";
+	   return (HttpSessionUtility.verifySession(request,"adminId")) ? "MonthlyProductivityGraph" : "EmsHomePage";
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class ReportGenerationController {
 		logger.info("inside ReportGenerationController getTodayAttendancePage()");		
 
 		// verify admin is logged in or not
-		return (HttpSessionUtility.verifySession(request)) ? "TodayAttendanceGraph" : "EmsHomePage";
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "TodayAttendanceGraph" : "EmsHomePage";
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class ReportGenerationController {
 		logger.info("inside ReportGenerationController getAnualProductivityPage()");		
 	
 		// verify admin is logged in or not
-		return (HttpSessionUtility.verifySession(request)) ? "AnnualProductivityGraph" : "EmsHomePage";
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "AnnualProductivityGraph" : "EmsHomePage";
 	}
 	
 	
@@ -91,7 +91,7 @@ public class ReportGenerationController {
 		logger.info("inside ReportGenerationController getWeeklyReportGenerationPage()");
 
 		// verify admin is logged in or not
-		return (HttpSessionUtility.verifySession(request)) ? "WeeklyGenerateReports" : "EmsHomePage";
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "WeeklyGenerateReports" : "EmsHomePage";
 	}
 	
 	/**
@@ -103,7 +103,7 @@ public class ReportGenerationController {
 		logger.info("inside ReportGenerationController getMonthlyReportGenerationPage()");
 
 		// verify admin is logged in or not
-		return (HttpSessionUtility.verifySession(request)) ? "MonthlyGenerateReports" : "EmsHomePage";
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "MonthlyGenerateReports" : "EmsHomePage";
 	}
 	
 	/**
@@ -116,7 +116,7 @@ public class ReportGenerationController {
 		logger.info("inside ReportGenerationController getAnnuallyReportGenerationPage()");
 
 		// verify admin is logged in or not
-		return (HttpSessionUtility.verifySession(request)) ? "AnnuallyReportGenerationPage" : "EmsHomePage";
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "AnnuallyReportGenerationPage" : "EmsHomePage";
 	}
 	
 	

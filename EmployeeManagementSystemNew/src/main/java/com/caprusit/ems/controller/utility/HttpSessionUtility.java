@@ -19,17 +19,21 @@ public class HttpSessionUtility {
 	 * If session is alive returns true
 	 * 
 	 * */
-	public static  boolean verifySession(HttpServletRequest request) {
+	public static  boolean verifySession(HttpServletRequest request,String attributeName) {
 
 		HttpSession HttpSession = request.getSession(false);
 		logger.info("in HttpSessionUtility class");
 		if (HttpSession != null) {
-			logger.info("adminid in session: " + HttpSession.getAttribute("adminId"));
+			Object attributeValue= HttpSession.getAttribute(attributeName); 
+			logger.info("adminid/employee in session: " + attributeValue );
+			if(attributeValue != null)
+				return true;
+			else
+				return false;
 		} else {
 			logger.info("session expired!!");
-		}
-
-		return ((HttpSession != null) && (HttpSession.getAttribute("adminId") != null)) ? true : false;
+			return false;
+		}		
 
 	}
 

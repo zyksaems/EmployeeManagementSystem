@@ -821,7 +821,9 @@ $("document").ready(
 					    }
 				     }
 					else{
-						$(employeeChangePasswordSuccessMsg_id).text(shortEmployeeIdMsg);
+						//$(employeeChangePasswordSuccessMsg_id).text(shortEmployeeIdMsg);
+						setEmployeeChangePasswordSuccessMsg(shortEmployeeIdMsg);
+						setTimeout(setEmployeeChangePasswordSuccessMsg,5000,"");
 					}
 					/* function call to search employee id in all employee details array */
 					
@@ -849,7 +851,9 @@ $("document").ready(
 					errorMessage=(employeeNewPassword.length < employeePasswordMinLength)?shortNewPasswordMsg : errorMessage;
 					errorMessage=(employeeCurrentPassword.length < employeePasswordMinLength)? shortCurrentPasswordMsg : errorMessage;
 					errorMessage=(changePasswordEmployeeIdFlag)? errorMessage : invalidChangePassEmployeeIdMsg;					
-					$(employeeChangePasswordSuccessMsg_id).text(errorMessage);
+					//$(employeeChangePasswordSuccessMsg_id).text(errorMessage);
+					setEmployeeChangePasswordSuccessMsg(errorMessage);
+					setTimeout(setEmployeeChangePasswordSuccessMsg,5000,"");
 					return (errorMessage == "")? true : false;
 					
 				};// END -- validateChangePasswordDetails()
@@ -902,7 +906,7 @@ $("document").ready(
 				 * employee change password request
 				 */
 				function setEmployeeChangePasswordSuccessMsg(message){
-					//console.log("in  setEmployeeChangePasswordSuccessMsg(msg)  method");
+					console.log("in  setEmployeeChangePasswordSuccessMsg(msg)  method");
 					$(employeeChangePasswordSuccessMsg_id).text(message);
 					
 				}; //  END -- setEmployeeChangePasswordSuccessMsg(message)

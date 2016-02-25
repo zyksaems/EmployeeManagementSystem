@@ -3,6 +3,9 @@
   
 $("document").ready(function(){
 	
+	// apply accordian to accordian
+	$("#accordion").accordion();
+	
     var adminLogout_link_id="#admin-logout-link";
     
     var adminLogout_url="adminLogout.do";

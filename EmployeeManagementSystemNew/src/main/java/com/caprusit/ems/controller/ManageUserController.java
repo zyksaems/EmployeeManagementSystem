@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -37,7 +36,7 @@ import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.JsonEmployee;
 import com.caprusit.ems.service.IManageUserService;
 
-@Controller 
+@Controller
 public class ManageUserController {
 
 	@Autowired
@@ -65,14 +64,14 @@ public class ManageUserController {
 	public String getAddEmployeePage(HttpServletRequest request){
 		logger.info("inside ManageUserController getAddEmployeePage()");	
 		// verify admin is logged in or not
-		return (HttpSessionUtility.verifySession(request))? "AddEmployee" :  "EmsHomePage";
+		return (HttpSessionUtility.verifySession(request,"adminId"))? "AddEmployee" :  "EmsHomePage";
 	}
 	
 	@RequestMapping(value = "/getExcel", method = RequestMethod.GET)
 	 ModelAndView getExcel(HttpServletRequest request,HttpServletResponse response) throws Exception {
 	  logger.info("Calling generateExcel()...");
 	  ModelAndView modelAndView;
-	  if(HttpSessionUtility.verifySession(request)){
+	  if(HttpSessionUtility.verifySession(request,"adminId")){
 		  List<Employee> employees =manageUserService.getAllEmployee();	  
 		  logger.info("in controller employee list : "+ employees);
 		  modelAndView= new ModelAndView("excelView", "employees",employees);
@@ -115,7 +114,7 @@ public class ManageUserController {
 	public @ResponseBody Integer addSingleEmployee(HttpServletRequest request,@RequestBody Employee emp,
 			@RequestParam("dob") String milliSeconds) {
 
-		if(!HttpSessionUtility.verifySession(request))
+		if(!HttpSessionUtility.verifySession(request,"adminId"))
 			return -1;
 		else
 		    return manageUserService.addSingleEmployee(emp, milliSeconds);
@@ -143,7 +142,7 @@ public class ManageUserController {
 	@RequestMapping(value = "ViewUser")
 	public String  updateUser(HttpServletRequest request) {
 		 // verify admin is logged in or not
-		return (HttpSessionUtility.verifySession(request)) ? "UpdateUser" : "EmsHomePage";
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "UpdateUser" : "EmsHomePage";
 
 		
 	}
@@ -164,7 +163,7 @@ public class ManageUserController {
 	@RequestMapping(value = "sendObject", method = RequestMethod.POST)
 	public @ResponseBody String  sendEmployeeJson(@ModelAttribute JsonEmployee employeeJson,HttpServletRequest request) throws ParseException {
 		String message=null;
-		if(HttpSessionUtility.verifySession(request)){
+		if(HttpSessionUtility.verifySession(request,"adminId")){
 			Employee employee=new Employee();
 			
 			employee.setEmployeeId(Integer.parseInt(employeeJson.getEmployeeId()));
@@ -196,7 +195,7 @@ public class ManageUserController {
 	@RequestMapping(value="/downloadExcelReferenceTemplate.do", method = RequestMethod.GET)
 	public void downloadFile(HttpServletResponse response,HttpServletRequest request) throws IOException {
 		
-		if(HttpSessionUtility.verifySession(request)){
+		if(HttpSessionUtility.verifySession(request,"adminId")){
 			
 			File file = null;
 			

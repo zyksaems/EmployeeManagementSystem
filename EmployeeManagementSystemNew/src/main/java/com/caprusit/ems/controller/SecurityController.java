@@ -56,10 +56,13 @@ public class SecurityController {
 		logger.info("in admin security controller");
 		int status = securityService.login(admin);
 		String url="";
-		if (status == 1)
+		if (status == 1 || status == 10)
 		{
 			int updateRes=service.setDefualtAttemptCount(admin.getAdminId());
-			request.getSession().setAttribute("adminId", admin.getAdminId());
+			if(status == 10 )
+				request.getSession().setAttribute("adminId", admin.getAdminId());
+			else
+				request.getSession().setAttribute("employeeId", admin.getAdminId());
 		}
 		else if(status==0){
       	  int res=service.checkAttemptsCount(admin.getAdminId());
@@ -85,16 +88,21 @@ public class SecurityController {
 	public String getAdminHomePage(HttpServletRequest request) {
 
 		logger.info("in admin security controller -- getAdminHomePage()");
-		if(HttpSessionUtility.verifySession(request)){
-			
-			return "AdminTemplate";
-		}
-		else{
-			return "EmsHomePage";
-		}
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "AdminTemplate" : "EmsHomePage" ;
 		
 	}
 	
+	/**
+	 * This method is for Employee home page 
+	 * If employee id is there in session returns employee home page
+	 * otherwise returns error page
+	 * */
+	@RequestMapping(value = "/employeeHomePage", method = RequestMethod.GET)
+	public String getEmployeeHomePage(HttpServletRequest request) {
+
+		logger.info("in admin security controller -- getEmployeeHomePage()");
+		return (HttpSessionUtility.verifySession(request,"employeeId")) ? "EmployeeDashBoard": "EmsHomePage";		
+	}
 	
 	/**
 	 *  getChangePasswordPage() method will display ChangePasswordPage when we click 
@@ -106,7 +114,7 @@ public class SecurityController {
 		logger.info("inside SecurityController getChangePasswordPage()");
 
 		 // verify admin is logged in or not
-	    return (HttpSessionUtility.verifySession(request)) ? "ChangePassword" : "EmsHomePage";
+	    return (HttpSessionUtility.verifySession(request,"adminId")) ? "ChangePassword" : "EmsHomePage";
 	}
 	
 
@@ -210,7 +218,7 @@ public class SecurityController {
 	public @ResponseBody String changePassword(HttpServletRequest request,
 			@RequestParam("cpwd") String oldPassword,
 			@RequestParam("npwd") String newPassword) {
-		if (!HttpSessionUtility.verifySession(request)) {
+		if (!HttpSessionUtility.verifySession(request,"adminId")) {
 			logger.info("session expired!");
 			return JsonUtility.convertToJson("sessionExpired!");
 		} else {

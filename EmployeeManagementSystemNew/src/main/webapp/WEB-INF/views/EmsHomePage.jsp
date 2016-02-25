@@ -80,7 +80,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li id="admin-login-li"><a href="#" id="admin-sign-in-link">
-					<span  class="glyphicon glyphicon-log-in"></span> Admin Login</a></li>  <!-- data-toggle="modal" data-target="#myModal" -->
+					<span  class="glyphicon glyphicon-log-in"></span> EMS Login</a></li>  <!-- data-toggle="modal" data-target="#myModal" -->
 				</ul>
 			</div>
 	</nav>
@@ -108,7 +108,7 @@
 			</div>
 			<button class="btn btn-lg btn-primary btn-block " id="employeeAttendanceButton">In-Time</button>			
 			
-		    <br>  <p class="text-danger hand text-center"  id="employee-login-forgot-password" ><b>forgot password?</b></p>
+		    <br>  <p class="text-danger hand text-center"  id="employee-login-forgot-password" ><b>Forgot password?</b></p>
 		
 			<h4 class="text-center" id="employeeLoginSuccessMsg"></h4>
 		</form>
@@ -219,7 +219,7 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><b>X</b></button>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h2 class="modal-title form-signin-heading text-center">
 						<span id="model-header" class="glyphicon"></span> <span id="modal-header-text"></span>
 					</h2>
@@ -231,7 +231,7 @@
 							<!-- text box for admin id -->
 							<div class="form-group  has-feedback "
 								id="admin-login-adminid-div">
-								<label>Admin ID</label> <input type="text"
+								<label>Username</label> <input type="text"
 									class="form-control text-center " id="admin-login-adminid-val"
 									autocomplete="off" required> <span
 									class="glyphicon form-control-feedback"
@@ -250,7 +250,7 @@
 									<label> <input type="checkbox" class=""
 									id="admin-login-show-adminpass"> Show Password
 								</label> <label> <a herf="" class="text-danger"
-									id="admin-login-forgot-password">forgot password?</a>
+									id="admin-login-forgot-password">Forgot password?</a>
 								</label>
 							</div>
 

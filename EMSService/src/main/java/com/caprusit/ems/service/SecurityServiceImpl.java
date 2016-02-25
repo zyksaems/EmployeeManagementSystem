@@ -44,21 +44,20 @@ public class SecurityServiceImpl implements ISecurityService {
 	 */
 	public int login(Admin admin) {
 
-		String adminCurrentPassword=null;
+		String currentPassword=null;
+		int adminRoleId=10;
 		int status=-1;
 		Employee e=manageUsaerDAO.findById(admin.getAdminId());
-		logger.info("emplotyee :"+e);
-		if(e.getRollId() == 10){
-			EncryptedEmployee encEmployee = securityDAO.getEmployeeCurrentPassword(admin.getAdminId());
+		logger.info("emplotyee :"+e);		
+		EncryptedEmployee encEmployee = securityDAO.getEmployeeCurrentPassword(admin.getAdminId());
  
-		      if(encEmployee != null ){
-			
-			             adminCurrentPassword=EncryptionUtility.decryptPassword(admin.getPassword(), encEmployee.getEncryptedPassword());
-			              status = (adminCurrentPassword != null) ? 1 : 0;
-		        }
-
-	          	   logger.info("login status for admin: " + status);
-		    }
+		 if(encEmployee != null ){			
+			 currentPassword=EncryptionUtility.decryptPassword(admin.getPassword(), encEmployee.getEncryptedPassword());
+			 status = (currentPassword != null) ? 1 : 0;
+		 }
+		 status=(status == 1 && e.getRollId() == adminRoleId)? 10 : status;
+	     logger.info("login status for admin/employee: " + status);
+	     
 		return status;
 
 	}
