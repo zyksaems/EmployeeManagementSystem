@@ -30,14 +30,14 @@ public class SchedulerUtility {
 		
 		logger.info("quartz schduler executing time: "+new Date());			
 		
-				List<Object> li=attendanceDao.getStillWorkingEmployeeIds();						
-				for(Object o: li){
-					Object [] arr=(Object[]) o;
-					Employee emp=manageUserDao.findById((Integer)arr[0]);
+				List<Integer> li=attendanceDao.getStillWorkingEmployeeIds();						
+				for(Integer empId: li){
+			
+					Employee emp=manageUserDao.findById(empId);
 					String message="\n\n\n \t You are not logged out from office.Please log out if you want to leave \n\n\n \t NOTE: We will remind you in next "+
 					                                  EmsConditions.NOT_LOGOUT_REMIND_TIME+" minutes";
 					emialUtility.sendMail(emp.getEmailId(), message, emp.getFirstName()+" "+emp.getLastName(),"Alert from EMS");							
-					logger.info("Not log-out alert mail sent to employee id "+ arr[0] +"  email id:  "+emp.getEmailId());
+					logger.info("Not log-out alert mail sent to employee id  "+empId +"  email id:  "+emp.getEmailId());
 				}
 			
 		

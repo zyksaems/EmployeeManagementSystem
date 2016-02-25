@@ -11,7 +11,7 @@ public interface IAttendanceDAO {
 
 	public int outTime(User user);
 	
-	List<Object> getStillWorkingEmployeeIds();
+	List<Integer> getStillWorkingEmployeeIds();
 
 	
 }

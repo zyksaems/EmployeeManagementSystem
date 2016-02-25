@@ -219,7 +219,7 @@ public class ManageUserController {
 			
 	        response.setContentType(mimeType);
 	        
-	        /* "Content-Disposition : attachment" will download the files [like PDF/text/excel anything] by the browser */
+	        /* "Content-Disposition : attachment" will download the files [like PDF/text/excel anything] to our system*/
 	        response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + file.getName() +"\""));
 
 	        response.setContentLength((int)file.length());

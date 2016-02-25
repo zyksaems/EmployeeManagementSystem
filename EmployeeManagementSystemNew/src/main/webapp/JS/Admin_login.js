@@ -48,8 +48,8 @@ $("document").ready(function(){
 	
 	/*variables to store success/error messages*/
 	var shortAdminPass_msg="Password is short";
-	var shortAdminId_msg="Admin ID should contain 6 digits";
-	var invalidAdminId_msg="Invalid admin ID";
+	var shortAdminId_msg="Username should contain 6 digits";
+	var invalidAdminId_msg="Invalid username";
 	var wrongPassword_msg="Wrong password ";
 	var internalProblem_msg="Some internal problem occured";
 	/*variables to store flags of text fields*/

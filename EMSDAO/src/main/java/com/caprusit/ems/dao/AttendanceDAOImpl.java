@@ -72,7 +72,7 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 	 * This method is to find out employees who are not logged out
 	 * after they completed their work hours
 	 */
-    public List<Object> getStillWorkingEmployeeIds() {
+    public List<Integer> getStillWorkingEmployeeIds() {
 
 		Session session = factory.openSession();
 				
@@ -83,15 +83,14 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 		Date last = Calendar.getInstance().getTime();
 
 		@SuppressWarnings("unchecked")
-		List<Object> list = session
+		List<Integer> list = session
 				.createCriteria(Attendance.class)
 				.add(Restrictions.eq("attendanceDate", today))
 				.add(Restrictions.eqOrIsNull("endTime", null))
 				.add(Restrictions.le("startTime", getMinStartTime()))
 				.setProjection(
 						Projections.projectionList()
-								.add(Projections.property("employeeId"))
-								.add(Projections.property("startTime"))).list();
+								.add(Projections.property("employeeId"))).list();
 
 		return list;
 	}
