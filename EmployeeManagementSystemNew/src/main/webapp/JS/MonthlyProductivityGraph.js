@@ -1,6 +1,10 @@
 
   $(document).ready(function(){
 	  
+	  $("#accordion").accordion({
+			 active:3
+		});
+	  
 	console.log("Inside MonthlyProductivityGraph function");
 	var overAllProductivityButton_id="#overAll-monthly-productivity-button";
 	var individualProductivityButton_id="#individual-monthly-productivity-button";

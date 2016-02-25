@@ -1,4 +1,9 @@
 $(function() {
+	
+	$("#accordion").accordion({
+		 active: 1
+	});
+	
 	var x=0;
 	var tableclear=null;
 	//Start of Daily Generate Reports functionality code

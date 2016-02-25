@@ -37,7 +37,7 @@ import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.JsonEmployee;
 import com.caprusit.ems.service.IManageUserService;
 
-@Controller
+@Controller 
 public class ManageUserController {
 
 	@Autowired

@@ -6,7 +6,7 @@ public class EmsConditions {
 	public static final int WORKING_HOURS_PER_DAY = 4; 
 	
 	//Working days per month
-	public static final int WORKING_DAYS_PER_MONTH = 26; 
+	public static final int WORKING_DAYS_PER_MONTH = 26;  
 	
 	//Reset password link valid time in minutes
 	public static final int RESET_PASSSWORD_LINK_VALID_TIME = 10; // In minutes

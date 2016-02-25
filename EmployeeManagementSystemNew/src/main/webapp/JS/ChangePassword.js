@@ -1,6 +1,11 @@
 $("document").ready(
 			function() {
 				
+				$("#accordion").accordion({
+					active: false,
+					  collapsible: true,
+				});
+				
 				var employeePasswordMinLength = 6;
 				
 				var successClass="has-success";

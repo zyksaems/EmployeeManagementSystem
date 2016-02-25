@@ -1,5 +1,8 @@
 
 $("document").ready(function(){
+	$("#accordion").accordion({
+		 active: 0
+	});
 	
       var addEmployeeMainDiv_id="#add-employee-main-division";
   

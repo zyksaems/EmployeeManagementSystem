@@ -219,7 +219,7 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<button type="button" class="close" data-dismiss="modal"><b>X</b></button>
 					<h2 class="modal-title form-signin-heading text-center">
 						<span id="model-header" class="glyphicon"></span> <span id="modal-header-text"></span>
 					</h2>

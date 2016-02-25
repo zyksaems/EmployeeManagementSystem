@@ -19,11 +19,6 @@
   <script src="./JS/autoCompleteEmployeeId.js"></script>
   <script src="./JS/AdminTemplete.js"></script>
  
- <script src="./JS/MonthlyGenerateReoprts.js"></script>
- <script src="./JS/WeeklyGenerateReports.js"></script>
- <script src="./JS/DailyGenerateReports.js"></script>
- <script src="./JS/AnnuallyGenerateReports.js"></script>
-
 <style>
 #page_result_div {
 	float: right;
@@ -41,7 +36,7 @@
             <img src="./images/caprus logo.png" width="65px" height="65px">
 		</div>
 			<div class="col-sm-8 title_menu text-center">
-				<h1 align="center">EMPLOYEE MANAGEMENT SYSTEM</h1>
+				<h1 ><b>Employee Management System</b></h1>
 			</div>
 			<div class="col-sm-2">
 				<div class="dropdown">
@@ -65,27 +60,27 @@
 			<h3 style="">Manage Employee</h3>
 	    	<div>
 	    	<ul>
-	    	<li><a href="/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">Add Employee</a></li>
+	    	<li><a  href="/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">Add Employee</a></li>
 	    	<li><a href="/EmployeeManagementSystemNew/ViewUser.do" id="admin-view-update-emp-link">View/Update Employee</a></li>
 	    	</ul>
 			</div>
 			<h3>Reports</h3>
 			<div>
 						<ul>
-							<li><a href="/EmployeeManagementSystemNew/getDailyReportGenerationPage.do">Daily Reports</a></li>
+							<li><a  href="/EmployeeManagementSystemNew/getDailyReportGenerationPage.do">Daily Reports</a></li>
 						</ul>
-						<li><a href="/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">Weekly Reports</a></li>
+						<li><a  href="/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">Weekly Reports</a></li>
 						</ul>
-						<li><a href="/EmployeeManagementSystemNew/getMonthlyReportGenerationPage.do">Monthly Reports</a></li>
+						<li><a  href="/EmployeeManagementSystemNew/getMonthlyReportGenerationPage.do">Monthly Reports</a></li>
 						</ul>
-						<li><a href="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do">Annual Reports</a></li>
+						<li><a  href="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do">Annual Reports</a></li>
 						</ul>
 					</div>
 			<h3>View Attendance</h3>
 			<div>
 			<ul>
 			<li>
-			<a href="/EmployeeManagementSystemNew/getTodayAttendancePage.do" id="daily-attendance-link">Daily Attendance</a></li>
+			<a  href="/EmployeeManagementSystemNew/getTodayAttendancePage.do" id="daily-attendance-link">Daily Attendance</a></li>
 			<!-- <li>
 			<a href="#" id="weekly-productivity-link">Weekly Attendance</a></li>
 			<li>
@@ -96,11 +91,11 @@
 			<div>
 			<ul>
 			<li>
-			<a href="/EmployeeManagementSystemNew/getWeeklyProductivityPage.do" id="weekly-productivity-link">Weekly Productivity</a></li>
+			<a  href="/EmployeeManagementSystemNew/getWeeklyProductivityPage.do" id="weekly-productivity-link">Weekly Productivity</a></li>
 			<li>
 			<a href="/EmployeeManagementSystemNew/getMonthlyProductivityPage.do" id="monthly-productivity-link">Monthly Productivity</a></li>
 			<li>
-			<a href="/EmployeeManagementSystemNew/getAnnualProductivityPage.do"  id="anual-productivity-link">Annual Productivity</a></li>
+			<a  href="/EmployeeManagementSystemNew/getAnnualProductivityPage.do"  id="anual-productivity-link">Annual Productivity</a></li>
 			</ul>
 			</div>
 			</div> 

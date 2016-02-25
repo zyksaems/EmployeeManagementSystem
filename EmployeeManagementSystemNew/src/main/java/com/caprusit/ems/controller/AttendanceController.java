@@ -21,7 +21,7 @@ public class AttendanceController {
 	@Autowired
 	private ILoginFailedAttemptsService service;
 	
-	private static int maxloginattempts=3;
+	private static int maxloginattempts=3; 
 	
 	private static Logger logger=Logger.getLogger(AttendanceController.class);
 

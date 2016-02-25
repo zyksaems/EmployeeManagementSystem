@@ -1,5 +1,5 @@
- <script src="./JS/DailyGenerateReports.js"></script>
-	<jsp:include page="AdminTemplate.jsp"></jsp:include>
+ <jsp:include page="AdminTemplate.jsp"></jsp:include>
+<script src="./JS/DailyGenerateReports.js"></script>
 
     <div class="row">
 	<div class="row generateposition" id="daily-attendance-div">

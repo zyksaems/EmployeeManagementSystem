@@ -1,4 +1,7 @@
 $(function() {
+	$("#accordion").accordion({
+		 active: 1
+	});
 	var x=0;
 	var x1=0;
 	var tableclear=null;

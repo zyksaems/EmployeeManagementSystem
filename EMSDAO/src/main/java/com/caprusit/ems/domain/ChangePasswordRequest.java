@@ -13,7 +13,7 @@ public class ChangePasswordRequest implements Serializable {
 	public int getUserName() {
 		return userName;
 	}
-
+  
 	public void setUserName(int userName) {
 		this.userName = userName;
 	}

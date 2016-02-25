@@ -1,4 +1,4 @@
-    
+    	
     var todayAttendanceDetails;
 	var activePoints=[];
 	var  todayDateString=(""+new Date()+"").substr(4,12);
@@ -182,6 +182,9 @@
 	
 $("document").ready(function(){
 	
+	$("#accordion").accordion({
+		 active: 2
+	});
 	
 	var dailyAttendance_legend_id="#daily-attendance-legend-div";
 	var todayAttendanceHeading_id="#today-attendance-heading";

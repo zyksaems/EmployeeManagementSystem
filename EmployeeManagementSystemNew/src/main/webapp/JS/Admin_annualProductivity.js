@@ -1,6 +1,9 @@
 
   $(document).ready(function(){
-	
+		$("#accordion").accordion({
+			 active: 3
+		});
+	  
 	var overAllProductivityButton_id="#overAll-monthly-productivity-button";
 	var individualProductivityButton_id="#individual-monthly-productivity-button";
 	var overAllProductivityForm_id="#over-all-monthly-productivity-form";

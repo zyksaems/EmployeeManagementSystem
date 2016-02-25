@@ -11,6 +11,7 @@
 
 	
 	$(function() {
+		
 		var employeeids=[];
 		$("#table").hide();
 		 $("#table1").hide();
@@ -40,8 +41,11 @@
 			$("#back_div").hide();
 			$("#print").hide();
 		});
+		/*var index=0;
 		
-		$("#accordion").accordion();
+		$("#accordion").accordion({
+			 active: index
+		});*/
 		$("#datepicker").datepicker();
 		$("#back").hide();
 		$("#print").hide();

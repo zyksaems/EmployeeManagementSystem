@@ -13,10 +13,10 @@ import javax.persistence.Table;
 public class Employee implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	@Id 
 	@Column(name="employeeid")
 	private int employeeId; 
-	
+	  
 	@Column(name="firstname")
 	private String firstName;
 	

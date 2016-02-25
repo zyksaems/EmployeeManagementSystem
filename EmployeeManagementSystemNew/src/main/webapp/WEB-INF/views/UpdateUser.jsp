@@ -65,7 +65,7 @@
             <img src="./images/caprus logo.png" width="65px" height="65px">
 		</div>
 			<div class="col-sm-8 title_menu text-center">
-				<h1 align="center">EMPLOYEE MANAGEMENT SYSTEM</h1>
+				<h1 ><b>Employee Management System</b></h1>
 			</div>
 			<div class="col-sm-2">
 				<div class="dropdown">
