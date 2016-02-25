@@ -21,7 +21,8 @@
   <link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png" />
     
   <script src="./JS/Admin_logout.js"></script>  
- 
+  <script src="./JS/EmployeeDetails.js"></script>  
+
 </head>
 <body>
 

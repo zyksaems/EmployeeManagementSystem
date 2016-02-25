@@ -1,0 +1,22 @@
+
+ 
+ 
+ /* his file name  employeeDashboard.css */
+
+
+.name-heading{
+	
+	color: blue;
+	font-family: verdana;
+	font-style: oblique;
+	font-size: 25px;
+	
+}
+
+
+.login-time{
+	
+	/* color: lightgreen ; */
+	font-size: 20px;
+	font-family: chiller; 
+}

@@ -127,7 +127,7 @@ public class SecurityController {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			logger.info("invalidating session ");
+			logger.info("invalidating session (employee ID)"+session.getAttribute("employeeId")+""+session.getAttribute("adminId"));
 			session.invalidate();
 		}
 
@@ -248,6 +248,14 @@ public class SecurityController {
         logger.info("in security controller -- changeEmployeePassword()");
         logger.info("change password request received : "+changePasswordData);
         return  securityService.changeEmployeePassword(changePasswordData);
+       
+	}
+	
+	@RequestMapping(value = "/getLoggedInEmployeeId", method = RequestMethod.POST)
+	public @ResponseBody int getLoggedEmployeeId(HttpServletRequest request) {
+        logger.info("in security controller -- getLoggedEmployeeId()");
+   
+        return  (Integer)request.getSession(false).getAttribute("employeeId");
        
 	}
 }
