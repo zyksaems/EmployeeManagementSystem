@@ -44,7 +44,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		user.setEid(test.getId());
 		
 		EncryptedEmployee encryptedEmployee=securityDao.getEmployeeCurrentPassword(test.getId());
-		byte [] currentPassword=encryptedEmployee.getEncryptedPassword();
+		byte [] currentPassword=(encryptedEmployee != null )?encryptedEmployee.getEncryptedPassword(): null;
 		if(!ValidatePasswordUtility.validatePassword(test.getPassword(),currentPassword)){
 			logger.info("returnning 0 to controller -- employeee password mismatch");
 			return 0;

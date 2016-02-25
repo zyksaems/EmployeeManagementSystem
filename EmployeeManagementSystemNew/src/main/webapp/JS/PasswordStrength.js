@@ -43,17 +43,28 @@
     	   }
     	   
 
-       };
+       };//  END  -- measurePasswordStrength(passwordToTest,element_id)
        
       /**
        * This function is to set text and class to given field
        */
       function setTextAndClass(field_id,textToSet,classToset){
     	    //console.log("in set text and class  ");
-    	    $(field_id).text(textToSet);
+    	    //function call
+    	    setPasswordStrengthMessage(field_id,textToSet);
+    	    setTimeout(setPasswordStrengthMessage,5000,field_id,"");
      	    $(field_id).removeClass(mediumPassword_cls).removeClass(strongPassword_cls).removeClass(weakPassword_cls).addClass(classToset);
      	    $("#employee-new-password-strength-span").val();
-      };
+     	    
+      };//  END  -- setTextAndClass(field_id,textToSet,classToset)
+      
+      /**
+       * This function is to set messasge to given field
+       */
+        function setPasswordStrengthMessage(field_id,msg){
+        	//console.log(" in setPasswordStrengthMessage(field_id,msg) method");
+        	$(field_id).text(msg);
+        };//  END  -- setPasswordStrengthMessage(field_id,msg)
       
        
        

@@ -36,7 +36,7 @@ public class SchedulerUtility {
 					Employee emp=manageUserDao.findById((Integer)arr[0]);
 					String message="\n\n\n \t You are not logged out from office.Please log out if you want to leave \n\n\n \t NOTE: We will remind you in next "+
 					                                  EmsConditions.NOT_LOGOUT_REMIND_TIME+" minutes";
-					//emialUtility.sendMail(emp.getEmailId(), message, emp.getFirstName()+" "+emp.getLastName(),"Alert from EMS");							
+					emialUtility.sendMail(emp.getEmailId(), message, emp.getFirstName()+" "+emp.getLastName(),"Alert from EMS");							
 					logger.info("Not log-out alert mail sent to employee id "+ arr[0] +"  email id:  "+emp.getEmailId());
 				}
 			

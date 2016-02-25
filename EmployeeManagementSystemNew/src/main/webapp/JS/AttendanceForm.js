@@ -391,6 +391,7 @@ $("document").ready(
 							disableOrEnableAttendanceButton();
 							console.log("employee not --	 found");
 							$(employeeLoginSuccessMsg_id).text(invalidIdMsg);
+							setTimeout(setAttendanceSuccessMessage,5000,"");
 						}
 						
 						
@@ -884,14 +885,27 @@ $("document").ready(
 					        	/* function call to set default values */
 					            setEmployeeChangePasswordDefaultValues(); 
 					        }
-					        $(employeeChangePasswordSuccessMsg_id).text(displayResult);
+					      
+					        setEmployeeChangePasswordSuccessMsg(displayResult);
+					        setTimeout(setEmployeeChangePasswordSuccessMsg,5000,"");
 					     },
 				      error: function(data){
 				    	  setDefaultVales();
-				    	  $(employeeChangePasswordSuccessMsg_id).text(internalServerProblem);
+				    	  setEmployeeChangePasswordSuccessMsg(internalServerProblem);
+				    	  
 				      }
 					}); 
 				};// END -- makeAjaxCallToChangePassword(changePasswordObject)
+				
+				/**
+				 * This function is to set the success/error message to
+				 * employee change password request
+				 */
+				function setEmployeeChangePasswordSuccessMsg(message){
+					//console.log("in  setEmployeeChangePasswordSuccessMsg(msg)  method");
+					$(employeeChangePasswordSuccessMsg_id).text(message);
+					
+				}; //  END -- setEmployeeChangePasswordSuccessMsg(message)
 				
 				
 				/*  

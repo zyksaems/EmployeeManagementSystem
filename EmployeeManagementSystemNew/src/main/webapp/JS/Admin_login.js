@@ -115,7 +115,9 @@ $("document").ready(function(){
        $(adminLoginForm_id).show();
       /*  function call to set modal  header text as sign in*/
        setModalHeaderAsSignIn();
-       
+       //set default values  to forms
+       setEmployeeChangePasswordDefaultValues();//This function is in attendanceForm.
+       setDefaultVales();//This function is in attendanceForm.
 	}); // END  --  
 	
 	
