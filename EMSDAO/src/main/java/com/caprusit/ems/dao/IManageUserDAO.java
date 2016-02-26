@@ -5,6 +5,7 @@ import java.util.List;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EmployeeForDate;
 import com.caprusit.ems.domain.EncryptedEmployee;
+import com.caprusit.ems.domain.Notice;
 
 public interface IManageUserDAO {
 	
@@ -24,5 +25,11 @@ public interface IManageUserDAO {
 	public Integer updateEmployeeData(Employee e);
 	
 	int saveEncryptedEmployee(EncryptedEmployee encEmp);
+	
+	public List<Notice> getNotice();
+	
+	public void deleteNotice(Notice notice);
+	
+	public void setNotice(Notice notice);
 
 }

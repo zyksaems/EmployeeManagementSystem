@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.JsonEmployee;
+import com.caprusit.ems.domain.Notice;
 
 @Service("UserService")
 @Transactional
@@ -34,5 +35,11 @@ public interface IManageUserService {
 	public List<JsonEmployee> getAllEmployeesData();
 
 	public String updateEmployeeData(Employee e);
+	
+	public List<Notice> getNotice();
+	
+	public void deleteNotice(Notice notice);
+	
+	public void setNotice(Notice notice);
 
 }

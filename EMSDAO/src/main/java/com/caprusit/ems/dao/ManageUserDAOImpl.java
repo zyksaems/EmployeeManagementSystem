@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EmployeeForDate;
 import com.caprusit.ems.domain.EncryptedEmployee;
+import com.caprusit.ems.domain.Notice;
 
 @Repository
 public class ManageUserDAOImpl implements IManageUserDAO{
@@ -175,7 +177,51 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		return id;
 	}
 	
-
+	public List<Notice> getNotice(){
+		Session session = sessionFactory.openSession();
+		String sql = "SELECT * FROM PRAKASH.NOTICE_TABLE order by id desc";
+		SQLQuery query = session.createSQLQuery(sql);
+		query.addEntity(Notice.class);
+		@SuppressWarnings("unchecked")
+		List<Notice> results = query.list();	
+		
+		session.close();
+		return results;
+	}
+	
+	public void deleteNotice(Notice data){
+		System.out.println("In dao");
+		System.out.println(data.getNotice());
+		String noticeData=data.getNotice();
+		System.out.println("notice data"+noticeData);
+		Session session = sessionFactory.openSession();
+		Transaction ts = session.beginTransaction();
+	
+		String sql = "delete from PRAKASH.NOTICE_TABLE where notices=?";
+		
+		SQLQuery query = session.createSQLQuery(sql);
+		query.setString(0, noticeData);
+		query.addEntity(Notice.class);
+		
+		query.executeUpdate();
+		ts.commit();
+		
+		session.close();
+	
+	}
+	public void setNotice(Notice data){
+		System.out.println("In dao setNotice()");
+		System.out.println(data.getNotice());
+		Session session = sessionFactory.openSession();
+		Transaction ts = session.beginTransaction();
+	
+		session.save(data);
+		
+		ts.commit();
+		
+		session.close();
+	
+	}
 	
 	
 }

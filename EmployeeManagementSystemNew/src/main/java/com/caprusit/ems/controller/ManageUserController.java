@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.JsonEmployee;
+import com.caprusit.ems.domain.Notice;
 import com.caprusit.ems.service.IManageUserService;
 
 @Controller
@@ -231,4 +232,38 @@ public class ManageUserController {
 		}
 	
 	}
+	@RequestMapping(value="/updateNotice")
+	public String updateNotice(){
+		
+		return "NoticeBoard";
+	}
+	
+	@RequestMapping(value = "/allNotices")
+	public @ResponseBody List<Notice> getNotice(){
+		List<Notice> notices=manageUserService.getNotice();
+		Iterator<Notice> iterate=notices.iterator();
+		
+		while(iterate.hasNext()){
+			Notice notice=(Notice)iterate.next();
+			System.out.println(notice);
+		}
+		
+		return notices;
+	}
+	@RequestMapping(value = "/deleteNotice",method = RequestMethod.POST)
+	public @ResponseBody void deleteNotice(@ModelAttribute Notice noticeData,HttpServletRequest request){
+		
+		System.out.println("in deleteNotice() "+noticeData.getNotice());
+		manageUserService.deleteNotice(noticeData);
+		
+	}
+	@RequestMapping(value = "/setNotice",method = RequestMethod.POST)
+	public @ResponseBody void setNotice(@ModelAttribute Notice noticeData,HttpServletRequest request){
+		
+		System.out.println("in home controller"+noticeData.getNotice());
+		manageUserService.setNotice(noticeData);
+		
+	}
+
 }
+

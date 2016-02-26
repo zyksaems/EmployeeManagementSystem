@@ -22,6 +22,7 @@ import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EmployeeForDate;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.JsonEmployee;
+import com.caprusit.ems.domain.Notice;
 import com.caprusit.ems.utility.EncryptionUtility;
 import com.caprusit.ems.utility.JsonUtility;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
@@ -173,7 +174,22 @@ public class ManageUserServiceImpl implements IManageUserService {
 
 		return message;
 	}
-
 	
+
+	public List<Notice> getNotice(){
+		List<Notice> notice=manageUserDAO.getNotice();
+		return notice;
+	}
+	
+	public void deleteNotice(Notice data){
+		System.out.println("In homeService");
+		manageUserDAO.deleteNotice(data);
+		
+	}
+	public void setNotice(Notice data){
+		System.out.println("In homeService");
+		manageUserDAO.setNotice(data);
+		
+	}
 
 }

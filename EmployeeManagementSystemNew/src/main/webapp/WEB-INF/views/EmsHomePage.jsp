@@ -7,24 +7,18 @@
 
 <!-- JQuery  -->
 <script src="./jquery/jquery-2.1.4.js"></script>
-
 <!-- bootstrap javascript file -->
 <script src="./bootstrap/bootstrap.min.js"></script>
-
 <!-- custom javascript file with jQuery code-->
 <script src="./JS/homepage.js"></script>
-
 <script src="./JS/AttendanceForm.js"></script>
-
 <script src="./JS/Admin_login.js"></script>
-
 <script src="./JS/PasswordStrength.js"></script>
 
 
 <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png" />
 <!-- boottrap css-->
-<link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
-
+<link rel="stylesheet" href="./bootstrap/bootstrap.css">
 <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
 <!-- custom css -->
 <link rel="stylesheet" href="./CSS/homepage.css">
@@ -36,17 +30,71 @@
 <link rel="stylesheet" href="./CSS/contactUs.css"> 
 <link rel="stylesheet" href="./CSS/PasswordStrength.css">
 <script>
+
+var totalString="";
+
+$(document).ready(function () {
+    DisplayCurrentTime();
+    getAllNotices();
+    
+});
+
+	function DisplayCurrentTime() {
+	    var dt = new Date();
+	    var refresh = 1000;  	 
+	    var cDate = dt.getDate()+ "-" + (dt.getMonth() + 1)  + "-" + dt.getFullYear();
+	    $('#timeNow').text(dt.toLocaleTimeString());
+	    $("#dateNow").text(cDate )
+	    window.setTimeout('DisplayCurrentTime()', refresh);
+	}
+	
   function DisableBackButton() {
 		window.history.forward();
 	}
+  
 	DisableBackButton();
+	
 	window.onload = DisableBackButton;
 	window.onpageshow = function(evt) {
 		if (evt.persisted)
 			DisableBackButton();
 	}
+	
 	window.onunload = function() {
 		void (0);
+	}
+	
+	 function getAllNotices(){
+		  console.log("......getAllNotices()......");
+		  var request = $.ajax({
+			  url: "/EmployeeManagementSystemNew/allNotices.do",
+			  method: "GET",
+			 
+			});
+			 
+			request.done(function(data) {
+				console.log("Notices came");
+				noticeData=data;
+				
+				var len=data.length;
+				var string="";
+				if(len>0){
+					for(var i=0;i<len;i++){
+						var k=i+1;
+						console.log(noticeData[i].notice);
+						string=string+"<p>"+k+". "+noticeData[i].notice+"</p>";
+						/* document.getElementById("#notice-board").innerHTML="<p>"+k+". "+noticeData[i].notice+"</p>"; */
+					}
+				}
+				totalString=string;
+				console.log("totalString "+totalString);
+				 $("#noticeBoard").html(totalString);
+				
+				});
+			
+			request.fail(function(jqXHR, textStatus ) {
+				  console.log("failed to retrieve notices");
+				});	
 	}
   </script>
 
@@ -87,11 +135,24 @@
 
 	<!-- In-Time form -->
 	<div class="container intime-margin" id="in-time-form">
-
+	
+	<div class="row">
+	  <div class="col-sm-4">
+	  	  	
+	  
+	  		<div class="alert alert-info">
+	  	  		<strong>Date : <span id="dateNow">date</span></strong><br><br>
+	  	  		<strong>Time : <span id="timeNow">time</span></strong>
+	  	  	</div>
+	  
+	  </div>
+	  
+	  <div class="col-sm-4">
 		<form action="#attendanceForm.do" class="form-inTime" id="attendance-form">
 			<h2 class="form-inTime-heading ">
 				<span class="glyphicon glyphicon-pencil"></span>Enter Employee Id
 			</h2>
+			
 			<!--text box for Employee id  -->
 			<div class="form-group  has-feedback" id="employee-id-div">
 				<label>Employee id</label> <input type="text"
@@ -108,14 +169,30 @@
 			</div>
 			<button class="btn btn-lg btn-primary btn-block " id="employeeAttendanceButton">In-Time</button>			
 			
-		    <br>  <p class="text-danger hand text-center"  id="employee-login-forgot-password" ><b>Forgot password?</b></p>
+		    <br>  <p class="text-danger hand text-center"  id="employee-login-forgot-password" ><b>forgot password?</b></p>
 		
 			<h4 class="text-center" id="employeeLoginSuccessMsg"></h4>
+			
+			
 		</form>
+		</div>
+		
+		<div class="col-sm-4">
+		
+			<div class="container" align="center">
+	 			<h2>Notice Board</h2>
+	 				<div class="alert alert-info">
+   						<marquee width=400 direction="up" behavior="scroll" height=160 scrollamount="3" onmouseover="this.stop();" onmouseout="this.start();">
+							<p id="noticeBoard">mhgjhjg</p>
+						 </marquee>
+  					</div>
+			</div>
+		
+		</div>
 
 	</div>
-
 	</div>
+	
 	<!--End of In Time Form  -->
 	<!-- Employee change password division -->
 	<div class="col-md-12 intime-margin" id="employee-change-passowrd-div"><!-- container intime-margin -->

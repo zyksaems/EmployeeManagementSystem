@@ -62,6 +62,7 @@
 	    	<ul>
 	    	<li><a  href="/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">Add Employee</a></li>
 	    	<li><a href="/EmployeeManagementSystemNew/ViewUser.do" id="admin-view-update-emp-link">View/Update Employee</a></li>
+	    	<li><a href="/EmployeeManagementSystemNew/updateNotice.do" id="notice-add-link">Update Notice</a></li>
 	    	</ul>
 			</div>
 			<h3>Reports</h3>
