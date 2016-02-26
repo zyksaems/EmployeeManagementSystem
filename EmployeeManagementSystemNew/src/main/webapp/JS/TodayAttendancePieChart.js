@@ -9,6 +9,7 @@
 	var showTableDetails='#showTableDetails';
 	var backButton_one_id="#show-piechart-back-button";
 	var backButton_two_id="#show-piechart-back-button2";
+	var dailyAttendance_legend_id="#daily-attendance-legend-div";
 	
 	
 	
@@ -18,29 +19,27 @@
 	var myPieChart ;
 	
 	var clickOnPieChart="#clickOnPieChart";
-		
-	/*var dailyAttendance_link_id="#daily-attendance-div";*/
 	
-	
-	
-	
-	/*first display showChart division as default division*/
-	/*function call to hide remaining divisions*/
-	
+	/**
+	 * This function executes when user clicks on pie chart
+	 */	
 	function clickPieChart(event){
 		  console.log("chart -- pie chart clicked and event: "+event);
+		  console.log("chart -- pie chart clicked and event: (stringify) "+JSON.stringify(event));
+		  $(dailyAttendance_legend_id).hide();
 		  pieMouseEvent=event;
 		  $("#remove").remove();
 			console.log("Inside onClickOnPieChart () function");
 			 
 			   var activePoints = myPieChart.getSegmentsAtEvent(pieMouseEvent);
-			  
+			   console.log("active points......length "+activePoints.length);
+			   console.log("active points...(stringify) "+JSON.stringify(activePoints));
 						   console.log("new points......1 "+activePoints[0].value);
 						   console.log("new points......1 "+activePoints[0].label);
 						
 						
-						   console.log("new points......2 "+activePoints[0].value);
-						   console.log("new points......2 "+activePoints[0].label);
+						   //console.log("new points......2 "+activePoints[0].value);
+						   //console.log("new points......2 "+activePoints[0].label);
 						
 					
 						var presentiesList=todayAttendanceDetails.presentiesList;
@@ -57,14 +56,14 @@
 								
 								
 								if(empDetails[j].employeeId==empId){
-									console.log("found at index : "+j);
+									//console.log("found at index : "+j);
 									foundIndex=j;
 									presetiesIndexList.push(j);
 									
 								}
 						   }
-							console.log("Index after search:="+foundIndex);
-							console.log("employee details: new ="+ empDetails[foundIndex].firstName);
+							//console.log("Index after search:="+foundIndex);
+							//console.log("employee details: new ="+ empDetails[foundIndex].firstName);
 							if(presentiesList[i].endTime==undefined){
 								presentiesList[i].endTime="still working";
 							}
@@ -102,7 +101,7 @@
 							
 						}
 						
-				   /*	printing absents list on console*/
+				   //	printing absents list on console
 						
 						function makeListOfAbsentEmp(j){
 						 
@@ -179,14 +178,14 @@
 					   			    	
 					   			    }		
 	} // END -- clickPieChart() 
-	
+
 $("document").ready(function(){
 	
 	$("#accordion").accordion({
 		 active: 2
 	});
 	
-	var dailyAttendance_legend_id="#daily-attendance-legend-div";
+
 	var todayAttendanceHeading_id="#today-attendance-heading";
 	var todayAttendanceInfoDetails_id="#today-attendance-info-detils";
 	
@@ -300,6 +299,9 @@ $("document").ready(function(){
 /* After clicking on pie chart  */
 	
 	$("#pieChart").click(function(event){
+		
+		console.log(" in rteady  click on pie chart: event"+event);
+		//console.log("in rteady  click on pie chart: event: (stringify) "+JSON.stringify(event));
 		//$("#daily-attendance-legend-div").hide();
 		$(pieChartDiv).hide();
 		$(dailyAttendance_legend_id).hide();
@@ -308,7 +310,9 @@ $("document").ready(function(){
 		
 				console.log("Inside onClickOnPieChart () function");
 				 
-					   var activePoints = myPieChart.getSegmentsAtEvent(event);							 
+					   var activePoints = myPieChart.getSegmentsAtEvent(event);		
+					   //console.log("active point length: "+activePoints.length);
+					   //console.log("active points (stringify)"+JSON.stringify(activePoints));
 								
 								var presentiesList=todayAttendanceDetails.presentiesList;
 								var empDetails= todayAttendanceDetails.employeeDetails;
@@ -373,7 +377,7 @@ $("document").ready(function(){
 									
 								}
 								
-						   /*	printing absents list on console*/
+						  // 	printing absents list on console
 								
 								function makeListOfAbsentEmp(j){
 									 
@@ -404,7 +408,7 @@ $("document").ready(function(){
 							   			    }
 				
 			} ); // END -- $("#pieChart").click()
-	
+
 }; // END --   displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie)
 
 });// End of -  $("document").ready()

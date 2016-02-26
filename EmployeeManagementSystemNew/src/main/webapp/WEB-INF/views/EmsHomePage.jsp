@@ -14,13 +14,13 @@
 <script src="./JS/AttendanceForm.js"></script>
 <script src="./JS/Admin_login.js"></script>
 <script src="./JS/PasswordStrength.js"></script>
+<script src="./JS/HomePageNoticeBoard.js"></script>
 
 
 <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png" />
 <!-- boottrap css-->
 <link rel="stylesheet" href="./bootstrap/bootstrap.css">
-<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
-<!-- custom css -->
+
 <link rel="stylesheet" href="./CSS/homepage.css">
 <link rel="stylesheet" href="./CSS/header.css">
 <link rel="stylesheet" href="./CSS/footer.css">
@@ -29,76 +29,6 @@
 <link rel="stylesheet" href="./CSS/aboutUs.css">
 <link rel="stylesheet" href="./CSS/contactUs.css"> 
 <link rel="stylesheet" href="./CSS/PasswordStrength.css">
-<script>
-
-var totalString="";
-
-$(document).ready(function () {
-    DisplayCurrentTime();
-    getAllNotices();
-    
-});
-
-	function DisplayCurrentTime() {
-	    var dt = new Date();
-	    var refresh = 1000;  	 
-	    var cDate = dt.getDate()+ "-" + (dt.getMonth() + 1)  + "-" + dt.getFullYear();
-	    $('#timeNow').text(dt.toLocaleTimeString());
-	    $("#dateNow").text(cDate )
-	    window.setTimeout('DisplayCurrentTime()', refresh);
-	}
-	
-  function DisableBackButton() {
-		window.history.forward();
-	}
-  
-	DisableBackButton();
-	
-	window.onload = DisableBackButton;
-	window.onpageshow = function(evt) {
-		if (evt.persisted)
-			DisableBackButton();
-	}
-	
-	window.onunload = function() {
-		void (0);
-	}
-	
-	 function getAllNotices(){
-		  console.log("......getAllNotices()......");
-		  var request = $.ajax({
-			  url: "/EmployeeManagementSystemNew/allNotices.do",
-			  method: "GET",
-			 
-			});
-			 
-			request.done(function(data) {
-				console.log("Notices came");
-				noticeData=data;
-				
-				var len=data.length;
-				var string="";
-				if(len>0){
-					for(var i=0;i<len;i++){
-						var k=i+1;
-						console.log(noticeData[i].notice);
-						string=string+"<p>"+k+". "+noticeData[i].notice+"</p>";
-						/* document.getElementById("#notice-board").innerHTML="<p>"+k+". "+noticeData[i].notice+"</p>"; */
-					}
-				}
-				totalString=string;
-				console.log("totalString "+totalString);
-				 $("#noticeBoard").html(totalString);
-				
-				});
-			
-			request.fail(function(jqXHR, textStatus ) {
-				  console.log("failed to retrieve notices");
-				});	
-	}
-  </script>
-
-
 
 </head>
 <body>
@@ -134,19 +64,19 @@ $(document).ready(function () {
 	</nav>
 
 	<!-- In-Time form -->
-	<div class="container intime-margin" id="in-time-form">
+	<div class="container-fluid intime-margin" id="in-time-form">
 	
-	<div class="row">
+	<div class="row" >
+	  <!-- <div class="col-sm-2"></div> -->
 	  <div class="col-sm-4">
-	  	  	
-	  
-	  		<div class="alert alert-info">
-	  	  		<strong>Date : <span id="dateNow">date</span></strong><br><br>
-	  	  		<strong>Time : <span id="timeNow">time</span></strong>
+	       <div class="col-sm-8"></div>
+  		   <div class="alert alert-info col-sm-3">
+	  	  		<strong>Date : <br><span id="dateNow">date</span></strong><br><br>
+	  	  		<strong>Time : <br><span id="timeNow">time</span></strong>
 	  	  	</div>
-	  
+	  	  	<div class="col-sm-1"></div>	  
 	  </div>
-	  
+	  <!-- <div class="col-sm-1"></div>  -->
 	  <div class="col-sm-4">
 		<form action="#attendanceForm.do" class="form-inTime" id="attendance-form">
 			<h2 class="form-inTime-heading ">
@@ -176,18 +106,16 @@ $(document).ready(function () {
 			
 		</form>
 		</div>
-		
 		<div class="col-sm-4">
-		
-			<div class="container" align="center">
-	 			<h2>Notice Board</h2>
-	 				<div class="alert alert-info">
-   						<marquee width=400 direction="up" behavior="scroll" height=160 scrollamount="3" onmouseover="this.stop();" onmouseout="this.start();">
-							<p id="noticeBoard">mhgjhjg</p>
+		     <div class="col-sm-12">
+	 			   
+	 				<div class="alert alert-info col-sm-10">
+	 				    <h2 class="text-center">Notice Board</h2>
+   						 <marquee  direction="up" behavior="scroll" height="175px" scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
+							<p id="noticeBoard"></p>
 						 </marquee>
-  					</div>
-			</div>
-		
+  					</div>		
+		     </div>
 		</div>
 
 	</div>
@@ -385,67 +313,7 @@ $(document).ready(function () {
 		</div>
 	</div>
 	
-	<!--  employee forgot password modal -->
-  <!-- <div class="modal fade" id="employeeForgotPasswordModal" role="dialog">
-		<div class="modal-dialog">
 
-			Modal content
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h2 class="modal-title form-signin-heading text-center">
-						<span id="employee-model-header" class="glyphicon"></span> <span id="modal-header-text"></span>
-					</h2>
-				</div>
-				<div class="modal-body">
-					<div id="sign-in-form">
-					
-						forgot password form
-						   <font color="green"><p id="res"></p></font> 
-						<form class="form-signin" action="#" id="forgot-password-form">
-						
-							<div class="form-group has-feedback" id="Forgot_password_div">
-								<label>Employee Id</label> <input type="text"
-									class="form-control text-center" id="empid"
-									placeholder="employee id" title="please enter valid 6 digits."
-									autocomplete="off"> <span
-									class="glyphicon  form-control-feedback"
-									id="forgotpassword-id-span"></span>
-							</div>
-							<div class="form-group has-feedback"
-								id="forgot_password_email_div" >
-                                 <label>Email Address</label>
-								<div class="input-group" >
-						
-									<span class="input-group-addon"><i
-										class="glyphicon glyphicon-envelope color-blue email_symbal"></i></span>
-										<input
-										id="email1" placeholder="email address"
-										class="form-control text-center" type="email"
-										autocomplete="off"> <span
-										class="glyphicon  form-control-feedback"
-										id="forgotpassword-email-span"></span>
-								</div>
-							</div>
-							<div class="row">
-						        <button class="btn btn-primary" id="forgotpassword_button">send</button><br>
-						    </div>
-                            <font color="red"><p class="text-center" id="validation_res"></p></font>
-					</form>
-					</div>
-				</div>
-				
-				<div class="modal-footer ">
-				    <div class="col-sm-3" id="back-to-employee-attendance"><button type="button" class="btn btn-warning" >Back to Employee Attendance</div>
-				    <div class="col-sm-7"></div>
-				    
-				      <div class="col-sm-2" id="close-back-to-employee-attendance"><button type="button" class="btn btn-warning" >Close</div>
-				   <div id="close-back-to-employee-attendance">
-				   </div><button type="button" class="btn btn-warning" >Close</button></div>
-				   </div>
-				    					
-				</div>
-			</div> -->  <!-- Content -->
 		</div>
 	</div>
 	

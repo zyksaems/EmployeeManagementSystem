@@ -26,7 +26,7 @@
    	  /*variables to store success/errpe messages*/
    	   var todayNotLoggedIn_msg="Today  you are not logged-in, please login! ";
    	   var loginTime_msg="Today  you are logged-in  at ";
-   	   var stillWorking_msg="You are Working still";
+   	   var stillWorking_msg="You are Working still !";
    	   var logoutTime_msg="Today you are logged-out at ";
    	   
       
