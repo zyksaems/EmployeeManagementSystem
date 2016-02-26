@@ -1,6 +1,6 @@
 package com.caprusit.ems.utility;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
@@ -24,14 +24,14 @@ public class UploadExcelFileUtility {
 
 	int firstCellNum, lastCellNum, count, exceptionRowNumber = -1, exceptionColNumber = -1;
 
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 	private Sheet sheet = null;
 
 	public String saveExcelFileData(Workbook workbook) {
 
 		try {
 
-			int NoOfSheets = workbook.getNumberOfSheets();
+		//	int NoOfSheets = workbook.getNumberOfSheets();
 			for (int i = 0; i <1; i++) {
 				sheet = workbook.getSheetAt(i);
 				Iterator<Row> rowIterator = sheet.rowIterator();
@@ -66,16 +66,16 @@ public class UploadExcelFileUtility {
 									System.err.println("date of birth(cell): " + cell);
 
 									try {
-										String strDate = cell.getStringCellValue();
+										Date strDate = cell.getDateCellValue();
 										logger.info("Date of birth as String: " + strDate);
-										employee.setDob(dateFormat.parse(strDate));
+										employee.setDob(strDate);
 									} catch (IllegalStateException exception) {
 										logger.info("exception during getting dob as String type");
-										logger.info("dob exceptionclass (illegal state exception): "
+										logger.info("dob exception class (illegal state exception): "
 												+ exception.getClass());
 										exceptionColNumber = cell.getColumnIndex();
-										logger.info("exceprion row number: " + exceptionRowNumber
-												+ " exceptionn column number: " + exceptionColNumber);
+										logger.info("exception row number: " + exceptionRowNumber
+												+ " exception column number: " + exceptionColNumber);
 										// exception.printStackTrace();
 										return JsonUtility.convertToJson(
 												(exceptionRowNumber + 1) + "." + (exceptionColNumber + 1));
@@ -109,7 +109,7 @@ public class UploadExcelFileUtility {
 
 						}
 						System.out.println("employee object: " + employee);
-						if (count > 0 && employee.getEmployeeId() > 0 ){
+						if (count > 0){
 							int id=manageUserDAO.saveEmployee(employee);
 							if(id == 1){
 								EncryptedEmployee encEmp=new EncryptedEmployee();

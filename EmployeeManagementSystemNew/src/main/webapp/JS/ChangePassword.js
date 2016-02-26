@@ -205,15 +205,18 @@ function validateChangePasswordDetails(){
 *  
 */
 function makeAjaxCallToChangePassword(changePasswordObject){
+	var currentPassword=changePasswordObject.currentPassword;
+	var newPassword=changePasswordObject.newPassword;
+	console.log("Current  password: "+JSON.stringify(currentPassword));
+	console.log("New password: "+JSON.stringify(newPassword));
 	$.ajax ({
 	    url: "/EmployeeManagementSystemNew/changePassword.do",
 	    type: "POST",
-	    data: JSON.stringify(changePasswordObject),
+	    data: { cpwd:currentPassword,npwd: newPassword},
 	    dataType: "json",
 	    contentType: "application/json; charset=utf-8",
 	    success: function(data){
 	    	alert("data: "+data);
-	    	alert("Hi");
 	    	var result=data;
 	    	var displayResult="";
 	        if(result == 1){
@@ -235,8 +238,8 @@ function makeAjaxCallToChangePassword(changePasswordObject){
 	        $(employeeChangePasswordSuccessMsg_id).text(displayResult);
 	     },
      error: function(data){
-   	  setDefaultVales();
-   	  $(employeeChangePasswordSuccessMsg_id).text(internalServerProblem);
+   	 // setDefaultVales();
+   	  $(employeeChangePasswordSuccessMsg_id).text("Internal problem occurred");
      }
 	}); 
 };// END -- makeAjaxCallToChangePassword(changePasswordObject)
