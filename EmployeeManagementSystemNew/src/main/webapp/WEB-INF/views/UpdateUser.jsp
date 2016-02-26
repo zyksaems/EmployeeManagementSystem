@@ -39,6 +39,10 @@
 <link rel="stylesheet" href="./CSS/header2.css">
 <link rel="stylesheet" href="./CSS/footer.css">
 
+    <script src="./JS/AdminLinkControll.js"></script>
+  
+   <script src="./JS/MakeLinkAsActive.js "></script>
+   <link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
 
 
 <script>
@@ -86,51 +90,47 @@
 		<!-- This division is the division on left for display links -->
 		<div class="col-sm-2 sidebar">
 
-			<div id="accordion">
-				<h3 style="">Manage Employee</h3>
-				<div>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">Add Employee</a></li>
-						<li><a href="/EmployeeManagementSystemNew/ViewUser.do" id="admin-add-employee-link">View/Update Employee</a></li>
-						<li><a href="/EmployeeManagementSystemNew/updateNotice.do" id="notice-add-link">Update Notice</a></li>
-					</ul>
-				</div>
-				<h3>Reports</h3>
-				<div>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getDailyReportGenerationPage.do">Daily Reports</a></li>
-					</ul>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">Weekly Reports</a></li>
-					</ul>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getMonthlyReportGenerationPage.do">Monthly Reports</a></li>
-					</ul>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do">annually Reports</a></li>
-					</ul>
-				
-				</div>
-				<h3>View Attendance</h3>
-				<div>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getTodayAttendancePage.do" id="daily-attendance-link">Daily
-								Attendance</a></li>
-					</ul>
-				</div>
-				<h3>Productivity</h3>
-				<div>
-					<ul>
 						
-						<li>
-			<a href="/EmployeeManagementSystemNew/getWeeklyProductivityPage.do" id="weekly-productivity-link">Weekly Productivity</a></li>
-			<li>
-			<a href="/EmployeeManagementSystemNew/getMonthlyProductivityPage.do" id="monthly-productivity-link">Monthly Productivity</a></li>
-			<li>
-			<a href="/EmployeeManagementSystemNew/getAnnualProductivityPage.do"  id="anual-productivity-link">Annually Productivity</a></li>
-					</ul>
-				</div>
+			 <div id="accordion">
+			<h3 style="">Manage Employee</h3>
+	    	<div>
+	    	<ul>
+	    	<li><a  href="#" id="admin-add-employee-link">Add Employee</a></li>
+	    	<li><a href="#" id="admin-view-update-emp-link">View/Update Employee</a></li>
+	    	<li><a href="#" id="notice-add-link">Update Notice</a></li>
+	    	</ul>
 			</div>
+			<h3>Reports</h3>
+			<div>
+						<ul>
+							<li><a href="#" id="admin-view-daily-report-link">Daily Reports</a></li>
+						</ul>
+						<li><a  href="#" id="admin-view-weekly-report-link">Weekly Reports</a></li>
+						</ul>
+						<li><a  href="#" id="admin-view-monthly-report-link">Monthly Reports</a></li>
+						</ul>
+						<li><a  href="#" id="admin-view-anual-report-link">Annual Reports</a></li>
+						</ul>
+					</div>
+			<h3>View Attendance</h3>
+			<div>
+			<ul>
+			<li>
+			 <a  href="#" id="admin-view-today-attendance-link">Daily Attendance</a></li>
+			</ul>
+			</div>
+			<h3>Productivity</h3>
+			<div>
+			<ul>
+			<li>
+			<a  href="#" id="weekly-productivity-link">Weekly Productivity</a></li>
+			<li>
+			<a href="#" id="monthly-productivity-link">Monthly Productivity</a></li>
+			<li>
+			<a  href="#"  id="anual-productivity-link">Annual Productivity</a></li>
+			</ul>
+			</div>
+			</div> 
 		</div>
 		
 		<div style="overflow-x: auto;" class="table-responsive">
@@ -140,8 +140,8 @@
 				<hr>
 				
 				<nav  role="navigation" title="Search">
-				<div class="wrapper">
-					<div class="col-sm-11 col-md-11" align="left">
+				<div class="wrapper  row">
+					<div class="col-sm-5" align="left">
 						<form class="navbar-form" role="search">
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="Search"
@@ -154,9 +154,9 @@
 							</div>
 						</form>
 					</div>
-					<div align="right">
-				<span class="pagination pagination-lg" id="myPager"></span>
-				</div>
+					<div class="col-sm-7" align="right">
+				          <span class="pagination pagination-lg" id="myPager"></span>
+				      </div>
 					</div>
 				</nav> 
 				

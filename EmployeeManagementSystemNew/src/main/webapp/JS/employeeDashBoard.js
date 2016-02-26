@@ -17,6 +17,8 @@
 	  
 	   
    	   var employeeReport;
+   	   var loggedInEmployeeId;
+   	   var loggedInEmployeeName;
    	   
    	   /*variables to store field ids*/
    	   var employeeName_id="#logged-in-employee-name";
@@ -24,7 +26,7 @@
    	   var employeeLofginTime_id="#logged-in-employee-loginTime";
    	   
    	  /*variables to store success/errpe messages*/
-   	   var todayNotLoggedIn_msg="Today  you are not logged-in, please login! ";
+   	   var todayNotLoggedIn_msg="Today your atendance not posted, please login to post attendance! ";
    	   var loginTime_msg="Today  you are logged-in  at ";
    	   var stillWorking_msg="You are Working still !";
    	   var logoutTime_msg="Today you are logged-out at ";
@@ -47,9 +49,13 @@
    		    contentType: "application/json; charset=utf-8",
    	        success: function(data)
    	        {
-   	        	console.log("data returned from server for today attendance status :"+ data);
-   	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));   	        	         
-   	        	loggedInEmployeeId=data; // loggedInEmployeeId  is in EmployeeDetails.js file
+   	        	//console.log("data returned from server for today attendance status :"+ data);
+   	        	//console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));   	        	         
+   	        	loggedInEmployeeId=data;
+   	        	localStorage.setItem("loggedInEmployeeId", data);
+   	        	//console.log("local storage item: "+localStorage.getItem("loggedInEmployeeId"));
+   	        	
+   	        	
    	        },
    	        error: function(jqXHR, textStatus, errorThrown)
    	        {
@@ -84,7 +90,8 @@
     	        	console.log("data returned from server for today attendance status :"+ data);
     	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));
     	        	employeeReport=data.employeeReport;
-    	        	loggedInEmployeeName=data.empName; // loggedInEmployeeName  is in EmployeeDetails.js file
+    	        	loggedInEmployeeName=data.empName;
+    	        	localStorage.setItem("loggedEmployeeName",loggedInEmployeeName);
     	        	$(employeeName_id).append(loggedInEmployeeName);
     	        	if(employeeReport.length==0){
     	        		//console.log("today employee is not logged in");

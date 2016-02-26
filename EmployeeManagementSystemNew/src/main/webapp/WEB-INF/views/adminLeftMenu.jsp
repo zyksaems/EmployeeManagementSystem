@@ -18,6 +18,11 @@
   <script src="./JS/Admin_logout.js"></script>
   <script src="./JS/autoCompleteEmployeeId.js"></script>
   <script src="./JS/AdminTemplete.js"></script>
+  
+  <script src="./JS/AdminLinkControll.js"></script>
+  
+   <script src="./JS/MakeLinkAsActive.js "></script>
+   <link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
  
 <style>
 #page_result_div {
@@ -60,43 +65,39 @@
 			<h3 style="">Manage Employee</h3>
 	    	<div>
 	    	<ul>
-	    	<li><a  href="/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">Add Employee</a></li>
-	    	<li><a href="/EmployeeManagementSystemNew/ViewUser.do" id="admin-view-update-emp-link">View/Update Employee</a></li>
-	    	<li><a href="/EmployeeManagementSystemNew/updateNotice.do" id="notice-add-link">Update Notice</a></li>
+	    	<li><a  href="#" id="admin-add-employee-link">Add Employee</a></li>
+	    	<li><a href="#" id="admin-view-update-emp-link">View/Update Employee</a></li>
+	    	<li><a href="#" id="notice-add-link">Update Notice</a></li>
 	    	</ul>
 			</div>
 			<h3>Reports</h3>
 			<div>
 						<ul>
-							<li><a  href="/EmployeeManagementSystemNew/getDailyReportGenerationPage.do">Daily Reports</a></li>
+							<li><a href="#" id="admin-view-daily-report-link">Daily Reports</a></li>
 						</ul>
-						<li><a  href="/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">Weekly Reports</a></li>
+						<li><a  href="#" id="admin-view-weekly-report-link">Weekly Reports</a></li>
 						</ul>
-						<li><a  href="/EmployeeManagementSystemNew/getMonthlyReportGenerationPage.do">Monthly Reports</a></li>
+						<li><a  href="#" id="admin-view-monthly-report-link">Monthly Reports</a></li>
 						</ul>
-						<li><a  href="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do">Annual Reports</a></li>
+						<li><a  href="#" id="admin-view-anual-report-link">Annual Reports</a></li>
 						</ul>
 					</div>
 			<h3>View Attendance</h3>
 			<div>
 			<ul>
 			<li>
-			<a  href="/EmployeeManagementSystemNew/getTodayAttendancePage.do" id="daily-attendance-link">Daily Attendance</a></li>
-			<!-- <li>
-			<a href="#" id="weekly-productivity-link">Weekly Attendance</a></li>
-			<li>
-			<a href="#" id="monthly-productivity-link">Monthly Attendance</a></li> -->
+			 <a  href="#" id="admin-view-today-attendance-link">Daily Attendance</a></li>
 			</ul>
 			</div>
 			<h3>Productivity</h3>
 			<div>
 			<ul>
 			<li>
-			<a  href="/EmployeeManagementSystemNew/getWeeklyProductivityPage.do" id="weekly-productivity-link">Weekly Productivity</a></li>
+			<a  href="#" id="weekly-productivity-link">Weekly Productivity</a></li>
 			<li>
-			<a href="/EmployeeManagementSystemNew/getMonthlyProductivityPage.do" id="monthly-productivity-link">Monthly Productivity</a></li>
+			<a href="#" id="monthly-productivity-link">Monthly Productivity</a></li>
 			<li>
-			<a  href="/EmployeeManagementSystemNew/getAnnualProductivityPage.do"  id="anual-productivity-link">Annual Productivity</a></li>
+			<a  href="#"  id="anual-productivity-link">Annual Productivity</a></li>
 			</ul>
 			</div>
 			</div> 

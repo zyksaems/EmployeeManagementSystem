@@ -1,0 +1,17 @@
+
+   /*  This file name:  LinkStyle.css */
+   
+    /* This file is to apply css classes to links  means 
+       To apply indication to active link and inactive link */
+       
+  
+  
+ .active-link{
+ 
+    text-decoration: underline;
+    font-weight: bolder;
+    font-style: italic;
+ 
+ }  
+   
+    
