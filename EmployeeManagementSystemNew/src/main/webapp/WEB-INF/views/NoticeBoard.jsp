@@ -24,6 +24,10 @@
 <link rel="stylesheet" href="./CSS/header2.css">
 <link rel="stylesheet" href="./CSS/footer.css">
 
+    <script src="./JS/AdminLinkControll.js"></script>
+  
+   <script src="./JS/MakeLinkAsActive.js "></script>
+   <link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
 
 
 <script type="text/javascript">
@@ -134,11 +138,18 @@ function setNotice(){
 				
 						 string += " <tr id="+i+"><td>"+j+"</td><td>"
                          +noticeData[i].notice
-                         +"</td><td><button type='button' class='btn btn-default' onclick='getNoticeId("+i+")' " +
+                         +"</td><td><button type='button' class='btn btn-info active' onclick='getNoticeId("+i+")' " +
                  		"data-toggle='modal' data-target='#deleteNoticeModal'>Delete</button></td><tr>";
 					}
 				}
+				/* $("#myTable").append("<tbody id='tablebody'>"+string+"</tbody>"); */
+				if(string!=""){
 				$("#myTable").append("<tbody id='tablebody'>"+string+"</tbody>");
+				}else{
+					$("#myTable thead").hide();
+					$("#table-div").html("No notice available");
+				}
+				
 				modifiedString=string1;
 				console.log("modifiedString="+modifiedString);
 				count=j;
@@ -150,6 +161,12 @@ function setNotice(){
 				  console.log("failed to retrieve notices");
 				});	
 			}
+	  
+	  
+	  function clearReviewNotice(){
+		  document.getElementById("post-show").innerHTML=""; 
+		  
+	  }
   
 	
 </script>	
@@ -190,94 +207,86 @@ function setNotice(){
 		<!-- This division is the division on left for display links -->
 		<div class="col-sm-2 sidebar">
 
-			<div id="accordion">
-				<h3 style="">Manage Employee</h3>
-				<div>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">Add Employee</a></li>
-						<li><a href="/EmployeeManagementSystemNew/ViewUser.do" id="admin-add-employee-link">View/Update Employee</a></li>
-						<li><a href="/EmployeeManagementSystemNew/updateNotice.do" id="notice-add-link">Update Notice</a></li>
-					</ul>
-				</div>
-				<h3>Reports</h3>
-				<div>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getDailyReportGenerationPage.do">Daily Reports</a></li>
-					</ul>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">Weekly Reports</a></li>
-					</ul>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getMonthlyReportGenerationPage.do">Monthly Reports</a></li>
-					</ul>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do">annually Reports</a></li>
-					</ul>
-				
-				</div>
-				<h3>View Attendance</h3>
-				<div>
-					<ul>
-						<li><a href="/EmployeeManagementSystemNew/getTodayAttendancePage.do" id="daily-attendance-link">Daily
-								Attendance</a></li>
-					</ul>
-				</div>
-				<h3>Productivity</h3>
-				<div>
-					<ul>
-						
-						<li>
-			<a href="/EmployeeManagementSystemNew/getWeeklyProductivityPage.do" id="weekly-productivity-link">Weekly Productivity</a></li>
-			<li>
-			<a href="/EmployeeManagementSystemNew/getMonthlyProductivityPage.do" id="monthly-productivity-link">Monthly Productivity</a></li>
-			<li>
-			<a href="/EmployeeManagementSystemNew/getAnnualProductivityPage.do"  id="anual-productivity-link">Annually Productivity</a></li>
-					</ul>
-				</div>
+			 <div id="accordion">
+			<h3 style="">Manage Employee</h3>
+	    	<div>
+	    	<ul>
+	    	<li><a  href="#" id="admin-add-employee-link">Add Employee</a></li>
+	    	<li><a href="#" id="admin-view-update-emp-link">View/Update Employee</a></li>
+	    	<li><a href="#" id="notice-add-link">Update Notice</a></li>
+	    	</ul>
 			</div>
+			<h3>Reports</h3>
+			<div>
+						<ul>
+							<li><a href="#" id="admin-view-daily-report-link">Daily Reports</a></li>
+					
+						
+						<li><a  href="#" id="admin-view-weekly-report-link">Weekly Reports</a></li>
+						
+						<li><a  href="#" id="admin-view-monthly-report-link">Monthly Reports</a></li>
+					
+						<li><a  href="#" id="admin-view-anual-report-link">Annual Reports</a></li>
+						</ul>
+					</div>
+			<h3>View Attendance</h3>
+			<div>
+			<ul>
+			<li>
+			 <a  href="#" id="admin-view-today-attendance-link">Daily Attendance</a></li>
+			</ul>
+			</div>
+			<h3>Productivity</h3>
+			<div>
+			<ul>
+			<li>
+			<a  href="#" id="weekly-productivity-link">Weekly Productivity</a></li>
+			<li>
+			<a href="#" id="monthly-productivity-link">Monthly Productivity</a></li>
+			<li>
+			<a  href="#"  id="anual-productivity-link">Annual Productivity</a></li>
+			</ul>
+			</div>
+			</div> 
 		</div>	
 		<h2>Notice Board</h2>
 		
-		 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-4" style="background-color:lavender;">
-    <h2>Previous Notice</h2>
-	 				<div class="alert alert-info">
-	 					<table id="myTable" border="1">
-	 						<thead>
-								<tr>
-									<th>Sn #</th>
-									<th>Notices</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-	 					</table>
-  					</div>
-    <h2>Add Notices</h2>
-    <textarea rows="5" cols="60"  id="notice"></textarea><br>
-    <input type="button" onclick="display();" value="Review"> 
-    
-    <div id="show"></div>
-    
-    </div>
-    <div class="col-sm-4" style="background-color:lavenderblush;">
-    
-    
-    <h2>Review Notice Board</h2>
-	 				<div class="alert alert-info">
-   						<marquee width=400 direction="up" behavior="scroll" height=160 scrollamount="3" onmouseover="this.stop();" onmouseout="this.start();">
-							<p id="post-show"></p>
-						 </marquee>
-						 
-  					</div>
-    				<button type='button' class='btn btn-default'  data-toggle='modal' data-target='#setNoticeModal'>Set Notice</button>
-    
-    
-    
-    </div>
-   
-  </div>
-</div>
+	<div class="container-fluid">
+		  <div class="row">
+				    <div class="col-sm-5" style="background-color:lavender;">
+				    		<h2>Previous Notice</h2>
+					 		<div class="alert alert-info" id="table-div">
+					 			<table  class="table" id="myTable" border="1">
+					 				<thead>
+										<tr>
+											<th>Sn #</th>
+											<th>Notices</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+					 			</table>
+				  			</div>
+				    	<h2>Add Notices</h2>
+				    	<textarea rows="5" cols="62"  id="notice"></textarea><br>
+				    	<p align="center"><Button type="button" onclick="display();" class='btn btn-info active' >Review</Button></p>
+				    </div>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+				    
+				    <div class="col-sm-4" style="background-color:lavenderblush;">
+				    	<h2>Review Notice Board</h2>
+					 		<div class="alert alert-info">
+				   				<marquee width=400 direction="up" behavior="scroll" height=160 scrollamount="3" onmouseover="this.stop();" onmouseout="this.start();">
+									<p id="post-show"></p>
+								</marquee>
+							</div>
+				    	<p align="center">
+				    	
+				    		<button type='button' class='btn btn-info active'  data-toggle='modal' data-target='#setNoticeModal'>Set Notice</button>
+				    		<button type='button' class='btn btn-info active'  onclick='clearReviewNotice()'>Clear Notice</button>
+				    	</p>
+				   </div>
+		   	</div>
+	</div>
 </div>
 </div>
 			<!-- Modal 1 -->
