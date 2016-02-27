@@ -138,7 +138,7 @@ function setNotice(){
 				
 						 string += " <tr id="+i+"><td>"+j+"</td><td>"
                          +noticeData[i].notice
-                         +"</td><td><button type='button' class='btn btn-default' onclick='getNoticeId("+i+")' " +
+                         +"</td><td><button type='button' class='btn btn-info active' onclick='getNoticeId("+i+")' " +
                  		"data-toggle='modal' data-target='#deleteNoticeModal'>Delete</button></td><tr>";
 					}
 				}
@@ -214,11 +214,12 @@ function setNotice(){
 			<div>
 						<ul>
 							<li><a href="#" id="admin-view-daily-report-link">Daily Reports</a></li>
-						</ul>
+					
+						
 						<li><a  href="#" id="admin-view-weekly-report-link">Weekly Reports</a></li>
-						</ul>
+						
 						<li><a  href="#" id="admin-view-monthly-report-link">Monthly Reports</a></li>
-						</ul>
+					
 						<li><a  href="#" id="admin-view-anual-report-link">Annual Reports</a></li>
 						</ul>
 					</div>
@@ -244,46 +245,37 @@ function setNotice(){
 		</div>	
 		<h2>Notice Board</h2>
 		
-		 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-4" style="background-color:lavender;">
-    <h2>Previous Notice</h2>
-	 				<div class="alert alert-info" id="table-div">
-	 					<table id="myTable" border="1">
-	 						<thead>
-								<tr>
-									<th>Sn #</th>
-									<th>Notices</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-	 					</table>
-  					</div>
-    <h2>Add Notices</h2>
-    <textarea rows="5" cols="60"  id="notice"></textarea><br>
-    <input type="button" onclick="display();" value="Review"> 
-    
-    <div id="show"></div>
-    
-    </div>
-    <div class="col-sm-4" style="background-color:lavenderblush;">
-    
-    
-    <h2>Review Notice Board</h2>
-	 				<div class="alert alert-info">
-   						<marquee width=400 direction="up" behavior="scroll" height=160 scrollamount="3" onmouseover="this.stop();" onmouseout="this.start();">
-							<p id="post-show"></p>
-						 </marquee>
-						 
-  					</div>
-    				<button type='button' class='btn btn-default'  data-toggle='modal' data-target='#setNoticeModal'>Set Notice</button>
-    
-    
-    
-    </div>
-   
-  </div>
-</div>
+	<div class="container-fluid">
+		  <div class="row">
+				    <div class="col-sm-4" style="background-color:lavender;">
+				    		<h2>Previous Notice</h2>
+					 		<div class="alert alert-info" id="table-div">
+					 			<table id="myTable" border="1">
+					 				<thead>
+										<tr>
+											<th>Sn #</th>
+											<th>Notices</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+					 			</table>
+				  			</div>
+				    	<h2>Add Notices</h2>
+				    	<textarea rows="5" cols="62"  id="notice"></textarea><br>
+				    	<p align="center"><Button type="button" onclick="display();" class='btn btn-info active' >Review</Button></p>
+				    </div>
+				    
+				    <div class="col-sm-4" style="background-color:lavenderblush;">
+				    	<h2>Review Notice Board</h2>
+					 		<div class="alert alert-info">
+				   				<marquee width=400 direction="up" behavior="scroll" height=160 scrollamount="3" onmouseover="this.stop();" onmouseout="this.start();">
+									<p id="post-show"></p>
+								</marquee>
+							</div>
+				    	<p align="center"><button type='button' class='btn btn-info active'  data-toggle='modal' data-target='#setNoticeModal'>Set Notice</button></p>
+				   </div>
+		   	</div>
+	</div>
 </div>
 </div>
 			<!-- Modal 1 -->
