@@ -142,7 +142,14 @@ function setNotice(){
                  		"data-toggle='modal' data-target='#deleteNoticeModal'>Delete</button></td><tr>";
 					}
 				}
+				/* $("#myTable").append("<tbody id='tablebody'>"+string+"</tbody>"); */
+				if(string!=""){
 				$("#myTable").append("<tbody id='tablebody'>"+string+"</tbody>");
+				}else{
+					$("#myTable thead").hide();
+					$("#table-div").html("No notice available");
+				}
+				
 				modifiedString=string1;
 				console.log("modifiedString="+modifiedString);
 				count=j;
@@ -241,7 +248,7 @@ function setNotice(){
   <div class="row">
     <div class="col-sm-4" style="background-color:lavender;">
     <h2>Previous Notice</h2>
-	 				<div class="alert alert-info">
+	 				<div class="alert alert-info" id="table-div">
 	 					<table id="myTable" border="1">
 	 						<thead>
 								<tr>
