@@ -21,22 +21,10 @@ $("document").ready(function(){
 			   console.log("logged in  employee ids data: "+data);
 			   if(data == 1){
 				   
-				   clearLocalStorage();
 				   window.location.href="/"+applicationName+"/"+homePage_url;
 			   }
 			},"json");
     	
     });// END -- $(adminLogout_link_id).click()
-    
-    /**
-     * This function is to clear local storage values
-     */
-     function clearLocalStorage(){
-    	 
-    	 localStorage.removeItem("loggedInEmployeeId");
-		 localStorage.removeItem("loggedEmployeeName");
-		 localStorage.removeItem("activeLinkId");
-    	 
-     }; // END -- clearLocalStorage()
     
 });// END -- $("document").ready()

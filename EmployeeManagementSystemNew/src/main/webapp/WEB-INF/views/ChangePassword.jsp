@@ -17,7 +17,7 @@
                     <!-- textBox for employee current Password -->
 			      <div class="form-group  has-feedback " id="change-password-admin-current-password-div">
 				       <label>Current Password</label> 
-				       <input type="password" class="form-control text-center" id="change-password-admin-current-password-val" autocomplete="off" required />
+				       <input type="password" class="form-control text-center" id="change-password-admin-current-password-val"  autocomplete="off" required/>
 				      <span class="glyphicon  form-control-feedback" id="change-password-admin-current-password-span"></span>
 			     </div>
              </div>
@@ -29,7 +29,7 @@
                   <!-- textBox for employee new  Password -->
 			      <div class="form-group  has-feedback " id="change-password-admin-new-password-div">
 				       <label>New Password</label> 
-				       <input type="password" class="form-control text-center" id="change-password-admin-new-password-val" autocomplete="off" required />
+				       <input type="password" class="form-control text-center" id="change-password-admin-new-password-val"  autocomplete="off" required maxlength="20"/>
 				      <span class="glyphicon  form-control-feedback" id="change-password-admin-new-password-span"></span>
 			     </div>
              </div>
@@ -41,7 +41,7 @@
                   <!-- textBox for employee confirm Password -->
 			      <div class="form-group  has-feedback " id="change-password-admin-confirm-password-div">
 				       <label>Confirm Password</label> 
-				       <input type="password" class="form-control text-center" id="change-password-admin-confirm-password-val" autocomplete="off" required />
+				       <input type="password" class="form-control text-center" id="change-password-admin-confirm-password-val" autocomplete="off" required maxlength="20" />
 				      <span class="glyphicon  form-control-feedback" id="change-password-admin-confirm-password-span"></span>
 			     </div>
              </div>
@@ -58,10 +58,6 @@
              <div class="col-sm-4"></div>
 			   
 			</div>
-          
-            
-            			
-			
 		</form>
 </div>
 </div>

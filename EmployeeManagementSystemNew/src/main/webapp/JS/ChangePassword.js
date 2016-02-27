@@ -52,12 +52,12 @@ var adminNewPasswordStrengthSpan_id ="#admin-new-password-strength-span";
 var shortCurrentPasswordMsg="Current password is short";
 /* variable to display new password is short error message  (string) */
 var shortNewPasswordMsg="New password is short";
-/* variable to display new password and confirm password not mateched error message  (string) */
+/* variable to display new password and confirm password not matched error message  (string) */
 var newPasswordConfimPassNotMatchedMsg="New password and confirm password not matched";
 /* variable to display employee password successfully changed message  (string) */
 var changePasswordSuccessMsg="Password successfully changed!";
-/* variable to display current password is not corrent error message  (string) */
-var changePasswordCurrentPassNotMatchedMsg="Entered current password is wrong try again";
+/* variable to display current password is not correct error message  (string) */
+var changePasswordCurrentPassNotMatchedMsg="Entered current password is wrong. Try again....";
  /* variable to display internal problem in change password error message  (string) */
 var changePasswordInternalErrorMsg="Some problem occured try again !!";
 
@@ -123,7 +123,7 @@ $(changePasswordEmployeeCurrentPass_id).keyup(function(){
 var newflag=false;
 $(changePasswordEmployeeNewPass_id).keyup(function(){
 	var length=$(this).val().length;
-	/*function call to measure passwors strength*/
+	/*function call to measure password strength*/
 	measurePasswordStrength($(this).val(),adminNewPasswordStrengthSpan_id);// This function is in PassworddStrength.js file
 	if(length >= employeePasswordMinLength && $(changePasswordEmployeeNewPass_id).val()!=$(changePasswordEmployeeCurrentPass_id).val()){
 		newflag=true;
@@ -207,11 +207,9 @@ function validateChangePasswordDetails(){
 function makeAjaxCallToChangePassword(changePasswordObject){
 	var currentPassword=changePasswordObject.currentPassword;
 	var newPassword=changePasswordObject.newPassword;
-	console.log("Current  password: "+JSON.stringify(currentPassword));
-	console.log("New password: "+JSON.stringify(newPassword));
 	$.ajax ({
 	    url: "/EmployeeManagementSystemNew/changePassword.do",
-	    type: "POST",
+	    type: "GET",
 	    data: { cpwd:currentPassword,npwd: newPassword},
 	    dataType: "json",
 	    contentType: "application/json; charset=utf-8",

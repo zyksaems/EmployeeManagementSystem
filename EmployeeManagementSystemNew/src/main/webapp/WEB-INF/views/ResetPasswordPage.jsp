@@ -69,7 +69,7 @@
                                             <!-- textBox for new Password -->
 			                                <div class="form-group  has-feedback ">
 				                                  <label>New Password</label> 
-				                                  <input type="password" class="form-control text-center" id="newPassword" autocomplete="off" required />				      
+				                                  <input type="password" class="form-control text-center" id="newPassword" autocomplete="off" required maxlength="20"/>				      
 			                                </div>
                                        </div>
                                       <div class="col-sm-4"><p class="password-strength-top-margin" id="resetPassword-strength-span"></p></div>			   
@@ -80,7 +80,7 @@
                                             <!-- textBox for confirm Password -->
 			                                <div class="form-group  has-feedback ">
 				                                  <label>Confirm Password</label> 
-				                                  <input type="password" class="form-control text-center" id="confirmPassword" autocomplete="off" required />				      
+				                                  <input type="password" class="form-control text-center" id="confirmPassword" autocomplete="off" required maxlength="20"/>				      
 			                                </div>
                                        </div>
                                       <div class="col-sm-4"></div>			   

@@ -94,7 +94,7 @@
 			<div class="form-group has-feedback " id="employee-password-div">
 				<label>Password</label> <input type="password"
 					class="form-control text-center " id="employee-password-val"
-					required> <span class="glyphicon form-control-feedback"
+					required maxlength="20"> <span class="glyphicon form-control-feedback"
 					id="employee-password-span"></span>
 			</div>
 			<button class="btn btn-lg btn-primary btn-block " id="employeeAttendanceButton">In-Time</button>			
@@ -149,7 +149,7 @@
                    <!-- textBox for employee current Password -->
 			      <div class="form-group  has-feedback " id="change-password-employee-current-password-div">
 				       <label>Current Password</label> 
-				       <input type="password" class="form-control text-center" id="change-password-employee-current-password-val" autocomplete="off" required />
+				       <input type="password" class="form-control text-center" id="change-password-employee-current-password-val" autocomplete="off" />
 				      <span class="glyphicon  form-control-feedback" id="change-password-employee-current-password-span"></span>
 			     </div>
              </div>
@@ -161,7 +161,7 @@
                    <!-- textBox for employee new  Password -->
 			      <div class="form-group  has-feedback " id="change-password-employee-new-password-div">
 				       <label>New Password</label> 
-				       <input type="password" class="form-control text-center" id="change-password-employee-new-password-val" autocomplete="off" required />
+				       <input type="password" class="form-control text-center" id="change-password-employee-new-password-val" autocomplete="off" required maxlength="20"/>
 				      <span class="glyphicon  form-control-feedback" id="change-password-employee-new-password-span"></span>
 			     </div>
              </div>
@@ -174,7 +174,7 @@
                    <!-- textBox for employee confirm Password -->
 			      <div class="form-group  has-feedback " id="change-password-employee-confirm-password-div">
 				       <label>Confirm Password</label> 
-				       <input type="password" class="form-control text-center" id="change-password-employee-confirm-password-val" autocomplete="off" required />
+				       <input type="password" class="form-control text-center" id="change-password-employee-confirm-password-val" autocomplete="off" required maxlength="20"/>
 				      <span class="glyphicon  form-control-feedback" id="change-password-employee-confirm-password-span"></span>
 			     </div>
              </div>
@@ -247,7 +247,7 @@
 								id="admin-login-adminpass-div">
 								<label>Password</label> <input type="password"
 									class="form-control text-center "
-									id="admin-login-adminpass-val" required> <span
+									id="admin-login-adminpass-val" required maxlength="20"> <span
 									class="glyphicon  form-control-feedback"
 									id="admin-login-adminpass-span"></span>
 							</div>
