@@ -198,7 +198,9 @@ $("document").ready(
 				/*setting employee id text box maxlength property*/
 				$(employeeId_id).prop( "maxlength", employeeIdMinLength );
 				
-				
+				console.log("local storage get item {active link id}(before): val"+localStorage.getItem("activeLinkId"));
+				console.log("local storage remove item {active link id}: val"+localStorage.removeItem("activeLinkId"));
+				console.log("local storage get item {active link id} (aftr remove): val"+localStorage.getItem("activeLinkId"));
 				
 				/* function call to set default values */
 				setDefaultVales();

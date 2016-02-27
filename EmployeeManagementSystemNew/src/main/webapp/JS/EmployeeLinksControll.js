@@ -15,7 +15,7 @@
 	    /* variables to store request url */
 	     var applicationName="/EmployeeManagementSystemNew";
 	     var urlPattern=".do";
-	     var viewEmployeeWeeklyAttendanceRequest="/employeeHomePage"+urlPattern;
+	     var viewEmployeeWeeklyAttendanceRequest="/getEmployeeWeeklyGenerationPage"+urlPattern;
 	     var viewEmployeeMonthlyAttendanceRequest="/employeeHomePage"+urlPattern;
 	     var viewEmployeeAnualAttendanceRequest="/employeeHomePage"+urlPattern;
 	     

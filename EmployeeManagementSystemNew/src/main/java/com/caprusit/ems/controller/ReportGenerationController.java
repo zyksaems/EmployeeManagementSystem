@@ -109,14 +109,25 @@ public class ReportGenerationController {
 	/**
 	 *  getAnnuallyReportGenerationPage() method will display AnnuallyReportGenerationPage when we click 
 	 *  on AnnualyReports link in Report Generation Functionality.
-	 */
-	
+	 */	
 	@RequestMapping(value = "/getAnnuallyReportGenerationPage", method = RequestMethod.GET)
 	public String getAnnuallyReportGenerationPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getAnnuallyReportGenerationPage()");
 
 		// verify admin is logged in or not
 		return (HttpSessionUtility.verifySession(request,"adminId")) ? "AnnuallyReportGenerationPage" : "EmsHomePage";
+	}
+	
+	/**
+	 *  getAnnuallyReportGenerationPage() method will display AnnuallyReportGenerationPage when we click 
+	 *  on AnnualyReports link in Report Generation Functionality.
+	 */	
+	@RequestMapping(value = "/getEmployeeWeeklyGenerationPage", method = RequestMethod.GET)
+	public String getEmployeeWeeklyReportGenerationPage(HttpServletRequest request) {
+		logger.info("inside ReportGenerationController getEmployeeWeeklyReportGenerationPage()");
+
+		// verify user is logged in or not
+		return (HttpSessionUtility.verifySession(request,"employeeId")) ? "EmployeeWeeklyGenerateReport" : "EmsHomePage";
 	}
 	
 	
@@ -480,4 +491,6 @@ public class ReportGenerationController {
 		   return reportGenerationService.getAllEmployeeAnnualProductivity(year);
 		   
 		  }
+		 
+		 
 }

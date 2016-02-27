@@ -12,6 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -81,6 +82,7 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 		Criterion c2 = Restrictions.between("attendanceDate", fromDate, toDate);
 		Criterion c3 = Restrictions.and(c1, c2);
 		crit.add(c3);
+		crit.addOrder(Order.asc("attendanceDate"));
 
 		List<Attendance> result = crit.list();
 		logger.info("Result size:"+result.size());
