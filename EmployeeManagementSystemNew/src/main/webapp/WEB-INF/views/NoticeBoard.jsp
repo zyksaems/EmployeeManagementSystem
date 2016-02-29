@@ -29,7 +29,6 @@
    <script src="./JS/MakeLinkAsActive.js "></script>
    <link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
 
-
 <script type="text/javascript">
 var noticeData;
 var modifiedString="";
