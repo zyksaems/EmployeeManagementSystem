@@ -152,28 +152,31 @@ public class ManageUserController {
 	 * This method is to send selected employee details into service for storing into database 
 	 * */
 	@RequestMapping(value = "sendObject", method = RequestMethod.POST)
-	public @ResponseBody String  sendEmployeeJson(@ModelAttribute JsonEmployee employeeJson) throws ParseException {
+	public @ResponseBody String  sendEmployeeJson(@ModelAttribute JsonEmployee employeeJson,HttpServletRequest request) throws ParseException {
+		String message=null;
+		if(HttpSessionUtility.verifySession(request)){
+			Employee employee=new Employee();
+			
+			employee.setEmployeeId(Integer.parseInt(employeeJson.getEmployeeId()));
+			employee.setFirstName(employeeJson.getFirstName());
+			employee.setLastName(employeeJson.getLastName());
+			
+			DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+			Date d2 = df2.parse(employeeJson.getDob());
+		    java.sql.Date sqlDate = new java.sql.Date(d2.getTime());
+		      
+			employee.setDob(sqlDate);
+			
+			employee.setMobileNo(employeeJson.getMobileNo());
+			employee.setEmailId(employeeJson.getEmailId());
+			employee.setDesignation(employeeJson.getDesignation());
+			employee.setRollId(Integer.parseInt(employeeJson.getRollId()));
+			employee.setStatus(employeeJson.getStatus());
+			employee.setDeptId(Integer.parseInt(employeeJson.getDeptId()));
+			
+		 message=manageUserService.updateEmployeeData(employee);
+		}
 		
-		Employee employee=new Employee();
-		
-		employee.setEmployeeId(Integer.parseInt(employeeJson.getEmployeeId()));
-		employee.setFirstName(employeeJson.getFirstName());
-		employee.setLastName(employeeJson.getLastName());
-		
-		DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-		Date d2 = df2.parse(employeeJson.getDob());
-	    java.sql.Date sqlDate = new java.sql.Date(d2.getTime());
-	      
-		employee.setDob(sqlDate);
-		
-		employee.setMobileNo(employeeJson.getMobileNo());
-		employee.setEmailId(employeeJson.getEmailId());
-		employee.setDesignation(employeeJson.getDesignation());
-		employee.setRollId(Integer.parseInt(employeeJson.getRollId()));
-		employee.setStatus(employeeJson.getStatus());
-		employee.setDeptId(Integer.parseInt(employeeJson.getDeptId()));
-		
-		String message=manageUserService.updateEmployeeData(employee);
 	
 		return message;	
 	}

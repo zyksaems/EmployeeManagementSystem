@@ -555,6 +555,8 @@ $("document").ready(
 	           var changeEmployeePasswordButton_id="#change-employee-password-button";	           
 	           
 	           var employeeChangePasswordForm_id="#emp-change-pass-form";
+	           
+	           var employeePasswordStrength_id="#employee-new-password-strength-span";
 	                
 	            /* declaring variables */
 	            
@@ -650,6 +652,9 @@ $("document").ready(
                  */
 	            $(changePasswordEmployeeNewPass_id).keyup(function(){
 	            	$(employeeChangePasswordSuccessMsg_id).text("");
+	            	/*function call to measure passsword strength*/
+	            	measurePasswordStrength($(this).val(),employeePasswordStrength_id); // This fiunction is in PasswordStrength.js file
+	            	
 	            	var length=$(changePasswordEmployeeNewPass_id).val().length;
 	            	/*if(length < employeePasswordMinLength){
 	            		setTextBoxClassError(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);

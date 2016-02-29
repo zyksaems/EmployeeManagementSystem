@@ -18,6 +18,8 @@
 
 <script src="./JS/Admin_login.js"></script>
 
+<script src="./JS/PasswordStrength.js"></script>
+
 <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png" />
 <!-- boottrap css-->
 <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
@@ -30,7 +32,8 @@
 <link rel="stylesheet" href="./CSS/intime.css">
 <link rel="stylesheet" href="./CSS/signin.css">
 <link rel="stylesheet" href="./CSS/aboutUs.css">
-<link rel="stylesheet" href="./CSS/contactUs.css">
+<link rel="stylesheet" href="./CSS/contactUs.css"> 
+<link rel="stylesheet" href="./CSS/PasswordStrength.css">
 <script>
   function DisableBackButton() {
 		window.history.forward()
@@ -148,6 +151,7 @@
 					id="change-password-employee-new-password-val" required> <span
 					class="glyphicon form-control-feedback"
 					id="change-password-employee-new-password-span"></span>
+					<div ><span id="employee-new-password-strength-span"></span></div>
 			</div>
 			<!-- textBox for employee confirm Password -->
 			<div class="form-group has-feedback "
