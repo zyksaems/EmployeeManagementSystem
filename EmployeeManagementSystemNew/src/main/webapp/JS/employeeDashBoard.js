@@ -17,6 +17,7 @@
 	  
 	   
    	   var employeeReport;
+   	   var loggedInEmployeeId;
    	   
    	   /*variables to store field ids*/
    	   var employeeName_id="#logged-in-employee-name";
@@ -49,7 +50,8 @@
    	        {
    	        	console.log("data returned from server for today attendance status :"+ data);
    	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));   	        	         
-   	        	loggedInEmployeeId=data; // loggedInEmployeeId  is in EmployeeDetails.js file
+   	        	loggedInEmployeeId=data;
+   	        	localStorage.setItem("loggedInEmployeeId",loggedInEmployeeId);
    	        },
    	        error: function(jqXHR, textStatus, errorThrown)
    	        {

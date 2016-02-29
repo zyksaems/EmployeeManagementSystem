@@ -2,6 +2,7 @@ package com.caprusit.ems.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +41,7 @@ public class ManageUserServiceImpl implements IManageUserService {
 
 	private Logger logger = Logger.getLogger(ManageUserServiceImpl.class);
 
+	@Transactional(rollbackFor=SQLException.class,readOnly=true)
 	public String getEmployees() {
 
 		logger.info("inside ManageUserServiceImpl getEmployees()");
@@ -47,43 +49,48 @@ public class ManageUserServiceImpl implements IManageUserService {
 		return JsonUtility.convertToJson(employeeList);
 	}
 
+	@Transactional(rollbackFor=SQLException.class,readOnly=true)
 	public List<Employee> getAllEmployee() {
 
 		List<Employee> employeeList = manageUserDAO.getEmployees();
 		return employeeList;
 	}
 
+	@Transactional(rollbackFor=SQLException.class,readOnly=true)
 	public List<Employee> findAllUsers() {
 
-		System.out.println("Inside Userservice findAllUsers()");
+		logger.info("Inside Userservice findAllUsers()");
 		List<Employee> allEmpData = manageUserDAO.getEmployees();
 		users = allEmpData;
-		System.out.println(allEmpData.toString());
+		logger.info(allEmpData.toString());
 		return allEmpData;
 	}
 
+	@Transactional(rollbackFor=SQLException.class,readOnly=true)
 	public Employee findById(int id) {
 		for (Employee user : users) {
 			if (user.getEmployeeId() == id) {
-				System.out.println("In UserService fingById()");
+				logger.info("In UserService fingById()");
 				Employee oneUser = manageUserDAO.findById(id);
-				System.out.println("oneUser=" + oneUser);
+				logger.info("oneUser=" + oneUser);
 				return oneUser;
 			}
 		}
 		return null;
 	}
 
+	@Transactional(rollbackFor=SQLException.class)
 	public void updateUser(Employee user) {
-		System.out.println("In updatUser() all users=" + users);
-		System.out.println("provided user=" + user);
+		logger.info("In updatUser() all users=" + users);
+		logger.info("provided user=" + user);
 		int index = users.indexOf(user);
-		System.out.println("index of user= " + index);
+		logger.info("index of user= " + index);
 		// users.set(index, user);
 
 		((ManageUserServiceImpl) manageUserDAO).updateUser(user);
 	}
 
+	@Transactional(rollbackFor=SQLException.class)
 	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream, String fileName) {
 
 		logger.info("in upload file(service)");
@@ -116,6 +123,7 @@ public class ManageUserServiceImpl implements IManageUserService {
 	 * @return int returns 1 if employee successfully saved 
 	 *                     0 if employee not saved successfully
 	 */
+	@Transactional(rollbackFor=SQLException.class)
 	public int addSingleEmployee(Employee emp, String milliseconds) {
 		emp.setDob(new Date(Long.valueOf(milliseconds)));
 		// return securityDAO.saveEmployee(emp);
@@ -132,12 +140,13 @@ public class ManageUserServiceImpl implements IManageUserService {
 		return (id >= 1)? 1 : 0;
 	}
 
+	@Transactional(rollbackFor=SQLException.class)
 	public int updateEmployee(Employee employee) {
 
 		return manageUserDAO.updateEmployee(employee);
 
 	}
-	@Transactional(propagation=Propagation.REQUIRED , readOnly=true)
+	@Transactional(propagation=Propagation.REQUIRED,rollbackFor=SQLException.class , readOnly=true)
 	public List<JsonEmployee> getAllEmployeesData() {
 
 		List<EmployeeForDate> employees = manageUserDAO.getAllEmployeesData();
@@ -165,29 +174,34 @@ public class ManageUserServiceImpl implements IManageUserService {
 		return employeejsonList;
 
 	}
-	@Transactional(propagation=Propagation.NESTED)
+	
+	@Transactional(propagation=Propagation.NESTED,rollbackFor=SQLException.class)
 	public String updateEmployeeData(Employee e) {
-		System.out.println("Inside home service");
+		logger.info("Inside home service");
 		Integer rows = manageUserDAO.updateEmployeeData(e);
-		System.out.println("inside home service");
+		logger.info("inside home service");
 		String message = "Updated rows are ( " + rows + ")";
 
 		return message;
 	}
 	
 
+	@Transactional(rollbackFor=SQLException.class,readOnly=true)
 	public List<Notice> getNotice(){
 		List<Notice> notice=manageUserDAO.getNotice();
 		return notice;
 	}
 	
+	@Transactional(rollbackFor=SQLException.class)
 	public void deleteNotice(Notice data){
-		System.out.println("In homeService");
+		logger.info("In homeService");
 		manageUserDAO.deleteNotice(data);
 		
 	}
+	
+	@Transactional(rollbackFor=SQLException.class)
 	public void setNotice(Notice data){
-		System.out.println("In homeService");
+		logger.info("In homeService");
 		manageUserDAO.setNotice(data);
 		
 	}

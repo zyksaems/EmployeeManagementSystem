@@ -21,7 +21,10 @@
   <link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png" />
     
   <script src="./JS/Admin_logout.js"></script>  
-  <script src="./JS/EmployeeDetails.js"></script>  
+  
+  <script src="./JS/EmployeeLinksControll.js "></script>
+  <script src="./JS/MakeLinkAsActive.js "></script> 
+  <link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
 
 </head>
 <body>
@@ -54,8 +57,10 @@
 			       <div id="accordion">
 			           <h3 style="">Attendance</h3>
 	    	           <div>
-	    	               <ul>
-	    	                  <li><a href="#/EmployeeManagementSystemNew/getAddEmployeePage.do" id="admin-add-employee-link">View Attendance details</a></li>	    	     
+	    	               <ul>	    	            
+	    	                  <li ><a href="#" id="view-employee-weekly-attendance-link">View weekly attendance details</a></li>
+	    	                  <li><a href="#" id="view-employee-monthly-attendance-link">View monthly attendance details</a></li>
+	    	                  <li><a href="#" id="view-employee-annual-attendance-link">View annual attendance details</a></li>
 	    	               </ul>
 			            </div>
 			            <h3>Leave</h3>

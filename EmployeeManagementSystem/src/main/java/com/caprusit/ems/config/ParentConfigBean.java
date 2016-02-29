@@ -5,6 +5,8 @@ import java.util.Properties;
 import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
@@ -12,14 +14,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.caprusit.ems.dao.utility.HibernateSessionUtility;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.Department;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EncryptedAdmin;
+import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.Role;
 import com.caprusit.ems.utility.EmailUtility;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
@@ -57,7 +62,7 @@ public class ParentConfigBean {
 		
 		LocalSessionFactoryBean  factory= new LocalSessionFactoryBean ();
 		factory.setDataSource(getDataSource());
-		factory.setAnnotatedClasses(Employee.class,Attendance.class,EncryptedAdmin.class,Role.class,Department.class);
+		factory.setAnnotatedClasses(Employee.class,Attendance.class,EncryptedAdmin.class,Role.class,Department.class,EncryptedEmployee.class);
 		Properties p=new Properties();		
 	    p.load(new ClassPathResource("properties/hibernate.properties").getInputStream()); //load gives FileNotFound and IOException
 		factory.setHibernateProperties(p);
@@ -101,6 +106,21 @@ public class ParentConfigBean {
 	@Bean 
 	public UploadExcelFileUtility getExcelFileUtility(){
 		return new UploadExcelFileUtility();
+	}
+	
+	@Bean
+	@Autowired
+	public HibernateTransactionManager getHibernateTransactionManager(SessionFactory sessionFactory){
+		
+		HibernateTransactionManager hibernateTransactionManager=new HibernateTransactionManager();
+		hibernateTransactionManager.setSessionFactory(sessionFactory);
+		return hibernateTransactionManager;
+	}
+	
+	@Bean
+	@Autowired
+	public HibernateSessionUtility gethibernateSessionUtility(SessionFactory factory){
+		return new HibernateSessionUtility(factory);
 	}
 	
 }

@@ -2711,7 +2711,7 @@ app.config(function($translateProvider) {
 			var adminObj={adminId:$scope.Admin.userName,password:$scope.Admin.password};
 			var adminLogin = $http.post('/EmployeeManagementSystem/adminLogin.do',adminObj);
 			adminLogin.success(function(data, status, headers, config) {
-				if(data == 1){
+				if(data == 1 || data == 10){
 					console.log("successfully logged in");
 					$uibModalInstance.close(true);
 				}

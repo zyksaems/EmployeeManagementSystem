@@ -1,10 +1,12 @@
 package com.caprusit.ems.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.dao.IManageUserDAO;
@@ -42,6 +44,7 @@ public class SecurityServiceImpl implements ISecurityService {
 	 * returns 0 if password is wrong
 	 * returns -1 if admin username is wrong
 	 */
+	@Transactional(rollbackFor=SQLException.class)
 	public int login(Admin admin) {
 
 		String currentPassword=null;
@@ -76,6 +79,7 @@ public class SecurityServiceImpl implements ISecurityService {
 	 * Returns 0 if mail ID is wrong
 	 * Returns -1 if username is wrong
 	 */
+	@Transactional(rollbackFor=SQLException.class)
 	public int forgotPassword(int adminId, String emailId,String url) {
 		int result;
 		List<Object> mailInfo = securityDAO.forgotPassword(adminId);
@@ -105,6 +109,7 @@ public class SecurityServiceImpl implements ISecurityService {
 	 * Returns 0 if old password is incorrect
 	 * Returns -1 if any problem occured
 	 */
+	@Transactional(rollbackFor=SQLException.class)
 	public int changePassword(Admin admin,String newPassword) {
 
 		EncryptedEmployee encEmployee=securityDAO.getEmployeeCurrentPassword(admin.getAdminId());
@@ -131,6 +136,7 @@ public class SecurityServiceImpl implements ISecurityService {
 	 * Takes admin object
 	 * Returns 1 on successful reset
 	 */
+	@Transactional(rollbackFor=SQLException.class)
 	public int resetPassword(Admin admin) {
 		EncryptedEmployee encryptedEmployee=new EncryptedEmployee();
 		encryptedEmployee.setEmployeeId(admin.getAdminId());
@@ -145,6 +151,7 @@ public class SecurityServiceImpl implements ISecurityService {
 	 * Returns 0 if current password is wrong
 	 * Returns -1 if any problem occurred
 	 */
+	@Transactional(rollbackFor=SQLException.class)
 	public int changeEmployeePassword(ChangePasswordRequest changePasswordData) {
         logger.info("in SecurityServiceImpl class -- changeEmployeePassword(ChangePasswordRequest changePasswordData)");
         EncryptedEmployee encEmployee=securityDAO.getEmployeeCurrentPassword(changePasswordData.getUserName());

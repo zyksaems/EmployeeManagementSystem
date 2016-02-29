@@ -7,6 +7,7 @@ import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.hibernate.SessionFactory;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
@@ -24,6 +26,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.caprusit.ems.dao.utility.HibernateSessionUtility;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.Department;
 import com.caprusit.ems.domain.Employee;
@@ -145,7 +148,6 @@ public class ParentConfigBean {
 		CronTriggerFactoryBean bean=new CronTriggerFactoryBean();
 		
 		bean.setJobDetail(methodJobDetail);
-		String cronExpression="0 * 11-23 ? * MON-FRI *";
 		bean.setCronExpression("0 0/30 19-23 ? * MON-FRI *");
 		
 		return bean;
@@ -164,6 +166,21 @@ public class ParentConfigBean {
 		 bean.setTriggers(cronTrigger);	 
 		 return bean;
 		
+	}
+	
+	@Bean
+	@Autowired
+	public HibernateTransactionManager getHibernateTransactionManager(SessionFactory sessionFactory){
+		
+		HibernateTransactionManager hibernateTransactionManager=new HibernateTransactionManager();
+		hibernateTransactionManager.setSessionFactory(sessionFactory);
+		return hibernateTransactionManager;
+	}
+	
+	@Bean
+	@Autowired
+	public HibernateSessionUtility gethibernateSessionUtility(SessionFactory factory){
+		return new HibernateSessionUtility(factory);
 	}
 	
 	

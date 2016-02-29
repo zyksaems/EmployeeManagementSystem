@@ -1,8 +1,11 @@
 package com.caprusit.ems.service;
 
+import java.sql.SQLException;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.caprusit.ems.dao.LoginFailedAttemptsDAO;
 import com.caprusit.ems.utility.EmailUtility;
@@ -16,16 +19,21 @@ public class LoginFailedAttemptServiceImpl implements ILoginFailedAttemptsServic
 	private EmailUtility emailUtility;
 	
 	private Logger logger = Logger.getLogger(LoginFailedAttemptServiceImpl.class);
+	
+	@Transactional(rollbackFor=SQLException.class,readOnly=true)
 	public int checkAttemptsCount(int adminId) {
 		logger.info("in side checkLoginAttempts Methode() serviceImpl ");
 		int res=dao.checkAttemptsCount(adminId);
 		return res;
 	}
 
+	@Transactional(rollbackFor=SQLException.class)
 	public void incrementAttemptCount(int adminId) {
 		logger.info("in side incrementAttemptCount Methode() serviceImle");
 		dao.incrementAttemptCount(adminId);
 	}
+	
+	@Transactional(rollbackFor=SQLException.class)
 	public int LockUser(int adminId,String url) {
 		logger.info("in side LockUser Methode() serviceImpl");
 		int res=dao.LockUser(adminId);
@@ -41,6 +49,7 @@ public class LoginFailedAttemptServiceImpl implements ILoginFailedAttemptsServic
 		return res;
 	}
 
+	@Transactional(rollbackFor=SQLException.class)
 	public int setDefualtAttemptCount(int adminId) {
 		logger.info("in side setDefualtAttemptCount Methode() serviceImpl");
 		return dao.setDefualtAttemptCount(adminId);

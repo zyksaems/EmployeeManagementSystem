@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.caprusit.ems.dao.ValidationDAO;
 import com.caprusit.ems.domain.EmployeeData;
@@ -19,6 +20,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	private  Logger logger = Logger.getLogger(ValidationServiceImpl.class);
 
+	@Transactional(readOnly=true)
 	public String getAllEmployeeIds() {
 
 		logger.info("inside ValidationServiceImpl getAllEmployeeIds()");
@@ -40,6 +42,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	}
 
+	@Transactional(readOnly=true)
 	public String getLoggedInEmoloyeeIds() {
 
 		logger.info("inside ValidationServiceImpl getLoggedInEmoloyeeIds()");
@@ -50,6 +53,7 @@ public class ValidationServiceImpl implements ValidationService {
 		return JsonUtility.convertToJson(loggedInList);
 	}
 
+	@Transactional(readOnly=true)
 	public String getLoggedOutEmployeeIds() {
 
 		logger.info("inside ValidationServiceImpl getLoggedOutEmployeeIds()");
@@ -61,6 +65,7 @@ public class ValidationServiceImpl implements ValidationService {
 		
 	}
 
+	@Transactional(readOnly=true)
 	public String getRoleIds() {
 		
 		logger.info("inside ValidationServiceImpl getRoleIds()");
@@ -71,6 +76,7 @@ public class ValidationServiceImpl implements ValidationService {
 		return JsonUtility.convertToJson(roleIdsList);
 	}
 
+	@Transactional(readOnly=true)
 	public String getDeptIds() {
 		logger.info("inside ValidationServiceImpl getDeptIds()");
 

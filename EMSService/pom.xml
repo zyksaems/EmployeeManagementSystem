@@ -68,6 +68,13 @@
 			<version>4.2.1.RELEASE</version>
 		</dependency>
 		
+		<!-- Spring transaction -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+		
 		<!-- Quartz framework -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>

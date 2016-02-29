@@ -6,16 +6,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.caprusit.ems.dao.utility.HibernateSessionUtility;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.Department;
 import com.caprusit.ems.domain.Employee;
@@ -23,9 +21,6 @@ import com.caprusit.ems.domain.Role;
 
 @Repository
 public class ValidationDAOImpl implements ValidationDAO {
-
-	@Autowired
-	private SessionFactory sessionFactory;
 
 	private Logger logger=Logger.getLogger(ValidationDAOImpl.class);
 	
@@ -37,9 +32,7 @@ public class ValidationDAOImpl implements ValidationDAO {
 		
 		logger.info("inside ValidationDAOImpl getAllEmploeeIds()");
 
-		Session session = sessionFactory.openSession();
-
-		Criteria allEmployeeIdsCriteria = session.createCriteria(Employee.class);
+		Criteria allEmployeeIdsCriteria = HibernateSessionUtility.getHibernateSession().createCriteria(Employee.class);
 
 		allEmployeeIdsCriteria.add(Restrictions.eq("status", "1"));
 		Projection allEmployeeIdsProjection1 = Projections.property("employeeId");
@@ -56,8 +49,6 @@ public class ValidationDAOImpl implements ValidationDAO {
 		List<Object> allEmpData = allEmployeeIdsCriteria.list();
 		
 		logger.info("inside ValidationDAOImpl getAllEmploeeIds(): all emploee ids size: "+allEmpData.size());
-
-		session.close();
 
 		return allEmpData;
 
@@ -103,9 +94,8 @@ public class ValidationDAOImpl implements ValidationDAO {
 	@SuppressWarnings("unchecked")
 	private List<Object> executeCriteria(int type){
 		
-		Session session = sessionFactory.openSession();
 
-		Criteria employeeIdsCriteria = session.createCriteria(Attendance.class);
+		Criteria employeeIdsCriteria = HibernateSessionUtility.getHibernateSession().createCriteria(Attendance.class);
 
 		Projection employeeIdsProjection = Projections.property("employeeId");
 
@@ -124,8 +114,6 @@ public class ValidationDAOImpl implements ValidationDAO {
 
 		List<Object> loggedInList = employeeIdsCriteria.list();
 		
-		session.close();
-
 		return loggedInList;
 		
 	}
@@ -137,15 +125,12 @@ public class ValidationDAOImpl implements ValidationDAO {
 	@SuppressWarnings("unchecked")
 	public List<Object> getRoleIds() {
 		
-		Session session = sessionFactory.openSession();
-		
-		Criteria roleIdCriteria=session.createCriteria(Role.class);
+		Criteria roleIdCriteria=HibernateSessionUtility.getHibernateSession().createCriteria(Role.class);
 		
 		List<Object> roleIdList=roleIdCriteria.list();
 		
 		logger.info("role IDs list in dao : "+roleIdList);
 
-		session.close();
 		
 		return roleIdList;
 	}
@@ -157,15 +142,11 @@ public class ValidationDAOImpl implements ValidationDAO {
 	@SuppressWarnings("unchecked")
 	public List<Object> getDeptIds() {
 		
-        Session session = sessionFactory.openSession();
-		
-		Criteria deptIdCriteria=session.createCriteria(Department.class);
+		Criteria deptIdCriteria=HibernateSessionUtility.getHibernateSession().createCriteria(Department.class);
 		
 		List<Object> deptIdList=deptIdCriteria.list();
 		
 		logger.info("dept IDs list in dao : "+deptIdList);
-
-		session.close();
 		
 		return deptIdList;
 	}

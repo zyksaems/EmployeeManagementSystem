@@ -1,10 +1,12 @@
 package com.caprusit.ems.service;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.caprusit.ems.dao.IAttendanceDAO;
 import com.caprusit.ems.dao.ISecurityDAO;
@@ -16,8 +18,10 @@ import com.caprusit.ems.utility.ValidatePasswordUtility;
 
 @Service
 public class AttendanceServiceImpl implements IAttendanceService {
+	
 	@Autowired
 	private IAttendanceDAO attendanceDAO;
+	
 	@Autowired
 	private ISecurityDAO securityDao;
 	
@@ -26,6 +30,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	/**
 	 * This method is for 
 	 */
+	@Transactional(rollbackFor=SQLException.class)
 	public int logInOrLogOut(EmployeeAttendanceRequest test) {
 		User user = new User();
 		user.setEid(test.getId());
@@ -39,6 +44,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			return attendanceDAO.outTime(user);
 	}
 
+	@Transactional(rollbackFor=SQLException.class)
 	public int EmployeeLogInOrLogOut(EmployeeAttendanceRequest test) {
 		User user = new User();
 		user.setEid(test.getId());
