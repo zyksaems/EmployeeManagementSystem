@@ -26,7 +26,7 @@
 	      * This function executes  when "employeeViewWeeklyAttendance_link_id" is clicked
 	      */
 	     $(employeeViewWeeklyAttendance_link_id).click(function(){
-	    	 alert("employee weekly attendance clikced");
+	    	 console.log("employee weekly attendance clikced");
 	    	 // function call This function is in MakeLinkAsActive.js file
 	    	 setActiveLinkInLocalStorage(employeeViewWeeklyAttendance_link_id);
 	    	 
@@ -39,7 +39,7 @@
 	      */
 	     $(employeeViewMonthlyAttendance_link_id).click(function(){
 	    	 // function call This function is in MakeLinkAsActive.js file
-	    	 alert("employee monthly attendance link clicked");
+	    	 console.log("employee monthly attendance link clicked");
 	    	 setActiveLinkInLocalStorage(employeeViewMonthlyAttendance_link_id);
 	    	 
 	    	 window.location.href=applicationName+viewEmployeeMonthlyAttendanceRequest;
@@ -50,6 +50,7 @@
 	      */
 	     $(employeeViewAnnualAttendance_link_id).click(function(){
 	    	 // function call This function is in MakeLinkAsActive.js file
+	    	 console.log("employee annual attendance link clicked");
 	    	 setActiveLinkInLocalStorage(employeeViewAnnualAttendance_link_id);
 	    	 
 	    	 window.location.href=applicationName+viewEmployeeAnualAttendanceRequest;

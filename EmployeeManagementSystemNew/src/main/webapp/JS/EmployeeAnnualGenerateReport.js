@@ -53,7 +53,7 @@ $('document').ready(function(){
 		   //console.log("year entered: "+year);
 		   //console.log("year entered length: "+year.length);
 		   console.log("Year is "+year);
-		   if(year.length == 7){
+		   if(year.length == 4){
 			   console.log("setting wait message");
 			   setValidationMessage(wait_msg);
 			   makeAjaxCallForAnnualReport();
@@ -91,7 +91,7 @@ $('document').ready(function(){
    	        	console.log("data returned from server for today attendance status :"+ data);
    	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));   
    	        	// function call
-   	        	appendDataToTable(data.annualWorkingDetails);
+   	        	appendDataToTable(data.annuallyWorkingDetails);
    	        	$(employeReportDiv_id).show();
    	        		        	         
    	        },
