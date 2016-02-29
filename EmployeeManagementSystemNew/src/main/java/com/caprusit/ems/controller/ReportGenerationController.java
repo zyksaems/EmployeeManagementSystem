@@ -119,8 +119,8 @@ public class ReportGenerationController {
 	}
 	
 	/**
-	 *  getAnnuallyReportGenerationPage() method will display AnnuallyReportGenerationPage when we click 
-	 *  on AnnualyReports link in Report Generation Functionality.
+	 *  getEmployeeWeeklyReportGenerationPage() method will display EmployeeWeeklyGenerateReport when we click 
+	 *  on "view-employee-weekly-attendance-link" in Report Generation Functionality.
 	 */	
 	@RequestMapping(value = "/getEmployeeWeeklyGenerationPage", method = RequestMethod.GET)
 	public String getEmployeeWeeklyReportGenerationPage(HttpServletRequest request) {
@@ -129,6 +129,33 @@ public class ReportGenerationController {
 		// verify user is logged in or not
 		return (HttpSessionUtility.verifySession(request,"employeeId")) ? "EmployeeWeeklyGenerateReport" : "EmsHomePage";
 	}
+	
+	
+	/**
+	 *  getEmployeeMonthlyReportGenerationPage() method will display EmployeeMonthlyGenerateReport when we click 
+	 *  on "view-employee-monthly-attendance-link" in Report Generation Functionality.
+	 */	
+	@RequestMapping(value = "/getEmployeeMonthlyReportGenerationPage", method = RequestMethod.GET)
+	public String getEmployeeMonthlyReportGenerationPage(HttpServletRequest request) {
+		logger.info("inside ReportGenerationController getEmployeeMonthlyReportGenerationPage()");
+
+		// verify user is logged in or not
+		return (HttpSessionUtility.verifySession(request,"employeeId")) ? "EmployeeMonthlyGenerateReport" : "EmsHomePage";
+	}
+	
+	
+	/**
+	 *  getEmployeeAnnualReportGenerationPage() method will display EmployeeAnnualGenerateReport when we click 
+	 *  on "view-employee-monthly-attendance-link" in Report Generation Functionality.
+	 */	
+	@RequestMapping(value = "/getEmployeeAnnualReportGenerationPage", method = RequestMethod.GET)
+	public String getEmployeeAnnualReportGenerationPage(HttpServletRequest request) {
+		logger.info("inside ReportGenerationController getEmployeeAnnualReportGenerationPage()");
+
+		// verify user is logged in or not
+		return (HttpSessionUtility.verifySession(request,"employeeId")) ? "EmployeeAnnualGenerateReport" : "EmsHomePage";
+	}
+	
 	
 	
 	/**

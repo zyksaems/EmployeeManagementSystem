@@ -1,37 +1,36 @@
 
-   /*This file name: EmployeeWeeklyReport.js  */
+   /*This file name: EmployeeMonthlyGenerateReport.js  */
 
-
-   $('document').ready(function(){
+$('document').ready(function(){
 	   
 	   /*variables to store ids of fields*/
-	   var employeeWeeklyRportWeek_id="#employee-weekly-report-week-val";
-	   var emplopyeeWeeklyReportButton_id="#show-employeee-weekly-report-button";
-	   var emplopyeeWeeklyReprtMsg_id="#employee-weekly-report-msg";
-	   var employeeWeeklyReportForm_id="#employee-weekly-report-form";
-	   var weeklyReportTable_id="#employee-wekly-report-table";
-	   var employeReportDiv_id="#employee-weekly-report-div";
+	   var employeeMonthlyReportMonth_id="#employee-monthly-report-month-val";
+	   var emplopyeeMonthlyReportButton_id="#show-employeee-monthly-report-button";
+	   var emplopyeeMonthlyReprtMsg_id="#employee-monthly-report-msg";
+	   var employeeMonthlyReportForm_id="#employee-monthly-report-form";
+	   var monthlyReportTable_id="#employee-monthly-report-table";
+	   var employeReportDiv_id="#employee-monthly-report-div";
 	   
 	   /*variables to store requests*/
 	   var applicationName="EmployeeManagementSystemNew";
 	   var urlPattern=".do";
-	   var employeeWeeklyReportRequest="/getEmployeeReportForWeekByIdAndWeekDate"+urlPattern;
+	   var employeeMonthlyReportRequest="/getEmployeeReportForMonthByIdAndMonth"+urlPattern;
 	   var employeeId_param="employeeId";
-	   var week_param="weekDate";
+	   var month_param="month";
 	   
 	   /*variables to store error/success messages*/
-	   var invalidWeek_msg="Invalid week";
-	   var intValueernalProblem_msg="Some problem occured try again";
+	   var invalidMonth_msg="Invalid month";
+	   var internalProblem_msg="Some problem occured try again";
 	   var wait_msg="Please wait..";
 	   var absent_msg="you are absent .. ";
 	   var onLeave_msg="You are on leave";
 	   var noReports_msg="No records found";
 	   
-	   var week="";
+	   var month="";
 	   var employeeId="";
 
 	   
-	   //console.log("in employee weekly report.js file");
+	   //console.log("in employee monthly report.js file");
 	   
 	   /*first hide employee report div*/
 	   $(employeReportDiv_id).hide();
@@ -39,50 +38,51 @@
 	   /**
 	    * This function is to stop reloading page on form submit
 	    */
-	     $(employeeWeeklyReportForm_id).submit(function(){
-	    	 console.log("employee weekly report form submitting returning false");
+	     $(employeeMonthlyReportForm_id).submit(function(){
+	    	 console.log("employee monthly report form submitting returning false");
 	    	 return false;
 	    	 
-	     }); // END -- $(employeeWeeklyReportForm_id).submit()
+	     }); // END -- $(employeeMonthlyReportForm_id).submit()
 	   
 	   /**
 	    * This function excutes when click on show button
 	    */
-	   $(emplopyeeWeeklyReportButton_id).click(function(){
+	   $(emplopyeeMonthlyReportButton_id).click(function(){
 		   
-		   week=$(employeeWeeklyRportWeek_id).val();
+		   month=$(employeeMonthlyReportMonth_id).val();
 		   employeeId=localStorage.getItem("loggedInEmployeeId");
-		   //console.log("week entered: "+week);
-		   //console.log("week entered length: "+week.length);
-		   if(week.length == 8){
+		   //console.log("month entered: "+month);
+		   //console.log("month entered length: "+month.length);
+		   console.log("Month is "+month);
+		   if(month.length == 7){
 			   console.log("setting wait message");
 			   setValidationMessage(wait_msg);
-			   makeAjaxCallForWeeklyReport();
+			   makeAjaxCallForMonthlyReport();
 		   }
 		   else{
-			   setValidationMessage(invalidWeek_msg);
+			   setValidationMessage(invalidMonth_msg);
 			   $(employeReportDiv_id).hide();
 		   }	   
 		   
-	   }); //  END -- $(emplopyeeWeeklyReportButton_id).click)
+	   }); //  END -- $(emplopyeeMonthlyReportButton_id).click)
 	   
 	   /**
 	    * This function is to set error/success message 
 	    */
 	   function setValidationMessage(msg){
 		   
-		   $(emplopyeeWeeklyReprtMsg_id).text(msg);
+		   $(emplopyeeMonthlyReprtMsg_id).text(msg);
 		   
 	   }; // END -- setValidationMessage(msg)
 	   
 	   /**
 	    * This function is to make call to controller
 	    */
-	   function makeAjaxCallForWeeklyReport(){
+	   function makeAjaxCallForMonthlyReport(){
 		   
-		   // console.log("in makeAjaxCallForWeeklyReport(week)");
+		   // console.log("in makeAjaxCallForMonthlyReport(month)");
 		   $.ajax({
-   	        url:"/"+applicationName+"/"+employeeWeeklyReportRequest+"?"+employeeId_param+"="+employeeId+"&"+week_param+"="+week,
+   	        url:"/"+applicationName+"/"+employeeMonthlyReportRequest+"?"+employeeId_param+"="+employeeId+"&"+month_param+"="+month,
    	        type: 'post',
    	        dataType: "json",
    		    contentType: "application/json; charset=utf-8",
@@ -92,7 +92,7 @@
    	        	console.log("data returned from server for today attendance status :"+ data);
    	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));   
    	        	// function call
-   	        	appendDataToTable(data.weeklyWorkingDetails);
+   	        	appendDataToTable(data.monthlyWorkingDetails);
    	        	$(employeReportDiv_id).show();
    	        		        	         
    	        },
@@ -100,17 +100,17 @@
    	        {
    	            
    	            console.log('ERRORS: ' + textStatus);
-   	            setValidationMessage(intValueernalProblem_msg);
+   	            setValidationMessage(internalProblem_msg);
    	            $(employeReportDiv_id).hide();
    	            // STOP LOADING SPINNER
-   	            //$(addEmployeeSuccessMsg_id).text(intValueernalProblem_msg);
+   	            //$(addEmployeeSuccessMsg_id).text(internalProblem_msg);
    	        }
    	        
    	    });//END -- $.ajax()
 		   
-	   }; // END -- makeAjaxCallForWeeklyReport(week)
+	   }; // END -- makeAjaxCallForMonthlyReport(month)
 	   /**
-	    * This function is to append data to employee weekly report table
+	    * This function is to append data to employee monthly report table
 	    */
 	   function appendDataToTable(data){
 		  
@@ -122,47 +122,47 @@
 		   //console.log("data length: "+length);
 		   if(length >= 1){			   
 			   var tableHeader="<tr><th class='text-center'>Attendance date</th><th class='text-center'>Login time</th><th class='text-center'>Logout time</th><th class='text-center'>Working hours (h:m)</th></tr>";
-               $(weeklyReportTable_id).html(tableHeader);
-               $(weeklyReportTable_id).append("<tbody>");
-               
+               $(monthlyReportTable_id).html(tableHeader);
+               $(monthlyReportTable_id).append("<tbody>");
     		   for(var i=0;i<length;i++){
-    			   
-    			   if(data[i].startTime!= undefined){
-					   startTime=data[i].startTime.substring(12,24);
-				   	}
-				   if(data[i].endTime!= undefined){
-					   		endTime=data[i].endTime.substring(12,24);
-				  	}
-				   else{
-					   	endTime="Not Logged Out";
-				   }
     			   if(data[i].dayIndicator == 1){
     				    // function call
     				   workedHours=convertWorkingHours(data[i].workingHours);
+
+    				   if(data[i].startTime!= undefined){
+    					   startTime=data[i].startTime.substring(12,24);
+    				   	}
+    				   
+    				   if(data[i].endTime!= undefined){
+   					   		endTime=data[i].endTime.substring(12,24);
+    				  	}
+    				   else{
+    					   	endTime="Not Logged Out";
+    				   }
     				   //console.log("minutes in floatValue"+hour);
-    				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td>"+startTime+
+    				   $(monthlyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td>"+startTime+
     						   "</td><td>"+endTime+"</td><td>"+workedHours+"</td></tr>");
-    			   }
+    			   		}
     			   else if(data[i].dayIndicator == 0){
     				   //console.log("indicator is  0: ");
-    				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+absent_msg+"</td></tr>");
+    				   $(monthlyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+absent_msg+"</td></tr>");
     			   }
     			   else{
-    				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+onLeave_msg+"</td></tr>");
+    				   $(monthlyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+onLeave_msg+"</td></tr>");
     			   }
     			   
     			   
     		   }
-    		   $(weeklyReportTable_id).append("</tbody>");			   
+    		   $(monthlyReportTable_id).append("</tbody>");			   
 		   }
 		   else{
-			   $(weeklyReportTable_id).html("<tr><td><b>"+noReports_msg+"</b></td></tr>");
+			   $(monthlyReportTable_id).html("<tr><td><b>"+noReports_msg+"</b></td></tr>");
 			   setValidationMessage(noReports_msg);
 		   }
 		  
 		   
-		   console.log("table data: "+$(weeklyReportTable_id).val());
-		   //$(weeklyReportTable_id).append();
+		   console.log("table data: "+$(monthlyReportTable_id).val());
+		   //$(monthlyReportTable_id).append();
 		   
 	   }; // END -- appendDataToTable(data)
 	   

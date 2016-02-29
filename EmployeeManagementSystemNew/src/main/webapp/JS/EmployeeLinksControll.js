@@ -16,17 +16,17 @@
 	     var applicationName="/EmployeeManagementSystemNew";
 	     var urlPattern=".do";
 	     var viewEmployeeWeeklyAttendanceRequest="/getEmployeeWeeklyGenerationPage"+urlPattern;
-	     var viewEmployeeMonthlyAttendanceRequest="/employeeHomePage"+urlPattern;
-	     var viewEmployeeAnualAttendanceRequest="/employeeHomePage"+urlPattern;
+	     var viewEmployeeMonthlyAttendanceRequest="/getEmployeeMonthlyReportGenerationPage"+urlPattern;
+	     var viewEmployeeAnualAttendanceRequest="/getEmployeeAnnualReportGenerationPage"+urlPattern;
 	     
 	    // function call This function is in MakeLinkAsActive.js file
 	     setLinkClassAsActive();
 	     
 	     /**
-	      * This function executes on click
+	      * This function executes  when "employeeViewWeeklyAttendance_link_id" is clicked
 	      */
 	     $(employeeViewWeeklyAttendance_link_id).click(function(){
-	    	 console.log("employee weekly attendance clikced");
+	    	 alert("employee weekly attendance clikced");
 	    	 // function call This function is in MakeLinkAsActive.js file
 	    	 setActiveLinkInLocalStorage(employeeViewWeeklyAttendance_link_id);
 	    	 
@@ -35,17 +35,18 @@
 	     });
 	     
 	     /**
-	      * This function executes on click
+	      * This function executes when "employeeViewMonthlyAttendance_link_id" is clicked
 	      */
 	     $(employeeViewMonthlyAttendance_link_id).click(function(){
 	    	 // function call This function is in MakeLinkAsActive.js file
+	    	 alert("employee monthly attendance link clicked");
 	    	 setActiveLinkInLocalStorage(employeeViewMonthlyAttendance_link_id);
 	    	 
 	    	 window.location.href=applicationName+viewEmployeeMonthlyAttendanceRequest;
 	     });
 	     
 	     /**
-	      * This function executes on click
+	      * This function executes when "employeeViewAnnualAttendance_link_id" is clicked
 	      */
 	     $(employeeViewAnnualAttendance_link_id).click(function(){
 	    	 // function call This function is in MakeLinkAsActive.js file

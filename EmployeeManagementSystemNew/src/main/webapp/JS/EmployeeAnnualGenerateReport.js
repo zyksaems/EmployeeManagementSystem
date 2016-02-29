@@ -1,37 +1,35 @@
+ /*This file name is : EmployeeAnnualGenerateReport.js */
 
-   /*This file name: EmployeeWeeklyReport.js  */
-
-
-   $('document').ready(function(){
+$('document').ready(function(){
 	   
 	   /*variables to store ids of fields*/
-	   var employeeWeeklyRportWeek_id="#employee-weekly-report-week-val";
-	   var emplopyeeWeeklyReportButton_id="#show-employeee-weekly-report-button";
-	   var emplopyeeWeeklyReprtMsg_id="#employee-weekly-report-msg";
-	   var employeeWeeklyReportForm_id="#employee-weekly-report-form";
-	   var weeklyReportTable_id="#employee-wekly-report-table";
-	   var employeReportDiv_id="#employee-weekly-report-div";
+	   var employeeAnnualReportYear_id="#employee-annual-report-year-val";
+	   var emplopyeeAnnualReportButton_id="#show-employeee-annual-report-button";
+	   var emplopyeeAnnualReprtMsg_id="#employee-annual-report-msg";
+	   var employeeAnnualReportForm_id="#employee-annual-report-form";
+	   var annualReportTable_id="#employee-annual-report-table";
+	   var employeReportDiv_id="#employee-annual-report-div";
 	   
 	   /*variables to store requests*/
 	   var applicationName="EmployeeManagementSystemNew";
 	   var urlPattern=".do";
-	   var employeeWeeklyReportRequest="/getEmployeeReportForWeekByIdAndWeekDate"+urlPattern;
+	   var employeeAnnualReportRequest="/getEmployeeReportForYearByIdAndYear"+urlPattern;
 	   var employeeId_param="employeeId";
-	   var week_param="weekDate";
+	   var year_param="year";
 	   
 	   /*variables to store error/success messages*/
-	   var invalidWeek_msg="Invalid week";
-	   var intValueernalProblem_msg="Some problem occured try again";
+	   var invalidYear_msg="Invalid year";
+	   var internalProblem_msg="Some problem occured try again";
 	   var wait_msg="Please wait..";
 	   var absent_msg="you are absent .. ";
 	   var onLeave_msg="You are on leave";
 	   var noReports_msg="No records found";
 	   
-	   var week="";
+	   var year="";
 	   var employeeId="";
 
 	   
-	   //console.log("in employee weekly report.js file");
+	   //console.log("in employee annual report.js file");
 	   
 	   /*first hide employee report div*/
 	   $(employeReportDiv_id).hide();
@@ -39,50 +37,51 @@
 	   /**
 	    * This function is to stop reloading page on form submit
 	    */
-	     $(employeeWeeklyReportForm_id).submit(function(){
-	    	 console.log("employee weekly report form submitting returning false");
+	     $(employeeAnnualReportForm_id).submit(function(){
+	    	 console.log("employee annual report form submitting returning false");
 	    	 return false;
 	    	 
-	     }); // END -- $(employeeWeeklyReportForm_id).submit()
+	     }); // END -- $(employeeAnnualReportForm_id).submit()
 	   
 	   /**
 	    * This function excutes when click on show button
 	    */
-	   $(emplopyeeWeeklyReportButton_id).click(function(){
+	   $(emplopyeeAnnualReportButton_id).click(function(){
 		   
-		   week=$(employeeWeeklyRportWeek_id).val();
+		   year=$(employeeAnnualReportYear_id).val();
 		   employeeId=localStorage.getItem("loggedInEmployeeId");
-		   //console.log("week entered: "+week);
-		   //console.log("week entered length: "+week.length);
-		   if(week.length == 8){
+		   //console.log("year entered: "+year);
+		   //console.log("year entered length: "+year.length);
+		   console.log("Year is "+year);
+		   if(year.length == 7){
 			   console.log("setting wait message");
 			   setValidationMessage(wait_msg);
-			   makeAjaxCallForWeeklyReport();
+			   makeAjaxCallForAnnualReport();
 		   }
 		   else{
-			   setValidationMessage(invalidWeek_msg);
+			   setValidationMessage(invalidYear_msg);
 			   $(employeReportDiv_id).hide();
 		   }	   
 		   
-	   }); //  END -- $(emplopyeeWeeklyReportButton_id).click)
+	   }); //  END -- $(emplopyeeAnnualReportButton_id).click)
 	   
 	   /**
 	    * This function is to set error/success message 
 	    */
 	   function setValidationMessage(msg){
 		   
-		   $(emplopyeeWeeklyReprtMsg_id).text(msg);
+		   $(emplopyeeAnnualReprtMsg_id).text(msg);
 		   
 	   }; // END -- setValidationMessage(msg)
 	   
 	   /**
 	    * This function is to make call to controller
 	    */
-	   function makeAjaxCallForWeeklyReport(){
+	   function makeAjaxCallForAnnualReport(){
 		   
-		   // console.log("in makeAjaxCallForWeeklyReport(week)");
+		   // console.log("in makeAjaxCallForAnnualReport(year)");
 		   $.ajax({
-   	        url:"/"+applicationName+"/"+employeeWeeklyReportRequest+"?"+employeeId_param+"="+employeeId+"&"+week_param+"="+week,
+   	        url:"/"+applicationName+"/"+employeeAnnualReportRequest+"?"+employeeId_param+"="+employeeId+"&"+year_param+"="+year,
    	        type: 'post',
    	        dataType: "json",
    		    contentType: "application/json; charset=utf-8",
@@ -92,7 +91,7 @@
    	        	console.log("data returned from server for today attendance status :"+ data);
    	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));   
    	        	// function call
-   	        	appendDataToTable(data.weeklyWorkingDetails);
+   	        	appendDataToTable(data.annualWorkingDetails);
    	        	$(employeReportDiv_id).show();
    	        		        	         
    	        },
@@ -100,17 +99,17 @@
    	        {
    	            
    	            console.log('ERRORS: ' + textStatus);
-   	            setValidationMessage(intValueernalProblem_msg);
+   	            setValidationMessage(internalProblem_msg);
    	            $(employeReportDiv_id).hide();
    	            // STOP LOADING SPINNER
-   	            //$(addEmployeeSuccessMsg_id).text(intValueernalProblem_msg);
+   	            //$(addEmployeeSuccessMsg_id).text(internalProblem_msg);
    	        }
    	        
    	    });//END -- $.ajax()
 		   
-	   }; // END -- makeAjaxCallForWeeklyReport(week)
+	   }; // END -- makeAjaxCallForAnnualReport(year)
 	   /**
-	    * This function is to append data to employee weekly report table
+	    * This function is to append data to employee annual report table
 	    */
 	   function appendDataToTable(data){
 		  
@@ -122,47 +121,47 @@
 		   //console.log("data length: "+length);
 		   if(length >= 1){			   
 			   var tableHeader="<tr><th class='text-center'>Attendance date</th><th class='text-center'>Login time</th><th class='text-center'>Logout time</th><th class='text-center'>Working hours (h:m)</th></tr>";
-               $(weeklyReportTable_id).html(tableHeader);
-               $(weeklyReportTable_id).append("<tbody>");
-               
+               $(annualReportTable_id).html(tableHeader);
+               $(annualReportTable_id).append("<tbody>");
     		   for(var i=0;i<length;i++){
-    			   
-    			   if(data[i].startTime!= undefined){
-					   startTime=data[i].startTime.substring(12,24);
-				   	}
-				   if(data[i].endTime!= undefined){
-					   		endTime=data[i].endTime.substring(12,24);
-				  	}
-				   else{
-					   	endTime="Not Logged Out";
-				   }
     			   if(data[i].dayIndicator == 1){
     				    // function call
     				   workedHours=convertWorkingHours(data[i].workingHours);
+
+    				   if(data[i].startTime!= undefined){
+    					   startTime=data[i].startTime.substring(12,24);
+    				   	}
+    				   
+    				   if(data[i].endTime!= undefined){
+   					   		endTime=data[i].endTime.substring(12,24);
+    				  	}
+    				   else{
+    					   	endTime="Not Logged Out";
+    				   }
     				   //console.log("minutes in floatValue"+hour);
-    				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td>"+startTime+
+    				   $(annualReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td>"+startTime+
     						   "</td><td>"+endTime+"</td><td>"+workedHours+"</td></tr>");
-    			   }
+    			   		}
     			   else if(data[i].dayIndicator == 0){
     				   //console.log("indicator is  0: ");
-    				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+absent_msg+"</td></tr>");
+    				   $(annualReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+absent_msg+"</td></tr>");
     			   }
     			   else{
-    				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+onLeave_msg+"</td></tr>");
+    				   $(annualReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+onLeave_msg+"</td></tr>");
     			   }
     			   
     			   
     		   }
-    		   $(weeklyReportTable_id).append("</tbody>");			   
+    		   $(annualReportTable_id).append("</tbody>");			   
 		   }
 		   else{
-			   $(weeklyReportTable_id).html("<tr><td><b>"+noReports_msg+"</b></td></tr>");
+			   $(annualReportTable_id).html("<tr><td><b>"+noReports_msg+"</b></td></tr>");
 			   setValidationMessage(noReports_msg);
 		   }
 		  
 		   
-		   console.log("table data: "+$(weeklyReportTable_id).val());
-		   //$(weeklyReportTable_id).append();
+		   console.log("table data: "+$(annualReportTable_id).val());
+		   //$(annualReportTable_id).append();
 		   
 	   }; // END -- appendDataToTable(data)
 	   
