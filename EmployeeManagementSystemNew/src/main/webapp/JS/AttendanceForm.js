@@ -40,6 +40,8 @@
 	           var changePasswordEmployeeConfirmPass_id="#change-password-employee-confirm-password-val";
 	           var employeeChangePasswordSuccessMsg_id="#employee-change-password-success-message";
 	           
+	           var employeePasswordStrength_id="#employee-new-password-strength-span";
+	           
 	           /**
 	             * This function sets default values to text fleds (Employee change password)
 	             */
@@ -59,6 +61,7 @@
 					// $(changePasswordEmployeeNewPassSpan_id).removeClass(glyphiconOk); 
 					// $(changePasswordEmployeeConfirmPassSpan_id).removeClass(glyphiconOk); 
 					 $(employeeChangePasswordSuccessMsg_id).text("");
+					 $(employeePasswordStrength_id).text("");
 	                
 	                
 	            };// END -- setEmployeeChangePasswordDefaultValues()
@@ -556,7 +559,7 @@ $("document").ready(
 	           
 	           var employeeChangePasswordForm_id="#emp-change-pass-form";
 	           
-	           var employeePasswordStrength_id="#employee-new-password-strength-span";
+	        
 	                
 	            /* declaring variables */
 	            

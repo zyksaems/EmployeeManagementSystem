@@ -20,6 +20,7 @@
 
 <script src="./JS/PasswordStrength.js"></script>
 
+
 <link rel="shortcut icon" type="image/x-icon" href="images/caprus logo.png" />
 <!-- boottrap css-->
 <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
@@ -36,16 +37,16 @@
 <link rel="stylesheet" href="./CSS/PasswordStrength.css">
 <script>
   function DisableBackButton() {
-		window.history.forward()
+		window.history.forward();
 	}
 	DisableBackButton();
 	window.onload = DisableBackButton;
 	window.onpageshow = function(evt) {
 		if (evt.persisted)
-			DisableBackButton()
+			DisableBackButton();
 	}
 	window.onunload = function() {
-		void (0)
+		void (0);
 	}
   </script>
 
@@ -117,54 +118,74 @@
 	</div>
 	<!--End of In Time Form  -->
 	<!-- Employee change password division -->
-	<div class="container intime-margin" id="employee-change-passowrd-div">
-
-		<form action="#EmployeeChangePassword.do" class="form-inTime"
-			id="emp-change-pass-form">
-			<h2 class="form-inTime-heading ">
+	<div class="col-md-12 intime-margin" id="employee-change-passowrd-div"><!-- container intime-margin -->
+        
+		<form action="#EmployeeChangePassword.do" class="col-sm-12"  id="emp-change-pass-form"> <!-- form-inTime -->
+			<h2 class="form-inTime-heading text-center">
 				<span class="glyphicon glyphicon-pencil"></span>Change Password
 			</h2>
 
-			<!--text box for Employee id  -->
-			<div class="form-group  has-feedback "
-				id="change-password-employee-id-div">
-				<label>Employee Id</label> <input type="text"
-					class="form-control text-center "
-					id="change-password-employee-id-val" autocomplete="off" required>
-				<span class="glyphicon  form-control-feedback"
-					id="change-password-employee-id-span"></span>
+          <div class="row">
+             <div class="col-sm-5"></div>
+             <div class="col-sm-2">
+                   <!--text box for Employee id  -->
+			      <div class="form-group  has-feedback " id="change-password-employee-id-div">
+				       <label>Employee Id</label> 
+				       <input type="text" class="form-control text-center" id="change-password-employee-id-val" autocomplete="off" required />
+				      <span class="glyphicon  form-control-feedback" id="change-password-employee-id-span"></span>
+			     </div>
+             </div>
+             <div class="col-sm-4"></div>
+			   
 			</div>
-			<!-- textBox for employee current Password -->
-			<div class="form-group has-feedback "
-				id="change-password-employee-current-password-div">
-				<label>Current Password</label> <input type="password"
-					class="form-control text-center "
-					id="change-password-employee-current-password-val" required>
-				<span class="glyphicon form-control-feedback"
-					id="change-password-employee-current-password-span"></span>
+			<div class="row">
+             <div class="col-sm-5"></div>
+             <div class="col-sm-2">
+                   <!-- textBox for employee current Password -->
+			      <div class="form-group  has-feedback " id="change-password-employee-current-password-div">
+				       <label>Current Password</label> 
+				       <input type="password" class="form-control text-center" id="change-password-employee-current-password-val" autocomplete="off" required />
+				      <span class="glyphicon  form-control-feedback" id="change-password-employee-current-password-span"></span>
+			     </div>
+             </div>
+             <div class="col-sm-4"></div>			   
 			</div>
-			<!-- textBox for employee new  Password -->
-			<div class="form-group has-feedback "
-				id="change-password-employee-new-password-div">
-				<label>New Password</label> <input type="password"
-					class="form-control text-center "
-					id="change-password-employee-new-password-val" required> <span
-					class="glyphicon form-control-feedback"
-					id="change-password-employee-new-password-span"></span>
-					<div ><span id="employee-new-password-strength-span"></span></div>
+			<div class="row">
+             <div class="col-sm-5"></div>
+             <div class="col-sm-2">
+                   <!-- textBox for employee new  Password -->
+			      <div class="form-group  has-feedback " id="change-password-employee-new-password-div">
+				       <label>New Password</label> 
+				       <input type="password" class="form-control text-center" id="change-password-employee-new-password-val" autocomplete="off" required />
+				      <span class="glyphicon  form-control-feedback" id="change-password-employee-new-password-span"></span>
+			     </div>
+             </div>
+             <div class="col-sm-4"><p class="password-strength-top-margin" id="employee-new-password-strength-span"></p></div>
+			   
 			</div>
-			<!-- textBox for employee confirm Password -->
-			<div class="form-group has-feedback "
-				id="change-password-employee-confirm-password-div">
-				<label>Confirm Password</label> <input type="password"
-					class="form-control text-center "
-					id="change-password-employee-confirm-password-val" required>
-				<span class="glyphicon form-control-feedback"
-					id="change-password-employee-confirm-password-span"></span>
+			<div class="row">
+             <div class="col-sm-5"></div>
+             <div class="col-sm-2">
+                   <!-- textBox for employee confirm Password -->
+			      <div class="form-group  has-feedback " id="change-password-employee-confirm-password-div">
+				       <label>Confirm Password</label> 
+				       <input type="password" class="form-control text-center" id="change-password-employee-confirm-password-val" autocomplete="off" required />
+				      <span class="glyphicon  form-control-feedback" id="change-password-employee-confirm-password-span"></span>
+			     </div>
+             </div>
+             <div class="col-sm-4"></div>
+			   
 			</div>
-			<button class="btn btn-lg btn-primary btn-block "
-				id="change-employee-password-button">Change Password</button>
-			<h4 class="text-center" id="employee-change-password-success-message"></h4>
+			<div class="row">
+             <div class="col-sm-5"></div>
+             <div class="col-sm-2">                 
+			      <button class="btn btn-lg btn-primary btn-block " id="change-employee-password-button">Change Password</button>
+			      <h4 class="text-center" id="employee-change-password-success-message"></h4>
+             </div>
+             <div class="col-sm-4"></div>
+			   
+			</div>
+			
 		</form>
 	</div>
 	<!--End of employee change password div  -->

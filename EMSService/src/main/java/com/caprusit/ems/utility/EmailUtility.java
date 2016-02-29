@@ -47,7 +47,7 @@ public class EmailUtility {
 			Message mimeMessage = new MimeMessage(session);
 			// Set sender and receiver
 			mimeMessage.setFrom(new InternetAddress(username));
-			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse("shankarrao.kota@caprusit.com"));
+			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientMailId));
 			mimeMessage.setSubject(subject);
 			mimeMessage.setText("Dear " + recipientName+"," + message +" \n\nRegards,\nCaprusIT Team.");
 			// Transmit the mail

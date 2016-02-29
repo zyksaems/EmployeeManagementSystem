@@ -33,7 +33,7 @@ public class SecurityController {
 	private Set<Integer> resetPasswordAdminSet=new HashSet<Integer>();
 	
 	/*This integer represents validity time in  minutes */
-	private int passwordLinkValidTime=1;
+	private int passwordLinkValidTime=10;
 
 	private Logger logger = Logger.getLogger(SecurityController.class);
 	

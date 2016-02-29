@@ -9,6 +9,8 @@ $(document).ready(function(){
 	var success_msg_id="#resetPasswordSuccessMsg";
 	var reset_msg_id="#reset-message";
 	
+	var resetPasswordStrengthSpan_id="#resetPassword-strength-span";
+	
 	var applicationName="EmployeeManagementSystemNew";
 	/* variable for storing get all employee ids request (String) */
 	var resetPasswordRequest="setNewAdminPassword.do";
@@ -19,7 +21,9 @@ $(document).ready(function(){
 	/*function call to checkAdminId()*/
 	setforgotPasswordDefaultValues();
 	
-	
+	/**
+	 * function to set default values
+	 */
 	function setforgotPasswordDefaultValues(){
 		
 	    adminId=$(resetPasswordAdminId_id).val();
@@ -28,21 +32,39 @@ $(document).ready(function(){
 	    $(newPassword_id).val("");   
 	    $(confirmPassword_id).val("");
 	    $(success_msg_id).text("");
+	    $(reset_msg_id).text("");
 	  
 	}
-	
+	/**
+	 * This function is to stop reloading page on submit
+	 */
 	$(resetPasswlrd_form_id).submit(function (){
 	
 		return false;
 		
 	});
 	
+	/**
+	 * This function is executing when entering
+	 * value in new password text box
+	 */
+	$(newPassword_id).keyup(function(){
+		
+		measurePasswordStrength($(this).val(),resetPasswordStrengthSpan_id) ;
+	});
+	
+	
+	/**
+	 * function executes when reset password button is clicked
+	 */
 	$(resetPasswordButton_id).click(function(){
 		
 				resetPasswordFunction();
 			
 	});
-	
+	/**
+	 * Function to verify fileds
+	 */
 	function resetPasswordFunction() {
 		    
 	      var newPwd=$(newPassword_id).val();   
@@ -69,9 +91,11 @@ $(document).ready(function(){
 	    	  makeAjaxCallToResetPassword(adminObject);
 	      }
 	};
-	
+	/**
+	 * Function to call backend for reset password
+	 */
 	function makeAjaxCallToResetPassword(adminObject){
-		
+		console.log("object for reset password: "+JSON.stringify(adminObject));
 		$.ajax ({
 		    url: "/"+applicationName+"/"+resetPasswordRequest,
 		    type: "POST",

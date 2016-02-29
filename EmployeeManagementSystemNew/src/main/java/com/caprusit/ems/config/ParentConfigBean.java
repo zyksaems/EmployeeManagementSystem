@@ -130,7 +130,7 @@ public class ParentConfigBean {
 		CronTriggerFactoryBean bean=new CronTriggerFactoryBean();
 		
 		bean.setJobDetail(methodJobDetail);
-		bean.setCronExpression("0 0/20 19-23 ? * MON-FRI *");
+		bean.setCronExpression("0 0/30 19-23 ? * MON-FRI *");
 		
 		return bean;
 	}

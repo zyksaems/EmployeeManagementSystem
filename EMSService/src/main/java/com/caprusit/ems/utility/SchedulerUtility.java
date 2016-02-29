@@ -1,5 +1,6 @@
 package com.caprusit.ems.utility;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -22,16 +23,18 @@ public class SchedulerUtility {
 	@Autowired
 	private EmailUtility emialUtility;
 	
-	private Long  prevousExecutingTime,currentTime,oneMin_mills=(long) (60*1000);
+	private Long  prevousExecutingTime,currentTime,oneMin_mills=(long) 61494325;
 	
 	private Logger logger=Logger.getLogger(SchedulerUtility.class);
 	
 	public SchedulerUtility(){
-		prevousExecutingTime=System.currentTimeMillis();
+		prevousExecutingTime=System.nanoTime();
 	}
 	public void  runSchedulerToRemindEmployees(){
+		
+		logger.info("schduler executing time: "+new Date());
 	
-		currentTime=System.currentTimeMillis();
+		currentTime=System.nanoTime();
 				
 			if((prevousExecutingTime + oneMin_mills) < currentTime ){
 				logger.info("+++++++++++++++++++++++++++++++++++   executing    +++++++++++++++++++++++++++++++++++");
@@ -44,7 +47,7 @@ public class SchedulerUtility {
 					Employee emp=manageUserDao.findById((Integer)arr[0]);
 					String message="\n\n\n \t You are not logged out from office.Please log out if you want to leave \n\n\n \t NOTE: We will remind you in next 30 minutes";
 					emialUtility.sendMail(emp.getEmailId(), message, emp.getFirstName()+" "+emp.getLastName(),"Alert from EMS");							
-					logger.info("not logout alert mail sent to employee id "+arr[0]);
+					logger.info("not logout alert mail sent to employee id "+arr[0] +"  email id: "+emp.getEmailId());
 				}
 			}
 			else{

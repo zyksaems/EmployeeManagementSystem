@@ -8,20 +8,21 @@ $("document").ready(
 				var errorCalss="has-error" ;
 				var glyphiconError="glyphicon-remove";
 				
-function setTextBoxClassOk(divId,spanId){
+                function setTextBoxClassOk(divId,spanId){
 					
 					$(divId).removeClass(errorCalss).addClass(successClass);
 					$(spanId).removeClass(glyphiconError).addClass(glyphiconOk);
 					
 				}
 
-function setTextBoxClassError(divId,spanId){
+                function setTextBoxClassError(divId,spanId){
 	
-	$(divId).removeClass(successClass).addClass(errorCalss);
-	$(spanId).removeClass(glyphiconOk).addClass(glyphiconError); 
+	               $(divId).removeClass(successClass).addClass(errorCalss);
+	               $(spanId).removeClass(glyphiconOk).addClass(glyphiconError); 
 	
-}  
+                }  
 
+var adminChangePasswordForm_id="#admin-change-password-form"; 
 var changePasswordEmployeeCurrentPassDiv_id="#change-password-admin-current-password-div";  
 var changePasswordEmployeeCurrentPass_id="#change-password-admin-current-password-val";
 var changePasswordEmployeeCurrentPassSpan_id="#change-password-admin-current-password-span";
@@ -39,6 +40,10 @@ var changeEmployeePasswordButton_id="#change-admin-password-button";
 var employeeChangePasswordSuccessMsg_id="#admin-change-password-success-message";
 
 var employeeChangePasswordSuccessMsg_id1="#admin-change-password-success-message1";
+
+var adminNewPasswordStrengthSpan_id ="#admin-new-password-strength-span";
+
+
 var shortCurrentPasswordMsg="Current password is short";
 /* variable to display new password is short error message  (string) */
 var shortNewPasswordMsg="New password is short";
@@ -80,6 +85,14 @@ function setChangePasswordDefaultValues(){
     
 };// END -- setChangePasswordDefaultValues()
 
+   /**
+    * This function is to stop reloading page on submit
+    */
+   $(adminChangePasswordForm_id).submit(function(){
+	   //console.log("in change password form submit func");
+	   return false;
+   });
+
 /* function call to set default values */
 setChangePasswordDefaultValues();
 
@@ -87,14 +100,14 @@ var currentflag=false;
 
 $(changePasswordEmployeeCurrentPass_id).keyup(function(){
 	var length=$(changePasswordEmployeeCurrentPass_id).val().length;
-	if(length < employeePasswordMinLength){
+	/*if(length < employeePasswordMinLength){
 		setTextBoxClassError(changePasswordEmployeeCurrentPassDiv_id,changePasswordEmployeeCurrentPassSpan_id);
 	}
 	else{
 		
 		currentflag=true;
 		setTextBoxClassOk(changePasswordEmployeeCurrentPassDiv_id,changePasswordEmployeeCurrentPassSpan_id);
-	}
+	}*/
 	
 });// END -- $(changePasswordEmployeeId_id).keyup()
 
@@ -104,13 +117,15 @@ $(changePasswordEmployeeCurrentPass_id).keyup(function(){
  */
 var newflag=false;
 $(changePasswordEmployeeNewPass_id).keyup(function(){
-	var length=$(changePasswordEmployeeNewPass_id).val().length;
+	var length=$(this).val().length;
+	/*function call to measure passwors strength*/
+	measurePasswordStrength($(this).val(),adminNewPasswordStrengthSpan_id);// This function is in PassworddStrength.js file
 	if(length >= employeePasswordMinLength && $(changePasswordEmployeeNewPass_id).val()!=$(changePasswordEmployeeCurrentPass_id).val()){
 		newflag=true;
-		setTextBoxClassOk(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);
+		//setTextBoxClassOk(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);
 	}
 	else{
-		setTextBoxClassError(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);
+		//setTextBoxClassError(changePasswordEmployeeNewPassDiv_id,changePasswordEmployeeNewPassSpan_id);
 		
 	}
 	
@@ -125,11 +140,11 @@ $(changePasswordEmployeeConfirmPass_id).keyup(function(){
 	var confirmPassword=$(changePasswordEmployeeConfirmPass_id).val();
 	var newPassword=$(changePasswordEmployeeNewPass_id).val();
 	if(newPassword.length >= employeePasswordMinLength && confirmPassword == newPassword){
-		setTextBoxClassOk(changePasswordEmployeeConfirmPassDiv_id,changePasswordEmployeeConfirmPassSpan_id);
+		//setTextBoxClassOk(changePasswordEmployeeConfirmPassDiv_id,changePasswordEmployeeConfirmPassSpan_id);
 		confirmflag=true;
 	}
 	else{
-		setTextBoxClassError(changePasswordEmployeeConfirmPassDiv_id,changePasswordEmployeeConfirmPassSpan_id);
+		//setTextBoxClassError(changePasswordEmployeeConfirmPassDiv_id,changePasswordEmployeeConfirmPassSpan_id);
 	}
 	
 });
