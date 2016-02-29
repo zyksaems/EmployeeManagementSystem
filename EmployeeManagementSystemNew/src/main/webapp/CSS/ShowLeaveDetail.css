@@ -1,0 +1,41 @@
+
+#total_title{
+	position: relative;
+}
+#leave_count{
+	position: relative;
+}
+#div1{
+	padding: 20px;
+	 float:left; 
+	right:20px;
+	top:50px;
+	 border: 2px solid red;
+}
+#page_title{
+	padding-left: 350px;
+}
+#button_position{
+	padding-left: 295px;
+}
+#month_leave_div{
+	padding-left: 250px;
+}
+#month_leave_table{
+	width: 420px;
+}
+#all_leave_table
+{
+	margin-left:240px;
+	width: 420px; 
+}
+#res{
+	padding-left: 280px;
+}
+
+#month_leave_title{
+	padding-left: 100px;
+}
+#all_leave_title{
+	padding-left: 370px;
+}

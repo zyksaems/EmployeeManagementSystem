@@ -15,7 +15,8 @@
    <link rel="stylesheet"  href="./bootstrap/bootstrap.min.css">
   
   
-  <link rel="stylesheet" href="./CSS/AdminTemplete.css"> 
+  <link rel="stylesheet" href="./CSS/AdminTemplete.css">
+   <link rel="stylesheet" href="./CSS/EmployeeDashBoardCss.css">  
   <link rel="stylesheet" type="text/css" href="./CSS/style.css"> 
   
   <link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png" />
@@ -37,11 +38,11 @@
 			 <div class="col-sm-8 title_menu text-center">
 				 <h1 align="center">EMPLOYEE MANAGEMENT SYSTEM</h1>
 			 </div>
-			 <div class="col-sm-2">
-				<div class="dropdown">
-					<span class="glyphicon glyphicon-cog icon-setting"
-						data-toggle="dropdown"></span>
-					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
+			<div class="col-sm-2" id="loggedout_div">
+				<div class="employee_dropdown">
+					<span class="logged_out_name_css"
+						data-toggle="dropdown"><p id="loggedout_employee-name" class="glyphicon glyphicon-collapse-down"></p></span>
+					<ul class="dropdown-menu dropdown-menu-left" id="dropdown_emp">
 						<!-- <li><a href="#" id="admin-profile-link">Profile</a></li> -->
 						<li><a href="/EmployeeManagementSystemNew/getChangePasswordPage.do">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
@@ -66,6 +67,7 @@
 			            <h3>Leave</h3>
 			            <div>
 						    <ul>
+						     <li><a href="/EmployeeManagementSystemNew/viewEmployeeLeave.do">View leaves</a></li>
 							   <li><a href="#/EmployeeManagementSystemNew/getDailyReportGenerationPage.do">Apply for leave</a></li>						    
  						       <li><a href="#/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">View leave status</a></li>												       												      
 						   </ul>

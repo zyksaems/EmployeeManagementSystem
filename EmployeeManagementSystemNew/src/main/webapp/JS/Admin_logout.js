@@ -3,6 +3,9 @@
   
 $("document").ready(function(){
 	
+	var employeename=localStorage.getItem("loggedEmployeeName");
+	$("#loggedout_employee-name").append(employeename);
+	
 	// apply accordian to accordian
 	$("#accordion").accordion();
 	

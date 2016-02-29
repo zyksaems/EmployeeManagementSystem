@@ -88,6 +88,7 @@
     	        	employeeReport=data.employeeReport;
     	        	loggedInEmployeeName=data.empName; // loggedInEmployeeName  is in EmployeeDetails.js file
     	        	$(employeeName_id).append(loggedInEmployeeName);
+    	        	 localStorage.setItem("loggedEmployeeName", data.empName);
     	        	if(employeeReport.length==0){
     	        		//console.log("today employee is not logged in");
     	        		$(employeeLofginTime_id).text(todayNotLoggedIn_msg);
