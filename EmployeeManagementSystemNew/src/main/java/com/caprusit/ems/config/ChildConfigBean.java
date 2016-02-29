@@ -46,12 +46,11 @@ public class ChildConfigBean extends WebMvcConfigurerAdapter {
 	}
 
 	@Override
-	public void configureDefaultServletHandling(
-			DefaultServletHandlerConfigurer configurer) {   
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {   
 		configurer.enable();
 	}
 	/**
-	 * This methos is to add interceptors to application
+	 * This method is to add interceptors to application
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

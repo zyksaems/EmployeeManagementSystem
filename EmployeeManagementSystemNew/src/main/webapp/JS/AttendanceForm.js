@@ -14,11 +14,11 @@
 			var glyphiconError="glyphicon-remove";
       
 
-             /**
-	             * This function is to set default values to forgot password default values
-	             */
-	            function setForgotPasswordDefaulValues()
-	            {
+         /**
+	       * This function is to set default values to forgot password default values
+	       */
+	        function setForgotPasswordDefaulValues()
+	        {
 	            	  $(forgotpassword_id).val("");
 	            	  $(forgotpassword_email).val("");
 	            	  $(forgotpassword_div).removeClass(successClass).removeClass(errorCalss);
@@ -26,7 +26,42 @@
 	            	  $(forgotpassword_email_div).removeClass(successClass).removeClass(errorCalss);
 		              $(forgotpassword_email_span_id).removeClass(glyphiconOk).removeClass(glyphiconError);
 		              $("#res").text("");
-	            };
+	        };
+	        
+	        /*variables to store ids of employee change password functionality*/
+			
+	           
+	           var changePasswordEmployeeId_id="#change-password-employee-id-val";	  
+	           var changePasswordEmployeeIdDiv_id = "#change-password-employee-id-div";
+	           var changePasswordEmployeeIdSpan_id="#change-password-employee-id-span";
+	           
+	           var changePasswordEmployeeCurrentPass_id="#change-password-employee-current-password-val";
+	           var changePasswordEmployeeNewPass_id="#change-password-employee-new-password-val";
+	           var changePasswordEmployeeConfirmPass_id="#change-password-employee-confirm-password-val";
+	           var employeeChangePasswordSuccessMsg_id="#employee-change-password-success-message";
+	           
+	           /**
+	             * This function sets default values to text fleds (Employee change password)
+	             */
+	            function setEmployeeChangePasswordDefaultValues(){
+	                $(changePasswordEmployeeId_id).val("");
+	                $(changePasswordEmployeeCurrentPass_id).val("");
+	                $(changePasswordEmployeeNewPass_id).val("");
+	                $(changePasswordEmployeeConfirmPass_id).val("");
+	                
+	                /*reomve all success classes from text boxes*/
+	                 //$(changePasswordEmployeeCurrentPassDiv_id).removeClass(errorCalss).removeClass(successClass);
+	                // $(changePasswordEmployeeNewPassDiv_id).removeClass(errorCalss).removeClass(successClass);
+	                 //$(changePasswordEmployeeConfirmPassDiv_id).removeClass(errorCalss).removeClass(successClass);
+	                 $(changePasswordEmployeeIdDiv_id).removeClass(errorCalss).removeClass(successClass);		                 
+					 $(changePasswordEmployeeIdSpan_id).removeClass(glyphiconError).removeClass(glyphiconOk);
+					// $(changePasswordEmployeeCurrentPassSpan_id).removeClass(glyphiconOk); 
+					// $(changePasswordEmployeeNewPassSpan_id).removeClass(glyphiconOk); 
+					// $(changePasswordEmployeeConfirmPassSpan_id).removeClass(glyphiconOk); 
+					 $(employeeChangePasswordSuccessMsg_id).text("");
+	                
+	                
+	            };// END -- setEmployeeChangePasswordDefaultValues()
 
 $("document").ready(
 			function() {
@@ -505,40 +540,22 @@ $("document").ready(
 				  
 				
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------*/				
-	
-	
-	           /*var showEmployeeChangePasswordDiv_id="#show-Employee-Cahange-password-div";
-	           var attendanceForm_id="#in-time-form";
-	           var employeeChangePasswordDiv_id="#employee-change-passowrd-div";*/
 	           
-	           var changePasswordEmployeeIdDiv_id = "#change-password-employee-id-div";
-	           var changePasswordEmployeeId_id="#change-password-employee-id-val";
-	           var changePasswordEmployeeIdSpan_id="#change-password-employee-id-span";
-	           
-	           var changePasswordEmployeeCurrentPassDiv_id="#change-password-employee-current-password-div";  
-	           var changePasswordEmployeeCurrentPass_id="#change-password-employee-current-password-val";
+			   /*variables to store ids of employee change password functionality*/
+			  
+	           var changePasswordEmployeeCurrentPassDiv_id="#change-password-employee-current-password-div";  	           
 	           var changePasswordEmployeeCurrentPassSpan_id="#change-password-employee-current-password-span";
 	           
-	           var changePasswordEmployeeNewPassDiv_id="#change-password-employee-new-password-div";
-	           var changePasswordEmployeeNewPass_id="#change-password-employee-new-password-val";
+	           var changePasswordEmployeeNewPassDiv_id="#change-password-employee-new-password-div";	         
 	           var changePasswordEmployeeNewPassSpan_id="#change-password-employee-new-password-span";
 	           
-	           var changePasswordEmployeeConfirmPassDiv_id="#change-password-employee-confirm-password-div";
-	           var changePasswordEmployeeConfirmPass_id="#change-password-employee-confirm-password-val";
+	           var changePasswordEmployeeConfirmPassDiv_id="#change-password-employee-confirm-password-div";	        
 	           var changePasswordEmployeeConfirmPassSpan_id="#change-password-employee-confirm-password-span";
 	           
-	           var changeEmployeePasswordButton_id="#change-employee-password-button";
+	           var changeEmployeePasswordButton_id="#change-employee-password-button";	           
 	           
-	           var employeeChangePasswordSuccessMsg_id="#employee-change-password-success-message";
 	           var employeeChangePasswordForm_id="#emp-change-pass-form";
-	     
-	           
-	         
-	            
-	           
-	           
-	            
-	            
+	                
 	            /* declaring variables */
 	            
 	            /* variable for storing  change password employee id (String) */
@@ -578,31 +595,11 @@ $("document").ready(
 	            /* variable store employee change password request url  (string) */
 	            var changePasswordRequest="changeEmployeePassword.do";
 	            
-	            /* setting some default values to text fields */
-	            /*
-	             * This function sets default values to text fleds 
-	             */
-	            function setChangePasswordDefaultValues(){
-	                $(changePasswordEmployeeId_id).val("");
-	                $(changePasswordEmployeeCurrentPass_id).val("");
-	                $(changePasswordEmployeeNewPass_id).val("");
-	                $(changePasswordEmployeeConfirmPass_id).val("");
-	                
-	                /*reomve all success classes from text boxes*/
-	                 $(changePasswordEmployeeCurrentPassDiv_id).removeClass(successClass);
-	                 $(changePasswordEmployeeNewPassDiv_id).removeClass(successClass);
-	                 $(changePasswordEmployeeConfirmPassDiv_id).removeClass(successClass);
-	                 $(changePasswordEmployeeIdDiv_id).removeClass(successClass);		                 
-					 $(changePasswordEmployeeIdSpan_id).removeClass(glyphiconOk);
-					 $(changePasswordEmployeeCurrentPassSpan_id).removeClass(glyphiconOk); 
-					 $(changePasswordEmployeeNewPassSpan_id).removeClass(glyphiconOk); 
-					 $(changePasswordEmployeeConfirmPassSpan_id).removeClass(glyphiconOk); 
-	                
-	                
-	            };// END -- setChangePasswordDefaultValues()
+	          
+	           
 	            
 	            /* function call to set default values */
-	            setChangePasswordDefaultValues();
+	            setEmployeeChangePasswordDefaultValues();
 	
 	            /* function call to set default values for forgot password */
 	            setForgotPasswordDefaulValues();
@@ -612,7 +609,7 @@ $("document").ready(
                  *  success/error message
                  */
 	            $(changePasswordEmployeeId_id).keyup(function(){
-	            	
+	            	console.log("change password employee id : keyup");
 	            	$(employeeChangePasswordSuccessMsg_id).text("");
 	            	var length=$(changePasswordEmployeeId_id).val().length;
 	            	if(length == employeeIdMinLength){
@@ -794,7 +791,7 @@ $("document").ready(
 					    	var displayResult="";
 					        if(result == 1){
 					            /* function call to set default values */
-					            setChangePasswordDefaultValues();
+					            setEmployeeChangePasswordDefaultValues();
 					        	displayResult=changePasswordSuccessMsg;  
 					        }
 					        else if(result == 0){
@@ -806,7 +803,7 @@ $("document").ready(
 					        else{
 					        	displayResult=changePasswordInternalErrorMsg;
 					        	/* function call to set default values */
-					            setChangePasswordDefaultValues(); 
+					            setEmployeeChangePasswordDefaultValues(); 
 					        }
 					        $(employeeChangePasswordSuccessMsg_id).text(displayResult);
 					     },

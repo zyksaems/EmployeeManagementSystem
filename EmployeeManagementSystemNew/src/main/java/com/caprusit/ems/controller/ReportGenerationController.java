@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.service.IReportGenerationService;
 import com.caprusit.ems.utility.JsonUtility;
 
@@ -31,71 +32,78 @@ public class ReportGenerationController {
 	 *  on DailyReports link in Report Generation Functionality.
 	 */	
 	@RequestMapping(value = "/getDailyReportGenerationPage", method = RequestMethod.GET)
-	public String getDailyReportGenerationPage() {
+	public String getDailyReportGenerationPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getDailyReportGenerationPage()");
+		// verify admin is logged in or not
+		return (HttpSessionUtility.verifySession(request)) ? "DailyGenerateReports" : "EmsHomePage";
 		
-		return "DailyGenerateReports";
 	}
 	
 	/**
 	 * This method returns weekly productivity page
 	 */	
 	@RequestMapping(value = "/getWeeklyProductivityPage", method = RequestMethod.GET)
-	public String getWeeklyProductivityPage() {
-		logger.info("inside ReportGenerationController getWeeklyProductivityPage()");		
-		return "WeeklyProductivityGraph";
+	public String getWeeklyProductivityPage(HttpServletRequest request) {
+		logger.info("inside ReportGenerationController getWeeklyProductivityPage()");				
+		// verify admin is logged in or not
+		return (HttpSessionUtility.verifySession(request)) ? "WeeklyProductivityGraph" : "EmsHomePage";
 	}
 	
 	/**
 	 * This method returns monthly productivity page
 	 */	
 	@RequestMapping(value = "/getMonthlyProductivityPage", method = RequestMethod.GET)
-	public String getMonthlyProductivityPage() {
+	public String getMonthlyProductivityPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getMonthlyProductivityPage()");		
-		return "MonthlyProductivityGraph";
+		// verify admin is logged in or not
+	   return (HttpSessionUtility.verifySession(request)) ? "MonthlyProductivityGraph" : "EmsHomePage";
 	}
 	
 	/**
 	 * This method returns Today attendance page
 	 */	
 	@RequestMapping(value = "/getTodayAttendancePage", method = RequestMethod.GET)
-	public String getTodayAttendancePage() {
+	public String getTodayAttendancePage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getTodayAttendancePage()");		
-		return "TodayAttendanceGraph";
+
+		// verify admin is logged in or not
+		return (HttpSessionUtility.verifySession(request)) ? "TodayAttendanceGraph" : "EmsHomePage";
 	}
 	
 	/**
 	 * This method returns annual productivity page
 	 */	
 	@RequestMapping(value = "/getAnnualProductivityPage", method = RequestMethod.GET)
-	public String getAnualProductivityPage() {
+	public String getAnualProductivityPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getAnualProductivityPage()");		
-		return "AnnualProductivityGraph";
+	
+		// verify admin is logged in or not
+		return (HttpSessionUtility.verifySession(request)) ? "AnnualProductivityGraph" : "EmsHomePage";
 	}
 	
 	
 	/**
 	 *  getWeeklyReportGenerationPage() method will display WeeklyReportGenerationPage when we click 
 	 *  on WeeklyReports link in Report Generation Functionality.
-	 */
-	
+	 */	
 	@RequestMapping(value = "/getWeeklyReportGenerationPage", method = RequestMethod.GET)
-	public String getWeeklyReportGenerationPage() {
+	public String getWeeklyReportGenerationPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getWeeklyReportGenerationPage()");
-		
-		return "WeeklyGenerateReports";
+
+		// verify admin is logged in or not
+		return (HttpSessionUtility.verifySession(request)) ? "WeeklyGenerateReports" : "EmsHomePage";
 	}
 	
 	/**
 	 *  getMonthlyReportGenerationPage() method will display MonthlyReportGenerationPage when we click 
 	 *  on MonthlyReports link in Report Generation Functionality.
-	 */
-	
+	 */	
 	@RequestMapping(value = "/getMonthlyReportGenerationPage", method = RequestMethod.GET)
-	public String getMonthlyReportGenerationPage() {
+	public String getMonthlyReportGenerationPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getMonthlyReportGenerationPage()");
-		
-		return "MonthlyGenerateReports";
+
+		// verify admin is logged in or not
+		return (HttpSessionUtility.verifySession(request)) ? "MonthlyGenerateReports" : "EmsHomePage";
 	}
 	
 	/**
@@ -104,10 +112,11 @@ public class ReportGenerationController {
 	 */
 	
 	@RequestMapping(value = "/getAnnuallyReportGenerationPage", method = RequestMethod.GET)
-	public String getAnnuallyReportGenerationPage() {
+	public String getAnnuallyReportGenerationPage(HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getAnnuallyReportGenerationPage()");
-		
-		return "AnnuallyReportGenerationPage";
+
+		// verify admin is logged in or not
+		return (HttpSessionUtility.verifySession(request)) ? "AnnuallyReportGenerationPage" : "EmsHomePage";
 	}
 	
 	
@@ -117,8 +126,7 @@ public class ReportGenerationController {
 	 * supplied values.
 	 */
 	@RequestMapping(value = "/getAutoCompleteInfo", method = RequestMethod.POST)
-	public @ResponseBody
-	String getAutoCompleteInfo(@RequestParam("employeeId") String employeeId) {
+	public @ResponseBody String getAutoCompleteInfo(@RequestParam("employeeId") String employeeId) {
 		String pattern = "^[0-9]$";
 
 		List<Integer> infolist = null;
@@ -146,8 +154,7 @@ public class ReportGenerationController {
 	 * all the working details of an employee.
 	 */
 	@RequestMapping(value = "/getReportById", method = RequestMethod.POST)
-	public @ResponseBody
-	String getReportById(@RequestParam("employeeId") int employeeId) {
+	public @ResponseBody String getReportById(@RequestParam("employeeId") int employeeId) {
 		logger.info("inside ReportGenerationController getReportById()");
 		
 		return reportGenerationService.getEmployeeWorkingDetailsById(employeeId);
@@ -159,8 +166,7 @@ public class ReportGenerationController {
 	 * it is worked on this date.
 	 */
 	@RequestMapping(value = "/getReportByIdAndDate", method = RequestMethod.POST)
-	public @ResponseBody
-	String getReportByIdAndDate(@RequestParam("employeeId") int employeeId,
+	public @ResponseBody String getReportByIdAndDate(@RequestParam("employeeId") int employeeId,
 			@RequestParam("attendanceDate") String attendanceDate,
 			HttpServletRequest request) {
 		logger.info("inside ReportGenerationController getReportByIdAndDate()");
@@ -187,8 +193,7 @@ public class ReportGenerationController {
 	 * display the total working details of an employee.
 	 */
 	@RequestMapping(value = "/getReportByName", method = RequestMethod.POST)
-	public @ResponseBody
-	String getReportByName(@RequestParam("employeeId") String employeeId) {
+	public @ResponseBody  String getReportByName(@RequestParam("employeeId") String employeeId) {
 		logger.info("inside ReportGenerationController getReportByName()");
 		
 		return reportGenerationService.getReportByName(employeeId);
@@ -200,8 +205,7 @@ public class ReportGenerationController {
 	 * date.
 	 */
 	@RequestMapping(value = "/getReportByNameDay", method = RequestMethod.POST)
-	public @ResponseBody
-	String getReportByDay(@RequestParam("employeeId") String employeeId,
+	public @ResponseBody String getReportByDay(@RequestParam("employeeId") String employeeId,
 			@RequestParam("attendanceDate") String attendanceDate) {
 		logger.info("inside ReportGenerationController getReportByDay()");
 		
@@ -214,8 +218,7 @@ public class ReportGenerationController {
 	 * time.
 	 */
 	@RequestMapping(value = "/getReportByNameBetweenDates", method = RequestMethod.POST)
-	public @ResponseBody
-	String getReportByNameDates(@RequestParam("employeeId") String employeeId,
+	public @ResponseBody String getReportByNameDates(@RequestParam("employeeId") String employeeId,
 			@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 		logger.info("inside ReportGenerationController getReportByNameDates()");
@@ -228,8 +231,7 @@ public class ReportGenerationController {
 	 * getAllEmployeesWorkingDetails() method will display working details of all employees.
 	 */
 	@RequestMapping(value = "/getAllEmployeesWorkingDetails", method = RequestMethod.POST)
-	public @ResponseBody
-	String getAllEmployeesWorkingDetails() {
+	public @ResponseBody String getAllEmployeesWorkingDetails() {
 		logger.info("inside ReportGenerationController getAllEmployeesWorkingDetails()");
 		
 		return reportGenerationService.getAllEmployeesWorkingDetails();
@@ -240,8 +242,7 @@ public class ReportGenerationController {
 	 * display all employees working details on a specified date.
 	 */
 	@RequestMapping(value = "/getAllEmployeesReportByDate", method = RequestMethod.POST)
-	public @ResponseBody
-	String getAllEmployeesReportByDate(
+	public @ResponseBody String getAllEmployeesReportByDate(
 			@RequestParam("attendanceDate") String attendanceDate) {
 		logger.info("inside ReportGenerationController getAllEmployeesReportByDate()");
 
@@ -255,8 +256,7 @@ public class ReportGenerationController {
 	 * time.
 	 */
 	@RequestMapping(value = "/getEmployeesReportBetweenDates", method = RequestMethod.POST)
-	public @ResponseBody
-	String getEmployeesReportBetweenDates(@RequestParam("fromDate") String fromDate,
+	public @ResponseBody String getEmployeesReportBetweenDates(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 		logger.info("inside ReportGenerationController getEmployeesReportBetweenDates()");
 
@@ -289,16 +289,16 @@ public class ReportGenerationController {
 	 
 	 
 	 /**
-		 * getWeeklyReportOfEmployeeByIdAndWeek(-) method display the working details of an employee for a week using line chart.
-		 * @throws ParseException 
-		 * */
-		 @RequestMapping(value = "/getWeeklyReportOfEmployeeByIdAndWeek", method = RequestMethod.POST)
-		  public @ResponseBody String getWeeklyReportOfEmployeeByIdAndWeek(@RequestParam("employeeId") int employeeId,
+	   * getWeeklyReportOfEmployeeByIdAndWeek(-) method display the working details of an employee for a week using line chart.		 
+	   * @throws ParseException 
+	   */
+	@RequestMapping(value = "/getWeeklyReportOfEmployeeByIdAndWeek", method = RequestMethod.POST)
+	public @ResponseBody String getWeeklyReportOfEmployeeByIdAndWeek(@RequestParam("employeeId") int employeeId,
 		    @RequestParam("week") String week) throws ParseException {
-		   logger.info("inside ReportGenerationController getWeeklyReportOfEmployeeByIdAndWeek()");
+		 logger.info("inside ReportGenerationController getWeeklyReportOfEmployeeByIdAndWeek()");
 
-		   return reportGenerationService.getWeeklyReportOfEmployeeByIdAndWeek(employeeId, week);
-		  }
+		 return reportGenerationService.getWeeklyReportOfEmployeeByIdAndWeek(employeeId, week);
+	}
 	 
 		 
 		 /**
@@ -339,8 +339,7 @@ public class ReportGenerationController {
 		 * @throws Exception 
 		 */
 		@RequestMapping(value = "/getAllEmployeeReportForWeekByWeekDate", method = RequestMethod.POST)
-		public @ResponseBody
-		String getAllEmployeeReportForWeekByWeekDate(@RequestParam("weekDate") String weekDate) throws Exception {
+		public @ResponseBody String getAllEmployeeReportForWeekByWeekDate(@RequestParam("weekDate") String weekDate) throws Exception {
 			logger.info("inside ReportGenerationController getAllEmployeeReportForWeekByWeekDate()");
 			
 			logger.info("Date in getAllEmployeeReportForWeekByWeekDate : "+weekDate);
@@ -357,8 +356,7 @@ public class ReportGenerationController {
 		 * @throws Exception 
 		 */
 		@RequestMapping(value = "/getEmployeeReportForMonthByIdAndMonth", method = RequestMethod.POST)
-		public @ResponseBody
-		String getEmployeeReportForMonthByIdAndMonth(@RequestParam("employeeId") int employeeId,
+		public @ResponseBody String getEmployeeReportForMonthByIdAndMonth(@RequestParam("employeeId") int employeeId,
 				@RequestParam("month") String month) throws Exception {
 			logger.info("inside ReportGenerationController getEmployeeReportForMonthByIdAndMonth()");
 			
@@ -378,8 +376,7 @@ public class ReportGenerationController {
 		 * @throws Exception 
 		 */
 		@RequestMapping(value = "/getAllEmployeeReportForMonthByMonth", method = RequestMethod.POST)
-		public @ResponseBody
-		String getAllEmployeeReportForMonthByMonth(@RequestParam("month") String month) throws Exception {
+		public @ResponseBody String getAllEmployeeReportForMonthByMonth(@RequestParam("month") String month) throws Exception {
 			logger.info("inside ReportGenerationController getAllEmployeeReportForMonthByMonth()");
 			
 			logger.info("Month in getAllEmployeeReportForMonthByMonth : "+month);
@@ -395,8 +392,7 @@ public class ReportGenerationController {
 		 * year.
 		 */
 		@RequestMapping(value = "/getEmployeeReportForYearByIdAndYear", method = RequestMethod.POST)
-		public @ResponseBody
-		String getEmployeeReportForYearByIdAndYear(@RequestParam("employeeId") int employeeId,
+		public @ResponseBody String getEmployeeReportForYearByIdAndYear(@RequestParam("employeeId") int employeeId,
 				@RequestParam("year") String year) throws Exception {
 			logger.info("inside ReportGenerationController getEmployeeReportForYearByIdAndYear()");
 			
@@ -411,8 +407,7 @@ public class ReportGenerationController {
 		 * @throws Exception 
 		 */
 		@RequestMapping(value = "/getAllEmployeeReportForYearByYearDate", method = RequestMethod.POST)
-		public @ResponseBody
-		String getAllEmployeeReportForYearByYearDate(@RequestParam("yearDate") String yearDate) throws Exception {
+		public @ResponseBody String getAllEmployeeReportForYearByYearDate(@RequestParam("yearDate") String yearDate) throws Exception {
 			logger.info("inside ReportGenerationController getAllEmployeeReportForYearByYearDate()");
 			
 			logger.info("Year in getAllEmployeeReportForYearByYearDate : "+yearDate);

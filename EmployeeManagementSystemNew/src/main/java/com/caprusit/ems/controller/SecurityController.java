@@ -81,10 +81,11 @@ public class SecurityController {
 	 */
 	
 	@RequestMapping(value = "/getChangePasswordPage", method = RequestMethod.GET)
-	public String getChangePasswordPage() {
+	public String getChangePasswordPage(HttpServletRequest request) {
 		logger.info("inside SecurityController getChangePasswordPage()");
-		
-		return "ChangePassword";
+
+		 // verify admin is logged in or not
+	    return (HttpSessionUtility.verifySession(request)) ? "ChangePassword" : "EmsHomePage";
 	}
 	
 
@@ -92,8 +93,7 @@ public class SecurityController {
 	 * This method is for admin logout functionality
 	 * Returns 1 on successful logout*/
 	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
-	public @ResponseBody
-	int adminLogout(HttpServletRequest request) {
+	public @ResponseBody int adminLogout(HttpServletRequest request) {
 
 		HttpSession session = request.getSession(false);
 
@@ -186,8 +186,7 @@ public class SecurityController {
 	 * returns either a successful or an error message to the browser
 	 */
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
-	public @ResponseBody
-	String changePassword(HttpServletRequest request,
+	public @ResponseBody String changePassword(HttpServletRequest request,
 			@RequestParam("cpwd") String oldPassword,
 			@RequestParam("npwd") String newPassword) {
 		if (!HttpSessionUtility.verifySession(request)) {

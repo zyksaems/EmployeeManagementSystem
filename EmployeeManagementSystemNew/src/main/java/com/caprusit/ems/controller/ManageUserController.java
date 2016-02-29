@@ -48,24 +48,29 @@ public class ManageUserController {
 	}
 	
 	/**
-	 * This method is to return add employee page
-	 * */
+	 * This method is to return add employee page if admin is logged in
+	 * otherwise returns homepage
+	 */
 	@RequestMapping(value="/getAddEmployeePage",method=RequestMethod.GET)
-	public String getAddEmployeePage(){
+	public String getAddEmployeePage(HttpServletRequest request){
 		logger.info("inside ManageUserController getAddEmployeePage()");	
-		return "AddEmployee";
+		// verify admin is logged in or not
+		return (HttpSessionUtility.verifySession(request))? "AddEmployee" :  "EmsHomePage";
 	}
 	
-    
-	
-	
 	@RequestMapping(value = "/getExcel", method = RequestMethod.GET)
-	 ModelAndView getExcel(HttpServletRequest request,
-	   HttpServletResponse response) throws Exception {
+	 ModelAndView getExcel(HttpServletRequest request,HttpServletResponse response) throws Exception {
 	  System.out.println("Calling generateExcel()...");
-	  List<Employee> employees =manageUserService.getAllEmployee();	  
-	  logger.info("in controller employee list : "+ employees);
-	  ModelAndView modelAndView = new ModelAndView("excelView", "employees",employees);
+	  ModelAndView modelAndView;
+	  if(HttpSessionUtility.verifySession(request)){
+		  List<Employee> employees =manageUserService.getAllEmployee();	  
+		  logger.info("in controller employee list : "+ employees);
+		  modelAndView= new ModelAndView("excelView", "employees",employees);
+	  }
+	  else{
+		  modelAndView= new ModelAndView("EmsHomePage");
+	  }
+	  
 	  logger.info("modelAndView   "+ modelAndView);
 	  return modelAndView;
 	}
@@ -124,12 +129,12 @@ public class ManageUserController {
 	/**
 	 * This method is to redirect the UpdateUser view page
 	 * Here all employee details are displayed and updating each employee details.
-	 * */
+	 */
 	@RequestMapping(value = "ViewUser")
-	public String  updateUser() {
-		
-		return "UpdateUser";
-		//return "ViewOrUpdate";
+	public String  updateUser(HttpServletRequest request) {
+		 // verify admin is logged in or not
+		return (HttpSessionUtility.verifySession(request)) ? "UpdateUser" : "EmsHomePage";
+
 		
 	}
 	/**

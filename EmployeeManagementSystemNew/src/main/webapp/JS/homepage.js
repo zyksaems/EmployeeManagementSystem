@@ -27,9 +27,10 @@ $(document).ready(function(){
      * This function is to show attendance division when button clicks
      */
 	$(homeLink_id).click(function(){
-		
+		// reload the page
+		 location.reload();
 		/*functionc all to hide remaining divisions*/
-		diplayOnlyOneDivision(attendanceForm_id);
+		//diplayOnlyOneDivision(attendanceForm_id);
 		
 	});// END -- $(homeLink_id).click()
 	
@@ -57,6 +58,8 @@ $(document).ready(function(){
     $(changePasswordLink_id).click(function(){
  	   /*functionc all to hide remaining divisions*/
  	  diplayOnlyOneDivision(employeeChangePasswordDiv_id);
+ 	 /* function call to set default vlaues */
+ 	 setEmployeeChangePasswordDefaultValues();
  	   
     });// END -- $(changePasswordLink_id).click()
 	
@@ -66,7 +69,7 @@ $(document).ready(function(){
 	 */
 	function diplayOnlyOneDivision(divId){
 		
-		console.log("hide/show page divisions");
+		//console.log("hide/show page divisions");
 		(divId == employeeChangePasswordDiv_id)? $(employeeChangePasswordDiv_id).show()&& $(changePasswordLink_id).addClass(active) :$(employeeChangePasswordDiv_id).hide()&& $(changePasswordLink_id).removeClass(active);
 		(divId == attendanceForm_id)? $(attendanceForm_id).show()&& $(homeLink_id).addClass(active):$(attendanceForm_id).hide()&& $(homeLink_id).removeClass(active);
 		(divId == aboutUsDiv_id)? $(aboutUsDiv_id).show()&& $(aboutLink_id).addClass(active):$(aboutUsDiv_id).hide()&& $(aboutLink_id).removeClass(active);
