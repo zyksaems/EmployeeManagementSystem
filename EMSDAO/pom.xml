@@ -39,16 +39,16 @@
 			<version>2.2.2</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- ojdbc jar file -->
 		<dependency>
-       	 	 <groupId>oracle.jdbc.driver</groupId>
-         		<artifactId>ojdbc14</artifactId>
-        		 <scope>system</scope>
-        		 <version>10.2.0.1.0</version>
-        		 <systemPath>${basedir}\src\lib\ojdbc14.jar</systemPath>
-      </dependency>
-		 
+			<groupId>oracle.jdbc.driver</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<scope>system</scope>
+			<version>10.2.0.1.0</version>
+			<systemPath>${basedir}\src\lib\ojdbc14.jar</systemPath>
+		</dependency>
+
 		<!-- hibernate jar file -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -72,5 +72,19 @@
 	</dependencies>
 	<build>
 		<finalName>EMSDAO</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

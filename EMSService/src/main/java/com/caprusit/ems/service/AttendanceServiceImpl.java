@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.dao.IAttendanceDAO;
 import com.caprusit.ems.dao.ISecurityDAO;
 import com.caprusit.ems.domain.Attendance;
@@ -80,7 +81,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		Date date = new Date();
 		attendance.setAttendanceDate(date);
 		attendance.setAttendanceId(34);
-		attendance.setDayIndicator(1);
+		attendance.setDayIndicator(EmsConditions.EMPLOYEE_PRESENT_STATUS);
 		attendance.setStartTime(date);
 		attendance.setWorkingHours(0);
 		attendance.setEmployeeId(employeeeId);		

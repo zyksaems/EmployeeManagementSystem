@@ -29,6 +29,11 @@
 	   
 	   var week="";
 	   var employeeId="";
+	   
+	   /* status of employee attendance (dayindicato column of attendance table)  */
+	   var employeeAbsent_status=2;
+	   var employeeLeave_status=0;
+	   var employeePresent_status=1;
 
 	   
 	   //console.log("in employee weekly report.js file");
@@ -136,18 +141,18 @@
 				   else{
 					   	endTime="Not Logged Out";
 				   }
-    			   if(data[i].dayIndicator == 1){
+    			   if(data[i].dayIndicator == employeePresent_status){
     				    // function call
     				   workedHours=convertWorkingHours(data[i].workingHours);
     				   //console.log("minutes in floatValue"+hour);
     				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td>"+startTime+
     						   "</td><td>"+endTime+"</td><td>"+workedHours+"</td></tr>");
     			   }
-    			   else if(data[i].dayIndicator == 0){
+    			   else if(data[i].dayIndicator == employeeAbsent_status){
     				   //console.log("indicator is  0: ");
     				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+absent_msg+"</td></tr>");
     			   }
-    			   else{
+    			   else if(data[i].dayIndicator == employeeLeave_status){
     				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+onLeave_msg+"</td></tr>");
     			   }
     			   

@@ -17,7 +17,7 @@
 	  
 	   
    	   var employeeReport;
-   	   var loggedInEmployeeId;
+   	   var loggedInEmployeeId="";
    	   
    	   /*variables to store field ids*/
    	   var employeeName_id="#logged-in-employee-name";
@@ -73,48 +73,52 @@
 		    console.log("in  makeAjaxCallToKnowTodayAttendanceStatus(employeeId,attendanceDateMills)");
 		    if(loggedInEmployeeId == undefined){
 		    	//console.log("logged in employee id is undefined  -- setting timeout()");
-		    	setTimeout(makeAjaxCallToKnowTodayAttendanceStatus,500);
+		    	setTimeout(makeAjaxCallTogetLoggedInEmployeeId,500);
+		    	setTimeout(makeAjaxCallToKnowTodayAttendanceStatus,1000);
 		    }
-		    var attendanceDateMills=new Date().getTime();
-			$.ajax({
-    	        url:"/"+applicationName+"/"+todayAttendanceStatusRequest+"?"+employeeId_reqParam+"="+loggedInEmployeeId+'&'+attendanceDate_reqParam+'='+attendanceDateMills,
-    	        type: 'POST',
-    	        dataType: "json",
-    		    contentType: "application/json; charset=utf-8",
-    	        success: function(data)
-    	        {
-    	        	console.log("data returned from server for today attendance status :"+ data);
-    	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));
-    	        	employeeReport=data.employeeReport;
-    	        	loggedInEmployeeName=data.empName; // loggedInEmployeeName  is in EmployeeDetails.js file
-    	        	$(employeeName_id).append(loggedInEmployeeName);
-    	        	 localStorage.setItem("loggedEmployeeName", data.empName);
-    	        	if(employeeReport.length==0){
-    	        		//console.log("today employee is not logged in");
-    	        		$(employeeLofginTime_id).text(todayNotLoggedIn_msg);
-    	        	}
-    	        	else{
-    	        		console.log("employee start time: "+employeeReport[0].startTime.substring(12,24));
-    	        		$(employeeLofginTime_id).append(loginTime_msg+employeeReport[0].startTime.substring(12,24));
-    	        		console.log("you are still working");
-    	        		var logoutMsg= (employeeReport[0].endTime == undefined)? stillWorking_msg : logoutTime_msg+employeeReport[0].endTime.substring(12,24) ;
-    	        		console.log("logout msg: "+logoutMsg);
-    	        		
-    	        		$(employeeLogoutTime_id).append(logoutMsg);
-    	        	}
-    	        	
-    	        	         
-                 
-    	        },
-    	        error: function(jqXHR, textStatus, errorThrown)
-    	        {
-    	            
-    	            console.log('ERRORS: ' + textStatus);
-    	            // STOP LOADING SPINNER
-    	            //$(addEmployeeSuccessMsg_id).text(internalProblem_msg);
-    	        }
-    	        
-    	    });//END -- $.ajax()
+		    else{
+		    	   var attendanceDateMills=new Date().getTime();
+					$.ajax({
+		    	        url:"/"+applicationName+"/"+todayAttendanceStatusRequest+"?"+employeeId_reqParam+"="+loggedInEmployeeId+'&'+attendanceDate_reqParam+'='+attendanceDateMills,
+		    	        type: 'POST',
+		    	        dataType: "json",
+		    		    contentType: "application/json; charset=utf-8",
+		    	        success: function(data)
+		    	        {
+		    	        	console.log("data returned from server for today attendance status :"+ data);
+		    	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));
+		    	        	employeeReport=data.employeeReport;
+		    	        	loggedInEmployeeName=data.empName; // loggedInEmployeeName  is in EmployeeDetails.js file
+		    	        	$(employeeName_id).append(loggedInEmployeeName);
+		    	        	if(employeeReport.length==0){
+		    	        		//console.log("today employee is not logged in");
+		    	        		$(employeeLofginTime_id).text(todayNotLoggedIn_msg);
+		    	        	}
+		    	        	else{
+		    	        		console.log("employee start time: "+employeeReport[0].startTime.substring(12,24));
+		    	        		$(employeeLofginTime_id).append(loginTime_msg+employeeReport[0].startTime.substring(12,24));
+		    	        		console.log("you are still working");
+		    	        		var logoutMsg= (employeeReport[0].endTime == undefined)? stillWorking_msg : logoutTime_msg+employeeReport[0].endTime.substring(12,24) ;
+		    	        		console.log("logout msg: "+logoutMsg);
+		    	        		
+		    	        		$(employeeLogoutTime_id).append(logoutMsg);
+		    	        	}
+		    	        	
+		    	        	         
+		                 
+		    	        },
+		    	        error: function(jqXHR, textStatus, errorThrown)
+		    	        {
+		    	            
+		    	            console.log('ERRORS: ' + textStatus);
+		    	            // STOP LOADING SPINNER
+		    	            //$(addEmployeeSuccessMsg_id).text(internalProblem_msg);
+		    	        }
+		    	        
+		    	    });//END -- $.ajax()
+		    	
+		    }// END -- else
+		 
 			
 	   }// END  -- makeAjaxCallToKnowTodayAttendanceStatus(employeeId,attendanceDateMills)
 	   

@@ -13,5 +13,14 @@ public class EmsConditions {
 	
 	//Employee not logout from office remind employee (every few minutes) time in minutes
 	public static final int NOT_LOGOUT_REMIND_TIME = 30; // In minutes
+	
+	//employee present indication
+	public static final int EMPLOYEE_PRESENT_STATUS = 1; 
+	
+	//employee absent indication
+	public static final int EMPLOYEE_ABSENT_STATUS = 2; 
+		
+	//employee on leave  indication
+	public static final int EMPLOYEE_LEAVE_STATUS = 0; 
 
 }

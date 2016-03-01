@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,8 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.caprusit.ems.dao.IAttendanceDAO;
+import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.dao.utility.HibernateSessionUtility;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.Department;
@@ -33,6 +36,7 @@ import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.Notice;
 import com.caprusit.ems.domain.Role;
+import com.caprusit.ems.service.scheduler.SchedulerDaoObjectsUtility;
 import com.caprusit.ems.utility.EmailUtility;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
 
@@ -53,6 +57,22 @@ public class ParentConfigBean {
 
 	@Value("${password}")
 	private String password;
+	
+	@Autowired
+	@Qualifier("notLogoutMailJobDetail")
+	JobDetail notlogOutJobdetail;
+	
+	@Autowired
+	@Qualifier("absentJobDetail")
+	JobDetail absentJobdetail;
+	
+	@Autowired
+	@Qualifier("absentTrigger")
+	Trigger absentTrigger;
+	
+	@Autowired
+	@Qualifier("notLogoutTrigger")
+	Trigger notLogoutTrigger;
 	
 	/*Bean creation for getting dataSource*/
 	@Bean(name = "dataSource")
@@ -120,42 +140,59 @@ public class ParentConfigBean {
 		return new UploadExcelFileUtility();
 	}
 	
-//  beans for quartz scheduler
-	@Bean()
-	public MethodInvokingJobDetailFactoryBean getmethodinvokeFactoryBean(){
+    //  beans for quartz scheduler
+	@Bean(name="notLogoutMailJobDetail")
+	public MethodInvokingJobDetailFactoryBean getmethodinvokeFactoryBeanOfNotlogedOut(){
 		
-		//logger.info("method invoking job detail factory  bean is creating --  parent");
-		
-		logger.info("method invoking job detail factory  bean is creating --  child");
+		logger.info("method invoking job detail factory  bean is creating --  parent");
 		
 		MethodInvokingJobDetailFactoryBean bean=new MethodInvokingJobDetailFactoryBean();
 		
-		bean.setTargetBeanName("quartzScheduler");
+		bean.setTargetBeanName("notLogoutMailQuartzScheduler");
 		bean.setTargetMethod("runSchedulerToRemindEmployees");
 		bean.setConcurrent(false);
 				
 		return bean;
 	}
 	
-	@Bean
-	@Autowired
-	public CronTriggerFactoryBean getCronTrigger(JobDetail methodJobDetail){
+	@Bean(name="absentJobDetail")
+	public MethodInvokingJobDetailFactoryBean getmethodinvokeFactoryBeanOfAbsent(){
 		
-	   //logger.info("cron trigger factory  bean is creating --  parent");
+		logger.info("method invoking job detail factory  bean is creating --  parent");
 		
-		logger.info("cron trigger factory  bean is creating --  child");
+		MethodInvokingJobDetailFactoryBean bean=new MethodInvokingJobDetailFactoryBean();
 		
-		CronTriggerFactoryBean bean=new CronTriggerFactoryBean();
+		bean.setTargetBeanName("absentQuartzScheduler");
+		bean.setTargetMethod("updateAbsentEmployees");
+		bean.setConcurrent(false);
+				
+		return bean;
+	}
+	
+	@Bean(name="notLogoutTrigger")
+	public CronTriggerFactoryBean getNotLogoutCronTrigger(){
+	   logger.info("cron trigger factory  bean is creating --  parent");
 		
-		bean.setJobDetail(methodJobDetail);
-		bean.setCronExpression("0 0/30 19-23 ? * MON-FRI *");
+		CronTriggerFactoryBean bean=new CronTriggerFactoryBean();		
+		bean.setJobDetail(notlogOutJobdetail);
+		bean.setCronExpression("0 0/30 19-23 ? * MON-FRI *");// 0 0/30 19-23 ? * MON-FRI *
+		
+		return bean;
+	}
+	
+	@Bean(name="absentTrigger")
+	public CronTriggerFactoryBean getAbsentCronTrigger(){
+	   logger.info("cron trigger factory  bean is creating --  parent");
+		
+		CronTriggerFactoryBean bean=new CronTriggerFactoryBean();		
+		bean.setJobDetail(absentJobdetail);
+		bean.setCronExpression("0 30 23 ? * MON-FRI *");// 0 30 23 ? * MON-FRI *
 		
 		return bean;
 	}
 	
 	@Bean
-	@Autowired
-	public SchedulerFactoryBean getSchedulerFactoryBean(Trigger cronTrigger) throws IOException{
+	public SchedulerFactoryBean getSchedulerFactoryBean() throws IOException{
 		
 		//logger.info("scheduler factory  bean is creating --  parent");
 		
@@ -163,9 +200,15 @@ public class ParentConfigBean {
 	     
 		 SchedulerFactoryBean bean=new SchedulerFactoryBean();
  
-		 bean.setTriggers(cronTrigger);	 
+		 bean.setTriggers(absentTrigger,notLogoutTrigger);	 
 		 return bean;
 		
+	}
+	
+	@Bean
+	@Autowired
+	public SchedulerDaoObjectsUtility getSchedulerDaoObjectsUtility(IAttendanceDAO attendance,IManageUserDAO manageUser,EmailUtility emaily){
+		return new SchedulerDaoObjectsUtility(attendance, manageUser, emaily);
 	}
 	
 	@Bean

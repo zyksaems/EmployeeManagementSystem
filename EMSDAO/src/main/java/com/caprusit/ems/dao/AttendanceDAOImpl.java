@@ -78,6 +78,17 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 
 		return list;
 	}
+    
+    /**
+     * This method is to get absent employee details
+     * @return list of employee details who are absent
+     */
+    public List<Object> getAbsentEmployeeDetails() {
+		String absentQuery="select e.employeeId,e.firstName,e.lastName,e.emailId from Employee e where e.status='1'"
+				+ "and e.employeeId not in (select  a.employeeId from Attendance a where a.attendanceDate = :today ) order by e.employeeId";  	
+    
+		return HibernateSessionUtility.getHibernateSession().createQuery(absentQuery).setParameter("today", Calendar.getInstance().getTime()).list();
+	}
 
 	/**
 	 * This method is to set today date with 00:00:00 time
@@ -113,6 +124,8 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 		return cal.getTime();
 
 	}
+
+	
 
 	
 }

@@ -22,7 +22,7 @@ $(function() {
 		$("#company_work_hours").text(0);
 		$("#emp_work_hours").text(0);	
 		 $("#remove").remove();
-		var day1=$("#mydatepicker").val();
+		var day1=$("#datepicker").val();
 		var newday=new Date(day1);
 		var newdayMilli=newday.getTime();
 	    console.log("emp id: "+empId+"    dtae: "+newday);
@@ -106,7 +106,7 @@ $(function() {
 		else if($( "#select" ).val()=="all" && day1!="")
 			{
 			
-				var day1=$("#mydatepicker").val();
+				var day1=$("#datepicker").val();
 				var newday=new Date(day1);
 				var newdayMilli=newday.getTime();
 				
