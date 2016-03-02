@@ -11,6 +11,8 @@ public interface ISecurityDAO {
 	public int changeEmployeePassword(EncryptedEmployee encryptedEmployee);
 
 	public EncryptedEmployee getEmployeeCurrentPassword(int employeeId);
+	
+	public List<Integer> getAdminRoleId();
 
 
 }

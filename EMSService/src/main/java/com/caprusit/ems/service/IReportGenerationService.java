@@ -59,4 +59,6 @@ public interface IReportGenerationService {
 	String getMonthlyProductivityOfEmployeeByIdAndMonth(int employeeId, String month);
 
 	String getMonthlyProductivityOfAllEmployeeByMonth(String month);
+	
+	String getTodayAttendanceDetails();
 }

@@ -2,6 +2,7 @@ package com.caprusit.ems.utility;
 
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -18,6 +19,10 @@ public class EmailUtility {
 	private Properties props;
 	private String mailPassword, username;
 	
+	private String recipientMailId,message,recipientName,subject;
+	
+	private String[] ccMailIds;
+	
 	private Logger logger=Logger.getLogger(EmailUtility.class);
 
 	public void setUsername(String username) {
@@ -32,18 +37,57 @@ public class EmailUtility {
 		this.props = props;
 	}
 
-	/*
-	 * sendMail() method takes mailId, password and recipient name as parameter
-	 * and send a mail to given mail Id with password information
+	
+	/**
+	 *  This method is to send mail without putting any CC
+	 *  
+	 * @param recipientMailId  recipient (To) mail id
+	 * @param message message you want to send
+	 * @param recipientName  name of recipient
+	 * @param subject subject of mail
 	 */
 	public void sendMail(String recipientMailId, String message, String recipientName,String subject) {
 		logger.info("in send mail method ");
+		this.recipientMailId=recipientMailId;    
+		this.message=message;
+		this.recipientName=recipientName;
+		this.subject=subject;
+		
+		// call with false  for sending without cc
+	    sendEmailUsingJavaMail(false);
+	
+	}
+	/**
+	 * This method is to send mail with CC
+	 * 
+	 * @param recipientMailId   recipient (To) mail id
+	 * @param message message  you want to send
+	 * @param recipientName   name of recipient
+	 * @param subject  subject of mail
+	 * @param ccMailsIds  mail ids to insert in CC 
+	 */
+	public void sendMail(String recipientMailId, String message, String recipientName,String subject,String ... ccMailsIds ) {
+		this.recipientMailId=recipientMailId;    
+		this.message=message;
+		this.recipientName=recipientName;
+		this.subject=subject;
+		this.ccMailIds=ccMailsIds;
+		
+		// call with true  for sending with cc
+		sendEmailUsingJavaMail(true);
+	}
+	
+	/**
+	 * This method is to send mail using java mail api
+	 * @param ccStatus  if it is true we are including cc  else we are not putting any cc
+	 */
+	private void sendEmailUsingJavaMail(boolean ccStatus){
+		logger.info("in sendEmailUsingJavaMail(boolean ccStatus) method");
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, mailPassword);
 			}
 		});
-		//logger.info("in send mail method   2");
 		try {
 			// Create a Message
 			Message mimeMessage = new MimeMessage(session);
@@ -52,6 +96,17 @@ public class EmailUtility {
 			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientMailId));
 			mimeMessage.setSubject(subject);
 			mimeMessage.setText("Dear " + recipientName+"," + message +" \n\nRegards,\nCaprusIT Team.");
+			Address [] arr=new Address[ccMailIds.length];
+			if(ccStatus){
+				//logger.info(" cc mail ids list: ");
+				for( int i=0;i< ccMailIds.length;i++){					
+					//logger.info(" "+ccMailIds[i]);
+					arr[i]=new InternetAddress(ccMailIds[i]);					
+				}
+				mimeMessage.setRecipients(Message.RecipientType.CC, arr);
+				
+			}
+
 			// Transmit the mail
 			Transport.send(mimeMessage);
 			logger.info("mail Sent");

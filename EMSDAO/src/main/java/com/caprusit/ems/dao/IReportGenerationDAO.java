@@ -34,7 +34,9 @@ public interface IReportGenerationDAO {
 
 	List<String> getAutoCompleteInfo(String employeeId);
 	
-    List<Attendance> getTodayAttendance();
+    List<Attendance> getTodayPresentAttendance();
+    
+    List<Attendance> getTodayLeaveAttendance();
     
     int getNumberOfEmployees();
     

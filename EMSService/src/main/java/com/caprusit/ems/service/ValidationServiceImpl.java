@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.caprusit.ems.dao.ValidationDAO;
 import com.caprusit.ems.domain.EmployeeData;
+import com.caprusit.ems.utility.EmailUtility;
 import com.caprusit.ems.utility.JsonUtility;
 
 @Service
@@ -37,7 +38,7 @@ public class ValidationServiceImpl implements ValidationService {
 			listOfAllEmpIds.add(emp);
 
 		}
-
+	
 		return JsonUtility.convertToJson(listOfAllEmpIds);
 
 	}
@@ -85,7 +86,6 @@ public class ValidationServiceImpl implements ValidationService {
 
 		return JsonUtility.convertToJson(deptIdsList);
 	}
-
 
 
 	

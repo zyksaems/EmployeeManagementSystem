@@ -48,7 +48,8 @@ public class SecurityServiceImpl implements ISecurityService {
 	public int login(Admin admin) {
 
 		String currentPassword=null;
-		int adminRoleId=10;
+		List<Integer> adminRoleList=securityDAO.getAdminRoleId();
+		logger.info("Admin role ids list: "+adminRoleList);
 		int status=-1;
 		Employee e=manageUsaerDAO.findById(admin.getAdminId());
 		logger.info("emplotyee :"+e);		
@@ -59,16 +60,14 @@ public class SecurityServiceImpl implements ISecurityService {
 				 currentPassword=EncryptionUtility.decryptPassword(admin.getPassword(), encEmployee.getEncryptedPassword());
 				 status = (currentPassword != null) ? 1 : 0;
 			 }
-			 status=(status == 1 && e.getRollId() == adminRoleId)? 10 : status;
+			 status=(status == 1 && adminRoleList.contains(e.getRollId()))? 10 : status;
 		     logger.info("login status for admin/employee: " + status);
 		     
 			return status;
 		}
 		else{
 			return status;
-		}
-		
-	
+		}	
 
 	}
 

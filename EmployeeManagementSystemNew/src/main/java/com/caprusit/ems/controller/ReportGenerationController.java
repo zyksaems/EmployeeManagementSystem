@@ -309,7 +309,7 @@ public class ReportGenerationController {
 	public @ResponseBody String getDayWiseReport() {
 		logger.info("in ReportGenerationController getDayWiseReport()");
 
-		String reportDetails = reportGenerationService.getTodayReport();
+		String reportDetails = reportGenerationService.getTodayAttendanceDetails();
 
 		return reportDetails;
 	}

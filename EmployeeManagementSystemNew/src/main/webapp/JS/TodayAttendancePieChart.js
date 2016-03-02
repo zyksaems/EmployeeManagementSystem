@@ -1,203 +1,67 @@
     	
-    var todayAttendanceDetails;
-	var activePoints=[];
-	var  todayDateString=(""+new Date()+"").substr(4,12);
-	console.log("date string: "+todayDateString);
-	/*creating variables to store division id's */
-	var  pieChartDiv="#pie-holder";
+   
 	
-	var showTableDetails='#showTableDetails';
-	var backButton_one_id="#show-piechart-back-button";
-	var backButton_two_id="#show-piechart-back-button2";
-	var dailyAttendance_legend_id="#daily-attendance-legend-div";
-	
-	
-	
-	/*variable to store mouse event of pie chart*/
-	var pieMouseEvent;
-	
-	var myPieChart ;
-	
-	var clickOnPieChart="#clickOnPieChart";
-	
-	/**
-	 * This function executes when user clicks on pie chart
-	 */	
-	function clickPieChart(event){
-		  console.log("chart -- pie chart clicked and event: "+event);
-		  console.log("chart -- pie chart clicked and event: (stringify) "+JSON.stringify(event));
-		  $(dailyAttendance_legend_id).hide();
-		  pieMouseEvent=event;
-		  $("#remove").remove();
-			console.log("Inside onClickOnPieChart () function");
-			 
-			   var activePoints = myPieChart.getSegmentsAtEvent(pieMouseEvent);
-			   console.log("active points......length "+activePoints.length);
-			   console.log("active points...(stringify) "+JSON.stringify(activePoints));
-						   console.log("new points......1 "+activePoints[0].value);
-						   console.log("new points......1 "+activePoints[0].label);
-						
-						
-						   //console.log("new points......2 "+activePoints[0].value);
-						   //console.log("new points......2 "+activePoints[0].label);
-						
-					
-						var presentiesList=todayAttendanceDetails.presentiesList;
-						var empDetails= todayAttendanceDetails.employeeDetails;
-						
-						var todayAttendancePieDetails=[];
-						var allAbsentEmpData=[];
-						var empId;
-						var foundIndex;
-						var presetiesIndexList=[];
-						for(var i=0;i<presentiesList.length;i++) {
-							empId=presentiesList[i].employeeId;
-						   for(var j=0;j<empDetails.length;j++){
-								
-								
-								if(empDetails[j].employeeId==empId){
-									//console.log("found at index : "+j);
-									foundIndex=j;
-									presetiesIndexList.push(j);
-									
-								}
-						   }
-							//console.log("Index after search:="+foundIndex);
-							//console.log("employee details: new ="+ empDetails[foundIndex].firstName);
-							if(presentiesList[i].endTime==undefined){
-								presentiesList[i].endTime="still working";
-							}
-							var detailsObject= { employee_id: empDetails[foundIndex].employeeId, 
-									           first_name: empDetails[foundIndex].firstName, 
-									           last_name : empDetails[foundIndex].lastName,
-									           In_time : presentiesList[i].startTime ,
-									           Out_time :presentiesList[i].endTime,
-									           workingHours:presentiesList[i].workingHours
-									           };
-							todayAttendancePieDetails.push(detailsObject);
-							
-						}
-					    var numberOfAbsentiesForPie=todayAttendanceDetails.totalEmployees- todayAttendanceDetails.noOfPresenties;
-
-						for(var k=0;k<empDetails.length;k++){
-							var count=0;
-							for(var l=0;l<presetiesIndexList.length;l++){
-							
-								if(presetiesIndexList[l]==k){
-									count=1;
-									
-							}
-								
-							}
-							if(count == 0){
-								
-								var absentEmpData={
-										 employee_id: empDetails[k].employeeId,
-										first_name:empDetails[k].firstName,
-										last_name : empDetails[k].lastName
-										};
-								allAbsentEmpData.push(absentEmpData);
-							}
-							
-						}
-						
-				   //	printing absents list on console
-						
-						function makeListOfAbsentEmp(j){
-						 
-							 
-							var absentEmpData={
-									 employee_id: empDetails[j].employeeId,
-									first_name:empDetails[j].firstName,
-									last_name : empDetails[j].lastName
-									};
-							console.log("absent data prepared: "+absentEmpData);
-							allAbsentEmpData.push(absentEmpData);
-							
-						}
-							   
-					    	        if(activePoints[0].label=='Present'){
-					    	        	
-					    	        	console.log("selected label   present");
-					    	        	
-					    	        	$("#listName") .text("Employees Present on "+todayDateString);
-					    	        	
-					    	        	 $("#showAbsentDetails").hide();
-					    	        	
-					    	        	$(pieChartDiv).hide() ;
-					    				 $("#pieLegend").hide();
-					    				 $(showTableDetails).show();
-
-					    				 var len = todayAttendancePieDetails.length;
-					    	                var txt = "";
-					    	                if(len > 0){
-					    	              
-					    	                 txt+="<tbody id='remove'>"
-					    	                    for(var i=0;i<len;i++){
-					    	                        
-					    	                            txt += "<tr><td>"+todayAttendancePieDetails[i].employee_id+"</td><td>"+todayAttendancePieDetails[i].first_name+"</td><td>"+todayAttendancePieDetails[i].last_name+"</td><td>"+todayAttendancePieDetails[i].In_time+"</td><td>"+todayAttendancePieDetails[i].Out_time+"</td><td>"+todayAttendancePieDetails[i].workingHours+"</td></tr>";
-					    	                        
-					    	                    }
-					    	                 txt+="</tbody>";
-					    	                    if(txt != ""){
-					    	                        $("#daily-present-table").append(txt);
-					    	                    }
-					    	                }
-					   		
-					   			    }
-					   			    if(activePoints[0].label=='Absent'){
-					   			    	
-					   			    	console.log("selected lable absent");	
-					   			    	
-					   			     $("#pie-holder").hide();
-					   				$("#pieLegend").hide();
-					   				
-
-					   			    	$(showTableDetails).hide();
-					    				 
-					    				 $("#showAbsentDetails").show();
-					    				 
-					    				 $("#listName1") .text("Employees Absent on "+todayDateString);
-					    				 
-					    				  var len = allAbsentEmpData.length;
-					    	                var txt = "";
-					    	                if(len > 0){
-					    	              
-					    	                 txt+="<tbody id='remove'>"
-					    	                    for(var i=0;i<len;i++){
-					    	                    	
-					    	                        if(allAbsentEmpData[i]!=undefined){
-					    	                            txt += "<tr><td>"+allAbsentEmpData[i].employee_id+"</td><td>"+allAbsentEmpData[i].first_name+"</td><td>"+allAbsentEmpData[i].last_name+"</td></tr>";
-					    	                        }
-					    	                    }
-					    	                 txt+="</tbody>";
-					    	                    if(txt != ""){
-					    	                        $("#daily-absent-table").append(txt);
-					    	                    }
-					    	                }
-					   			    	
-					   			    }		
-	} // END -- clickPieChart() 
-
 $("document").ready(function(){
 	
 	$("#accordion").accordion({
 		 active: 2
 	});
 	
+	    var todayAttendanceDetails;
+		var  todayDateString=(""+new Date()+"").substr(4,12);
+		console.log("date string: "+todayDateString);
+		/*creating variables to store division id's */
+		var  pieChartCanvas_id="#pieChart";
+		var pieChartCanvas="pieChart";
+		
+		var attendanceChartDiv_id="#daily-attendance-chart-div";
+		var attendanceDetailsTable_id="#attendance-details-tables";
+		var printButton_id="#print-attendance-button";
+		var presentTable_id="#present-table";
+		var absentTable_id="#absent-table";
+        var leaveTable_id="#leave-table";
+		var presentTableDiv_id="#present-table-div";
+		var absentTableDiv_id="#absent-table-div";
+		var leaveTableDiv_id="#leaves-table-div";
+		var buttonsDiv_id="#daily-attendance-buttons-div";
+		
+		var backButton_id="#show-piechart-back-button";
+		
 
-	var todayAttendanceHeading_id="#today-attendance-heading";
-	var todayAttendanceInfoDetails_id="#today-attendance-info-detils";
+		var todayAttendanceHeading_id="#today-attendance-heading";
+		var todayAttendanceInfoDetails_id="#today-attendance-info-detils";
+		var detailsHeading_id="#details-type-heding";
+		
+		/*variables tto store error/success messages*/
+		var absentDetailsHeading_msg="Employees Absent on "+todayDateString;
+		var presentDetailsHeading_msg="Employees Present on "+todayDateString;
+		var leaveDetailsHeading_msg="Leaves on "+todayDateString;
+		var stillWorking_msg="working still";
+		var leave_msg="on leave";
+		
+		//var dailyAttendance_legend_id="#daily-attendance-legend-div";	
+		
+		var myPieChart ;
+		var absentiesTable=null;
+		var presentiesTable=null;
+		var leavesTable=null;
+		var presentTableCount=0;
+		var absentTableCount=0;
+		var leaveTableCount=0;
+	    
+		/* status of employee attendance (dayindicato column of attendance table)  */
 	
-	console.log("called set default values function");
+		   var employeeLeave_status=0;
+		   var employeePresent_status=1;
+
+	
+	//console.log("called set default values function");
 	displayTodayAttendance();
+	hideTables();
 	
 	
 	/*	for display pie chart  for daily attendance*/
    function displayTodayAttendance() {
-			
-	$(showTableDetails).hide();
-	$(dailyAttendance_legend_id).show();
 	
 	$(todayAttendanceHeading_id).text("Attendance Date: "+todayDateString);
 	
@@ -208,6 +72,7 @@ $("document").ready(function(){
 		var todayAttendance;
 		var numberOfPresentiesForPie;
 		var numberOfAbsentiesForPie;
+		var numberOfLeavesForPie;
 		console.log("going to get data");
 		
 		/*make AJAX call to get data*/
@@ -220,18 +85,19 @@ $("document").ready(function(){
             {
 			    console.log("reply from get today attendance: "+ JSON.stringify(data));
 			    $("#pieLegend").text(" ");
-    		    todayAttendanceDetails=todayAttendance= data;
+    		    todayAttendanceDetails=todayAttendance= data;   		    
+    		    //console.log("presenties: "+data.noOfPresenties);
     		    
-    		    console.log("presenties: "+data.noOfPresenties);
-    		    
-    		    numberOfPresentiesForPie=todayAttendance.noOfPresenties;
-    		    console.log("presenties in  pie: "+numberOfPresentiesForPie);
-    		    numberOfAbsentiesForPie=todayAttendance.totalEmployees- numberOfPresentiesForPie;
-    		    console.log("absenties for pie: "+numberOfAbsentiesForPie);
-    		    $(todayAttendanceInfoDetails_id).html("<b>Number of presenties: "+numberOfPresentiesForPie+"<br> Number of absenties: "+numberOfAbsentiesForPie+"</b>");
+    		    numberOfPresentiesForPie=todayAttendance.presentiesList.length;
+    		    //console.log("presenties in  pie: "+numberOfPresentiesForPie);
+    		    numberOfAbsentiesForPie=todayAttendance.absenteesList.length;
+    		    numberOfLeavesForPie=todayAttendance.leavesList.length;
+    		    //console.log("absenties for pie: "+numberOfAbsentiesForPie);
+    		    $(todayAttendanceInfoDetails_id).html("<b>Number of presenties: "+numberOfPresentiesForPie+
+    		    		   "<br>Number of absenties: "+numberOfAbsentiesForPie+"<br>Number of Leaves: "+numberOfLeavesForPie+"</b>");
    		    
     		   /*	function call for showing pie chart*/    			
-    			displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie);
+    			displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie,numberOfLeavesForPie);
                 
             },
             error: function(jqXHR, textStatus, errorThrown)
@@ -245,25 +111,181 @@ $("document").ready(function(){
 	}; // END -- $(dailyAttendance_link_id).click()
 
 	/*function for back button */
-   $(backButton_one_id).click(function(){
+   $(backButton_id).click(function(){
+	   console.log("back button clicked");
 	   hideTables();	   
    }); // END -- $(dailyAttendance_link_id).click() show-piechart-back-button2
    
-   /*function for back button */
-   $(backButton_two_id).click(function(){
-   	   hideTables();	   
-   }); // END -- $(dailyAttendance_link_id).click() 
-   
-   /*function to hide tables */
+  
+   /**
+    * function to hide tables 
+    */
    function hideTables(){
-	   $("#pie-holder").show();		
-	   $(dailyAttendance_legend_id).show();
-   	   $(showTableDetails).hide();
-   	   $("#showAbsentDetails").hide();
+	   console.log("in hide tables fun");
+	   $(attendanceChartDiv_id).show();
+	   $(attendanceDetailsTable_id).hide();
+	   $(buttonsDiv_id).hide();
+	 
    };// END -- hideTables()
-
+   
+   /**
+    * function to show tables
+    */
+    function  showTables(label){
+    	console.log("in shoe table  lable received: "+label);
+    	if(label == "Absent"){
+    		$(detailsHeading_id).text(absentDetailsHeading_msg);  
+    		// display absent table
+    		displayOneTable(absentTableDiv_id);
+    		if(absentTableCount == 0){
+    			 absentTableCount=1;
+    		     displayAbsentEmployeeData();
+    		     // table.clear().draw();
+    		     //table.rows.add(dataSet).draw();
+    		}
+    	}
+    	else if(label == "Present"){
+    		// display present table
+    		displayOneTable(presentTableDiv_id);
+    		$(detailsHeading_id).text(presentDetailsHeading_msg);
+    		if(presentTableCount == 0){
+    			presentTableCount=1;
+   			    displayPresentEmployeeData();
+   		    }    		
+    	}
+    	else{
+    		$(detailsHeading_id).text(leaveDetailsHeading_msg);  
+    		// display present table
+    		displayOneTable(leaveTableDiv_id);
+    		if(leaveTableCount == 0){
+    			leaveTableCount=1;
+    			displayLeavesEmployeeData();
+   		    } 
+    	}
+    	$(attendanceChartDiv_id).hide();
+ 	    $(attendanceDetailsTable_id).show();
+ 	    $(buttonsDiv_id).show();
+ 	   
+    }; // END --  showTables(label)
+    
+    /**
+     *  This function is to display one table at a time
+     *  among leave, absent and presenties tables
+     */
+    function displayOneTable(tableDivId){
+    	 console.log("in displayOneTable(tableDivId) id received: "+tableDivId);
+    	(tableDivId == presentTableDiv_id) ? $(presentTableDiv_id).show() : $(presentTableDiv_id).hide();
+    	(tableDivId == absentTableDiv_id) ? $(absentTableDiv_id).show() : $(absentTableDiv_id).hide();
+    	(tableDivId == leaveTableDiv_id) ? $(leaveTableDiv_id).show() : $(leaveTableDiv_id).hide();
+		
+    }// END -- displayOneTable(tableDivId)
+    
+    /**
+     * This function is to display present employee data
+     */
+    function displayPresentEmployeeData(){
+    	var presentData=todayAttendanceDetails.presentiesList;
+    	var presentArray=new Array(presentData.length);
+    	for(var i=0;i< presentData.length;i++){
+    		presentArray[i]=new Array(5);
+    		presentArray[i][0]=presentData[i].employeeId;
+    		presentArray[i][1]=presentData[i].attendanceDate;
+    		if(presentData[i].dayIndicator == employeePresent_status){    			
+    			presentArray[i][2]=presentData[i].startTime.substr(12,24);
+        		if(presentData[i].endTime == undefined)
+        			 presentArray[i][3]=stillWorking_msg;    		
+        		else
+        			presentArray[i][3]=presentData[i].endTime.substr(12,24);  
+        		presentArray[i][4]=presentData[i].workingHours;
+    		}
+    		else if(presentData[i].dayIndicator == employeeLeave_status){
+    			presentArray[i][2]=leave_msg;
+    			presentArray[i][3]=leave_msg;
+    			presentArray[i][4]=leave_msg;
+    		} 		
+    		
+    	}
+ 
+        presentiesTable=$(presentTable_id).DataTable( {
+       	        data: presentArray,
+       	     "lengthMenu": [[5,10, -1], [5,10, "All"]],
+       	        columns: [
+        
+       	            { title: "Employee ID" },
+       	            { title: "Attendance Date","orderable": false},
+       	            { title: "Login Time"},
+       	            { title: "Logout Time"},
+       	            { title: "Worked Hours" },
+       	           
+       	          
+                 ]
+       	    } );
+    	
+    	
+    };// END -- displayPresentEmployeeData()
+    
+    /**
+     * This function is to display absent employee data
+     */
+    function displayAbsentEmployeeData(){
+    	var absentData=todayAttendanceDetails.absenteesList;
+    	var dataArray=new Array(absentData.length);
+    	for(var i=0;i<absentData.length;i++){
+    		dataArray[i]=new Array(3);
+    		dataArray[i][0]=absentData[i][0];
+    		dataArray[i][1]=absentData[i][1];
+    		dataArray[i][2]=absentData[i][2];
+    		
+    	}
+    	///console.log("absent table  (before): "+absentiesTable);    
+    		
+       absentiesTable=$(absentTable_id).DataTable( {
+       	        data: dataArray,
+       	     "lengthMenu": [[5,10, -1], [5,10, "All"]],
+       	        columns: [
+        
+       	            { title: "Employee ID" },
+       	            { title: "First name" },
+       	            { title: "Last Name" },
+       	            //{ title: "WorkHours","orderable": false },
+       	          
+                 ]
+       	    } ); 
+       
+    	console.log("absent table  after data table added: "+absentiesTable);
+    	//console.log("absent table  after data table added(stringify): "+JSON.stringify(absentiesTable));
+    	
+    };// END -- displayAbsentEmployeeData()
+    
+    /**
+     * This function is to display present employee data
+     */
+    function displayLeavesEmployeeData(){
+    	var leavesData=todayAttendanceDetails.leavesList;
+    	var leavesArray=new Array(leavesData.length);
+    	for(var i=0;i< leavesData.length;i++){
+    		leavesArray[i]=new Array(2);
+    		leavesArray[i][0]=leavesData[i].employeeId;
+    		leavesArray[i][1]=leavesData[i].attendanceDate;	
+    		
+    	}
+ 
+    	leavesTable=$(leaveTable_id).DataTable( {
+       	        data: leavesArray,
+       	     "lengthMenu": [[5, -1], [5, "All"]],
+       	        columns: [
+        
+       	            { title: "Employee ID" },       	       
+       	            { title: "Leave Date","orderable": false}       	           
+       	          
+                 ]
+       	    } );
+    	
+    	
+    };// END -- displayLeavesEmployeeData()
+    
    /*function for displaying pie chart*/
-   function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie){			
+   function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie,numberOfleaves){			
 	console.log("in display pie chart");
 	var pieData = [
 					{
@@ -279,136 +301,51 @@ $("document").ready(function(){
 						highlight: "#FF6666",
 						label: "Absent",
 						name:"a"
+					},
+					{
+						value:numberOfleaves,
+						color:"#D7DF01",
+						highlight: "#FFFF00",
+						label: "Leave",
+						name:"a"
 					}
 				   ];
-	var options = {};
+	   var options = {};
 	  if(window.myPie!=null){
 		    consol.log("pie graph destroying");
 	    	 window.myPie.destroy();
 	     }
 	
-	var ctx = document.getElementById("pieChart").getContext("2d");
+	var ctx = document.getElementById(pieChartCanvas).getContext("2d");
 
 	 myPieChart = new Chart(ctx).Pie(pieData,options);
 
+   }; // END --   displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie)
 	 
-	 $(dailyAttendance_legend_id).show();
-
-
    
-/* After clicking on pie chart  */
-	
-	$("#pieChart").click(function(event){
+    /* After clicking on pie chart  */	
+	$(pieChartCanvas_id).click(function(event){  
 		
-		console.log(" in rteady  click on pie chart: event"+event);
-		//console.log("in rteady  click on pie chart: event: (stringify) "+JSON.stringify(event));
-		//$("#daily-attendance-legend-div").hide();
-		$(pieChartDiv).hide();
-		$(dailyAttendance_legend_id).hide();
-		$("#daily-absent-table").prop({border:1});
-		$("#daily-present-table").prop({border:1});
-		
-				console.log("Inside onClickOnPieChart () function");
-				 
-					   var activePoints = myPieChart.getSegmentsAtEvent(event);		
-					   //console.log("active point length: "+activePoints.length);
-					   //console.log("active points (stringify)"+JSON.stringify(activePoints));
-								
-								var presentiesList=todayAttendanceDetails.presentiesList;
-								var empDetails= todayAttendanceDetails.employeeDetails;
-								
-								var todayAttendancePieDetails=[];
-								var allAbsentEmpData=[];
-								var empId;
-								var foundIndex;
-								var presetiesIndexList=[];
-								for(var i=0;i<presentiesList.length;i++) {
-									empId=presentiesList[i].employeeId;
-								   for(var j=0;j<empDetails.length;j++){
-										
-										
-										if(empDetails[j].employeeId==empId){
-											console.log("found at index : "+j);
-											foundIndex=j;
-											presetiesIndexList.push(j);
-											
-										}else{
-											
-											makeListOfAbsentEmp(j);
-										}
-										
-								   }
-									console.log("Index after search:="+foundIndex);
-									console.log("employee details: new ="+ empDetails[foundIndex].firstName);
-									if(presentiesList[i].endTime==undefined){
-										presentiesList[i].endTime="still working";
-									}
-									var detailsObject= { employee_id: empDetails[foundIndex].employeeId, 
-											           first_name: empDetails[foundIndex].firstName, 
-											           last_name : empDetails[foundIndex].lastName,
-											           In_time : presentiesList[i].startTime ,
-											           Out_time :presentiesList[i].endTime,
-											           workingHours:presentiesList[i].workingHours
-											           };
-									todayAttendancePieDetails.push(detailsObject);
-									
-								}
-							    var numberOfAbsentiesForPie=todayAttendanceDetails.totalEmployees- todayAttendanceDetails.noOfPresenties;
-
-								for(var k=0;k<empDetails.length;k++){
-									var count=0;
-									for(var l=0;l<presetiesIndexList.length;l++){
-									
-										if(presetiesIndexList[l]==k){
-											count=1;
-											
-									}
-										
-									}
-									if(count == 0){
-										
-										var absentEmpData={
-												 employee_id: empDetails[k].employeeId,
-												first_name:empDetails[k].firstName,
-												last_name : empDetails[k].lastName
-												};
-										allAbsentEmpData.push(absentEmpData);
-									}
-									
-								}
-								
-						  // 	printing absents list on console
-								
-								function makeListOfAbsentEmp(j){
-									 
-									var absentEmpData={
-											 employee_id: empDetails[j].employeeId,
-											first_name:empDetails[j].firstName,
-											last_name : empDetails[j].lastName
-											};
-									allAbsentEmpData.push(absentEmpData);
-									
-								}
-									   
-							    	        if(activePoints[0].label=='Present'){
-							    	        	$("#showChart").hide();
-							    	        	$("#daily-absent-table").hide();	
-							    	        	
-							    	        	$.showTableDetails=true;
-							    	        	$.listName="Present Employees";
-							    	        	$.persons=todayAttendancePieDetails;
-							    	        	
-							   		
-							   			    }
-							   			    if(activePoints[0].label=='Absent'){
-							   			 	
-							   			 	$("#showChart").hide();
-							   			 	
-						    	        	$("#daily-absent-table").show();	
-							   			    }
+			console.log("Inside onClickOnPieChart () function");				 
+			var activePoints = myPieChart.getSegmentsAtEvent(event);	//pieMouseEvent	
+			if(activePoints.length != 0){						   
+					console.log("selected lable: "+activePoints[0].label);												
+					showTables(activePoints[0].label);
+			}
+			else{
+				console.log("selected lable: is wromg");
+			}
 				
-			} ); // END -- $("#pieChart").click()
+	 }); // END -- $("#pieChart").click()
+	
+	/**
+	 *  Function for print button
+	 */
+	$(printButton_id).click(function(){
+		
+		//showingTable_id
+	});
 
-}; // END --   displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie)
+
 
 });// End of -  $("document").ready()

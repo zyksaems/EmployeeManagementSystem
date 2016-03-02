@@ -16,6 +16,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.dao.utility.HibernateSessionUtility;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.Employee;
@@ -210,14 +211,15 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 	}
 	
     @SuppressWarnings("unchecked")
-	public List<Attendance> getTodayAttendance() {
+	public List<Attendance> getTodayPresentAttendance() {
 		
         logger.info("in ReportGenerationDAOImpl--getDailyReport()");
         
-        Criteria toDayReportCriteria=HibernateSessionUtility.getHibernateSession().createCriteria(Attendance.class);            
-        Criterion dateCriterion=Restrictions.eq("attendanceDate",(Calendar.getInstance().getTime()));
+        Criteria toDayReportCriteria=HibernateSessionUtility.getHibernateSession().createCriteria(Attendance.class)
+        		.add(Restrictions.and(Restrictions.eq("attendanceDate",Calendar.getInstance().getTime()),Restrictions.eq("dayIndicator", EmsConditions.EMPLOYEE_PRESENT_STATUS)));            
+        /*Criterion dateCriterion=Restrictions.eq("attendanceDate",(Calendar.getInstance().getTime()));
         
-        toDayReportCriteria.add(dateCriterion);
+        toDayReportCriteria.add(dateCriterion);*/
         
         List<Attendance> list=toDayReportCriteria.list();
         
@@ -226,6 +228,11 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
         
 		return list;
 	}
+    
+    public List<Attendance> getTodayLeaveAttendance(){
+    	return HibernateSessionUtility.getHibernateSession().createCriteria(Attendance.class)
+		.add(Restrictions.and(Restrictions.eq("attendanceDate",Calendar.getInstance().getTime()),Restrictions.eq("dayIndicator", EmsConditions.EMPLOYEE_LEAVE_STATUS))).list();
+    }
     
     @SuppressWarnings("unchecked")
 	public int getNumberOfEmployees(){

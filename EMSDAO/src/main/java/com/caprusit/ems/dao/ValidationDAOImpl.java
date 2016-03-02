@@ -150,4 +150,5 @@ public class ValidationDAOImpl implements ValidationDAO {
 		
 		return deptIdList;
 	}
+
 }

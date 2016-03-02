@@ -1,6 +1,5 @@
 package com.caprusit.ems.service;
 
-import java.sql.SQLException;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,11 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.caprusit.ems.conditions.EmsConditions;
+import com.caprusit.ems.dao.IAttendanceDAO;
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.dao.IReportGenerationDAO;
 import com.caprusit.ems.domain.Attendance;
@@ -31,12 +32,15 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	@Autowired
 	private IManageUserDAO manageUserDAO;
 	
+	@Autowired
+	private IAttendanceDAO attendanceDAO;
+	
 	 private int workingHoursPerDay=EmsConditions.WORKING_HOURS_PER_DAY,daysPerMonth=EmsConditions.WORKING_DAYS_PER_MONTH;
       
 	
 	private Logger logger = Logger.getLogger(ReportGenerationServiceImpl.class);
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public List<Integer> getAutoCompleteInfo(int employeeId) {
 		logger.info("Inside ReportGenerationServiceImpl getAutoCompleteInfo() method ");
 		List<Integer> result = reportGenerationDAO.getAutoCompleteInfo(employeeId);
@@ -44,7 +48,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return result;
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public List<String> getAutoCompleteInfo(String employeeId) {
 		logger.info("Inside ReportGenerationServiceImpl getAutoCompleteInfo(String) method ");
 		List<String> result = reportGenerationDAO.getAutoCompleteInfo(employeeId);
@@ -52,7 +56,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return result;
 	}
 	
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getEmployeeWorkingDetailsById(int employeeId) {
 		logger.info("inside ReportGenerationServiceImpl getEmployeeWorkingDetailsById(-)");
 		
@@ -79,7 +83,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		  return JsonUtility.convertToJson(employeeReportMap);
 		 }
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getEmployeeWorkingDetailsByIdAndDate(int employeeId, Date attendanceDate) {
 		logger.info("Inside ReportGenerationServiceImpl getEmployeeWorkingDetailsByIdAndDate(-,-) method ");
 		
@@ -106,7 +110,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getEmployeeWorkingDetailsByDates(int employeeId, Date fromDate, Date toDate) {
 		logger.info("Inside ReportGenerationServiceImpl getAllEmployeeReport() method ");
 		
@@ -134,7 +138,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getSingleEmployeeDetailsById(int employeeId) {
 		logger.info("inside ReportGenerationServiceImpl login()");
 		List<Object> empData = reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
@@ -142,7 +146,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return JsonUtility.convertToJson(empData);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getSingleEmployeeDetailsByEmpName(String employeeId) {
 		logger.info("inside ReportGenerationServiceImpl getEmployeeWorkingDetailsByName()");
 		
@@ -158,7 +162,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return JsonUtility.convertToJson(empData);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getReportByName(String  employeeId) {
 		logger.info("Inside ReportGenerationServiceImpl getReportByName(empId) method ");
 		
@@ -194,7 +198,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String  getReportByDay(String employeeId, Date attendanceDate) {
 		logger.info("Inside ReportGenerationServiceImpl getReportByDay(empId) method ");
 		String string = employeeId;
@@ -229,7 +233,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getReportByNameDates(String employeeId, Date fromDate, Date toDate) {
 		logger.info("Inside ReportGenerationServiceImpl getReportByNameDates() method ");
 		
@@ -265,7 +269,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		  return JsonUtility.convertToJson(employeeReportMap);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getAllEmployeesWorkingDetails() {
 		logger.info("inside ReportGenerationServiceImpl getAllEmployeesWorkingDetails()");
 		List<Attendance> employeeList = reportGenerationDAO.getAllEmployeesWorkingDetails();
@@ -273,7 +277,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return JsonUtility.convertToJson(employeeList);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getAllEmployeesReportByDate(Date attendanceDate) {
 		logger.info("inside ReportGenerationServiceImpl getAllEmployeesReport()");
 		List<Attendance> empData = reportGenerationDAO.getAllEmployeesReportByDate(attendanceDate);
@@ -281,7 +285,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return  JsonUtility.convertToJson(empData);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getEmployeesReportBetweenDates(Date fromDate, Date toDate) {
 		logger.info("inside ReportGenerationServiceImpl getEmployeesReportBetweenDates()");
 		List<Attendance> empData = reportGenerationDAO.getEmployeesReportBetweenDates(fromDate, toDate);
@@ -289,11 +293,14 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return  JsonUtility.convertToJson(empData);
 	}
 
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getTodayReport() {
 
-        List<Attendance> todayPresentiesList = reportGenerationDAO.getTodayAttendance();
-
+        List<Attendance> todayPresentiesList = reportGenerationDAO.getTodayPresentAttendance();
+        List<Attendance> todayLeavesList = reportGenerationDAO.getTodayLeaveAttendance();
+        // add leaves + presnties
+        todayPresentiesList.addAll(todayLeavesList);
+        
 		List<Employee> employeeDetailsList=manageUserDAO.getEmployees();
 		
 		logger.info("employee details list: "+employeeDetailsList);
@@ -311,9 +318,25 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return JsonUtility.convertToJson(toDayReportMap);
 		
 	}
+	/**
+	 * This method is to get today attendance details like absentees and
+	 * Presenties details
+	 */
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
+	public String getTodayAttendanceDetails() {
+		
+		List<Object> absentDetailsList= attendanceDAO.getAbsentEmployeeDetails();
+		List<Attendance> presentiesList = reportGenerationDAO.getTodayPresentAttendance();
+		List<Attendance> leavesList = reportGenerationDAO.getTodayLeaveAttendance();
+		Map<String,Object>  toDayReportMap=new HashMap<String,Object>();		
+		toDayReportMap.put("presentiesList",presentiesList);
+		toDayReportMap.put("absenteesList",absentDetailsList);
+		toDayReportMap.put("leavesList",leavesList);
+		return JsonUtility.convertToJson(toDayReportMap);
+	}
 	
 	 @SuppressWarnings("unchecked")
-	 @Transactional(rollbackFor=SQLException.class,readOnly=true)
+	 @Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getDailyReportOfIndividual(int employeeId, Date attendanceDate) {
 		    logger.info("inside ReportGenerationServiceImpl getDailyReportOfIndividual()");
 		    Date lastDate=null;
@@ -368,7 +391,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * This method is to calculate individual employee 
      * monthly productivity based on given year
      */
-	 @Transactional(rollbackFor=SQLException.class,readOnly=true)
+	 @Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getEmployeeAnnualProductivity(int employeeId, int year) {
 
 		  logger.info("inside ReportGenerationServiceImpl getEmployeeMonthlyProductivity(-,-) method");
@@ -415,7 +438,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * This method is to calculate All employee 
      * monthly productivity based on given year
      */
-	 @Transactional(rollbackFor=SQLException.class,readOnly=true)
+	 @Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getAllEmployeeAnnualProductivity(int year) {
 		
 		 logger.info("inside ReportGenerationServiceImpl getAllEmployeeMonthlyProductivity(-) method");
@@ -473,7 +496,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * call EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-,-) method 
      * to get employee working details for particular week.
      */
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getEmployeeReportForWeekByIdAndWeekDate(int employeeId, String weekDate) throws Exception {
 		
 		logger.info("inside ReportGenerationServiceImpl getEmployeeReportForWeekByIdAndWeekDate(-,-) method");
@@ -513,7 +536,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * call EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-) method 
      * to get employee working details for particular week.
      */
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getAllEmployeeReportForWeekByWeekDate(String weekDate) throws Exception {
 		
 		logger.info("Inside ReportGenerationServiceImpl getAllEmployeeReportForWeekByWeekDate(-) method	"); 
@@ -535,7 +558,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * and we will convert String month to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-)
      * method  to get employee working details for particular month.
      */
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getEmployeeReportForMonthByIdAndMonth(int employeeId, String month) {
 		
 		logger.info("Inside ReportGenerationServiceImpl getEmployeeReportForMonthByIdAndMonth(-,-) method	");
@@ -590,7 +613,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * and we will convert String month to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-)
      * method  to get employee working details for particular month.
      */
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getAllEmployeeReportForMonthByMonth(String month) {
 		
 		logger.info("Inside ReportGenerationServiceImpl getAllEmployeeReportForMonthByMonth(-) method	");
@@ -626,7 +649,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * and we will convert String year to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeeWorkingDetailsByDates(-,-,-)
      * method  to get employee working details for particular month.
      */
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getEmployeeReportForYearByIdAndYear(int employeeId, String year) {
 		
 			logger.info("Inside ReportGenerationServiceImpl getEmployeeReportForYearByIdAndYear(-,-) method	");
@@ -681,7 +704,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * and we will convert String yearDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-)
      * method  to get employee working details for particular month.
      */
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getAllEmployeeReportForYearByYearDate(String yearDate) {
 		
 		logger.info("Inside ReportGenerationServiceImpl getEmployeeReportForYearByIdAndYear(-,-) method	");
@@ -720,7 +743,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      */
 	
 	@SuppressWarnings("unchecked")
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getWeeklyReportOfEmployeeByIdAndWeek(int employeeId, String weekDate) throws ParseException {
 	
 		logger.info("inside ReportGenerationServiceImpl getWeeklyReportOfEmployeeByIdAndWeek(-,-) method");
@@ -799,7 +822,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      */
 	
 	@SuppressWarnings("unchecked")
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getWeeklyReportOfAllEmployeeByWeek(String weekDate) {
 	
 		logger.info("inside ReportGenerationServiceImpl getWeeklyReportOfAllEmployeeByWeek(-,-) method");
@@ -877,7 +900,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
      * This getFromDateAndToDateFromWeekDate(-) method provides fromDate and toDate in java.util.Date format
      *  based on given weekDate of String type.
      */
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public Map<String, Date> getFromDateAndToDateFromWeekDate(String weekDate) {
 		
 		 logger.info("inside ReportGenerationServiceImpl getFromDateAndToDateFromWeekDate(-) method");
@@ -919,7 +942,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
  	 *  By passing employeeId, firstDate, lastDate to the getEmployeeWorkingDetailsByDates(-,-,-) method 
  	 *  get the working details of an employee.
 	 */
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getMonthlyProductivityOfEmployeeByIdAndMonth(int employeeId, String month) {
 		logger.info("Inside ReportGenerationServiceImpl getMonthlyProductivityOfEmployeeByIdAndMonth(-,-) method	");
 		
@@ -976,7 +999,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
  	 *  By passing  firstDate, lastDate to the getEmployeesReportBetweenDates(-,-) method 
  	 *  get the working details of all employee.
 	 */
-	@Transactional(rollbackFor=SQLException.class,readOnly=true)
+	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getMonthlyProductivityOfAllEmployeeByMonth(String month) {
 		logger.info("Inside ReportGenerationServiceImpl getMonthlyProductivityOfAllEmployeeByMonth(-,-) method	");
 		
@@ -1025,5 +1048,6 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
        
 		return JsonUtility.convertToJson(employeeMonthlyReportMap);
 	}
+
 	
 }
