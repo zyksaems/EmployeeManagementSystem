@@ -48,11 +48,6 @@ $("document").ready(function(){
 		var presentTableCount=0;
 		var absentTableCount=0;
 		var leaveTableCount=0;
-	    
-		/* status of employee attendance (dayindicato column of attendance table)  */
-	
-		   var employeeLeave_status=0;
-		   var employeePresent_status=1;
 
 	
 	//console.log("called set default values function");
@@ -65,7 +60,7 @@ $("document").ready(function(){
 	
 	$(todayAttendanceHeading_id).text("Attendance Date: "+todayDateString);
 	
-	console.log("in displayTodayAttendance()");
+	//console.log("in displayTodayAttendance()");
 	 $("#showAbsentDetails").hide();		 
 	 
 		
@@ -73,7 +68,7 @@ $("document").ready(function(){
 		var numberOfPresentiesForPie;
 		var numberOfAbsentiesForPie;
 		var numberOfLeavesForPie;
-		console.log("going to get data");
+		//console.log("going to get data");
 		
 		/*make AJAX call to get data*/
 		$.ajax({
@@ -83,7 +78,7 @@ $("document").ready(function(){
             contentType: "application/json; charset=utf-8",
             success: function(data)
             {
-			    console.log("reply from get today attendance: "+ JSON.stringify(data));
+			   // console.log("reply from get today attendance: "+ JSON.stringify(data));
 			    $("#pieLegend").text(" ");
     		    todayAttendanceDetails=todayAttendance= data;   		    
     		    //console.log("presenties: "+data.noOfPresenties);
@@ -102,7 +97,7 @@ $("document").ready(function(){
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
-               console.log("Error occured while displayPieChart() method");
+               //console.log("Error occured while displayPieChart() method");
               $("#pieLegend").text(" some internal problem occured try  gain");
             }
             
@@ -112,7 +107,7 @@ $("document").ready(function(){
 
 	/*function for back button */
    $(backButton_id).click(function(){
-	   console.log("back button clicked");
+	   //console.log("back button clicked");
 	   hideTables();	   
    }); // END -- $(dailyAttendance_link_id).click() show-piechart-back-button2
    
@@ -121,7 +116,7 @@ $("document").ready(function(){
     * function to hide tables 
     */
    function hideTables(){
-	   console.log("in hide tables fun");
+	   //console.log("in hide tables fun");
 	   $(attendanceChartDiv_id).show();
 	   $(attendanceDetailsTable_id).hide();
 	   $(buttonsDiv_id).hide();
@@ -132,7 +127,7 @@ $("document").ready(function(){
     * function to show tables
     */
     function  showTables(label){
-    	console.log("in shoe table  lable received: "+label);
+    	//console.log("in shoe table  lable received: "+label);
     	if(label == "Absent"){
     		$(detailsHeading_id).text(absentDetailsHeading_msg);  
     		// display absent table
@@ -173,7 +168,7 @@ $("document").ready(function(){
      *  among leave, absent and presenties tables
      */
     function displayOneTable(tableDivId){
-    	 console.log("in displayOneTable(tableDivId) id received: "+tableDivId);
+    	 //console.log("in displayOneTable(tableDivId) id received: "+tableDivId);
     	(tableDivId == presentTableDiv_id) ? $(presentTableDiv_id).show() : $(presentTableDiv_id).hide();
     	(tableDivId == absentTableDiv_id) ? $(absentTableDiv_id).show() : $(absentTableDiv_id).hide();
     	(tableDivId == leaveTableDiv_id) ? $(leaveTableDiv_id).show() : $(leaveTableDiv_id).hide();
@@ -189,20 +184,13 @@ $("document").ready(function(){
     	for(var i=0;i< presentData.length;i++){
     		presentArray[i]=new Array(5);
     		presentArray[i][0]=presentData[i].employeeId;
-    		presentArray[i][1]=presentData[i].attendanceDate;
-    		if(presentData[i].dayIndicator == employeePresent_status){    			
-    			presentArray[i][2]=presentData[i].startTime.substr(12,24);
-        		if(presentData[i].endTime == undefined)
-        			 presentArray[i][3]=stillWorking_msg;    		
-        		else
-        			presentArray[i][3]=presentData[i].endTime.substr(12,24);  
-        		presentArray[i][4]=presentData[i].workingHours;
-    		}
-    		else if(presentData[i].dayIndicator == employeeLeave_status){
-    			presentArray[i][2]=leave_msg;
-    			presentArray[i][3]=leave_msg;
-    			presentArray[i][4]=leave_msg;
-    		} 		
+    		presentArray[i][1]=presentData[i].attendanceDate;    		  			
+    		presentArray[i][2]=presentData[i].startTime.substr(12,24);
+        	if(presentData[i].endTime == undefined)
+        		presentArray[i][3]=stillWorking_msg;    		
+        	else
+        	   presentArray[i][3]=presentData[i].endTime.substr(12,24);  
+        	presentArray[i][4]=presentData[i].workingHours;
     		
     	}
  
@@ -252,7 +240,7 @@ $("document").ready(function(){
                  ]
        	    } ); 
        
-    	console.log("absent table  after data table added: "+absentiesTable);
+    	//console.log("absent table  after data table added: "+absentiesTable);
     	//console.log("absent table  after data table added(stringify): "+JSON.stringify(absentiesTable));
     	
     };// END -- displayAbsentEmployeeData()
@@ -286,7 +274,7 @@ $("document").ready(function(){
     
    /*function for displaying pie chart*/
    function displayPieChart(numberOfPresentiesForPie,numberOfAbsentiesForPie,numberOfleaves){			
-	console.log("in display pie chart");
+	//console.log("in display pie chart");
 	var pieData = [
 					{
 						value:numberOfPresentiesForPie,
@@ -326,7 +314,7 @@ $("document").ready(function(){
     /* After clicking on pie chart  */	
 	$(pieChartCanvas_id).click(function(event){  
 		
-			console.log("Inside onClickOnPieChart () function");				 
+			//console.log("Inside onClickOnPieChart () function");				 
 			var activePoints = myPieChart.getSegmentsAtEvent(event);	//pieMouseEvent	
 			if(activePoints.length != 0){						   
 					console.log("selected lable: "+activePoints[0].label);												
