@@ -18,7 +18,7 @@
                 <table id="month_leave_table" border='2' class="table table-bordered table-striped">
                 <th>S.no</th>
                 <th>Leave Date</th>
-                <th>Day Type</th>
+                <th>Day Type</th>  
                 </table>  
                  </div>
                 
