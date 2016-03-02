@@ -6,36 +6,36 @@
 	position: relative;
 }
 #div1{
-	padding: 20px;
+	/* padding: 20px; */
 	 float:left; 
-	right:20px;
-	top:50px;
+	/* right:20px; */
+	top:30px;
 	 border: 2px solid red;
 }
 #page_title{
-	padding-left: 350px;
+	/* padding-left: 350px; */
 }
 #button_position{
-	padding-left: 295px;
+	 padding-left: 45px; 
 }
 #month_leave_div{
-	padding-left: 250px;
+/* 	padding-left: 250px; */
 }
 #month_leave_table{
-	width: 420px;
+	/* width: 420px; */
 }
 #all_leave_table
 {
-	margin-left:240px;
-	width: 420px; 
+	/* margin-left:240px; */
+	/* width: 420px;  */
 }
 #res{
-	padding-left: 280px;
+	/* padding-left: 280px; */
 }
 
 #month_leave_title{
-	padding-left: 100px;
+	/* padding-left: 100px; */
 }
 #all_leave_title{
-	padding-left: 370px;
+	/* padding-left: 370px; */
 }

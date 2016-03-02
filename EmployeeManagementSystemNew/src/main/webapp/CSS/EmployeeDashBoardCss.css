@@ -2,7 +2,7 @@
 	max-width: 160px;
 	min-width: 100px;
 	top: 100px;
-	right : 20px;
+	right : -1px;
 	width: 250px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -15,5 +15,6 @@
 	
 }
 #loggedout_div{
+	padding-left:50px;
 	padding-top: 55px;
 }

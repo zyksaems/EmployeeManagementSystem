@@ -15,7 +15,7 @@
 .icon-setting {
 	font-size: 25px;
 	top: 60px;
-	left: 55px;
+	left: 35px;
 }
 ul {
 	padding: 0px;
@@ -23,8 +23,9 @@ ul {
 }
 
 .title_menu {
-	top: 10px;
-	right: 7px;
+	top: 15px;
+	left:45px;
+	/* right: 7px; */
 }
 
 a:hover {
