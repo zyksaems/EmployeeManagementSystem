@@ -80,12 +80,12 @@ $(function() {
                         
                     	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime.substr(12,23);
                     	
-                    	dataSet[i]=new Array(5);
+                    	dataSet[i]=new Array(4);
                     	dataSet[i][0]=data[i].attendanceDate;
                     	dataSet[i][1]=data[i].startTime.substr(12,23);
                     	dataSet[i][2]=endTime;
                     	dataSet[i][3]=data[i].workingHours;
-                    	dataSet[i][4]=data[i].dayIndicator;
+                    	/*dataSet[i][4]=data[i].dayIndicator;*/
                     	
                             companyproduct=companyproduct+9;
                             empproduct=empproduct+data[i].workingHours;
@@ -104,8 +104,8 @@ $(function() {
             	            { title: "Date" },
             	            { title: "StartTime" },
             	            { title: "EndTime" },
-            	            { title: "WorkHours","orderable": false },
-            	            { title: "DayIndicator","orderable": false  }
+            	            { title: "WorkHours","orderable": false }
+            	           
                       ]
             	    } );
                  	}
@@ -172,14 +172,14 @@ $(function() {
 		                        
 		                    	var endTime=(data[i].endTime == undefined)?"Not Logged Out":data[i].endTime.substr(12,23);
 		                    	
-		                    	dataSet[i]=new Array(6);
+		                    	dataSet[i]=new Array(5);
 		                    	
 		                    	dataSet[i][0]=data[i].employeeId;
 		                    	dataSet[i][1]=data[i].attendanceDate;
 		                    	dataSet[i][2]=data[i].startTime.substr(12,23);
 		                    	dataSet[i][3]=endTime;
 		                    	dataSet[i][4]=data[i].workingHours;
-		                    	dataSet[i][5]=data[i].dayIndicator;
+		                    	/*dataSet[i][5]=data[i].dayIndicator;*/
 		                    	
 		                            companyproduct=companyproduct+9;
 		                            empproduct=empproduct+data[i].workingHours;
@@ -200,8 +200,8 @@ $(function() {
 		               	            { title: "Date" },
 		               	            { title: "StartTime" },
 		               	            { title: "EndTime" },
-		               	            { title: "WorkHours","orderable": false },
-		               	            { title: "DayIndicator","orderable": false  }
+		               	            { title: "WorkHours","orderable": false }
+		               	            
 		                         ]
 		               	    } );
 		                    	}

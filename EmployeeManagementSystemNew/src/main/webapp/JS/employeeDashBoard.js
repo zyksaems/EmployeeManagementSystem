@@ -89,6 +89,7 @@
 		    	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));
 		    	        	employeeReport=data.employeeReport;
 		    	        	loggedInEmployeeName=data.empName; // loggedInEmployeeName  is in EmployeeDetails.js file
+		    	        	localStorage.setItem("loggedEmployeeName",loggedInEmployeeName);
 		    	        	$(employeeName_id).append(loggedInEmployeeName);
 		    	        	if(employeeReport.length==0){
 		    	        		//console.log("today employee is not logged in");

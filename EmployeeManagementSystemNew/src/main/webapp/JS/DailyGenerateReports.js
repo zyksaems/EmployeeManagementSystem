@@ -79,7 +79,7 @@ $(function() {
                 	$("#tbody").show();
                 	txt+="<tbody id='remove'>"
                         
-                            txt += "<tr><td>"+report.attendanceDate+"</td><td>"+report.startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+report.workingHours+"</td><td>"+report.dayIndicator+"</td></tr>";
+                            txt += "<tr><td>"+report.attendanceDate+"</td><td>"+report.startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+report.workingHours+"</td></tr>";
                             companyproduct=companyproduct+9;
                             empproduct=empproduct+report.workingHours;
                 	txt+="</tbody>";
@@ -145,14 +145,14 @@ $(function() {
 		                    	
 		                          /*  txt += "<tr><td>"+data[i].employeeId+"</td><td>"+data[i].attendanceDate+"</td><td>"+data[i].startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+data[i].workingHours+"</td><td>"+data[i].dayIndicator+"</td></tr>";*/
 		                          
-		                    	dataSet[i]=new Array(6);
+		                    	dataSet[i]=new Array(5);
 		                    	
 		                    	dataSet[i][0]=data[i].employeeId;
 		                    	dataSet[i][1]=data[i].attendanceDate;
 		                    	dataSet[i][2]=data[i].startTime.substr(12,23);
 		                    	dataSet[i][3]=endTime;
 		                    	dataSet[i][4]=data[i].workingHours;
-		                    	dataSet[i][5]=data[i].dayIndicator;
+		                  /*  	dataSet[i][5]=data[i].dayIndicator;*/
 		                    	
 		                    	companyproduct=companyproduct+9;
 		                            empproduct=empproduct+data[i].workingHours;
@@ -172,8 +172,8 @@ $(function() {
 		               	            { title: "Date" },
 		               	            { title: "StartTime" },
 		               	            { title: "EndTime" },
-		               	            { title: "WorkHours","orderable": false },
-		               	            { title: "DayIndicator","orderable": false  }
+		               	            { title: "WorkHours","orderable": false }
+		               	           
 		                         ]
 		               	    } );
 		                    	}

@@ -47,7 +47,6 @@
 						<th>StartTime</th>
 						<th>EndTime</th>
 						<th>WorkHours</th>
-						<th>DayIndicator</th>
 					</tr>
 				</thead>
 			</table>
