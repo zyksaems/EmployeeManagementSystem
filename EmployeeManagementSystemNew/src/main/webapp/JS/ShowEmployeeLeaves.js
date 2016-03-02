@@ -1,7 +1,7 @@
 $("document").ready(
 			function() { 
                 var allleave=0;
-                var monthleave=0;
+              /*  var monthleave=0;*/
 				$("#res").hide();
 				$("#month_leave_div").hide();
 				$("#month_leave_table").hide();
@@ -78,6 +78,7 @@ $("document").ready(
                          	allleave=allleave+1;
            	                }
            				else{
+           					$("#all_leave_table").hide();
            					$("#res").show();
            					document.getElementById("res").innerHTML="NO MATCH FOUND";
            				
@@ -85,6 +86,7 @@ $("document").ready(
            			});
            			 
            			request.fail(function( jqXHR, textStatus ) {
+           				$("#all_leave_table").hide();
            				$("#res").show();
            				document.getElementById("res").innerHTML="INTERNAL PROBLEM PLEASE TRY AGAIN.";
            			});
@@ -98,11 +100,12 @@ $("document").ready(
                 
                 // Month Leave Date Start
                 $("#month_leave_submit").click(function(){
+               	        $("#removeBody").remove();
                 	$("#res").hide();
                 	$("#all_leave_table").hide();
                 	var month=$("#month_leaves_input").val();
-                	if(allleave==0)
-            		{
+                	/*if(monthleave==0)
+            		{*/
             	 var request = $.ajax({
        			  url: "/EmployeeManagementSystemNew/getLoggedEmployeeMonthleaveDates.do",
        			  method: "POST",
@@ -128,13 +131,14 @@ $("document").ready(
        	                            
        	                    }
        	                    if(txt != ""){
-       	                        $("#month_leave_table").append("<tbody id='tablebody'>"+txt+"</tbody");
+       	                        $("#month_leave_table").append("<tbody id='removeBody'>"+txt+"</tbody");
        	                    }
                          
        	              	  
-                     	allleave=allleave+1;
+       	               /*  monthleave=monthleave+1;*/
        	                }
        				else{
+       					$("#month_leave_table").hide();
        					$("#res").show();
        					document.getElementById("res").innerHTML="NO MATCH FOUND";
        				
@@ -142,13 +146,14 @@ $("document").ready(
        			});
        			 
        			request.fail(function( jqXHR, textStatus ) {
+       				$("#month_leave_table").hide();
        				$("#res").show();
        				document.getElementById("res").innerHTML="INTERNAL PROBLEM PLEASE TRY AGAIN.";
        			});
-            		}
+            		/*}
             	else{
             		$("#month_leave_table").show();
-            	}
+            	}*/
                 	
                 });
                 

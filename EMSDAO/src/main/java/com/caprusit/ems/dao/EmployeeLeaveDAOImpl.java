@@ -109,10 +109,13 @@ public class EmployeeLeaveDAOImpl implements IEmployeeLeaveDAO{
 	     
 	     Date dateOfMonth2= calendar.getTime();
 	    		 
-	    
+	     System.out.println(dateOfMonth2);
+	     
 		Session session = factory.openSession();
-		SQLQuery qry=session.createSQLQuery("select  a.ATTENDANCEDATE,d.DAYNAME from PRAKASH.ATTENDANCE_TABLE a INNER JOIN PRAKASH.DAYTYPE_TABLE d on a.DAYINDICATOR=d.DAYINDICATOR where a.employeeid="+employeeId+" AND  a.DAYINDICATOR !=1 AND a.ATTENDANCEDATE  between("+dateOfMonth1+","+dateOfMonth2+")");                                 
-		
+		SQLQuery qry=session.createSQLQuery("select  a.ATTENDANCEDATE,d.DAYNAME from PRAKASH.ATTENDANCE_TABLE a INNER JOIN PRAKASH.DAYTYPE_TABLE d on a.DAYINDICATOR=d.DAYINDICATOR where a.employeeid="+employeeId+" AND  a.DAYINDICATOR !=1 AND (a.ATTENDANCEDATE >=:startDate  AND a.ATTENDANCEDATE <=:endDate )");                                 
+		 qry.setDate("startDate",dateOfMonth1);
+		 qry.setDate("endDate",dateOfMonth2);
+		 
 		List<Object> list =qry.list();
 		return list;
 	}
