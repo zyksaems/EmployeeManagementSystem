@@ -1,5 +1,4 @@
-
-   /*This file name: EmployeeMonthlyGenerateReport.js  */
+ /*This file name is : EmployeeMonthlyGenerateReport.js */
 
 $('document').ready(function(){
 	   
@@ -10,6 +9,10 @@ $('document').ready(function(){
 	   var employeeMonthlyReportForm_id="#employee-monthly-report-form";
 	   var monthlyReportTable_id="#employee-monthly-report-table";
 	   var employeReportDiv_id="#employee-monthly-report-div";
+	   var employeeDetailsDiv_id="#Employee_Details";
+	   var paginationDiv_Id="#table_pag_div";
+	   var tableId="#table";
+	   var tableId1="#table1";
 	   
 	   /*variables to store requests*/
 	   var applicationName="EmployeeManagementSystemNew";
@@ -28,12 +31,17 @@ $('document').ready(function(){
 	   
 	   var month="";
 	   var employeeId="";
+	   var monthlyReportData=0;
+	   var clearTable=null;
 
 	   
 	   //console.log("in employee monthly report.js file");
 	   
 	   /*first hide employee report div*/
 	   $(employeReportDiv_id).hide();
+	   $(employeeDetailsDiv_id).hide();
+	   $(paginationDiv_Id).hide();
+	   $(tableId1).hide();
 	   
 	   /**
 	    * This function is to stop reloading page on form submit
@@ -45,7 +53,7 @@ $('document').ready(function(){
 	     }); // END -- $(employeeMonthlyReportForm_id).submit()
 	   
 	   /**
-	    * This function excutes when click on show button
+	    * This function executes when click on show button
 	    */
 	   $(emplopyeeMonthlyReportButton_id).click(function(){
 		   
@@ -62,6 +70,9 @@ $('document').ready(function(){
 		   else{
 			   setValidationMessage(invalidMonth_msg);
 			   $(employeReportDiv_id).hide();
+			   $(employeeDetailsDiv_id).hide();
+			   $(paginationDiv_Id).hide();
+			   $(tableId1).hide();
 		   }	   
 		   
 	   }); //  END -- $(emplopyeeMonthlyReportButton_id).click)
@@ -88,20 +99,43 @@ $('document').ready(function(){
    		    contentType: "application/json; charset=utf-8",
    	        success: function(data)
    	        {
-   	        	setValidationMessage("");
-   	        	console.log("data returned from server for today attendance status :"+ data);
-   	        	console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));   
-   	        	// function call
-   	        	appendDataToTable(data.monthlyWorkingDetails);
-   	        	$(employeReportDiv_id).show();
-   	        		        	         
+   	        		setValidationMessage("");
+   	        		console.log("data returned from server for today attendance status :"+ data);
+   	        		console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));   
+				   var empId=employeeId;
+					var empName=data.employeeName;
+					var empDesignation=data.employeeDesignation;
+					
+					$("#emp_id").text(empId);
+					$("#emp_name").text(empName);
+		            $("#emp_designation").text(empDesignation);
+   	        	
+		            if(data.monthlyWorkingDetails.length!=0){
+		            // function call
+		        	appendDataToTable(data.monthlyWorkingDetails);
+	   	        	$(employeReportDiv_id).show();
+	   	        	$(employeeDetailsDiv_id).show();
+	   	        	$(paginationDiv_Id).show();
+	   	        	$(tableId1).hide();
+		            }
+	   	        	else{
+				   		$(employeReportDiv_id).show();
+		   	        	$(employeeDetailsDiv_id).show();
+				   		$(paginationDiv_Id).hide();
+				   		$(tableId1).show();
+				   		
+				   		$(tableId1).html("<tr><td><b>"+noReports_msg+"</b></td></tr>");
+				   		setValidationMessage(noReports_msg);
+			   }
    	        },
-   	        error: function(jqXHR, textStatus, errorThrown)
+   	        error: function(jqxHR, textStatus, errorThrown)
    	        {
    	            
    	            console.log('ERRORS: ' + textStatus);
    	            setValidationMessage(internalProblem_msg);
    	            $(employeReportDiv_id).hide();
+   	            $(employeeDetailsDiv_id).hide();
+   	            $(paginationDiv_Id).hide();
    	            // STOP LOADING SPINNER
    	            //$(addEmployeeSuccessMsg_id).text(internalProblem_msg);
    	        }
@@ -109,63 +143,91 @@ $('document').ready(function(){
    	    });//END -- $.ajax()
 		   
 	   }; // END -- makeAjaxCallForMonthlyReport(month)
+	   
 	   /**
 	    * This function is to append data to employee monthly report table
 	    */
 	   function appendDataToTable(data){
 		  
-		   //console.log("in appendDataToTable data received: "+data);
+		   console.log("in appendDataToTable data received: "+data);
 		   var length=data.length;
 		   var workedHours;
 		   var startTime=null;
 		   var endTime=null;
-		   //console.log("data length: "+length);
-		   if(length >= 1){			   
-			   var tableHeader="<tr><th class='text-center'>Attendance date</th><th class='text-center'>Login time</th><th class='text-center'>Logout time</th><th class='text-center'>Working hours (h:m)</th></tr>";
-               $(monthlyReportTable_id).html(tableHeader);
-               $(monthlyReportTable_id).append("<tbody>");
-    		   for(var i=0;i<length;i++){
-    			   if(data[i].dayIndicator == 1){
-    				    // function call
-    				   workedHours=convertWorkingHours(data[i].workingHours);
 
-    				   if(data[i].startTime!= undefined){
-    					   startTime=data[i].startTime.substring(12,24);
-    				   	}
-    				   
-    				   if(data[i].endTime!= undefined){
-   					   		endTime=data[i].endTime.substring(12,24);
-    				  	}
-    				   else{
-    					   	endTime="Not Logged Out";
-    				   }
-    				   //console.log("minutes in floatValue"+hour);
-    				   $(monthlyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td>"+startTime+
-    						   "</td><td>"+endTime+"</td><td>"+workedHours+"</td></tr>");
-    			   		}
+		   if(length >0){		
+			   
+			   if(monthlyReportData!=0)
+			   {
+				   clearTable.clear().draw();
+			   }
+             dataSet=new Array(length);
+			   
+			   
+    		   for(var i=0;i<length;i++){
+    			   
+    			   /*function call for converting working hours in hours and minute format*/
+				   workedHours=convertWorkingHours(data[i].workingHours);
+
+				   if(data[i].startTime!= undefined){
+					   startTime=data[i].startTime.substring(12,24);
+				   	}
+				   if(data[i].endTime!= undefined){
+					   		endTime=data[i].endTime.substring(12,24);
+				  	}
+				   else{
+					   	endTime="Not Logged Out";
+				   }
+				   
+				   	dataSet[i]=new Array(4);
+					dataSet[i][0]=data[i].attendanceDate;
+               		dataSet[i][1]=startTime;
+               		dataSet[i][2]=endTime;
+               		dataSet[i][3]=workedHours;
+    			
+               		
+    			   if(data[i].dayIndicator == 1){
+   						dataSet[i][0]=data[i].attendanceDate;
+                  		dataSet[i][1]=startTime;
+                  		dataSet[i][2]=endTime;
+                  		dataSet[i][3]=workedHours;
+    				  }
     			   else if(data[i].dayIndicator == 0){
-    				   //console.log("indicator is  0: ");
-    				   $(monthlyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+absent_msg+"</td></tr>");
+    				   	dataSet[i][0]=data[i].attendanceDate;
+   						dataSet[i][1]=" ";
+   						dataSet[i][2]=absent_msg;
+                   		dataSet[i][3]=" ";
     			   }
     			   else{
-    				   $(monthlyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td colspan='3'>"+onLeave_msg+"</td></tr>");
+    				   	dataSet[i][0]=data[i].attendanceDate;
+  						dataSet[i][1]=" ";
+  						dataSet[i][2]=onLeave_msg;
+                  		dataSet[i][3]=" ";
     			   }
-    			   
-    			   
     		   }
-    		   $(monthlyReportTable_id).append("</tbody>");			   
+    			
+           	 if(monthlyReportData==0)
+              	{
+           	clearTable=$(tableId).DataTable( {
+         	        data: dataSet,
+         	     "lengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "All"]],
+         	        columns: [
+          
+         	            { title: "Date" },
+         	            { title: "StartTime" },
+         	            { title: "EndTime" },
+         	            { title: "WorkHours (hh:mm)","orderable": false }
+         	           
+                   ]
+         	    } );
+              	}
+           	 else{
+           		 	clearTable.rows.add(dataSet).draw();
+           	 		}
+           	 		monthlyReportData= monthlyReportData+1;
 		   }
-		   else{
-			   $(monthlyReportTable_id).html("<tr><td><b>"+noReports_msg+"</b></td></tr>");
-			   setValidationMessage(noReports_msg);
-		   }
-		  
-		   
-		   console.log("table data: "+$(monthlyReportTable_id).val());
-		   //$(monthlyReportTable_id).append();
 		   
 	   }; // END -- appendDataToTable(data)
-	   
 	   
 	   /*variables for converting working hours into minutes*/
 	   var workedHours;

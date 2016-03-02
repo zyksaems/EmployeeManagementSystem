@@ -4,15 +4,26 @@
 <jsp:include page="EmployeeLeftMenu.jsp"></jsp:include>
 
         <script src="./JS/EmployeeMonthlyGenerateReport.js"></script>
-        
+       
           <div  class="row">   
                   <br>      
                   <div class="col-sm-8">
                      <div id="employee-monthly-report-div">
                         <div class="alert alert-info text-center"><strong>Monthly Report</strong></div>
-                        <table id="employee-monthly-report-table" class="table table-striped text-center" align="center">                      
-                                            
-                        </table>
+
+                        <div id="Employee_Details">
+							Employee ID :&nbsp;&nbsp;<span id="emp_id"></span><br />
+							Employee Name :&nbsp;&nbsp;<span id="emp_name"></span><br />
+							Employee Designation :&nbsp;&nbsp;<span id="emp_designation"></span>
+						</div>
+						<br/>
+						<div id="table_pag_div" >
+							 <table id="table" border='2' class="table table-bordered table-striped hand" >
+							</table>
+						</div>
+						
+						<table id="table1" border='2' class="table table-bordered table-striped alert alert-info text-center"></table>
+						
                       </div>
                   </div>
                   <div class="col-sm-2">
@@ -41,13 +52,9 @@
             
                          </form>
                   </div>                             
-            </div>
-
 
 <!---------------------------------------------------------------  write all code above this line   -------------------------------------------------------------- -->
      </div>  <!-- End of  "row" -->
-     
-   </div> <!-- End of  "container-fluid" -->
    
  </body>
  

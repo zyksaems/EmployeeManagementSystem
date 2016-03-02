@@ -26,6 +26,10 @@
   <script src="./JS/EmployeeLinksControll.js "></script>
   <script src="./JS/MakeLinkAsActive.js "></script> 
   <link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
+  
+   <!-- CDN for pagination and data table  -->
+   <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
 
 </head>
 <body>

@@ -27,6 +27,8 @@ $('document').ready(function(){
 	   
 	   var year="";
 	   var employeeId="";
+	   var clearTable=null;
+	   var annualReportData=0;
 
 	   
 	   //console.log("in employee annual report.js file");
