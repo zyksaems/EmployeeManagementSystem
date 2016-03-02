@@ -34,7 +34,7 @@
    	   // function call to get employee id
    	   makeAjaxCallTogetLoggedInEmployeeId();
    	   // execute  attendance after 500ms
-	   setTimeout(makeAjaxCallToKnowTodayAttendanceStatus,500);
+	   setTimeout(makeAjaxCallToKnowTodayAttendanceStatus,100);
    	
    	 /**
    	   * This function is to know logged in employee id
@@ -73,8 +73,8 @@
 		    console.log("in  makeAjaxCallToKnowTodayAttendanceStatus(employeeId,attendanceDateMills)");
 		    if(loggedInEmployeeId == undefined){
 		    	//console.log("logged in employee id is undefined  -- setting timeout()");
-		    	setTimeout(makeAjaxCallTogetLoggedInEmployeeId,500);
-		    	setTimeout(makeAjaxCallToKnowTodayAttendanceStatus,1000);
+		    	setTimeout(makeAjaxCallTogetLoggedInEmployeeId,300);
+		    	setTimeout(makeAjaxCallToKnowTodayAttendanceStatus,500);
 		    }
 		    else{
 		    	   var attendanceDateMills=new Date().getTime();
@@ -91,6 +91,7 @@
 		    	        	loggedInEmployeeName=data.empName; // loggedInEmployeeName  is in EmployeeDetails.js file
 		    	        	localStorage.setItem("loggedEmployeeName",loggedInEmployeeName);
 		    	        	$(employeeName_id).append(loggedInEmployeeName);
+		    	        	$("#loggedout_employee-name").text(loggedInEmployeeName);
 		    	        	if(employeeReport.length==0){
 		    	        		//console.log("today employee is not logged in");
 		    	        		$(employeeLofginTime_id).text(todayNotLoggedIn_msg);

@@ -3,8 +3,12 @@
   
 $("document").ready(function(){
 	
+	function getNameOfLoggedEmployee(){
 	var employeename=localStorage.getItem("loggedEmployeeName");
-	$("#loggedout_employee-name").append(employeename);
+	$("#loggedout_employee-name").text(employeename);
+	}
+	
+	 setTimeout(getNameOfLoggedEmployee,150);
 	
 	// apply accordian to accordian
 	$("#accordion").accordion();
@@ -29,5 +33,4 @@ $("document").ready(function(){
 			},"json");
     	
     });// END -- $(adminLogout_link_id).click()
-    
 });// END -- $("document").ready()
