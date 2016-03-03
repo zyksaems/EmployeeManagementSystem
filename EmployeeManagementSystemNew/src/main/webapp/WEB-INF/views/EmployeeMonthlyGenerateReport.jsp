@@ -4,6 +4,8 @@
 <jsp:include page="EmployeeLeftMenu.jsp"></jsp:include>
 
         <script src="./JS/EmployeeMonthlyGenerateReport.js"></script>
+         <!-- custom css for setting data table  --> 
+        <link rel="stylesheet" href="./CSS/EmployeeReportGeneration.css"> 
        
           <div  class="row">   
                   <br>      
@@ -18,11 +20,11 @@
 						</div>
 						<br/>
 						<div id="table_pag_div" >
-							 <table id="table" border='2' class="table table-bordered table-striped hand" >
+							 <table id="data-found-table" border='2' class="table table-bordered table-striped text-center" >
 							</table>
 						</div>
 						
-						<table id="table1" border='2' class="table table-bordered table-striped alert alert-info text-center"></table>
+						<table id="data-not-found-table" border='2' class="table table-bordered table-striped alert alert-info text-center"></table>
 						
                       </div>
                   </div>

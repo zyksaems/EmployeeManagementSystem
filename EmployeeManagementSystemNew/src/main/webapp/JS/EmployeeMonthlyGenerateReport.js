@@ -11,8 +11,8 @@ $('document').ready(function(){
 	   var employeReportDiv_id="#employee-monthly-report-div";
 	   var employeeDetailsDiv_id="#Employee_Details";
 	   var paginationDiv_Id="#table_pag_div";
-	   var tableId="#table";
-	   var tableId1="#table1";
+	   var tableId="#data-found-table";
+	   var tableId1="#data-not-found-table";
 	   
 	   /*variables to store requests*/
 	   var applicationName="EmployeeManagementSystemNew";
@@ -102,7 +102,7 @@ $('document').ready(function(){
    	        		setValidationMessage("");
    	        		console.log("data returned from server for today attendance status :"+ data);
    	        		console.log("data returned from server for today attendance status  (Stringify):"+ JSON.stringify(data));   
-				   var empId=employeeId;
+   	        		var empId=employeeId;
 					var empName=data.employeeName;
 					var empDesignation=data.employeeDesignation;
 					
@@ -211,15 +211,20 @@ $('document').ready(function(){
            	clearTable=$(tableId).DataTable( {
          	        data: dataSet,
          	     "lengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "All"]],
-         	        columns: [
+         	     "columnDefs": [
+              									{ 
+              										className: "dt-head-center", "targets": [ 0 ] 
+              									}
+              								],
+         	        columns:		 [
           
-         	            { title: "Date" },
-         	            { title: "StartTime" },
-         	            { title: "EndTime" },
-         	            { title: "WorkHours (hh:mm)","orderable": false }
+         	                		  			{ title: "Date" },
+         	                		  			{ title: "StartTime" },
+         	                		  			{ title: "EndTime" },
+         	                		  			{ title: "WorkHours (hh:mm)","orderable": false }
          	           
-                   ]
-         	    } );
+         	                		  	    ]
+           							} );
               	}
            	 else{
            		 	clearTable.rows.add(dataSet).draw();
@@ -241,7 +246,7 @@ $('document').ready(function(){
 			   workedHours=parseInt(wHours, 10);
 			   workedMinutes=Math.round((wHours-workedHours)*60);			
 			   //console.log("calculated worked hours: "+workedHours+" "+workedMinutes);
-			   return workedHours+":"+workedMinutes
+			   return workedHours+" "+":"+" "+workedMinutes;
 		   
 	   }; // END -- convertWorkingHours()
 	   

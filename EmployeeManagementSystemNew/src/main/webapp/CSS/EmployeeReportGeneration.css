@@ -1,0 +1,12 @@
+data-found-table.display thead th, tbody{
+background-color: green;
+font-family:Calibri;
+font-weight: bold;
+background-position: center bottom;
+cursor: hand;
+}
+
+#table_pag_div{
+	padding-left:180px;
+	padding-right: 280px;
+}

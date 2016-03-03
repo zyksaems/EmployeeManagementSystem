@@ -4,15 +4,29 @@
 <jsp:include page="EmployeeLeftMenu.jsp"></jsp:include>
 
         <script src="./JS/EmployeeAnnualGenerateReport.js"></script>
+         <!-- custom css for setting data table  --> 
+        <link rel="stylesheet" href="./CSS/EmployeeReportGeneration.css"> 
         
           <div  class="row">   
                   <br>      
                   <div class="col-sm-8">
                      <div id="employee-annual-report-div">
                         <div class="alert alert-info text-center"><strong>Annual Report</strong></div>
-                        <table id="employee-annual-report-table" class="table table-striped text-center" align="center">                      
-                                            
-                        </table>
+                        
+                         <div id="Employee_Details">
+							Employee ID :&nbsp;&nbsp;<span id="emp_id"></span><br />
+							Employee Name :&nbsp;&nbsp;<span id="emp_name"></span><br />
+							Employee Designation :&nbsp;&nbsp;<span id="emp_designation"></span>
+						</div>
+						<br/>
+						
+						<div id="table_pag_div" >
+							 <table id="data-found-table" border='2' class="table table-bordered table-striped text-center" >
+							</table>
+						</div>
+						
+						<table id="data-not-found-table" border='2' class="table table-bordered table-striped alert alert-info text-center"></table>
+						
                       </div>
                   </div>
                   <div class="col-sm-2">
