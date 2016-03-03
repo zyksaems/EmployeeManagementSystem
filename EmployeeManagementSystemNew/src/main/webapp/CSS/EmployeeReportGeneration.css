@@ -1,6 +1,5 @@
 data-found-table.display thead th, tbody{
-background-color: green;
-font-family:Calibri;
+background-color: purple;
 font-weight: bold;
 background-position: center bottom;
 cursor: hand;
@@ -9,4 +8,9 @@ cursor: hand;
 #table_pag_div{
 	padding-left:180px;
 	padding-right: 280px;
+}
+
+#Employee_Details{
+	color: purple;
+	font-weight: bold;
 }
