@@ -8,7 +8,7 @@ $("document").ready(function(){
 	$("#loggedout_employee-name").text(employeename);
 	}
 	
-	 setTimeout(getNameOfLoggedEmployee,150);
+	 setTimeout(getNameOfLoggedEmployee,200);
 	
 	// apply accordian to accordian
 	$("#accordion").accordion();

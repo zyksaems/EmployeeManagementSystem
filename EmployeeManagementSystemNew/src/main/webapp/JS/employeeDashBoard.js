@@ -16,7 +16,7 @@
 	   
 	   // set accordion first tab to enable
 	   $("#accordion").accordion({
-			 active: 1
+			 active: 0
 		});
 	   
 	   /*variables to store requests*/
@@ -47,8 +47,8 @@
    	   // function call to get employee id
    	   makeAjaxCallTogetLoggedInEmployeeId();
    	   // execute  attendance after 500ms
-	   setTimeout(makeAjaxCallToKnowTodayAttendanceStatus,500);
-	   setTimeout(leaveNotificationForEmployee,1000);
+	   setTimeout(makeAjaxCallToKnowTodayAttendanceStatus,100);
+	   setTimeout(leaveNotificationForEmployee,500);
 	  
    	
    	 /**

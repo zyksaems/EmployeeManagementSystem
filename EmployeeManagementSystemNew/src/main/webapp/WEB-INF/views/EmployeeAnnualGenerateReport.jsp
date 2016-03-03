@@ -11,9 +11,10 @@
  		<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
  		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
         
-          <div  class="row">   
-                  <br>      
-                  <div class="col-sm-8">
+          <div  class="col-sm-10">   
+                  <br>  
+                  <div class="col-sm-1"></div>    
+                  <div class="col-sm-9">
                      <div id="employee-annual-report-div">
                         <div class="alert alert-info text-center"><strong>Annual Report</strong></div>
                         

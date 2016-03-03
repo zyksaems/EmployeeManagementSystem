@@ -9,8 +9,8 @@
 
            <link rel="stylesheet" href="./CSS/employeeDashboard.css">
           
-          
-          <form>
+          <div class="col-sm-10">
+          <form >
           
           		<!-- <p id="logged-in-employee-name"  class="name-heading">Hi </p> -->
           		<br>
@@ -19,7 +19,7 @@
           		
           		</p>
           		<p></p>
-            <div class="row">   
+            <div class="row text-center" id="ApplyLeavePadding">   
             	       
                 
                   <!-- <div class="col-sm-10">
@@ -42,7 +42,7 @@
                 	
                 	<div class="col-sm-10">
                        <div class="form-group">
-      						 <textarea class="form-control" rows="10" id="text-for-leave" placeholder="Text Here"></textarea>
+      						 <textarea class="form-control" rows="10" id="text-for-leave" placeholder="Text Here"></textarea><br />
       						 <div align="left">
       						 <button type="button" class="btn btn-primary" onclick="sendMail();">Apply</button>
       						  <button type="reset" class="btn btn-warning">Reset All</button>
