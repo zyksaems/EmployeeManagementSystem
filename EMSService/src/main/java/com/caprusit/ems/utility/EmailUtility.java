@@ -96,8 +96,9 @@ public class EmailUtility {
 			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientMailId));
 			mimeMessage.setSubject(subject);
 			mimeMessage.setText("Dear " + recipientName+"," + message +" \n\nRegards,\nCaprusIT Team.");
-			Address [] arr=new Address[ccMailIds.length];
+			
 			if(ccStatus){
+				Address [] arr=new Address[ccMailIds.length];
 				//logger.info(" cc mail ids list: ");
 				for( int i=0;i< ccMailIds.length;i++){					
 					//logger.info(" "+ccMailIds[i]);
