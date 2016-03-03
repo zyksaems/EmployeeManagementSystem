@@ -143,7 +143,7 @@
 				   }
     			   if(data[i].dayIndicator == employeePresent_status){
     				    // function call
-    				   workedHours=convertWorkingHours(data[i].workingHours);
+    				   workedHours=convertWorkingHours(data[i].workingHours); // This function is in ConvertWorkingHours.js file
     				   //console.log("minutes in floatValue"+hour);
     				   $(weeklyReportTable_id).append("<tr><td>"+data[i].attendanceDate+"</td><td>"+startTime+
     						   "</td><td>"+endTime+"</td><td>"+workedHours+"</td></tr>");
@@ -170,23 +170,6 @@
 		   //$(weeklyReportTable_id).append();
 		   
 	   }; // END -- appendDataToTable(data)
-	   
-	   
-	   /*variables for converting working hours into minutes*/
-	   var workedHours;
-	   var workedMinutes;
-	   
-	   /**
-	    * This function is to convert working hour into minutes
-	    */
-	   function convertWorkingHours(wHours){
-		       //console.log("in convertWorkingHours(wHours)");
-			   workedHours=parseInt(wHours, 10);
-			   workedMinutes=Math.round((wHours-workedHours)*60);			
-			   //console.log("calculated worked hours: "+workedHours+" "+workedMinutes);
-			   return workedHours+":"+workedMinutes
-		   
-	   }; // END -- convertWorkingHours()
 	   
 	   
    }); // END -- $('document').ready(function())

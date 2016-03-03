@@ -136,14 +136,14 @@
   	        success: function(data)
   	        {
   	        	console.log("data returned from server for add single emoloyee:"+ JSON.stringify(data));
-  	        	 if(data.employeeName == undefined){
-  	        		 console.log("bname undefined");
-  	        		
+  	        	 if(data == -1){
+  	        		 console.log("session expired!!!");
+  	        		 window.location.reload();
   	        	 }  
   	        	 else{
-  	        		 console.log("name defined")
+  	        		printBarChart(data.workingHoursArray,data.nonWorkingHoursArray);
   	        	 }
-  	        	printBarChart(data.workingHoursArray,data.nonWorkingHoursArray);
+  	        	
   	        },
   	        error: function(jqXHR, textStatus, errorThrown)
   	        {

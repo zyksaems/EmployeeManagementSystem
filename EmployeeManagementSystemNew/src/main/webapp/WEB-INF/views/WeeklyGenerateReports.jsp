@@ -1,5 +1,7 @@
  <jsp:include page="AdminTemplate.jsp"></jsp:include>
 <script src="./JS/WeeklyGenerateReports.js"></script>
+<script src="./JS/ConverWorkingHours.js"></script>
+
 	<div class="row generateposition" id="weekly-productivity-div">
 	<h3 align="center"><b>Weekly Attendance Reports</b></h3>
 	<div id="searchcriteria">

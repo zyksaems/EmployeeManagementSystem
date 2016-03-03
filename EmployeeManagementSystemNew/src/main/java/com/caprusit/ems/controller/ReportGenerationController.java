@@ -330,25 +330,28 @@ public class ReportGenerationController {
 	   * getWeeklyReportOfEmployeeByIdAndWeek(-) method display the working details of an employee for a week using line chart.		 
 	   * @throws ParseException 
 	   */
-	@RequestMapping(value = "/getWeeklyReportOfEmployeeByIdAndWeek", method = RequestMethod.POST)
-	public @ResponseBody String getWeeklyReportOfEmployeeByIdAndWeek(@RequestParam("employeeId") int employeeId,
+	@RequestMapping(value = "/getWeeklyProductivityOfEmployeeByIdAndWeek", method = RequestMethod.POST)
+	public @ResponseBody String getWeeklyProductivityOfEmployeeByIdAndWeek(HttpServletRequest request,@RequestParam("employeeId") int employeeId,
 		    @RequestParam("week") String week) throws ParseException {
-		 logger.info("inside ReportGenerationController getWeeklyReportOfEmployeeByIdAndWeek()");
-
-		 return reportGenerationService.getWeeklyReportOfEmployeeByIdAndWeek(employeeId, week);
+		 logger.info("inside ReportGenerationController getWeeklyProductivityOfEmployeeByIdAndWeek()");
+		 if(HttpSessionUtility.verifySession(request, "adminId"))
+			 return reportGenerationService.getWeeklyProductivityOfEmployeeByIdAndWeek(employeeId, week);
+	     else return JsonUtility.convertToJson("-1");
+		
 	}
 	 
 		 
-		 /**
-			 * getWeeklyReportOfAllEmployeeByWeek(-) method display the working details of an employee for a week using line chart.
-			 * @throws ParseException 
-			 * */
-			 @RequestMapping(value = "/getWeeklyReportOfAllEmployeeByWeek", method = RequestMethod.POST)
-			  public @ResponseBody String getWeeklyReportOfAllEmployeeByWeek(@RequestParam("week") String week) throws ParseException {
-			   logger.info("inside ReportGenerationController getWeeklyReportOfEmployeeByIdAndWeek()");
-
-			   return reportGenerationService.getWeeklyReportOfAllEmployeeByWeek(week);
-			  }
+	/**
+	  * getWeeklyReportOfAllEmployeeByWeek(-) method display the working details of an employee for a week using line chart.
+	  * @throws ParseException 
+	  * */
+	 @RequestMapping(value = "/getWeeklyProductivityOfAllEmployeeByWeek", method = RequestMethod.POST)
+	 public @ResponseBody String getWeeklyProductivityOfAllEmployeeByWeek(HttpServletRequest request,@RequestParam("week") String week) throws ParseException {
+	   logger.info("inside ReportGenerationController getWeeklyProductivityOfAllEmployeeByWeek()");
+	       if(HttpSessionUtility.verifySession(request, "adminId"))
+			   return reportGenerationService.getWeeklyProductivityOfAllEmployeeByWeek(week);
+	       else return JsonUtility.convertToJson("-1");
+		}
 	 
 	 /**
 		 * getEmployeeReportForWeekByIdAndWeekDate(-,-) method takes employeeId,weekDate as a
@@ -462,13 +465,13 @@ public class ReportGenerationController {
 		 * @throws Exception 
 		 */
 		@RequestMapping(value = "/getMonthlyProductivityOfEmployeeByIdAndMonth", method = RequestMethod.POST)
-		public @ResponseBody String getMonthlyProductivityOfEmployeeByIdAndMonth(@RequestParam("employeeId") int employeeId,@RequestParam("month") String month){
-			logger.info("inside ReportGenerationController getMonthlyProductivityOfEmployeeByIdAndMonth()");
-			
+		public @ResponseBody String getMonthlyProductivityOfEmployeeByIdAndMonth(HttpServletRequest request,@RequestParam("employeeId") int employeeId,@RequestParam("month") String month){
+			logger.info("inside ReportGenerationController getMonthlyProductivityOfEmployeeByIdAndMonth()");			
 			logger.info("Month in getMonthlyProductivityOfEmployeeByIdAndMonth : "+month);
-			
-			return reportGenerationService
-					.getMonthlyProductivityOfEmployeeByIdAndMonth(employeeId,month);
+			if(HttpSessionUtility.verifySession(request, "adminId"))
+			    return reportGenerationService.getMonthlyProductivityOfEmployeeByIdAndMonth(employeeId,month);
+			else
+				return JsonUtility.convertToJson("-1");
 		}	
 		
 		/**
@@ -478,13 +481,14 @@ public class ReportGenerationController {
 		 * @throws Exception 
 		 */
 		@RequestMapping(value = "/getMonthlyProductivityOfAllEmployeeByMonth", method = RequestMethod.POST)
-		public @ResponseBody String getMonthlyProductivityOfAllEmployeeByMonth(@RequestParam("month") String month){
-			logger.info("inside ReportGenerationController getMonthlyProductivityOfAllEmployeeByMonth()");
-			
+		public @ResponseBody String getMonthlyProductivityOfAllEmployeeByMonth(HttpServletRequest request,@RequestParam("month") String month){
+			logger.info("inside ReportGenerationController getMonthlyProductivityOfAllEmployeeByMonth()");			
 			logger.info("Month in getMonthlyProductivityOfAllEmployeeByMonth : "+month);
+			if(HttpSessionUtility.verifySession(request, "adminId"))
+				return reportGenerationService.getMonthlyProductivityOfAllEmployeeByMonth(month);
+			else
+				return JsonUtility.convertToJson("-1");
 			
-			return reportGenerationService
-					.getMonthlyProductivityOfAllEmployeeByMonth(month);
 		}	
 		
 		
@@ -495,13 +499,15 @@ public class ReportGenerationController {
 		  * for given year  
 		  */
 		 @RequestMapping(value = "/getEmployeeAnnualProductivity", method = RequestMethod.POST)
-		  public @ResponseBody String getEmployeeAnnualProductivity(@RequestParam("employeeId") int employeeId,
+		  public @ResponseBody String getEmployeeAnnualProductivity(HttpServletRequest request,@RequestParam("employeeId") int employeeId,
 		    @RequestParam("year") int year) 
 		 {
 		   logger.info("inside ReportGenerationController getEmployeeAnnualProductivity()");
 		   logger.info("data received: employee id: "+employeeId+"  year: "+year);
-		   
-		   return reportGenerationService.getEmployeeAnnualProductivity(employeeId, year);
+		   if(HttpSessionUtility.verifySession(request, "adminId"))
+			   return reportGenerationService.getEmployeeAnnualProductivity(employeeId, year);
+			else
+				return JsonUtility.convertToJson("-1");		   
 		   
 		  }
 		 
@@ -510,12 +516,15 @@ public class ReportGenerationController {
 		  * for given year  
 		  */
 		 @RequestMapping(value = "/getAllEmployeeAnnualProductivity", method = RequestMethod.POST)
-		  public @ResponseBody String getAllEmployeeAnnualProductivity(@RequestParam("year") int year) 
+		  public @ResponseBody String getAllEmployeeAnnualProductivity(HttpServletRequest request,@RequestParam("year") int year) 
 		 {
 		   logger.info("inside ReportGenerationController getAllEmployeeAnnualProductivity()");
 		   logger.info("data received:  year: "+year);
+		   if(HttpSessionUtility.verifySession(request, "adminId"))
+			   return reportGenerationService.getAllEmployeeAnnualProductivity(year);
+			else
+				return JsonUtility.convertToJson("-1");
 		   
-		   return reportGenerationService.getAllEmployeeAnnualProductivity(year);
 		   
 		  }
 		 

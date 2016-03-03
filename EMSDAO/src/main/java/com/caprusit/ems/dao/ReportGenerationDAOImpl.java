@@ -143,11 +143,8 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
 	public List<Attendance> getEmployeesReportBetweenDates(Date fromDate, Date toDate) {
 		logger.info("inside ReportGenerationDAOImpl getEmployeesReportBetweenDates()");
 
-		Criteria crit = HibernateSessionUtility.getHibernateSession().createCriteria(Attendance.class);
-
-		Criterion c1 = Restrictions.between("attendanceDate", fromDate, toDate);
-		crit.add(c1);
-
+		Criteria crit = HibernateSessionUtility.getHibernateSession().createCriteria(Attendance.class)
+				.add(Restrictions.between("attendanceDate", fromDate, toDate)).addOrder(Order.asc("attendanceDate"));       
 		List<Attendance> result = crit.list();
 		logger.info("Data List size:"+ result.size());
 		return result;
@@ -276,5 +273,15 @@ public class ReportGenerationDAOImpl implements IReportGenerationDAO {
           map1.put("LastDate", toDate);
          return map1;
         }
+
+    /**
+     * This method is to count number of active employees
+     * @return int returns count of active employees
+     */
+	@Override
+	public int getNumberOfActiveEmployees() {
+		 List<Long> countList=HibernateSessionUtility.getHibernateSession().createCriteria(Employee.class).add(Restrictions.eq("status","1")).setProjection(Projections.rowCount()).list();	
+		 return countList.get(0).intValue();
+	}
 
 }

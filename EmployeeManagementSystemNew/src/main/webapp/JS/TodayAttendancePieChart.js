@@ -190,7 +190,7 @@ $("document").ready(function(){
         		presentArray[i][3]=stillWorking_msg;    		
         	else
         	   presentArray[i][3]=presentData[i].endTime.substr(12,24);  
-        	presentArray[i][4]=presentData[i].workingHours;
+        	presentArray[i][4]=convertWorkingHours(presentData[i].workingHours); // This function is in ConverWorkingHours.js file
     		
     	}
  
@@ -203,9 +203,8 @@ $("document").ready(function(){
        	            { title: "Attendance Date","orderable": false},
        	            { title: "Login Time"},
        	            { title: "Logout Time"},
-       	            { title: "Worked Hours" },
-       	           
-       	          
+       	            { title: "Worked Hours(H:M)" }
+       	                	          
                  ]
        	    } );
     	

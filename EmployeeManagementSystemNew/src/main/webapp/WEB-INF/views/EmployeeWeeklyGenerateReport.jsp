@@ -4,6 +4,7 @@
 <jsp:include page="EmployeeLeftMenu.jsp"></jsp:include>
 
         <script src="./JS/EmployeeWeeklyReport.js"></script>
+        <script src="./JS/ConverWorkingHours.js"></script>
         
           <div  class="row">   
                   <br>      

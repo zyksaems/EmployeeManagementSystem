@@ -1,5 +1,7 @@
 	<jsp:include page="AdminTemplate.jsp"></jsp:include>
 	<script src="./JS/AnnuallyGenerateReports.js"></script> 
+	    <script src="./JS/ConverWorkingHours.js"></script>
+	    
 	<div id="anual-report-select-div">
 	<div class="row generateposition">
 	<h3 align="center"><b>Annually Attendance Reports</b></h3>

@@ -4,6 +4,7 @@ import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -396,26 +397,28 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 
 		  logger.info("inside ReportGenerationServiceImpl getEmployeeMonthlyProductivity(-,-) method");
 		  
-        Calendar calendar=Calendar.getInstance();
-        double[] workingHoursArray=new double[12];
-        double[] nonWorkingHoursArray=new double[12];
-        int listSize;
-        double actualWorkingHours=daysPerMonth*workingHoursPerDay;
-        
+        Calendar calendar=Calendar.getInstance();        
         String employeeName = null,employeeDesignation = null;
         calendar.set(year, 0, 1);
         Date YearstartDate=calendar.getTime();
         calendar.set(year, 11,31);
         Date yearEndDate=calendar.getTime();
+        int endIndex=verifyEndDateAndMeasureEndIndex(yearEndDate, 2);
+		endIndex =( endIndex == -1 )? 12 : endIndex;
+		double [] workingHoursArray=new double[endIndex];
+		double [] nonWorkingHoursArray=new double[endIndex];
+        int listSize;
+        double actualWorkingHours=daysPerMonth*workingHoursPerDay;
+        
         logger.info("employee monthly report year start date : "+YearstartDate+"  year end date: "+yearEndDate);
         List<Attendance> employeeMonthlyData=reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId,YearstartDate,yearEndDate);
         listSize=employeeMonthlyData.size();
         logger.info("attendance details received for monthly individual employee results: "+employeeMonthlyData);
         logger.info("monthly employee report data size: "+listSize);
         
-        
-        calculateWorkingHours(workingHoursArray, employeeMonthlyData);
-        
+        //calculate working hours  pass 2 as parameter for month wise calculation
+	    calculateWorkingHours(workingHoursArray, employeeMonthlyData,2);
+	    //calculate non working hours 
         calculateNonWorkingHours(nonWorkingHoursArray, actualWorkingHours, workingHoursArray);
         
         List<Object> employeeDetails=reportGenerationDAO.getSingleEmployeeDetailsById(employeeId);
@@ -442,20 +445,22 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	public String getAllEmployeeAnnualProductivity(int year) {
 		
 		 logger.info("inside ReportGenerationServiceImpl getAllEmployeeMonthlyProductivity(-) method");
-		
-		 double[] workingHoursArray=new double[12];
-         double[] nonWorkingHoursArray=new double[12];
-         int noOfEmployees=reportGenerationDAO.getNumberOfEmployees();
+         int noOfEmployees=reportGenerationDAO.getNumberOfActiveEmployees();
          double actualWorkingHours=daysPerMonth*workingHoursPerDay*noOfEmployees;
          
 		 Calendar calendar=Calendar.getInstance();
 		 calendar.set(year, 0, 1);
 	     Date yearstartDate=calendar.getTime();
 	     calendar.set(year, 11,31);
-	     Date yearEndDate=calendar.getTime();	        
+	     Date yearEndDate=calendar.getTime();	  
+	     
+	     int endIndex=verifyEndDateAndMeasureEndIndex(yearEndDate, 2);
+		 endIndex =( endIndex == -1 )? 12 : endIndex;
+		 double [] workingHoursArray=new double[endIndex];
+		 double [] nonWorkingHoursArray=new double[endIndex];
 	     List<Attendance> allEmployeeMonthlyData= reportGenerationDAO.getEmployeesReportBetweenDates(yearstartDate,yearEndDate);
-	     //calculate working hours
-	     calculateWorkingHours(workingHoursArray, allEmployeeMonthlyData);
+	     //calculate working hours  pass 2 as parameter for month wise calculation
+	     calculateWorkingHours(workingHoursArray, allEmployeeMonthlyData,2);
 	     //calculate non working hours
 	     calculateNonWorkingHours(nonWorkingHoursArray, actualWorkingHours, workingHoursArray);
 	     Map<String,Object> allEmployeeMonthlyReportMap=new HashMap<String, Object>(); 
@@ -464,29 +469,43 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		 return JsonUtility.convertToJson(allEmployeeMonthlyReportMap);
 	}
 	 
-	/*This method is to calculate monthly working hours*/
-	private void calculateWorkingHours(double[] workingHoursArray,List<Attendance> attendanceDetailsList){
-		int listSize=attendanceDetailsList.size(),month;
+	/**
+	 * This method is to calculate monthly/weekly working hours
+	 * @param workedHoursArray  double type array to store calculated worked hours of employee
+	 * @param attendanceDetailsList  List of attendance from which we can calculate worked hours
+	 * @param typeOfCalculation  It defines type of calculation either month or week. For week calculation pass 1
+	 *    and for month  pass 2
+	 */
+	private void calculateWorkingHours(double[] workedHoursArray,List<Attendance> attendanceDetailsList,int typeOfCalculation){
+		int listSize=attendanceDetailsList.size();
 		Attendance attendanceObj;
 		Calendar calendar = Calendar.getInstance();
+		
 		for(int i=0;i<listSize;i++){
         	attendanceObj=attendanceDetailsList.get(i);
         	calendar.setTime(attendanceObj.getAttendanceDate());
-        	month=calendar.get(Calendar.MONTH);
-        	workingHoursArray[month]+=attendanceObj.getWorkingHours();
-       
+        	if(typeOfCalculation == 1)      
+        		workedHoursArray[calendar.get(Calendar.DAY_OF_WEEK)-1]+=attendanceObj.getWorkingHours();        		        	
+        	else if(typeOfCalculation == 2)      		
+        	   workedHoursArray[calendar.get(Calendar.MONTH)]+=attendanceObj.getWorkingHours();      
         }
 	}
-	/*This method is to calculate monthly non working hours*/
-	private void calculateNonWorkingHours(double[] nonWorkingHoursArray,double workingHoursPerMonth,double[] workingHoursArray){
+	/**
+	 * This method is to calculate employee non working hours from given worked hours and actual work hours values
+	 * 
+	 * @param nonWorkingHoursArray  double type array to store calculated non working hours
+	 * @param actualWorkHours  actual work hours of employee
+	 * @param workedHoursArray double type array worked hours from which we can calculate non working hours
+	 */
+	private void calculateNonWorkingHours(double[] nonWorkingHoursArray,double actualWorkHours,double[] workedHoursArray){
 		double workedHours;
-        for(int i=0;i<12;i++){
-        	workedHours=workingHoursPerMonth-workingHoursArray[i];
+		int length=nonWorkingHoursArray.length;
+        for(int i=0;i<length;i++){
+        	workedHours=actualWorkHours-workedHoursArray[i];
         	if(workedHours > 0)
         	  nonWorkingHoursArray[i]=workedHours;
         	else
-        	  nonWorkingHoursArray[i]=0.0;
-        	
+        	  nonWorkingHoursArray[i]=0.0;        	
         }
 	}
 
@@ -736,162 +755,89 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	}
 
 	/**
-     * getWeeklyReportOfEmployeeByIdAndWeek(-) method take string weekDate as parameters ,
-     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-)
-     * method  to get employee working details for particular week and display using line chart.
-	 * @throws ParseException 
-     */
-	
+     * This  method is to calculate individual employee productivity for given week
+     * @param employeeId employee id for productivity
+     * @param weekDate week in string format like: 2016-W09
+	 * @throws ParseException if unable to parse given week
+	 * @return String JSON string of Map object
+     */	
 	@SuppressWarnings("unchecked")
 	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
-	public String getWeeklyReportOfEmployeeByIdAndWeek(int employeeId, String weekDate) throws ParseException {
+	public String getWeeklyProductivityOfEmployeeByIdAndWeek(int employeeId, String weekDate) throws ParseException {
 	
-		logger.info("inside ReportGenerationServiceImpl getWeeklyReportOfEmployeeByIdAndWeek(-,-) method");
-		
-		Date startDate=null, endDate=null;
-		
-	   Double workingHours=0.0,totalAvailableHours=0.0;
-	   int onDayHours=workingHoursPerDay;
-	   Double totalWorkingHours=0.0;
-	   String dayNames[] = new DateFormatSymbols().getWeekdays();
-		      
-	   Calendar cal = Calendar.getInstance();
-		
-	   /*Calling  getFromDateAndToDateFromWeekDate(-) method to get fromDate and toDate based on given string weekDate*/
-	   
+		logger.info("inside ReportGenerationServiceImpl getWeeklyProductivityOfEmployeeByIdAndWeek(-,-) method");
+		//logger.info("week received: "+weekDate);
+		Date weekStartDate=null, weekEndDate=null;
 		Map<String,Date> dateValues= getFromDateAndToDateFromWeekDate(weekDate);
-
-		startDate= dateValues.get("startDate");
-		endDate=dateValues.get("endDate");
+		weekStartDate= dateValues.get("startDate");
+		weekEndDate=dateValues.get("endDate");
+		int endIndex=verifyEndDateAndMeasureEndIndex(weekEndDate, 1);
+		endIndex =( endIndex == -1 )? 7 : endIndex;
+		double [] weekWorkedHours=new double[endIndex];
+		double [] weekNonWorkedHours=new double[endIndex];
+		double actucalWorhHrsPerDay=(double)EmsConditions.WORKING_HOURS_PER_DAY;
 		
-		logger.info("Inside getWeeklyReportOfEmployeeByIdAndWeekStart(-)  Date:"+startDate);
-		logger.info(" Inside getWeeklyReportOfEmployeeByIdAndWeekStart(-)  End date:"+endDate);
-		    
-		    List<Attendance> attendanceDetails= new ArrayList<Attendance>(); 
-		    
-		    List<Attendance> workingDetails=reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, startDate, endDate);
-		    
-		     Map<String,Object> allMap = new HashMap<String, Object>();
-		     allMap.put("ListOfLine", workingDetails);
-		     allMap.put("LastDate",endDate);
-		     
-		   
-		     
-		    attendanceDetails=(List<Attendance>) allMap.get("ListOfLine");
-		    endDate =(Date) allMap.get("LastDate");
-		    logger.info("Attendance List is:"+attendanceDetails);
-		  
-		    Map<String,Double> dayAndWork=new HashMap<String, Double>();
-		    
-		    cal.setTime(startDate);
-		     String startDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
-		     cal.setTime(endDate);
-		     String lastDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
-		              
-		     List<String> presentDays=new ArrayList<String>();
-		     
-		    for(int i=0; i<attendanceDetails.size();i++){
-		    	startDate=attendanceDetails.get(i).getAttendanceDate();
-		     cal.setTime(startDate);
+		String dayNames[] = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+			
+		if(weekStartDate.compareTo(Calendar.getInstance().getTime())  >  0){
+			logger.info("invalid  week     ====================================== ");
+			return JsonUtility.convertToJson("0");
+		}
+		 List<Attendance> workingDetails=reportGenerationDAO.getEmployeeWorkingDetailsByDates(employeeId, weekStartDate, weekEndDate);
 
-		     workingHours=attendanceDetails.get(i).getWorkingHours();
-		     dayAndWork.put(dayNames[cal.get(Calendar.DAY_OF_WEEK)],workingHours);
-		     presentDays.add(dayNames[cal.get(Calendar.DAY_OF_WEEK)]);
-		     
-		     totalWorkingHours+=workingHours;
-		       
-		     totalAvailableHours+=onDayHours;    
-		      }
-		   
-		    Map<String,Object> graphDetails= new HashMap<String, Object>();
-		    graphDetails.put("dayAndWork",dayAndWork);
-		    graphDetails.put("totalWorkingHours",totalWorkingHours);
-		    graphDetails.put("oneDayHours",onDayHours);
-		    graphDetails.put("totalAvailableHours",totalAvailableHours);
-		    graphDetails.put("startDay",startDay);
-		    graphDetails.put("lastDay",lastDay);
-		    graphDetails.put("presentDays", presentDays);
-		    
-		    return JsonUtility.convertToJson(graphDetails);
+		 //calculate working hours  pass 2 as parameter for month wise calculation
+	     calculateWorkingHours(weekWorkedHours, workingDetails,1);
+	     // calculate non working hours
+		 calculateNonWorkingHours(weekNonWorkedHours,actucalWorhHrsPerDay , weekWorkedHours);
+		 
+		 Map<String,Object> weeklyProductivityMap= new HashMap<String, Object>();
+		 weeklyProductivityMap.put("workedHours",weekWorkedHours);
+		 weeklyProductivityMap.put("nonWorkedHours",weekNonWorkedHours);
+		 weeklyProductivityMap.put("dayNames", dayNames);
+
+		 return JsonUtility.convertToJson(weeklyProductivityMap);
 	}
 	
 	/**
-     * getWeeklyReportOfAllEmployeeByWeek(-) method take string weekDate as parameters ,
-     * and we will convert String weekDate to  java.util.Date and send to EmployeeReportGenerationDAO getEmployeesReportBetweenDates(-,-)
-     * method  to get all employee working details for particular week and display using line chart.
-     */
-	
+	 * This method is to calculate all employee weekly productivity of given week
+	 * @param weekDate string format of week like like: 2016-W09
+	 * @return String JSON string of Map object
+	 */
 	@SuppressWarnings("unchecked")
 	@Transactional(rollbackFor=HibernateException.class,readOnly=true)
-	public String getWeeklyReportOfAllEmployeeByWeek(String weekDate) {
+	public String getWeeklyProductivityOfAllEmployeeByWeek(String weekDate) {
 	
 		logger.info("inside ReportGenerationServiceImpl getWeeklyReportOfAllEmployeeByWeek(-,-) method");
-		
 		Date startDate=null, endDate=null;
-		
-	   Double workingHours=0.0,totalAvailableHours=0.0;
-	   int onDayHours=workingHoursPerDay;
-	   Double totalWorkingHours=0.0;
-	   String dayNames[] = new DateFormatSymbols().getWeekdays();
-		      
-	   Calendar cal = Calendar.getInstance();
-		
-	   /*Calling  getFromDateAndToDateFromWeekDate(-) method to get fromDate and toDate based on given string weekDate*/
-	   
 		Map<String,Date> dateValues= getFromDateAndToDateFromWeekDate(weekDate);
-
 		startDate= dateValues.get("startDate");
 		endDate=dateValues.get("endDate");
-		
-		logger.info("Inside getWeeklyReportOfAllEmployeeByWeek(-)  Date:"+startDate);
-		logger.info(" Inside getWeeklyReportOfAllEmployeeByWeek(-)  End date:"+endDate);
-		    
-		    List<Attendance> attendanceDetails= new ArrayList<Attendance>(); 
-		    
-		    List<Attendance> workingDetails=reportGenerationDAO.getEmployeesReportBetweenDates(startDate, endDate);
-		    
-		     Map<String,Object> allMap = new HashMap<String, Object>();
-		     allMap.put("ListOfLine", workingDetails);
-		     allMap.put("LastDate",endDate);
-		     
-		   
-		     
-		    attendanceDetails=(List<Attendance>) allMap.get("ListOfLine");
-		    endDate =(Date) allMap.get("LastDate");
-		    logger.info("Attendance List is:"+attendanceDetails);
-		  
-		    Map<String,Double> dayAndWork=new HashMap<String, Double>();
-		    
-		    cal.setTime(startDate);
-		     String startDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
-		     cal.setTime(endDate);
-		     String lastDay=dayNames[cal.get(Calendar.DAY_OF_WEEK)];
-		              
-		     List<String> presentDays=new ArrayList<String>();
-		     
-		    for(int i=0; i<attendanceDetails.size();i++){
-		    	startDate=attendanceDetails.get(i).getAttendanceDate();
-		     cal.setTime(startDate);
+		int endIndex=verifyEndDateAndMeasureEndIndex(endDate, 1);
+		endIndex =( endIndex == -1 )? 7 : endIndex;
+		 double [] weekWorkedHours=new double[endIndex];
+		 double [] weekNonWorkedHours=new double[endIndex];
+		 logger.info("index calculated:   end index: "+endIndex);
+		String dayNames[] = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
 
-		     workingHours=attendanceDetails.get(i).getWorkingHours();
-		     dayAndWork.put(dayNames[cal.get(Calendar.DAY_OF_WEEK)],workingHours);
-		     presentDays.add(dayNames[cal.get(Calendar.DAY_OF_WEEK)]);
-		     
-		     totalWorkingHours+=workingHours;
-		       
-		     totalAvailableHours+=onDayHours;    
-		      }
-		   
-		    Map<String,Object> graphDetails= new HashMap<String, Object>();
-		    graphDetails.put("dayAndWork",dayAndWork);
-		    graphDetails.put("totalWorkingHours",totalWorkingHours);
-		    graphDetails.put("oneDayHours",onDayHours);
-		    graphDetails.put("totalAvailableHours",totalAvailableHours);
-		    graphDetails.put("startDay",startDay);
-		    graphDetails.put("lastDay",lastDay);
-		    graphDetails.put("presentDays", presentDays);
-		    
-		    return JsonUtility.convertToJson(graphDetails);
+		logger.info(" start date of week: "+startDate+"    end date of week "+endDate);
+		if(startDate.compareTo(Calendar.getInstance().getTime())  >  0){
+			logger.info("invalid  week     ====================================== ");
+			return JsonUtility.convertToJson("0");
+		}
+		int employeeCount=reportGenerationDAO.getNumberOfActiveEmployees();
+		List<Attendance> workingDetails=reportGenerationDAO.getEmployeesReportBetweenDates(startDate, endDate);
+		double actualWorkHours=(double) employeeCount * EmsConditions.WORKING_HOURS_PER_DAY ;		
+		
+		 //calculate working hours  pass 2 as parameter for month wise calculation
+	     calculateWorkingHours(weekWorkedHours, workingDetails,1);
+	     // calculate non working hours
+		 calculateNonWorkingHours(weekNonWorkedHours,actualWorkHours , weekWorkedHours);		   
+		 Map<String,Object> weekProductivityMap= new HashMap<String, Object>();
+		 weekProductivityMap.put("workedHours", weekWorkedHours);
+		 weekProductivityMap.put("nonWorkedHours", weekNonWorkedHours);
+		 weekProductivityMap.put("dayNames", dayNames);		 
+		
+		 return JsonUtility.convertToJson(weekProductivityMap);
 	}
 	
 	
@@ -1007,7 +953,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	     String month_year=monthdate[0];
 	     String month_monthnumber=monthdate[1];
 	     int listSize;
-	     int noOfEmployees=reportGenerationDAO.getNumberOfEmployees();
+	     int noOfEmployees=reportGenerationDAO.getNumberOfActiveEmployees();
 	     double actualWorkingHours=daysPerMonth*workingHoursPerDay*noOfEmployees;
 	     int month_parseyear=Integer.parseInt(month_year);
 	     int month_parsemonthnumber=Integer.parseInt(month_monthnumber);
@@ -1049,5 +995,42 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		return JsonUtility.convertToJson(employeeMonthlyReportMap);
 	}
 
+	
+	private int  getArrayIndexOfDate(int indexType,Date sourceDate){
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(sourceDate);
+		if(indexType == 1)
+			return (cal.get(Calendar.DAY_OF_WEEK)-1);
+		else if(indexType == 2)
+			return cal.get(Calendar.MONTH);
+		else
+			return -1;
+	}
+	/**
+	 * This method is to verify end date is greater than current date,if true find outs array index of days/months array
+	 * based on given date
+	 * @param typeOfIndex type if index we want to calculate  for days array pass 1
+	 *         and for months array pass 2
+	 * @param endDate date,from which we can get index(if given endDate is > current date).
+	 * @return index of given end date,based on given typeOfIndex 1/2. if we pass other than 1/2 for typeOfIndex 
+	 *     returns -2 and if endDate is lessthan current date returns -1 
+	 */
+    private int verifyEndDateAndMeasureEndIndex(Date endDate,int typeOfIndex){
+	     Calendar cal=Calendar.getInstance();
+	     Date todayDate=cal.getTime();
+	     int endIndex=-1;
+	     if(endDate.compareTo(todayDate) > 0){
+		     logger.info("end date: "+endDate +"  > current date");
+		     if(typeOfIndex == 1)
+			     endIndex= (cal.get(Calendar.DAY_OF_WEEK));
+		     else if(typeOfIndex == 2)
+			     endIndex= cal.get(Calendar.MONTH)+1;
+		     else		    	 
+		    	 endIndex=-2;
+	     }
+	     logger.info("end index calculated: "+endIndex);
+	     return endIndex;
+	}
+	
 	
 }

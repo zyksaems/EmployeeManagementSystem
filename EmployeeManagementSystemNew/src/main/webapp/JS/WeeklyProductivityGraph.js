@@ -23,20 +23,22 @@ $(document).ready(function(){
 		var invalidEmployeeId_msg="Invalid employee ID";
 		var shortEmployeeId_msg="short employee ID";
 		var invalidWeek_msg="Invalid week";
+		var wait_msg="please wait...";
 		
 		var employeeId;
 		var employeeIdLength=6;
 
 		
 		var appplicationName="EmployeeManagementSystemNew";
-		var individualProductivity_url="getWeeklyReportOfEmployeeByIdAndWeek.do";
-		var overAllProductivity_url="getWeeklyReportOfAllEmployeeByWeek.do";
+		var urlPattern=".do";
+		var individualProductivity_url="getWeeklyProductivityOfEmployeeByIdAndWeek"+urlPattern;
+		var overAllProductivity_url="getWeeklyProductivityOfAllEmployeeByWeek"+urlPattern;
 		var employeeIdReqParam="employeeId";
 		var weekReqParam="week";
 		
 		/*first hide chart*/ 
 		$(lineChart_div_id).hide();
-		 $("#lineLegend").hide();
+		$("#lineLegend").hide();
 		
 		/*function call to apply auto complete functionality to employee id text field*/ 
 		autoFillDataToTextField(weeklyReportEmployeeId_id,3);
@@ -132,7 +134,8 @@ $(document).ready(function(){
 		   * This function to make ajax call to get weekly productivity details
 		   */
 		  function  makeAjaxCallToGetWeeklyProductivity(url){
-			   
+			  $(individualWeeklyProductivityMsg_id).text(wait_msg);
+			  $(overAllWeeklyProductivityMsg_id).text(wait_msg);
 			   $.ajax({
 	  	        url:url,
 	  	        type: 'POST',
@@ -141,9 +144,23 @@ $(document).ready(function(){
 	  	        success: function(data)
 	  	        {
 	  	        	console.log("data returned from server for add single emoloyee:"+ JSON.stringify(data));
-	  	        	
+	  	        	$(individualWeeklyProductivityMsg_id).text("");
+	  			    $(overAllWeeklyProductivityMsg_id).text("");
 	  	        	 var weeklyData=data;
+	  	        	 if(weeklyData.nonWorkedHours != undefined)
 					   displayLine(weeklyData);
+	  	        	 else if(weeklyData == 0){
+	  	        		 console.log("invalid week selected");
+	  	        		$(lineChart_div_id).hide();
+	  					 $("#lineLegend").hide();
+	  	        		 $(individualWeeklyProductivityMsg_id).text(invalidWeek_msg);
+	  	        		 $(overAllWeeklyProductivityMsg_id).text(invalidWeek_msg);
+	  	        	 }
+	  	        	 else if(weeklyData == -1){
+	  	        		 
+	  	        		 console.log("session expired!!");
+	  	        		 window.location.reload();
+	  	        	 }
 	  	        
 	  	        },
 	  	        error: function(jqXHR, textStatus, errorThrown)
@@ -182,124 +199,10 @@ $(document).ready(function(){
 			 	
 			 		var weeklyData = data;
 			 		console.log("data in  displayLine() after parsing:  "+JSON.stringify(data));  
-			 	 
-			 		console.log("last day "+weeklyData.lastDay); 
-				     console.log( typeof weeklyData); 
-				     console.log("dayAndWork "+weeklyData.dayAndWork.Saturday);
-				     console.log("start day "+weeklyData.startDay);
-				     
 
-				     var displayLabels=[];
-				     
-			     days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-			     
-			      var flag;
-			      var start;
-			      
-			      var work=[];
-			      var total=[];
-			      var temp;
-			      
-			      temp=weeklyData.dayAndWork.Monday;
-			      if(temp==undefined){
-			      	
-			      	work[0]=0.0;
-			      	total[0]=0.0
-			      }else{
-			      	
-			      	work[0]=temp;
-			      	total[0]=weeklyData.oneDayHours;
-			      }
-			       
-			      temp=weeklyData.dayAndWork.Tuesday;
-			      if(temp==undefined){
-			      	
-			      	work[1]=0.0;
-			      	total[1]=0.0
-			      }else{
-			      	
-			      	work[1]=temp;
-			      	total[1]=weeklyData.oneDayHours;
-			      }
-			       
-			      temp=weeklyData.dayAndWork.Wednesday;
-			      if(temp==undefined){
-			      	
-			      	work[2]=0.0;
-			      	total[2]=0.0
-			      }else{
-			      	
-			      	work[2]=temp;
-			      	total[2]=weeklyData.oneDayHours;
-			      }
-			    
-			      temp=weeklyData.dayAndWork.Thursday;
-			      if(temp==undefined){
-			      	
-			      	work[3]=0.0;
-			      	total[3]=0.0
-			      }else{
-			      	
-			      	work[3]=temp;
-			      	total[3]=weeklyData.oneDayHours;
-			      }
-			    
-			      temp=weeklyData.dayAndWork.Friday;
-			      if(temp==undefined){
-			      	
-			      	work[4]=0.0;
-			      	total[4]=0.0
-			      }else{
-			      	
-			      	work[4]=temp;
-			      	total[4]=weeklyData.oneDayHours;
-			      }
-			    
-			      temp=weeklyData.dayAndWork.Saturday;
-			      if(temp==undefined){
-			      	
-			      	work[5]=0.0;
-			      	total[5]=0.0
-			      }else{
-			      	
-			      	work[5]=temp;
-			      	total[5]=weeklyData.oneDayHours;
-			      }
-			    
-			      temp=weeklyData.dayAndWork.Sunday;
-			      if(temp==undefined){
-			      	
-			      	work[6]=0.0;
-			      	total[6]=0.0
-			      }else{
-			      	
-			      	work[6]=temp;
-			      	total[6]=weeklyData.oneDayHours;
-			      }
-			    
-			      
-			      var work1=[],total1=[];
-			      for(var i=0;i<7;i++){
-			     		 
-			     	 if(weeklyData.startDay==days[i]){
-			             start=i;
-			     	 }
-			     	 if(weeklyData.startDay==days[i]){
-			     		 end=i;
-			     	 }
-			      }
-			      
-			      for(var j=start; j<7;j++){
-			     	 displayLabels.push(days[j]);
-			     	 work1.push(work[j]);
-			     	 total1.push(total[j]);
-			      }
-			      
-			      for(var k=0; k<end; k++){
-			     	 displayLabels.push(days[k]);
-			     	 work1.push(work[k]);
-			     	 total1.push(total[k]);
-			      }
+				     var displayLabels=weeklyData.dayNames;
+				     var workedHours=weeklyData.workedHours;
+				     var nonWorkedHours=weeklyData.nonWorkedHours;
 
 			     lineChartData = {
 					labels : displayLabels,
@@ -312,7 +215,7 @@ $(document).ready(function(){
 							pointStrokeColor :"	#804d4d",
 							pointHighlightFill : "#FFFFFF",
 							pointHighlightStroke : "#660033",
-							data : total1
+							data : nonWorkedHours
 						},
 						{
 							label: "Working hours",														
@@ -322,7 +225,7 @@ $(document).ready(function(){
 							pointStrokeColor : "#005f80",
 							pointHighlightFill : "#FFFFFF",
 							pointHighlightStroke : "#000000",
-							data :work1
+							data :workedHours
 						}
 					]
 

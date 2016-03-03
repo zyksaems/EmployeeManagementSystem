@@ -17,10 +17,15 @@
 	function getEmployeeIdsFromLocal(){
 		
 		localValue=localStorage.getItem("employeeidsarray");
-		console.log("local value in second script: "+localValue);
+		//console.log("local value in second script: "+localValue);
 		//console.log("type of local value in second script: "+typeof localValue);		
-		employeeIdsArray=localValue.split(',');
-		//console.log("employeeIds array: "+employeeIdsArray);
+		var arryOfIds=localValue.split(',');
+		// remove duplicates if any
+		$.each(arryOfIds, function(i, el){
+		        if($.inArray(el, employeeIdsArray) === -1) employeeIdsArray.push(el);
+		 });
+		 //console.log("all employeeIds array (unique): "+employeeIdsArray);
+		//console.log("all employeeIds array (length): "+employeeIdsArray.length);
 	};
 	
 	

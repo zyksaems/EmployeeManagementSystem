@@ -3,7 +3,7 @@ package com.caprusit.ems.conditions;
 public class EmsConditions {
 	
 	// Employee working hours per day 
-	public static final int WORKING_HOURS_PER_DAY = 4; 
+	public static final int WORKING_HOURS_PER_DAY = 8; 
 	
 	//Working days per month
 	public static final int WORKING_DAYS_PER_MONTH = 26;  

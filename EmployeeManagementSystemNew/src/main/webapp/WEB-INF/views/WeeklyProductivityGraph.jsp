@@ -33,7 +33,7 @@
   
         <form class="form-vertical" role="form"  id="individual-weekly-productivity-form">
             <div class="form-group " style="color: red" >              
-               <label class=" col-sm-12 control-label text-center" >Individual Productivity</label>
+               <label class=" col-sm-12 control-label text-center" ><b>Individual Productivity</b></label>
            </div>            
            <div class="form-group">
                 <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
@@ -56,14 +56,14 @@
             <div class="form-group "  >
               <div class="col-sm-12">
                   <br>
-                  <p class="text-center text-danger weeklyErrorMsg" id="individual-weekly-productivity-msg"></p>
+                  <b><p class="text-center text-danger weeklyErrorMsg" id="individual-weekly-productivity-msg"></p></b>
               </div>
             </div>
             
        </form>
        <form class="form-vertical" role="form" ng-show="!showIndividualWeeklyForm" id="over-all-weekly-productivity-form">
               <div class="form-group " style="color: red" >              
-                <label class=" col-sm-12 control-label text-center">Over all Productivity</label>
+                <label class=" col-sm-12 control-label text-center"><b>Over all Productivity</b></label>
               </div>         
               <div class="form-group ">
                  <label class=" col-sm-12 control-label" >Enter Week</label>
@@ -80,7 +80,7 @@
               <div class="form-group "  >
                 <div class="col-sm-12">
                   <br>
-                  <p class="text-center text-danger weeklyErrorMsg" id="over-all-weekly-productivity-msg"></p>
+                  <b><p class="text-center text-danger weeklyErrorMsg" id="over-all-weekly-productivity-msg"></p></b>
                 </div>
               </div>
             
@@ -89,7 +89,7 @@
         <div id="lineLegend" class="chart-legend" >
            <div class="col-sm-8">			                            			          
                   <canvas  width="20px" height="20px" id="today-attendance-present-canvas" style="background-color: #FF3366"></canvas>
-                  <span><b>Actual work hours</b></span> <br>
+                  <span><b>Non-worked hours</b></span> <br>
                   <canvas  width="20px" height="20px" id="today-attendance-absent-canvas" style="background-color: #33CCFF "></canvas>
                   <span><b>Worked hours</b></span>                                                     
 			</div>

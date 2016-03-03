@@ -32,10 +32,13 @@
 
 	
 	var appplicationName="EmployeeManagementSystemNew";
-	var individualProductivity_url="getMonthlyProductivityOfEmployeeByIdAndMonth.do";
-	var overAllProductivity_url="getMonthlyProductivityOfAllEmployeeByMonth.do";
+	var urlpattern=".do";
+	var individualProductivity_url="getMonthlyProductivityOfEmployeeByIdAndMonth"+urlpattern;
+	var overAllProductivity_url="getMonthlyProductivityOfAllEmployeeByMonth"+urlpattern;
 	var employeeIdReqParam="employeeId";
 	var monthReqParam="month";
+	
+	var currentMonth=(new Date().getMonth()+1);
 	
 	/*function call to set auto complete to employee id text field*/
 	autoFillDataToTextField(monthlyReportEmployeeId_id,3);
@@ -45,7 +48,7 @@
 		 $(productivityTypeMsg_id).text("Individual Productivity");
 		 employeeId=$(monthlyReportEmployeeId_id).val();
 		 month=$(individualReportMonthly_id).val();
-		 
+		 intMonth=getMonthFromString(month);
 		 if(employeeId.length < employeeIdLength){			 
 			 $(individualMonthlyProductivityMsg_id).text(shortEmployeeId_msg);
 			 $(barChartDiv_id).hide();	
@@ -56,7 +59,7 @@
 			 $(barChartDiv_id).hide();
 			 $("#barLegend").hide();
          }
-		 else if(month > new Date().getMonth() || month < 11 || month == undefined){
+		 else if(intMonth > currentMonth || month < 11 || month == undefined){
 		    $(individualMonthlyProductivityMsg_id).text(invalidMonth_msg);
 		    $(barChartDiv_id).hide();
 		    $("#barLegend").hide();
@@ -71,12 +74,23 @@
 		 
 	 });//END -- $(showOverAllMonthlyReportButton_id).click()
 	 
+	 /**
+	  *  This function is to get month from year and month string
+	  */
+	 function getMonthFromString(stringMonth){
+		 var array=stringMonth.split('-');
+		 //console.log("month after conversion: "+parseInt(array[1])+"  current month: "+(new Date().getMonth()+1)+" date"+new Date());
+		 return parseInt(array[1]);
+	 }; //  END -- getMonthFromString(stringMonth)
+	 
+	 
 	 /*This function to show over all  productivity graph*/
 	 $(showOverAllMonthlyReportButton_id).click(function(){
 		 $(productivityTypeMsg_id).text("OverAll Productivity");
 		 month=$(overAllproductivityMonthly_id).val();
+		 intMonth=getMonthFromString(month);
 		 console.log("Month over all: "+month);
-		 if(month > new Date().getMonth() || month < 11 || month == undefined){
+		 if(intMonth > currentMonth || month < 11 || month == undefined){
 		    $(overAllMonthlyProductivityMsg_id).text(invalidMonth_msg);
 		    $(barChartDiv_id).hide();
 		    $("#barLegend").hide();
@@ -136,12 +150,16 @@
   		    contentType: "application/json; charset=utf-8",
   	        success: function(data)
   	        {
-  	        	console.log("data returned from server for add single emoloyee:"+ JSON.stringify(data));
-
-  	        	  var workingHours =[data.workingHours];
-  	              var nonWorkingHours=[data.nonWorkingHours];
-
-  	              printBarChart(workingHours,nonWorkingHours,data.monthName);
+  	        	console.log("data returned from server for add single emoloyee:"+ JSON.stringify(data)); 	        	  
+                   if(data == -1){
+                	   console.log("session expired");
+                	   window.location.reload();
+                   }else{
+                	   var workingHours =[data.workingHours];
+       	               var nonWorkingHours=[data.nonWorkingHours];
+                	   printBarChart(workingHours,nonWorkingHours,data.monthName);
+                   }
+  	              
   	        },
   	        error: function(jqXHR, textStatus, errorThrown)
   	        {

@@ -5,6 +5,7 @@
      <script src="./chartJS/Chart.js"></script> 
      
      <script src="./JS/TodayAttendancePieChart.js"></script>	
+      <script src="./JS/ConverWorkingHours.js"></script>
      <link rel="stylesheet" type="text/css" href="./CSS/header.css ">
 			
      <div class="row">

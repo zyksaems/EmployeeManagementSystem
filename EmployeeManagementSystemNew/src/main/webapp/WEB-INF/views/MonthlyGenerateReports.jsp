@@ -1,5 +1,7 @@
   <jsp:include page="AdminTemplate.jsp"></jsp:include>
  <script src="./JS/MonthlyGenerateReoprts.js"></script>
+     <script src="./JS/ConverWorkingHours.js"></script>
+     
 	<div class="row generateposition" id="monthly-report-select-div">
 	<h3 align="center"><b>Monthly Attendance Reports</b></h3>
 	<div id="searchcriteria">

@@ -31,7 +31,7 @@
   
         <form class="form-vertical" role="form" id="individual-monthly-productivity-form">
             <div class="form-group " style="color: red" >              
-               <label class=" col-sm-12 control-label text-center" >Individual Productivity</label>
+               <label class=" col-sm-12 control-label text-center" ><b>Individual Productivity</b></label>
            </div>            
            <div class="form-group">
                 <label class=" col-sm-12 control-label" >Enter EmployeeId</label> 
@@ -54,14 +54,14 @@
             <div class="form-group "  >
               <div class="col-sm-12">
                   <br>
-                  <p class="text-center text-danger monthlyErrorMsg" id="individual-monthly-productivity-msg"></p>
+                  <b><p class="text-center text-danger monthlyErrorMsg" id="individual-monthly-productivity-msg"></p></b>
               </div>
             </div>
             
        </form>
        <form class="form-vertical" role="form" ng-show="!showIndividualMonthlyForm" id="over-all-monthly-productivity-form">
               <div class="form-group " style="color: red" >              
-                <label class=" col-sm-12 control-label text-center">Over all Productivity</label>
+                <label class=" col-sm-12 control-label text-center"><b>Over all Productivity</b></label>
               </div>         
               <div class="form-group ">
                  <label class=" col-sm-12 control-label" >Enter year</label>
@@ -78,7 +78,7 @@
               <div class="form-group "  >
                 <div class="col-sm-12">
                   <br>
-                  <p class="text-center text-danger monthlyErrorMsg" id="over-all-monthly-productivity-msg"></p>
+                  <b><p class="text-center text-danger monthlyErrorMsg" id="over-all-monthly-productivity-msg"></p></b>
                 </div>
               </div>
             

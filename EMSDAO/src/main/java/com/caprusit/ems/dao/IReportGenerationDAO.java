@@ -40,6 +40,8 @@ public interface IReportGenerationDAO {
     
     int getNumberOfEmployees();
     
+    int getNumberOfActiveEmployees();
+    
     Map<String,Object> getDailyReportOfIndividual(int employeeId, Date attendanceDate);
 
 }

@@ -1,5 +1,6 @@
  <jsp:include page="AdminTemplate.jsp"></jsp:include>
 <script src="./JS/DailyGenerateReports.js"></script>
+<script src="./JS/ConverWorkingHours.js"></script>
 
     <div class="row">
 	<div class="row generateposition" id="daily-attendance-div">

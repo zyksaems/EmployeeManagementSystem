@@ -6,6 +6,14 @@ $(function() {
 	
 	var x=0;
 	var tableclear=null;
+	
+	 var employeeLeaveStatus = 0 ;
+	 var employeeAbsentStatus = 2 ;
+	 var employeePresentStatus = 1 ;
+	 
+	 var employeeLeave_msg=" on Leave";
+     var employeeAbsent_msg=" Absent";
+	    
 	//Start of Daily Generate Reports functionality code
 	$("#dayreports").click(function()
 	{
@@ -78,9 +86,14 @@ $(function() {
                 	$("#back").show();
                 	$("#tbody").show();
                 	txt+="<tbody id='remove'>"
-                        
-                            txt += "<tr><td>"+report.attendanceDate+"</td><td>"+report.startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+report.workingHours+"</td></tr>";
-                            companyproduct=companyproduct+9;
+                           if(report.dayIndicator == employeePresentStatus )
+                                txt += "<tr><td>"+report.attendanceDate+"</td><td>"+report.startTime.substr(12,23)+"</td><td>"+endTime+"</td><td>"+report.workingHours+"</td></tr>";
+                           else if(report.dayIndicator == employeeAbsentStatus)
+                        	   txt += "<tr><td>"+report.attendanceDate+"</td><td>"+employeeAbsent_msg +"</td><td>"+employeeAbsent_msg +"</td><td>"+employeeAbsent_msg +"</td></tr>";
+                           else
+                        	   txt += "<tr><td>"+report.attendanceDate+"</td><td>"+employeeLeave_msg  +"</td><td>"+employeeLeave_msg  +"</td><td>"+employeeLeave_msg  +"</td></tr>";
+                	
+                        	   companyproduct=companyproduct+9;
                             empproduct=empproduct+report.workingHours;
                 	txt+="</tbody>";
                     if(txt != ""){
@@ -149,10 +162,21 @@ $(function() {
 		                    	
 		                    	dataSet[i][0]=data[i].employeeId;
 		                    	dataSet[i][1]=data[i].attendanceDate;
-		                    	dataSet[i][2]=data[i].startTime.substr(12,23);
-		                    	dataSet[i][3]=endTime;
-		                    	dataSet[i][4]=data[i].workingHours;
-		                  /*  	dataSet[i][5]=data[i].dayIndicator;*/
+		                    	if(data[i].dayIndicator == employeePresentStatus ){
+		                    		dataSet[i][2]=data[i].startTime.substr(12,23);
+			                    	dataSet[i][3]=endTime;
+			                    	dataSet[i][4]=convertWorkingHours(data[i].workingHours); // This function is in ConverWorkingHours.js file
+		                    	}
+		                    	else if(data[i].dayIndicator == employeeAbsentStatus ){
+		                    		dataSet[i][2]= employeeAbsent_msg ;
+			                    	dataSet[i][3]=employeeAbsent_msg ;
+			                    	dataSet[i][4]=employeeAbsent_msg ;
+		                    	}
+		                    	else{
+		                    		dataSet[i][2]= employeeLeave_msg  ;
+			                    	dataSet[i][3]=employeeLeave_msg  ;
+			                    	dataSet[i][4]=employeeLeave_msg  ;
+		                    	}
 		                    	
 		                    	companyproduct=companyproduct+9;
 		                            empproduct=empproduct+data[i].workingHours;
@@ -169,10 +193,10 @@ $(function() {
 		               	        columns: [
                              
 		               	            { title: "empId"},
-		               	            { title: "Date" },
+		               	            { title: "Date","orderable": false },
 		               	            { title: "StartTime" },
 		               	            { title: "EndTime" },
-		               	            { title: "WorkHours","orderable": false }
+		               	            { title: "Worked Hours(H:M)" }
 		               	           
 		                         ]
 		               	    } );

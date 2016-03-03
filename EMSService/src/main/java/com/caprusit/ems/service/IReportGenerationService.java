@@ -52,9 +52,9 @@ public interface IReportGenerationService {
 
 	String getAllEmployeeReportForYearByYearDate(String yearDate);
 
-	String getWeeklyReportOfEmployeeByIdAndWeek(int employeeId, String weekDate) throws ParseException;
+	String getWeeklyProductivityOfEmployeeByIdAndWeek(int employeeId, String weekDate) throws ParseException;
 
-	String getWeeklyReportOfAllEmployeeByWeek(String week);
+	String getWeeklyProductivityOfAllEmployeeByWeek(String week);
 
 	String getMonthlyProductivityOfEmployeeByIdAndMonth(int employeeId, String month);
 
