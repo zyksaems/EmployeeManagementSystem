@@ -26,29 +26,22 @@
   <script src="./JS/EmployeeLinksControll.js "></script>
   <script src="./JS/MakeLinkAsActive.js "></script> 
   <link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
-  
-   <!-- CDN for pagination and data table  -->
-   <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
 
 </head>
 <body>
 
      <div class="container-fluid ">
       	<div class="row headpart">
-		     <div class="col-sm-1 icon">
+		     <div class="col-sm-2 icon">
                  <img src="./images/caprus logo.png" width="65px" height="65px">
 		     </div>
-			 <div class="col-sm-8 text-center title_menu">
-			<h1>
-				<b>Employee Management System</b>
-			</h1>
-		
+			 <div class="col-sm-8 title_menu text-center">
+				 <h1 align="center">EMPLOYEE MANAGEMENT SYSTEM</h1>
 			 </div>
-			<div class="col-sm-3" id="loggedout_div">
+			<div class="col-sm-2" id="loggedout_div">
 				<div class="employee_dropdown">
 					<span class="logged_out_name_css"
-						data-toggle="dropdown"><span id="loggedout_employee-name" class="glyphicon glyphicon-collapse-down"></span></span>
+						data-toggle="dropdown"><p id="loggedout_employee-name" class="glyphicon glyphicon-collapse-down"></p></span>
 					<ul class="dropdown-menu dropdown-menu-left" id="dropdown_emp">
 						<!-- <li><a href="#" id="admin-profile-link">Profile</a></li> -->
 						<li><a href="/EmployeeManagementSystemNew/getChangePasswordPage.do">Change password</a></li>
@@ -75,7 +68,7 @@
 			            <div>
 						    <ul>
 						     <li><a href="/EmployeeManagementSystemNew/viewEmployeeLeave.do">View leaves</a></li>
-							   <li><a href="#/EmployeeManagementSystemNew/getDailyReportGenerationPage.do">Apply for leave</a></li>						    
+							   <li><a href="/EmployeeManagementSystemNew/applyForLeave.do">Apply for leave</a></li>					    
  						       <li><a href="#/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">View leave status</a></li>												       												      
 						   </ul>
 					</div>

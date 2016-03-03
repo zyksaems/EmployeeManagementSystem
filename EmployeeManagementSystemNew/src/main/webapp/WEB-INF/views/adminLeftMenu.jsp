@@ -52,34 +52,6 @@
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>
 				</div>
-				
-				<div class="modal fade" id="myAlertModel" role="dialog">
-				<div class="modal-dialog">
-
-					<!-- Modal content-->
-					<div class="modal-content">
-						<!-- <div class="modal-header" style="padding: 35px 50px;"></div> -->
-							<div class="modal-body">
-                                       <font color="black"><h3>You did some changes in this page. Do you want to continue...?</h3></font>
-                                                  </div>
-									<div class="modal-footer">
-										<div align="center">
-											<button 
-												class="btn btn-default  btn-success active"
-												data-dismiss="modal">
-												<span class="glyphicon glyphicon-ok"></span>Yes
-											</button>
-											<button  id="logout_alert_button"
-												class="btn btn-default btn-danger active"
-												>
-												<span class="glyphicon glyphicon-remove"></span>No
-											</button>
-										</div>
-									</div>
-					</div>
-				</div>
-			</div>
-				
 			</div>
 		</div>
 		
@@ -95,6 +67,7 @@
 	    	<li><a  href="#" id="admin-add-employee-link">Add Employee</a></li>
 	    	<li><a href="#" id="admin-view-update-emp-link">View/Update Employee</a></li>
 	    	<li><a href="#" id="notice-add-link">Update Notice</a></li>
+	    	<li><a href="#" id="employee-leave-details-link">Employee Leave Details</a></li>
 	    	</ul>
 			</div>
 			<h3>Reports</h3>

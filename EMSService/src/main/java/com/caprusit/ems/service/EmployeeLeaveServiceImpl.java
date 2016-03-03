@@ -1,14 +1,15 @@
 package com.caprusit.ems.service;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.caprusit.ems.dao.IEmployeeLeaveDAO;
+import com.caprusit.ems.domain.EmployeeLeave;
 import com.caprusit.ems.utility.JsonUtility;
 
 @Service
@@ -80,5 +81,39 @@ try{
                      }
 		
 	}
+	
+	public void applyLeave(EmployeeLeave employeeLeave){
+		
+		
+		employeeLeaveDao.applyLeave(employeeLeave);
+			
+		}
+	   @Transactional(rollbackFor=HibernateException.class,readOnly=true)
+		public List<EmployeeLeave> getEmployeeLeaveNotification(int employeeId){
+			
+			return employeeLeaveDao.getEmployeeLeaveNotification(employeeId);
+			
+		}
+		@Transactional(rollbackFor=HibernateException.class,readOnly=true)
+		public List<EmployeeLeave> getEmployeeLeaveDetails(){
+			
+			return employeeLeaveDao.getEmployeeLeaveDetails();
+			
+		}
+		
+		public int doApprove(int employeeLeaveId){
+			
+			int result=employeeLeaveDao.doApprove(employeeLeaveId);
+			return result;
+		}
+		
+		public int disApproveLeaves(int leaveId){
+			
+			int result=employeeLeaveDao.disApproveLeaves(leaveId);
+			return result;
+			
+		}
+		
+		
 
 }

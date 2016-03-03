@@ -33,6 +33,7 @@ import com.caprusit.ems.dao.utility.HibernateSessionUtility;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.Department;
 import com.caprusit.ems.domain.Employee;
+import com.caprusit.ems.domain.EmployeeLeave;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.Notice;
 import com.caprusit.ems.domain.Role;
@@ -92,7 +93,7 @@ public class ParentConfigBean {
 		logger.info("local session factory bean is creating --  parent");
 		LocalSessionFactoryBean  factory= new LocalSessionFactoryBean ();
 		factory.setDataSource(getDataSource());
-		factory.setAnnotatedClasses(Employee.class,Attendance.class,Role.class,Department.class,EncryptedEmployee.class,Notice.class);
+		factory.setAnnotatedClasses(Employee.class,Attendance.class,Role.class,Department.class,EncryptedEmployee.class,Notice.class,EmployeeLeave.class);
 		Properties p=new Properties();		
 	    p.load(new ClassPathResource("properties/hibernate.properties").getInputStream()); //load gives FileNotFound and IOException
 		factory.setHibernateProperties(p);	

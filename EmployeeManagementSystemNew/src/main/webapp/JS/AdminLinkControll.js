@@ -10,6 +10,7 @@
 	   var adminAddEmployee_link_id="#admin-add-employee-link";	   
 	   var adminViewEmployee_link_id="#admin-view-update-emp-link";	   
 	   var adminAddNotice_link_id="#notice-add-link";
+	   var employee_leave_details_link_id="#employee-leave-details-link";
 	   
 	   var adminDailyReport_link_id="#admin-view-daily-report-link";
 	   var adminWeeklyReport_link_id="#admin-view-weekly-report-link";
@@ -29,6 +30,7 @@
 	   var adminAddEmployeeRequest="/getAddEmployeePage"+urlPattern;
 	   var adminViewEmployeeRequest="/ViewUser"+urlPattern;	   
 	   var adminAddNoticeRequest="/updateNotice"+urlPattern;
+	   var adminAllLeaveRequest="/getEmployeeLeaveView"+urlPattern;
 	   
 	   var adminDailyReportRequest="/getDailyReportGenerationPage"+urlPattern;
 	   var adminWeeklyReportRequest="/getWeeklyReportGenerationPage"+urlPattern;	   
@@ -172,6 +174,17 @@
 	    	 setActiveLinkInLocalStorage(adminAddNotice_link_id);
 	    	 
 	    	 window.location.href=applicationName + adminAddNoticeRequest;
+	    	 
+	     });
+	     /**
+	      * This function executes on click to get all leave details
+	      */
+	     $(employee_leave_details_link_id).click(function(){
+	    	 console.log("employee weekly attendance clikced");
+	    	 // function call This function is in MakeLinkAsActive.js file
+	    	 setActiveLinkInLocalStorage(employee_leave_details_link_id);
+	    	 
+	    	 window.location.href=applicationName + adminAllLeaveRequest;
 	    	 
 	     });
 	
