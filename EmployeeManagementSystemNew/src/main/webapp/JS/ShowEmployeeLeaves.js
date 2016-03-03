@@ -1,5 +1,8 @@
 $("document").ready(
-			function() { 
+			function() {
+				$("#accordion").accordion({
+					 active: 1
+				});
                 var allleave=0;
               /*  var monthleave=0;*/
 				$("#res").hide();
