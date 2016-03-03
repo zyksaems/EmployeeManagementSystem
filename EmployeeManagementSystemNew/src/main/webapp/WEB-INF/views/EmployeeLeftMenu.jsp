@@ -44,7 +44,7 @@
 						data-toggle="dropdown"><p id="loggedout_employee-name" class="glyphicon glyphicon-collapse-down"></p></span>
 					<ul class="dropdown-menu dropdown-menu-left" id="dropdown_emp">
 						<!-- <li><a href="#" id="admin-profile-link">Profile</a></li> -->
-						<li><a href="/EmployeeManagementSystemNew/getChangePasswordPage.do">Change password</a></li>
+						<li><a href="/EmployeeManagementSystemNew/getEmployeeChangePasswordPage.do">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>
 				</div>

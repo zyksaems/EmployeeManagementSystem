@@ -48,9 +48,9 @@
 				<ul class="nav navbar-nav">
 					<li class="" id="home-li"><a href="#" id="home-link"><span
 							class="glyphicon glyphicon-home"></span> Home</a></li>
-					<li class="" id="show-Employee-Cahange-password-div"><a
+					<!-- <li class="" id="show-Employee-Cahange-password-div"><a
 						href="#" id=""><span class="glyphicon glyphicon-pencil"></span>
-							Change Password</a></li>
+							Change Password</a></li> -->
 					<li id="about-li"><a href="#"><span
 							class="glyphicon glyphicon-info-sign"></span>About</a></li>
 					<li id="contact-li"><a href="#"><span
@@ -123,9 +123,9 @@
 	
 	<!--End of In Time Form  -->
 	<!-- Employee change password division -->
-	<div class="col-md-12 intime-margin" id="employee-change-passowrd-div"><!-- container intime-margin -->
+	<!-- <div class="col-md-12 intime-margin" id="employee-change-passowrd-div">container intime-margin
         
-		<form action="#EmployeeChangePassword.do" class="col-sm-12"  id="emp-change-pass-form"> <!-- form-inTime -->
+		<form action="#EmployeeChangePassword.do" class="col-sm-12"  id="emp-change-pass-form"> form-inTime
 			<h2 class="form-inTime-heading text-center">
 				<span class="glyphicon glyphicon-pencil"></span>Change Password
 			</h2>
@@ -133,7 +133,7 @@
           <div class="row">
              <div class="col-sm-5"></div>
              <div class="col-sm-2">
-                   <!--text box for Employee id  -->
+                   text box for Employee id 
 			      <div class="form-group  has-feedback " id="change-password-employee-id-div">
 				       <label>Employee Id</label> 
 				       <input type="text" class="form-control text-center" id="change-password-employee-id-val" autocomplete="off" required />
@@ -146,7 +146,7 @@
 			<div class="row">
              <div class="col-sm-5"></div>
              <div class="col-sm-2">
-                   <!-- textBox for employee current Password -->
+                   textBox for employee current Password
 			      <div class="form-group  has-feedback " id="change-password-employee-current-password-div">
 				       <label>Current Password</label> 
 				       <input type="password" class="form-control text-center" id="change-password-employee-current-password-val" autocomplete="off" />
@@ -158,7 +158,7 @@
 			<div class="row">
              <div class="col-sm-5"></div>
              <div class="col-sm-2">
-                   <!-- textBox for employee new  Password -->
+                   textBox for employee new  Password
 			      <div class="form-group  has-feedback " id="change-password-employee-new-password-div">
 				       <label>New Password</label> 
 				       <input type="password" class="form-control text-center" id="change-password-employee-new-password-val" autocomplete="off" required maxlength="20"/>
@@ -171,7 +171,7 @@
 			<div class="row">
              <div class="col-sm-5"></div>
              <div class="col-sm-2">
-                   <!-- textBox for employee confirm Password -->
+                   textBox for employee confirm Password
 			      <div class="form-group  has-feedback " id="change-password-employee-confirm-password-div">
 				       <label>Confirm Password</label> 
 				       <input type="password" class="form-control text-center" id="change-password-employee-confirm-password-val" autocomplete="off" required maxlength="20"/>
@@ -192,7 +192,7 @@
 			</div>
 			
 		</form>
-	</div>
+	</div> -->
 	<!--End of employee change password div  -->
 	<!--  About Us div -->
 	<div class="container" id="about-us-div">

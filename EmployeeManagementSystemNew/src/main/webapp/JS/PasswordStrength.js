@@ -1,4 +1,7 @@
-     
+$("#accordion").accordion({
+					active: false,
+					  collapsible: true,
+				});     
      /* variables to store regular expressions */
       var lowerAndUpperCaseCharactersCombination= new RegExp(/([a-z].*[A-Z])|([A-Z].*[a-z])/);
       var lowerAndUpperCaseCharacters =  new RegExp(/([a-zA-Z])/);

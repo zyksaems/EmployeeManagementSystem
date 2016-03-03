@@ -16,7 +16,7 @@
 	   
 	   // set accordion first tab to enable
 	   $("#accordion").accordion({
-			 active: 0
+			 active: 1
 		});
 	   
 	   /*variables to store requests*/

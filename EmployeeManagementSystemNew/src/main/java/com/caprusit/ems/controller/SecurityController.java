@@ -258,4 +258,13 @@ public class SecurityController {
         return  (Integer)request.getSession(false).getAttribute("employeeId");
        
 	}
+	
+	@RequestMapping(value="/getEmployeeChangePasswordPage",method = RequestMethod.GET)
+	public String viewEmployeeLeavePage(HttpServletRequest request ) {
+
+		logger.info("security controller getEmployeeChangePasswordPage()");
+		
+		return (HttpSessionUtility.verifySession(request,"employeeId")) ? "EmployeeChangePassword": "EmsHomePage";
+		
+	}
 }
