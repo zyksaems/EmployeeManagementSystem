@@ -20,6 +20,7 @@ public class EmployeeLeaveServiceImpl implements IEmployeeLeaveService{
 	
 	private Logger logger = Logger.getLogger(EmployeeLeaveServiceImpl.class);
 	
+	@Transactional
 	public String getEmployeeLeaveCount(int employeeId) {
 	
 		logger.info("EmployeeLeaveServiceImpl getEmployeeLeaveCount()");
@@ -27,20 +28,20 @@ public class EmployeeLeaveServiceImpl implements IEmployeeLeaveService{
 		System.out.println("json String     "+JsonUtility.convertToJson(list));
 		 return JsonUtility.convertToJson(list);
 	}
-
+	@Transactional
 	public String getLeaveDates(int employeeId) {
 		logger.info("EmployeeLeaveServiceImpl getLeaveDates()");
 	List<Object> list=employeeLeaveDao.getLeaveDates(employeeId);
 		
 		return JsonUtility.convertToJson(list);
 	}
-
+	@Transactional
 	public String getMonthLeaveDates(int employeeId,String month) {
 		
 		logger.info("EmployeeLeaveServiceImpl getMonthLeaveDates()");
 		
-try{
-	System.out.println(month);
+		try{
+			System.out.println(month);
 		 /*String monthdate[]=month.split("-");
 	     String month_year=monthdate[0];
 	     String month_monthnumber=monthdate[1];
@@ -81,32 +82,34 @@ try{
                      }
 		
 	}
-	
-	public void applyLeave(EmployeeLeave employeeLeave){
+		@Transactional
+		public void applyLeave(EmployeeLeave employeeLeave){
 		
 		
 		employeeLeaveDao.applyLeave(employeeLeave);
 			
 		}
+		
 	   @Transactional(rollbackFor=HibernateException.class,readOnly=true)
 		public List<EmployeeLeave> getEmployeeLeaveNotification(int employeeId){
 			
 			return employeeLeaveDao.getEmployeeLeaveNotification(employeeId);
 			
 		}
+	   
 		@Transactional(rollbackFor=HibernateException.class,readOnly=true)
 		public List<EmployeeLeave> getEmployeeLeaveDetails(){
 			
 			return employeeLeaveDao.getEmployeeLeaveDetails();
 			
 		}
-		
+		@Transactional
 		public int doApprove(int employeeLeaveId){
 			
 			int result=employeeLeaveDao.doApprove(employeeLeaveId);
 			return result;
 		}
-		
+		@Transactional
 		public int disApproveLeaves(int leaveId){
 			
 			int result=employeeLeaveDao.disApproveLeaves(leaveId);
