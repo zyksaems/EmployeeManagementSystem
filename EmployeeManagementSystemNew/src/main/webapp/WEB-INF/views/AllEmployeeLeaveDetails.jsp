@@ -1,5 +1,6 @@
 <jsp:include page="header.jsp"></jsp:include> 
 <jsp:include page="adminLeftMenu.jsp"></jsp:include>
+<link rel="stylesheet" href="FormValidation(css)/updateUser.css">
 			
 <script>
 
