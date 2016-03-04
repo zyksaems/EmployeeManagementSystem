@@ -40,3 +40,7 @@
 #all_leave_title{
 	/* padding-left: 370px; */
 }
+
+th {
+    text-align: center;
+}

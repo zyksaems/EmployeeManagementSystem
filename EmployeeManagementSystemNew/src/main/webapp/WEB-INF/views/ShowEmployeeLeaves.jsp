@@ -15,7 +15,7 @@
                 <h3 id="month_leave_title">Month Leave Dates</h3><br />
                 <label><b>Month :</b></label>&nbsp;<input type="month" id="month_leaves_input">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button class="btn btn-md btn-primary" id="month_leave_submit">submit</button><br /><br />
-                <table id="month_leave_table" border='2' class="table table-bordered table-striped">
+                <table id="month_leave_table" border="2" class="table table-bordered table-striped">
                 <th>S.no</th>
                 <th>Leave Date</th>
                 <th>Day Type</th>  
@@ -23,7 +23,7 @@
                  </div>
                 
                  <h3 id="all_leave_title">All Leave Dates</h3>
-               <table id="all_leave_table" border='2' class="table table-bordered table-striped">
+               <table id="all_leave_table" border="2" class="table table-bordered table-striped">
                 <th>S.no</th>
                 <th>Leave Date</th>
                 <th>Day Type</th>
