@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <jsp:include page="EmployeeLeftMenu.jsp"></jsp:include>
+<link rel="stylesheet" href="FormValidation(css)/updateUser.css">
 
 
 <script src="./JS/employeeDashBoard.js"></script>
