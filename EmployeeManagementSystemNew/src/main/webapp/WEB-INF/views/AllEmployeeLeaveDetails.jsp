@@ -74,6 +74,10 @@ function disapprove(index){
 }
 
 $(document).ready(function(){
+
+	 $("#accordion").accordion({
+		 active: 0
+	});
 	
 	getAllLeavesOfEmployee();
 	
@@ -153,7 +157,7 @@ function getAllLeavesOfEmployee(){
 <p align="center"><span style="font-size:200%">Employee Leave Details</span> </p>			   
 <hr>
 
-<div>
+<div id="Employee_Leave_Details_Div">
 
 	<table id="leave-table-details">
 					<thead >
@@ -229,7 +233,5 @@ function getAllLeavesOfEmployee(){
 
 				</div>
 			</div>
-			
-			
 			
 <jsp:include page="footer.jsp"></jsp:include> 

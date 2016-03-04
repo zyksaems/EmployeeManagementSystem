@@ -33,7 +33,7 @@ $("document").ready(function(){
     		{
     		flag=checkFieldInAddEmployeePage();
     		}
-    	else if(url=="/EmployeeManagementSystemNew/getDailyReportGenerationPage.do")
+    	/*else if(url=="/EmployeeManagementSystemNew/getDailyReportGenerationPage.do")
 		{
     		flag=checkFieldInDailyReportGenerationPage();
 		}
@@ -60,7 +60,7 @@ $("document").ready(function(){
     	else if(url=="/EmployeeManagementSystemNew/getAnnuallyReportGenerationPage.do")
 		{
     		flag=checkFieldInAnnuallyReportGenerationPage();
-		}
+		}*/
     	else
     		{
     		getLogOut();

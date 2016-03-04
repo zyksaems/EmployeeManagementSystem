@@ -35,6 +35,12 @@ var modifiedString="";
 var count=0;
 var eachNoticeIndex;
 $(document).ready(function(){
+	
+	$("#accordion").accordion({
+		 active: 0
+	});
+  
+	
 	display();
 	getAllNotices();
 	
@@ -249,11 +255,12 @@ function setNotice(){
 			</div>
 			</div> 
 		</div>	
-		<h2>Notice Board</h2>
+		<h2 align="center">Notice Board</h2>
 		
 	<div class="container-fluid">
 		  <div class="row">
-				    <div class="col-sm-5" style="background-color:lavender;">
+				    <div class="col-sm-6" id="pre_add_noticeboard">
+				    <div class="col-sm-12"   style="background-color:lavender;">
 				    		<h2>Previous Notice</h2>
 					 		<div class="alert alert-info" id="table-div">
 					 			<table  class="table" id="myTable" border="1">
@@ -270,7 +277,8 @@ function setNotice(){
 				    	<textarea rows="5" cols="62"  id="notice"></textarea><br>
 				    	<p align="center"><Button type="button" onclick="display();" class='btn btn-info active' >Review</Button></p>
 				    </div>
-					&nbsp;&nbsp;&nbsp;&nbsp;
+				 </div>
+					<div class="col-sm-0.5"></div>
 				    
 				    <div class="col-sm-4" style="background-color:lavenderblush;">
 				    	<h2>Review Notice Board</h2>
