@@ -28,6 +28,8 @@
   
    <script src="./JS/MakeLinkAsActive.js "></script>
    <link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
+   <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
 
 <script type="text/javascript">
 var noticeData;
@@ -121,6 +123,10 @@ function setNotice(){
 	 
     
 	  function getAllNotices(){
+		  var dataSet=[];
+		  var string="";
+		 
+		  var txt="";
 		  console.log("......getAllNotices()......");
 		  var request = $.ajax({
 			  url: "/EmployeeManagementSystemNew/allNotices.do",
@@ -129,31 +135,53 @@ function setNotice(){
 			});
 			 
 			request.done(function(data) {
+				 var string1="";
 				console.log("Notices came");
 				noticeData=data;
 				
 				var len=data.length;
-				var string="";
-				var string1="";
-				if(len>0){
-					for(var i=0;i<len;i++){
-						var k=i+2;
-						var j=i+1;
-						var string1=string1+"<p>"+k+". "+noticeData[i].notice;
 				
-						 string += " <tr id="+i+"><td>"+j+"</td><td>"
+				
+					for(var i=0;i<len;i++){
+						dataSet[i]=new Array(3);
+						
+						var k=i+2;
+					    var j=i+1;
+						var string1=string1+"<p>"+k+". "+noticeData[i].notice;
+							
+						 txt="<button type='button' class='btn btn-info active' onclick='getNoticeId("+i+")' " +
+	                 		"data-toggle='modal' data-target='#deleteNoticeModal'>Delete</button>";
+						 dataSet[i][0]=j;
+						 dataSet[i][1]=noticeData[i].notice;
+						 dataSet[i][2]=txt;
+						 
+						 /* string += " <tr id="+i+"><td>"+j+"</td><td>"
                          +noticeData[i].notice
                          +"</td><td><button type='button' class='btn btn-info active' onclick='getNoticeId("+i+")' " +
-                 		"data-toggle='modal' data-target='#deleteNoticeModal'>Delete</button></td><tr>";
+                 		"data-toggle='modal' data-target='#deleteNoticeModal'>Delete</button></td><tr>"; */
+                 		
+                 		
 					}
-				}
+				
 				/* $("#myTable").append("<tbody id='tablebody'>"+string+"</tbody>"); */
-				if(string!=""){
+				/* if(string!=""){
 				$("#myTable").append("<tbody id='tablebody'>"+string+"</tbody>");
 				}else{
 					$("#myTable thead").hide();
 					$("#table-div").html("No notice available");
-				}
+				} */
+				
+				$('#notice_table').DataTable({
+           	        data: dataSet,
+           	   "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]],
+           	        columns: [
+            
+           	            { title: "Sn #" },
+           	            { title: "Notices","orderable": false },
+           	            { title: "Action","orderable": false }
+           	             
+                     ]
+           	    } );
 				
 				modifiedString=string1;
 				console.log("modifiedString="+modifiedString);
@@ -263,7 +291,7 @@ function setNotice(){
 				    <div class="col-sm-12"   style="background-color:lavender;">
 				    		<h2>Previous Notice</h2>
 					 		<div class="alert alert-info" id="table-div">
-					 			<table  class="table" id="myTable" border="1">
+					 			<!-- <table  class="table" id="myTable" border="1">
 					 				<thead>
 										<tr>
 											<th>Sn #</th>
@@ -271,7 +299,8 @@ function setNotice(){
 											<th>Action</th>
 										</tr>
 									</thead>
-					 			</table>
+					 			</table> -->
+					 			<table id="notice_table" class="table table-bordered table-striped"></table>
 				  			</div>
 				    	<h2>Add Notices</h2>
 				    	<textarea rows="5" cols="75"  id="notice"></textarea><br>

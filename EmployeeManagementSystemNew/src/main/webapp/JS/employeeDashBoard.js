@@ -226,7 +226,7 @@
 	                    	}*/
 	                	
 	                	
-	                	tableclear=$('#leave-table').DataTable({
+	                	$('#leave-table').DataTable({
 	               	        data: dataSet,
 	               	     "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]],
 	               	        columns: [
