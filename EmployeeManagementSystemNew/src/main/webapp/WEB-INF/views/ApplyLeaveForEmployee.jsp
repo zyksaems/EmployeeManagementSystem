@@ -5,6 +5,7 @@
 
 
 <script src="./JS/employeeDashBoard.js"></script>
+<script src="./JS/accordion1.js"></script>
 
 
 

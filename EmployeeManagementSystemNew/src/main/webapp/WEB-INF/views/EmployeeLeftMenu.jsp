@@ -35,14 +35,14 @@
 		     <div class="col-sm-2 icon">
                  <img src="./images/caprus logo.png" width="65px" height="65px">
 		     </div>
-			 <div class="col-sm-8 title_menu text-center">
-				 <h1 align="center">EMPLOYEE MANAGEMENT SYSTEM</h1>
+			 <div class="col-sm-7 title_menu text-center">
+				<h1 ><b>Employee Management System</b></h1>
 			 </div>
-			<div class="col-sm-2" id="loggedout_div">
+			<div class="col-sm-3" id="loggedout_div">
 				<div class="employee_dropdown">
 					<span class="logged_out_name_css"
 						data-toggle="dropdown"><p id="loggedout_employee-name" class="glyphicon glyphicon-collapse-down"></p></span>
-					<ul class="dropdown-menu dropdown-menu-left" id="dropdown_emp">
+					<ul class="dropdown-menu dropdown-menu-right" id="dropdown_emp">
 						<!-- <li><a href="#" id="admin-profile-link">Profile</a></li> -->
 						<li><a href="/EmployeeManagementSystemNew/getEmployeeChangePasswordPage.do">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
