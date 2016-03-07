@@ -10,9 +10,9 @@
 			         <!-- This division for add employee manually and through excel file-->
 			        <div  class="row addEmployeeMainDivision" id="add-employee-main-division" > 
                          <div class="row" >  <!--  id="importEmployeeDataDiv" -->
-                              <div class="col-sm-4"></div>
-                              <div class="col-sm-4"> 
-                                <div class="row"><p class="AddEmpHeadingText">Add employee(s)</p></div> 
+                              <div class="col-sm-3"></div>
+                              <div class="col-sm-6"> 
+                                <div class="row"><p class="AddEmpHeadingText" align="center">Add employee(s)</p></div> 
                                 <div class="row">
                                   <div class="col-sm-1"></div> 
                                   <div class="col-sm-11">
@@ -23,7 +23,7 @@
                                   <div class="col-sm-1">  </div> 
                                 </div>                                                                       
                               </div>
-                             <div class="col-sm-4"></div>   
+                             <div class="col-sm-3"></div>   
                         </div>
                         <!-- Add employee Excel division -->
                         <div  class="row" id="add-employee-excel-div">          
@@ -118,7 +118,7 @@
                              <div class="col-sm-2"> </div>
                           </div>
                           <div class="row">
-                             <div class="col-sm-4"></div>
+                             <div class="col-sm-5"></div>
                              <div class="col-sm-4">
                                <div class="row">
                                   <button type="submit" class="btn btn-primary" id="add-employee-submit-button">Save Employee</button> 
@@ -127,7 +127,7 @@
                                   <p class="ManualEmployeeSuccessMsg text-danger"  id="add-employee-success-message"></p>   
                                 </div>                
                              </div>             
-                             <div class="col-sm-4"></div>    
+                             <div class="col-sm-3"></div>    
                           </div>            
                     </div>  <!--  END -- Add employee manual division -->       
                 </div> <!-- END -- add employee main division -->

@@ -30,10 +30,10 @@
 			                               </div>			                  
 			                            </div>		                            			                                                                                                 
 			                   </div>
-			                   <div  class="col-sm-6"> </div>
-			                   <div  class="col-sm-4" id="pie-holder" >   
+			                   <div  class="col-sm-5"> </div>
+			                   <div  class="col-sm-7" id="pie-holder" >   
 		                          <canvas id="pieChart" width="400px" height="400px" class="hand" ></canvas>
-		                           <p class="text-center alert"><b>Note:</b> please click on chart to show details of attendance</p> 
+		                           <p class="alert"><b>Note:</b> please click on chart to show details of attendance</p> 
 		            	       </div>			                          			                 
                          </div>  
                          <div class="row" id="attendance-details-tables">

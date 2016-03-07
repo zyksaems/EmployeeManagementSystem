@@ -43,7 +43,9 @@
 				<h1 ><b>Employee Management System</b></h1>
 			</div>
 			<div class="col-sm-2">
+			
 				<div class="dropdown">
+				<span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;
 					<span class="glyphicon glyphicon-cog icon-setting"
 						data-toggle="dropdown"></span>
 					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">

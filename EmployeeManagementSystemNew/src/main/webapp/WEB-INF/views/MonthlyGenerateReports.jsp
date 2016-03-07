@@ -1,14 +1,18 @@
   <jsp:include page="AdminTemplate.jsp"></jsp:include>
  <script src="./JS/MonthlyGenerateReoprts.js"></script>
      <script src="./JS/ConverWorkingHours.js"></script>
-     
-	<div class="row generateposition" id="monthly-report-select-div">
+     <div class="row">
+ <!--   <div class="col-sm-1"></div> -->
+   <div class="col-sm-12 generatereport_align">
+    <div class="col-sm-12">
+   <div class="col-sm-2"></div>
+	<div class="col-sm-8 generateposition" id="monthly-report-select-div">
 	<h3 align="center"><b>Monthly Attendance Reports</b></h3>
 	<div id="searchcriteria">
 		<h4>
 			<b>Search criteria</b>
 		</h4>
-	</div><br /><br />
+	</div><br />
 		<label>select type:</label> <select id="select"
 			onchange="getDisable()">
 			<option title="" value="">--Select--</option>
@@ -18,7 +22,11 @@
 		Month: <input type="month" id="month">&nbsp;&nbsp;
 		<button class="btn btn-primary" id="monthreports">submit</button>
 	</div>
-	<div class="row generateposition1">
+	<div class="col-sm-2"></div>
+	</div>
+	<div class="col-sm-12">
+	<div class="col-sm-2"></div>
+	<div class="col-sm-8 generateposition1">
 	<div id="searchcriteria">
 		<h4>
 			<b>Search Results</b>
@@ -46,11 +54,18 @@
 			</div>
 		</div>
 		</div>
-		<font color="red"><p aling="center" id="res"></p></font></div> <br /> <br />
+		<font color="red"><p aling="center" id="res"></p></font></div> <br />
 		<button id="back" class='btn btn-primary'>back</button>
 		<button id="print" class='btn btn-primary'
-			onclick="PrintDiv('printdiv')">print</button>
+			onclick="PrintDiv('printdiv')">print</button><br /> <br />
 			
 		
 	</div>
-   </div>
+	<div class="col-sm-2"></div>
+	</div>
+  	</div>
+</div>
+	</div>
+	<!-- <div class="col-sm-1"></div> -->
+	</body>
+	</html>

@@ -73,6 +73,7 @@
 			</div>
 			<div class="col-sm-2">
 				<div class="dropdown">
+				<span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;
 					<span class="glyphicon glyphicon-cog icon-setting"
 						data-toggle="dropdown"></span>
 					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
@@ -132,16 +133,17 @@
 			</div>
 			</div> 
 		</div>
-		
-		<div style="overflow-x: auto;" class="table-responsive">
+		<div class="col-sm-10">
+		<div class="row">
+		<div  class="table-responsive">
 			<div class="empdetail" align="center">
 				<h2>Employee Details</h2>
 				</div>
 				<hr>
 				
 				<nav  role="navigation" title="Search">
-				<div class="wrapper">
-					<div class="col-sm-11 col-md-11" align="left">
+				<div class="wrapper" >
+					<div class="col-sm-4" id="search_div" align="left">
 						<form class="navbar-form" role="search">
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="Search"
@@ -154,7 +156,7 @@
 							</div>
 						</form>
 					</div>
-					<div align="right">
+					<div align="right" id="pagination_div">
 				<span class="pagination pagination-lg" id="myPager"></span>
 				</div>
 					</div>
@@ -415,8 +417,9 @@
 
 				</div>
 			</div>
+			</div>
 
-
+           </div>
 		</div>
 
 		<!-- footer -->

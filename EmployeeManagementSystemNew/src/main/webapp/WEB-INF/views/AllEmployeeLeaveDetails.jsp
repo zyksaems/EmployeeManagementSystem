@@ -152,12 +152,15 @@ function getAllLeavesOfEmployee(){
 	
 }
 </script>
-
-
+<div class="row">
+<div class="col-sm-1"></div>
+<div class="col-sm-10">
+<div class="col-sm-1"></div>
+<div class="col-sm-10">
 <p align="center"><span style="font-size:200%">Employee Leave Details</span> </p>			   
 <hr>
 
-<div id="Employee_Leave_Details_Div">
+<div >
 
 	<table id="leave-table-details">
 					<thead >
@@ -173,8 +176,11 @@ function getAllLeavesOfEmployee(){
 
 </div>
 
-
-
+</div>
+<div class="col-sm-1"></div>
+</div>
+<div class="col-sm-1"></div>
+</div>
 <div class="abtlikebox" style="right: -268px;">
       <button id="fixed1" >Productivity info </button>
      <div>

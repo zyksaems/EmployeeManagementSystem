@@ -274,7 +274,7 @@ function setNotice(){
 					 			</table>
 				  			</div>
 				    	<h2>Add Notices</h2>
-				    	<textarea rows="5" cols="62"  id="notice"></textarea><br>
+				    	<textarea rows="5" cols="75"  id="notice"></textarea><br>
 				    	<p align="center"><Button type="button" onclick="display();" class='btn btn-info active' >Review</Button></p>
 				    </div>
 				 </div>

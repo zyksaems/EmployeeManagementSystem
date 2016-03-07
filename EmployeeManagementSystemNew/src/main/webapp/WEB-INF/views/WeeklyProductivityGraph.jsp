@@ -9,7 +9,7 @@
  <!-- Start of WeeklyProductivity division -->
  
   <div class="row">
-			     <div class="col-sm-9">
+			     <div class="col-sm-8" id="grap_div">
 			           <div style="width: auto ;" id="line-holder">
 			               <div class="row  pageHeading alert alert-info"><b><p class="text-center" id="weekly-productivity-type-msg"></p></b></div>
 			               <canvas id="lineChart" height="auto" width="auto" style="margin-left: 5%"></canvas>
@@ -17,17 +17,17 @@
                        </div>
 			     </div>
 			     <div class="col-sm-1"></div>
-			     <div class="col-sm-2" >
+			     <div class="col-sm-3" >
 			    <!-- bar chart form (monthly report) -->
                 <div id="weekly-productivity-select-div">
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-10">
+                <div class="row text-center">
+                  <!--   <div class="col-sm-1"></div> -->
+                    <div class="col-sm-12">
                      <br>
                        <button class="btn btn-primary btn-Text btn-sm" id="overAll-weekly-productivity-button">OverAll</button>
                        <button class="btn btn-primary btn-Text btn-sm" id="individual-weekly-productivity-button">Individual</button>
                    </div>
-                   <div class="col-sm-1"></div>
+                  <!--  <div class="col-sm-1"></div> -->
               
                </div>
   

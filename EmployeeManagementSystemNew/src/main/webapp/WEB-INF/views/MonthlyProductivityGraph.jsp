@@ -7,7 +7,7 @@
 	 <script src="./JS/MonthlyProductivityGraph.js"></script>	
 	 
      <div class="row">
-			     <div class="col-sm-9">
+			     <div class="col-sm-8" id="grap_div">
 			           <div style="width: auto ;" id="bar-holder" >
 			               <div class="row  pageHeading alert alert-info"><b><p class="text-center" id="monthly-productivity-type-msg"></p></b></div>
 			               <div class="row">
@@ -21,17 +21,17 @@
                        </div>
 			     </div>
 			     <div class="col-sm-1"></div>
-			     <div class="col-sm-2" style="background-color: ">
+			     <div class="col-sm-3" style="background-color: ">
 			    <!--bar chart form (monthly report) -->
                 <div ng-show="showMonthlyReportForm" id="monthly-productivity-select-div">
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-10">
+                <div class="row text-center">
+                  <!--   <div class="col-sm-1"></div> -->
+                    <div class="col-sm-12">
                      <br>
                        <button class="btn btn-primary btn-Text btn-sm" id="overAll-monthly-productivity-button">OverAll</button>
                        <button class="btn btn-primary btn-Text btn-sm" id="individual-monthly-productivity-button">Individual</button>
                    </div>
-                   <div class="col-sm-1"></div>
+                   <!-- <div class="col-sm-1"></div> -->
               
                </div>
   

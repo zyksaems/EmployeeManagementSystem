@@ -1,15 +1,19 @@
 	<jsp:include page="AdminTemplate.jsp"></jsp:include>
 	<script src="./JS/AnnuallyGenerateReports.js"></script> 
 	    <script src="./JS/ConverWorkingHours.js"></script>
-	    
-	<div id="anual-report-select-div">
-	<div class="row generateposition">
+	    <div class="row">
+ <!--   <div class="col-sm-1"></div> -->
+   <div class="col-sm-12 generatereport_align">
+      <div class="col-sm-12">
+   <div class="col-sm-2"></div>
+	<!-- <div id="anual-report-select-div"> -->
+	<div class="col-sm-8 generateposition" id="anual-report-select-div">
 	<h3 align="center"><b>Annually Attendance Reports</b></h3>
 	<div id="searchcriteria">
 		<h4>
 			<b>Search criteria</b>
 		</h4>
-	</div><br /><br />
+	</div><br />
 		<label>select type:</label> <select id="select"
 			onchange="getDisable()">
 			<option title="" value="">--Select--</option>
@@ -19,7 +23,11 @@
 		year: <input type="year" id="year" maxlength="4">&nbsp;&nbsp;
 		<button class="btn btn-primary" id="annualReports">submit</button>
 	</div>
-	<div class="row generateposition1"> 
+	<div class="col-sm-2"></div>
+	</div>
+	<div class="col-sm-12">
+	<div class="col-sm-2"></div>
+	<div class="col-sm-8 generateposition1"> 
 	<div id="searchcriteria">
 		<h4>
 			<b>Search Results</b>
@@ -47,9 +55,15 @@
 			</div>
 		</div>
 		</div>
-		<font color="red" size="4"><p aling="center" id="res"></p></font> </div><br />
+		<font color="red" size="4"><p aling="center" id="res"></p></font> </div>
 		<br /><button id="back" class='btn btn-primary'>back</button>
-		<button id="print" class='btn btn-primary'>print</button>
+		<button id="print" class='btn btn-primary'>print</button><br /> <br />
 	</div>
+	<div class="col-sm-2"></div>
 	</div>
+		</div>
+</div>
 	</div>
+	<!-- <div class="col-sm-1"></div> -->
+	</body>
+	</html>
