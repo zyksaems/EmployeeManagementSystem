@@ -69,7 +69,7 @@ span:HOVER {
 }
 
 table, td, th {
-	border: 1px solid green;
+	border: 1px solid  #BCC6CC;
 }
 
 th, td {
@@ -79,7 +79,7 @@ th, td {
 
 th {
 	height: 40px;
-	background-color: pink;
+	background-color: #77BFC7;
 	color: white;
 }
 

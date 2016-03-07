@@ -102,6 +102,7 @@ $(document).ready(function(){
 });
 
 function getAllLeavesOfEmployee(){
+	var dataSet=[];
 	
 	console.log(".........getting all leaves details.......");
 	
@@ -117,14 +118,26 @@ function getAllLeavesOfEmployee(){
 			allLeaveData=data;
 			 var len = data.length;
 			 for(var i=0;i<len;i++){
-				 console.log(data[i]);
+				 console.log(allLeaveData[i]);
 			 }
 			 console.log(len);
 			 
 			 var txt = "";
+			  dataSet=new Array(len);
+			 
+			 for(var i=0;i<len;i++){
+				 txt="<button type='button' class='btn btn-default btn-info active'onclick='holdRowNo("+i+")'" +
+            		"data-toggle='modal' data-target='#confirmLeaveModal'>Click</button>";
+				  dataSet[i]=new Array(4);
+				  dataSet[i][0]=data[i].employeeId;
+				  dataSet[i][1]=data[i].name;
+				  dataSet[i][2]=data[i].date_of_apply;
+				  dataSet[i][3]=txt;
+			 }
+				 
 			 
                if(len > 0){
-                   for(var i=0;i<len;i++){
+                  /*  for(var i=0;i<len;i++){
                            txt += " <tr id="+i+"><td>"
                            +data[i].employeeId+"</td><td>"
                            +data[i].name+"</td><td>"
@@ -138,7 +151,21 @@ function getAllLeavesOfEmployee(){
                    		$("button").click(function(){
                    			console.log("button clicked");
                    		});
-                   	}
+                   	} */
+                   	
+            		tableclear=$('#leave-table-details').DataTable( {
+               	        data: dataSet,
+               	     "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]],
+               	        columns: [
+                
+               	            { title: "EMPLOYEE ID" },
+               	            { title: "EMPLOYEE NAME" },
+               	            { title: "APPLIED DATE" },
+               	            { title: "VIEW MESSAGE","orderable": false }// ,"orderable": false 
+               	           
+                         ]
+               	    } );
+                   	
                    }
                	else{
                		alert("No Match Found");
@@ -152,18 +179,15 @@ function getAllLeavesOfEmployee(){
 	
 }
 </script>
-<div class="row">
-<div class="col-sm-1"></div>
-<div class="col-sm-10">
-<div class="col-sm-1"></div>
-<div class="col-sm-10">
+
+
 <p align="center"><span style="font-size:200%">Employee Leave Details</span> </p>			   
 <hr>
 
-<div >
+<div id="Employee_Leave_Details_Div">
 
-	<table id="leave-table-details">
-					<thead >
+	<table id="leave-table-details" border="2" class="table table-bordered table-striped">
+					<!-- <thead >
 						<tr>
 							<th height="50" align="center">EMPLOYEE ID</th>
 							<th height="50" align="center">EMPLOYEE NAME</th>
@@ -171,16 +195,13 @@ function getAllLeavesOfEmployee(){
 							<th height="50" align="center">STATUS</th>
 							<th height="50" align="center">VIEW MESSAGE</th>
 						</tr>
-					</thead>
+					</thead> -->
 	</table>
 
 </div>
 
-</div>
-<div class="col-sm-1"></div>
-</div>
-<div class="col-sm-1"></div>
-</div>
+
+
 <div class="abtlikebox" style="right: -268px;">
       <button id="fixed1" >Productivity info </button>
      <div>
