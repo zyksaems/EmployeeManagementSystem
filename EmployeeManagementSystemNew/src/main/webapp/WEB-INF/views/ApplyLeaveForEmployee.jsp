@@ -46,7 +46,7 @@
                        <div class="form-group">
       						 <textarea class="form-control" rows="10" id="text-for-leave" placeholder="Text Here"></textarea><br />
       						 <div align="left">
-      						 <button type="button" class="btn btn-primary" onclick="sendMail();">Apply</button>
+      						 <button type="button" class="btn btn-primary" onclick="applyForLeave();">Apply</button>
       						  <button type="reset" class="btn btn-warning">Reset All</button>
       						 </div>
    						 </div> 
@@ -62,7 +62,7 @@
           						</tr>
           					</thead>
           				</table>
-          			
+          			<p id="no-records"></p>
           			</div>
             
 

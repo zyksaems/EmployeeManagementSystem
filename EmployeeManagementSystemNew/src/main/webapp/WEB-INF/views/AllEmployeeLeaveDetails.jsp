@@ -128,11 +128,12 @@ function getAllLeavesOfEmployee(){
 			 for(var i=0;i<len;i++){
 				 txt="<button type='button' class='btn btn-default btn-info active'onclick='holdRowNo("+i+")'" +
             		"data-toggle='modal' data-target='#confirmLeaveModal'>Click</button>";
-				  dataSet[i]=new Array(4);
+				  dataSet[i]=new Array(5);
 				  dataSet[i][0]=data[i].employeeId;
 				  dataSet[i][1]=data[i].name;
 				  dataSet[i][2]=data[i].date_of_apply;
-				  dataSet[i][3]=txt;
+				  dataSet[i][3]=data[i].isApproved;
+				  dataSet[i][4]=txt;
 			 }
 				 
 			 
@@ -161,6 +162,7 @@ function getAllLeavesOfEmployee(){
                	            { title: "EMPLOYEE ID" },
                	            { title: "EMPLOYEE NAME" },
                	            { title: "APPLIED DATE" },
+               	        	{ title: "STATUS" },
                	            { title: "VIEW MESSAGE","orderable": false }// ,"orderable": false 
                	           
                          ]

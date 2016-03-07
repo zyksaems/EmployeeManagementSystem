@@ -139,7 +139,7 @@
 	   
    });  // END  -- $('document').ready(function())
    
-   function sendMail(){
+   function applyForLeave(){
 		
 		var leaveObject={employeeId:null,name:null,subject:null,message:null}; 
 		
