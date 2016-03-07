@@ -52,17 +52,17 @@
    						 </div> 
                 	</div>
           			<div class="col-sm-10">
-          				<table id="leave-table" class="table">
-          					<thead>
+          				<table id="leave-table" class="table table-bordered table-striped">
+          					<!-- <thead>
           						<tr>
           							<th>Date of Applied</th>
           							<th>Subject</th>
           							<th>Status</th>
           							<th>See Message</th>
           						</tr>
-          					</thead>
+          					</thead> -->
           				</table>
-          			<p id="no-records"></p>
+          			
           			</div>
             
 

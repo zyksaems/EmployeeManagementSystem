@@ -137,7 +137,7 @@ function getAllLeavesOfEmployee(){
 			 }
 				 
 			 
-               if(len > 0){
+               if(len >= 0){
                   /*  for(var i=0;i<len;i++){
                            txt += " <tr id="+i+"><td>"
                            +data[i].employeeId+"</td><td>"
@@ -154,7 +154,7 @@ function getAllLeavesOfEmployee(){
                    		});
                    	} */
                    	
-            		tableclear=$('#leave-table-details').DataTable( {
+            		tableclear=$('#leave-table-details').DataTable({
                	        data: dataSet,
                	     "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]],
                	        columns: [

@@ -180,6 +180,7 @@
    };
    
    function leaveNotificationForEmployee(){
+	   var dataSet=[];
 	   
 	   console.log("==================in leaveNotificationForEmployee()=================");
 		  var request = $.ajax({
@@ -196,8 +197,20 @@
 				 allEemployeeData=data;
 				 var txt = "";
 				 
-	                if(len > 0){
-	                    for(var i=0;i<len;i++){
+				 for(var i=0;i<len;i++){
+					 txt="<button type='button' class='btn btn-default btn-info active' onclick='showMessage("+i+")' " +
+	                            		"data-toggle='modal' data-target='#showMessageModal'>Click</button>";
+					  dataSet[i]=new Array(4);
+					  dataSet[i][0]=data[i].date_of_apply;
+					  dataSet[i][1]=data[i].subject;
+					  dataSet[i][2]=data[i].isApproved;
+					  dataSet[i][3]=txt;
+				 }
+					 
+				 
+	                if(len >= 0){
+	                	
+	                    /*for(var i=0;i<len;i++){
 	                            txt += " <tr id="+i+"><td>"
 	                            +data[i].date_of_apply+"</td><td>"
 	                            +data[i].subject+"</td><td>"
@@ -210,9 +223,23 @@
 	                    		$("button").click(function(){
 	                    			console.log("button clicked");
 	                    		});
-	                    	}
-	                    }
-	                	else{
+	                    	}*/
+	                	
+	                	
+	                	tableclear=$('#leave-table').DataTable({
+	               	        data: dataSet,
+	               	     "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]],
+	               	        columns: [
+	                
+	               	            { title: "Date of Applied" },
+	               	            { title: "Subject" },
+	               	            { title: "Status" },
+	               	        	{ title: "See Message","orderable": false }
+	               	             
+	                         ]
+	               	    } );
+	                	
+	                    }else{
 	                		/*alert("No Match Found");*/
 	                	}
 			});
