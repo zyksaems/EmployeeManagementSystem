@@ -4,7 +4,7 @@
 $("document").ready(function(){
 	
 	$("#accordion").accordion({
-		 active: 2
+		 active: 3
 	});
 	
 	    var todayAttendanceDetails;

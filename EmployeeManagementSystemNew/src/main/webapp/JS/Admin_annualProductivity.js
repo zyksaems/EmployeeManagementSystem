@@ -1,7 +1,7 @@
 
   $(document).ready(function(){
 		$("#accordion").accordion({
-			 active: 3
+			 active: 4
 		});
 	  
 	var overAllProductivityButton_id="#overAll-monthly-productivity-button";

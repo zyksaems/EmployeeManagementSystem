@@ -2,22 +2,30 @@ package com.caprusit.ems.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="PRAKASH.EMPLOYEE_LEAVE_TABLE")
 public class EmployeeLeave implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -33,6 +41,7 @@ public class EmployeeLeave implements Serializable{
 	private String name;
 	
 	@Column(name="date_of_apply")
+	@Temporal(TemporalType.DATE)
 	private Date date_of_apply;
 	
 	@Column(name="isapproved")
@@ -43,7 +52,13 @@ public class EmployeeLeave implements Serializable{
 	
 	@Column(name="message")
 	private String message;
-
+	
+	@OneToMany
+	@Fetch(FetchMode.SUBSELECT)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@Cascade(CascadeType.ALL)
+	@JoinColumn(name="leaveId_fk")
+    private Set<EmployeeLeaveDates> setOfLeaveDates;
 	
 	public int getLeaveId() {
 		return leaveId;
@@ -100,15 +115,24 @@ public class EmployeeLeave implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
 
-	@Override
+	public Set<EmployeeLeaveDates> getSetOfLeaveDates() {
+		return setOfLeaveDates;
+	}
+
+	public void setSetOfLeaveDates(Set<EmployeeLeaveDates> setOfLeaveDates) {
+		this.setOfLeaveDates = setOfLeaveDates;
+	}
+
+	/*@Override
 	public String toString() {
 		return "EmployeeLeave [leaveId=" + leaveId + ", employeeId=" + employeeId + ", name=" + name
 				+ ", date_of_apply=" + date_of_apply + ", isApproved=" + isApproved + ", subject=" + subject
 				+ ", message=" + message + "]";
 	}
 
-	
+	*/
 	
 	
 	

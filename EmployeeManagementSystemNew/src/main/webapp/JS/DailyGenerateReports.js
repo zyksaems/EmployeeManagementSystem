@@ -1,7 +1,7 @@
 $(function() {
 	
 	$("#accordion").accordion({
-		 active: 1
+		 active: 2
 	});
 	
 	var x=0;

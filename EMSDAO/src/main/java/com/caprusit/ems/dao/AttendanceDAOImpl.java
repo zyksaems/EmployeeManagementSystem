@@ -48,11 +48,8 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 		updateWorkingHours.setParameter(2, getTodayDate());
 		updateWorkingHours.setParameter(3, user.getEid());
 
-
-
 		int res = updateEndTime.executeUpdate();
 		int res2 = updateWorkingHours.executeUpdate();
-
 
 		logger.info("operation upate end time: " + res);
 		logger.info("hors worked: " + res2);
@@ -123,6 +120,19 @@ public class AttendanceDAOImpl implements IAttendanceDAO {
 
 		return cal.getTime();
 
+	}
+
+	/**
+	 * This method is to delete the row from attendance table  for given employeeId and attendance date
+	 * @param employeeId id of employee
+	 * @param attendanceDate date of attendance
+	 * @return returns 1 on successful delete
+	 */
+	public int deleteAttendanceByEmployeeIdAndDate(int employeeId,Date attendanceDate) {
+		
+		return HibernateSessionUtility.getHibernateSession()
+				.createQuery("delete from Attendance a where a.employeeId= :empId and a.attendanceDate= :attendanceDate ")
+				.setParameter("empId", employeeId).setParameter("attendanceDate", attendanceDate).executeUpdate();
 	}
 
 	

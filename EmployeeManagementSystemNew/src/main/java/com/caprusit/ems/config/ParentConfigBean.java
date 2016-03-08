@@ -1,7 +1,5 @@
 package com.caprusit.ems.config;
 
-
-
 import java.io.IOException;
 import java.util.Properties;
 
@@ -95,7 +93,8 @@ public class ParentConfigBean {
 		logger.info("local session factory bean is creating --  parent");
 		LocalSessionFactoryBean  factory= new LocalSessionFactoryBean ();
 		factory.setDataSource(getDataSource());
-		factory.setAnnotatedClasses(Employee.class,Attendance.class,Role.class,Department.class,EncryptedEmployee.class,Notice.class,EmployeeLeave.class);
+		factory.setPackagesToScan("com.caprusit.ems.domain");
+		//factory.setAnnotatedClasses(Employee.class,Attendance.class,Role.class,Department.class,EncryptedEmployee.class,Notice.class,EmployeeLeave.class);
 		Properties p=new Properties();		
 	    p.load(new ClassPathResource("properties/hibernate.properties").getInputStream()); //load gives FileNotFound and IOException
 		factory.setHibernateProperties(p);	
@@ -104,8 +103,8 @@ public class ParentConfigBean {
 	
 	/*Bean for PropertyPlaceHolderConfigurer(for reading properties file and setting values to variables)*/
 	@Bean
-	public static PropertyPlaceholderConfigurer placeholderConfigurer() {
 		
+	public static PropertyPlaceholderConfigurer placeholderConfigurer() {
 		PropertyPlaceholderConfigurer placeholderConfigurer = new PropertyPlaceholderConfigurer();
 		Resource resource = new ClassPathResource("properties/database.properties");
 		placeholderConfigurer.setLocation(resource);

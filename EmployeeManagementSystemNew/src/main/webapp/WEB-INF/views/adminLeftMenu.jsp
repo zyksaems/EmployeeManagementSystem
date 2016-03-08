@@ -60,26 +60,7 @@
 						<li><a href="/EmployeeManagementSystemNew/getChangePasswordPage.do">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>
-				</div> 
-				
-				
-				 <!-- <ul id="nav">
-                                <li><a href="#">Link1</a></li>
-                             <li><a href="#">Link2</a></li>
-                              <li><a href="#">Link2</a></li>
-                                    <li id="notification_li">
-                              <span id="notification_count">3</span>
-                                  <a href="#" id="notificationLink">Notifications</a>
-                                           <div id="notificationContainer">
-                                        <div id="notificationTitle">Notifications</div>
-                                       <div id="notificationsBody" class="notifications">
-                                         </div>
-                                         <div id="notificationFooter"><a href="#">See All</a></div>
-                                        </div>
-
-</li>
-<li><a href="#">Link3</a></li>
-</ul> -->
+				</div>
 				
 				<div class="modal fade" id="myAlertModel" role="dialog">
 			<div class="modal-dialog">
@@ -124,8 +105,15 @@
 	    	<li><a  href="#" id="admin-add-employee-link">Add Employee</a></li>
 	    	<li><a href="#" id="admin-view-update-emp-link">View/Update Employee</a></li>
 	    	<li><a href="#" id="notice-add-link">Update Notice</a></li>
-	    	<li><a href="#" id="employee-leave-details-link">Employee Leave Details</a></li>
 	    	</ul>
+			</div>
+			<h3>Leaves</h3>
+			<div>
+			<ul>
+			<li>
+			   <a href="#" id="employee-leave-details-link">Employee Leave Details</a>
+			</li>		
+			</ul>
 			</div>
 			<h3>Reports</h3>
 			<div>

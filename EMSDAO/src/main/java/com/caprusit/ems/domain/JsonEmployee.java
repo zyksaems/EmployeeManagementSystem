@@ -2,9 +2,6 @@ package com.caprusit.ems.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-
-@Entity
 public class JsonEmployee implements Serializable{
 	/**
 	 * 

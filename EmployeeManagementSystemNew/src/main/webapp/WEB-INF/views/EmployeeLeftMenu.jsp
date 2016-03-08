@@ -75,9 +75,9 @@
 			            <h3>Leave</h3>
 			            <div>
 						    <ul>
-						     <li><a href="/EmployeeManagementSystemNew/viewEmployeeLeave.do">View leaves</a></li>
-							   <li><a href="/EmployeeManagementSystemNew/applyForLeave.do">Apply for leave</a></li>					    
- 						       <li><a href="#/EmployeeManagementSystemNew/getWeeklyReportGenerationPage.do">View leave status</a></li>												       												      
+						     <li><a href="#/EmployeeManagementSystemNew/viewEmployeeLeave.do" id="employee-view-leaves-link">View leaves</a></li>
+							   <li><a href="#/EmployeeManagementSystemNew/applyForLeave.do" id="employee-apply-leave-link">Apply for leave</a></li>					    
+ 						       <li><a href="#" id="employee-view-leave-status-link">View leave status</a></li>												       												      
 						   </ul>
 					</div>
 		

@@ -2,7 +2,7 @@
   $(document).ready(function(){
 	  
 	  $("#accordion").accordion({
-			 active:3
+			 active:4
 		});
 	  
 	console.log("Inside MonthlyProductivityGraph function");

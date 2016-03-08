@@ -1,5 +1,6 @@
 package com.caprusit.ems.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.caprusit.ems.domain.Attendance;
@@ -15,5 +16,5 @@ public interface IAttendanceDAO {
 	
 	List<Object> getAbsentEmployeeDetails();
 
-	
+	int deleteAttendanceByEmployeeIdAndDate(int employeeId,Date attendanceDate);
 }

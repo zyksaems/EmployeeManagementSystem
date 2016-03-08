@@ -98,8 +98,15 @@
 	    	<li><a  href="#" id="admin-add-employee-link">Add Employee</a></li>
 	    	<li><a href="#" id="admin-view-update-emp-link">View/Update Employee</a></li>
 	    	<li><a href="#" id="notice-add-link">Update Notice</a></li>
-	    	<li><a href="#" id="employee-leave-details-link">Employee Leave Details</a></li>
 	    	</ul>
+			</div>
+			<h3>Leaves</h3>
+			<div>
+			<ul>
+			<li>
+			   <a href="#" id="employee-leave-details-link">Employee Leave Details</a>
+			</li>		
+			</ul>
 			</div>
 			<h3>Reports</h3>
 			<div>

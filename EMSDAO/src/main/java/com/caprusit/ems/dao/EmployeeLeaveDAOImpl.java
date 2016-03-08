@@ -3,19 +3,15 @@ package com.caprusit.ems.dao;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.caprusit.ems.dao.utility.HibernateSessionUtility;
@@ -62,12 +58,7 @@ public class EmployeeLeaveDAOImpl implements IEmployeeLeaveDAO{
 		{
 			e.printStackTrace();
 		}
-		/*SQLQuery qry=session.createSQLQuery("select count(*) from PRAKASH.ATTENDANCE_TABLE where employeeid=:P AND DAYINDICATOR !=1");	
-		//qry.addScalar("count",IntegerType.INSTANCE);
-	      qry.setInteger("P", adminId);
-		List list =qry.list();*/
 		
-	/*	int res=(Integer)list.get(0);*/
 		System.out.println(leavelist);
 		
 		return leavelist;
@@ -77,8 +68,6 @@ public class EmployeeLeaveDAOImpl implements IEmployeeLeaveDAO{
 		
 		Session session = HibernateSessionUtility.getHibernateSession();
 		SQLQuery qry=session.createSQLQuery("select  a.ATTENDANCEDATE,d.DAYNAME from PRAKASH.ATTENDANCE_TABLE a INNER JOIN PRAKASH.DAYTYPE_TABLE d on a.DAYINDICATOR=d.DAYINDICATOR where a.employeeid="+employeeId+" AND  a.DAYINDICATOR !=1 order by a.ATTENDANCEDATE asc");	
-		//qry.addScalar("count",IntegerType.INSTANCE);
-	//      qry.setInteger("P", adminId);
 		
 		List<Object> list =qry.list();
 		
@@ -122,82 +111,74 @@ public class EmployeeLeaveDAOImpl implements IEmployeeLeaveDAO{
 		List<Object> list =qry.list();
 		return list;
 	}
-	
-	public void applyLeave(EmployeeLeave employeeLeave){
+	/**
+	 * This method is to save employee leave object into database
+	 * @param  employeeLeave employee leave class object to save into database
+	 * @return 1 on successful save
+	 */
+	public int applyLeave(EmployeeLeave employeeLeave){
 		logger.info("In dao applyLeave()");
 		HibernateSessionUtility.getHibernateSession().save(employeeLeave);
+		return 1;
 	}
 	
 	public List<EmployeeLeave> getEmployeeLeaveNotification(int employeeId){
 		
-		
-	
 		Criteria criteria=HibernateSessionUtility.getHibernateSession().createCriteria(EmployeeLeave.class);
 		criteria.add(Restrictions.eq("employeeId",employeeId));
 		criteria.addOrder(Order.desc("date_of_apply"));
 		
 		List<EmployeeLeave> results =criteria.list();
-		
-		Iterator<EmployeeLeave> iterator=results.iterator();
-		
-		while(iterator.hasNext()){
-			EmployeeLeave employeeLeave=(EmployeeLeave)iterator.next();
-			System.out.println(employeeLeave);
-		}
+		logger.info("leaves in dao: "+results);
 
 		return results;
 		
 	}
+	/**
+	 *  This method is to read all employee leave details from database in ascending order of applied date.
+	 *  @return list of employee leave objects
+	 */
 	public List<EmployeeLeave> getEmployeeLeaveDetails(){
 
-		Criteria criteria=HibernateSessionUtility.getHibernateSession().createCriteria(EmployeeLeave.class);
-		
-		criteria.addOrder(Order.desc("date_of_apply"));
-		
-		List<EmployeeLeave> results =criteria.list();
-		
-		Iterator<EmployeeLeave> iterator=results.iterator();
-		
-		while(iterator.hasNext()){
-			EmployeeLeave employeeLeave=(EmployeeLeave)iterator.next();
-			System.out.println(employeeLeave);
-		}
-
-		return results;
+		return HibernateSessionUtility.getHibernateSession().createCriteria(EmployeeLeave.class).addOrder(Order.desc("date_of_apply")).list();
 		
 	}
-	public int doApprove(int employeeLeaveId){
-		System.out.println("In dao employeeLeaveId "+employeeLeaveId);
+	/**
+	 * This method is to approve or disapprove employee leave
+	 * @param employeeLeaveId  leave Id(primary key) to update
+	 * @param leaveStatus message weather it is approved or not
+	 * @return 1 on successful update, 0 if unsuccessful
+	 */
+	public int updateLeaveStatus(int employeeLeaveId,String leaveStatus){				
 		
-		final  String isApproved="Approved";
-		
-		
-		
-		String approveHql="update EmployeeLeave set isApproved=:approve where leaveId=:id";
-		
-		Query query = HibernateSessionUtility.getHibernateSession().createQuery(approveHql);
-		query.setParameter("approve", isApproved);
-		query.setParameter("id", employeeLeaveId);
-		int result = query.executeUpdate();
-		return result;
+         return HibernateSessionUtility.getHibernateSession().createQuery("update EmployeeLeave set isApproved=:approve where leaveId=:id")
+        		 .setParameter("approve", leaveStatus).setParameter("id", employeeLeaveId).executeUpdate();
 		
 	}
 	
-	public int disApproveLeaves(int leaveId){
+	/**
+	 * This method is to find out employee leave details of given employee
+	 * between given start and end dates.
+	 * @param employeeId employee id for searching
+	 * @param startDate date for search start date
+	 * @param endDate date for search stop date
+	 * @return list of employee leave details
+	 */
+	public List<EmployeeLeave> getEmployeeLeaveDetails(int employeeId,Date startDate,Date endDate) {
 		
-			System.out.println("In dao employeeLeaveId "+leaveId);
+		return HibernateSessionUtility.getHibernateSession().createCriteria(EmployeeLeave.class).add(Restrictions
+				      .and(Restrictions.eq("employeeId",employeeId),Restrictions.between("date_of_apply", startDate, endDate))).list();
+	}
+
+	/**
+	 * This method is to read EmployeeLeave class object from database based on given leaveId 
+	 * if given leave id is not there then returns null
+	 * @param leaveId primary key of object to read from database
+	 * @return employee leave class object
+	 */
+	public EmployeeLeave getEmployeeLeaveDetaisByLeaveId(int leaveId) {
 		
-				final  String disApproved="Not Approved";
-		
-		
-		
-		String approveHql="update EmployeeLeave set isApproved=:approve where leaveId=:id";
-		
-		Query query = HibernateSessionUtility.getHibernateSession().createQuery(approveHql);
-		query.setParameter("approve", disApproved);
-		query.setParameter("id", leaveId);
-		int result = query.executeUpdate();
-		return result;
+		return (EmployeeLeave)HibernateSessionUtility.getHibernateSession().get(EmployeeLeave.class, leaveId);
 	}
 	
 

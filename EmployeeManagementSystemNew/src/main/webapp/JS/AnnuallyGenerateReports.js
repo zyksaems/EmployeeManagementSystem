@@ -1,6 +1,6 @@
 $(function() {
 	$("#accordion").accordion({
-		 active: 1
+		 active: 2
 	});
 	var x=0;
 	var x1=0;

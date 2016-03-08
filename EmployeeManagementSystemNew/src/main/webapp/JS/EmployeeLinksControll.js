@@ -10,6 +10,9 @@
 	     var employeeViewWeeklyAttendance_link_id="#view-employee-weekly-attendance-link";
 	     var employeeViewMonthlyAttendance_link_id="#view-employee-monthly-attendance-link";
 	     var employeeViewAnnualAttendance_link_id="#view-employee-annual-attendance-link";
+	     var employeeeViewLeaveStatus_link_id ="#employee-view-leave-status-link";
+	     var employeeViewLeaves_link_id="#employee-view-leaves-link";
+	     var employeeApplyForLeave_link_id="#employee-apply-leave-link";
 	     
 	     
 	    /* variables to store request url */
@@ -18,9 +21,37 @@
 	     var viewEmployeeWeeklyAttendanceRequest="/getEmployeeWeeklyGenerationPage"+urlPattern;
 	     var viewEmployeeMonthlyAttendanceRequest="/getEmployeeMonthlyReportGenerationPage"+urlPattern;
 	     var viewEmployeeAnualAttendanceRequest="/getEmployeeAnnualReportGenerationPage"+urlPattern;
+	     var viewLeaveStatusRequest="/viewEmployeeLeaveStatus"+urlPattern;
+	     var viewLeavesRequest="/viewEmployeeLeave"+urlPattern;
+	     var employeeApplyForLeaveRequest="/applyForLeave"+urlPattern;
+	     
 	     
 	    // function call This function is in MakeLinkAsActive.js file
 	     setLinkClassAsActive();
+	     
+	     /**
+	      * This function executes  when "employeeApplyForLeave_link_id" is clicked
+	      */
+	     $(employeeApplyForLeave_link_id).click(function(){
+	    	 console.log("employee weekly attendance clikced");
+	    	 // function call This function is in MakeLinkAsActive.js file
+	    	 setActiveLinkInLocalStorage(employeeApplyForLeave_link_id);
+	    	 
+	    	 window.location.href= applicationName + employeeApplyForLeaveRequest;
+	    	 
+	     });
+	     
+	     /**
+	      * This function executes  when "employeeViewLeaves_link_id" is clicked
+	      */
+	     $(employeeViewLeaves_link_id).click(function(){
+	    	 console.log("employee weekly attendance clikced");
+	    	 // function call This function is in MakeLinkAsActive.js file
+	    	 setActiveLinkInLocalStorage(employeeViewLeaves_link_id);
+	    	 
+	    	 window.location.href=applicationName+viewLeavesRequest;
+	    	 
+	     });
 	     
 	     /**
 	      * This function executes  when "employeeViewWeeklyAttendance_link_id" is clicked
@@ -54,7 +85,19 @@
 	    	 setActiveLinkInLocalStorage(employeeViewAnnualAttendance_link_id);
 	    	 
 	    	 window.location.href=applicationName+viewEmployeeAnualAttendanceRequest;
-	     });	 
+	     });	
+	     
+	     /**
+	      * This function executes when "employeeeViewLeaveStatus_link_id" is clicked
+	      */
+	     $(employeeeViewLeaveStatus_link_id).click(function(){
+	    	 // function call This function is in MakeLinkAsActive.js file
+	    	 console.log("employee view leave status link clicked");
+	    	 setActiveLinkInLocalStorage(employeeeViewLeaveStatus_link_id);
+	    	 
+	    	 window.location.href=applicationName + viewLeaveStatusRequest;
+	     });
+	     
 	   
 	    
    }); // END -- $('document').ready(function ())
