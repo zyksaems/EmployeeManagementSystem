@@ -187,7 +187,11 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 	}
 	public void setNotice(Notice data){
 		logger.info("In dao setNotice()");
-		logger.info(data.getNotice());		
+		logger.info(data.getNotice());	
+		
+		Date date=new Date();
+		
+		data.setPublishedDate(date);
 	
 		HibernateSessionUtility.getHibernateSession().save(data);
 		

@@ -1,6 +1,7 @@
 package com.caprusit.ems.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,13 +20,24 @@ public class Notice implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="id")
-	@GenericGenerator(name="kaugen" , strategy="increment")
-	@GeneratedValue(generator="kaugen")
+	@Column(name="ID")
+	@GenericGenerator(name="increment" , strategy="increment")
+	@GeneratedValue(generator="increment")
 	private int id;
 	
-	@Column(name="notices")
+	@Column(name="NOTICES")
 	private String notice;
+	
+	@Column(name="PUBLISHED_DATE")
+	private Date publishedDate;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getNotice() {
 		return notice;
@@ -35,10 +47,14 @@ public class Notice implements Serializable{
 		this.notice = notice;
 	}
 
-	@Override
-	public String toString() {
-		return "Notice [notice=" + notice + "]";
+	public Date getPublishedDate() {
+		return publishedDate;
 	}
+
+	public void setPublishedDate(Date publishedDate) {
+		this.publishedDate = publishedDate;
+	}
+
 	
 	
 

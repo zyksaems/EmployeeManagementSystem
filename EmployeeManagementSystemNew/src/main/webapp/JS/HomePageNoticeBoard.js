@@ -68,7 +68,7 @@ $(document).ready(function () {
 					for(var i=0;i<len;i++){
 						var k=i+1;
 						console.log(noticeData[i].notice);
-						string=string+"<p>"+k+". "+noticeData[i].notice+"</p>";
+						string=string+"<p>"+k+". "+noticeData[i].notice+" ( posted on :"+noticeData[i].publishedDate+" )"+"</p>";
 					}
 				}
 				else{					

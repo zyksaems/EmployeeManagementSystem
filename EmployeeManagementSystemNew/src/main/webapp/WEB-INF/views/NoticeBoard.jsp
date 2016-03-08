@@ -24,18 +24,19 @@
 <link rel="stylesheet" href="./CSS/header2.css">
 <link rel="stylesheet" href="./CSS/footer.css">
 
-    <script src="./JS/AdminLinkControll.js"></script>
-  
-   <script src="./JS/MakeLinkAsActive.js "></script>
-   <link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
-   <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="./CSS/AdminTemplete.css">
+<script src="./JS/AdminLinkControll.js"></script>
+<script src="./JS/MakeLinkAsActive.js "></script>
+<link rel="stylesheet" type="text/css" href="./CSS/LinkStyle.css ">
+<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
 
 <script type="text/javascript">
 var noticeData;
 var modifiedString="";
 var count=0;
 var eachNoticeIndex;
+var currentDateAndTime;
 $(document).ready(function(){
 	
 	$("#accordion").accordion({
@@ -101,23 +102,62 @@ function setNotice(){
         success: function(msg) {
          
         },
-        error: function(msg) {
-    
-        
+        error: function(msg) { 
         }
-    });
-	 
-	
+    });	
 }
 
+function currentDateNTime(){
+	var date=new Date();
+	var monthCount=date.getMonth();
+	var month="";
+	
+	if(monthCount==0){
+		month="Jan";
+	}else if(monthCount==1){
+		month="Feb";
+	}
+	else if(monthCount==2){
+		month="Mar";
+		}
+	else if(monthCount==3){
+		month="Apr";
+	}
+	else if(monthCount==4){
+		month="May";
+	}
+	else if(monthCount==5){
+		month="Jun";
+	}
+	else if(monthCount==6){
+		month="Jul";
+	}
+	else if(monthCount==7){
+		month="Aug";
+	}
+	else if(monthCount==8){
+		month="Sep";
+	}
+	else if(monthCount==9){
+		month="Oct";
+	}
+	else if(monthCount==10){
+		month="Nov";
+	}else{
+		month="Dec";
+	}
+	
+	currentDateAndTime=month+" "+date.getDate()+", "+date.getFullYear()+" "+date.toLocaleTimeString();
+}
 
 	function display(){
+		currentDateNTime();
 		var str=document.getElementById("notice").value;
 		console.log("From textarea= "+str);
 		var inc=1;
 		if(str!=""){
 					
-			document.getElementById("post-show").innerHTML="<p>"+inc+". "+str+"</p><p>"+modifiedString+"</p>";
+			document.getElementById("post-show").innerHTML="<p>"+inc+". "+str+" ( posted on :"+currentDateAndTime+" ) "+"</p><p>"+modifiedString+"</p>";
 		}
 	}
 	 
@@ -143,34 +183,20 @@ function setNotice(){
 				
 				
 					for(var i=0;i<len;i++){
-						dataSet[i]=new Array(3);
+						dataSet[i]=new Array(4);
 						
 						var k=i+2;
 					    var j=i+1;
-						var string1=string1+"<p>"+k+". "+noticeData[i].notice;
+						var string1=string1+"<p>"+k+". "+noticeData[i].notice+" ( published on :"+noticeData[i].publishedDate+" )";
 							
 						 txt="<button type='button' class='btn btn-info active' onclick='getNoticeId("+i+")' " +
 	                 		"data-toggle='modal' data-target='#deleteNoticeModal'>Delete</button>";
 						 dataSet[i][0]=j;
 						 dataSet[i][1]=noticeData[i].notice;
-						 dataSet[i][2]=txt;
-						 
-						 /* string += " <tr id="+i+"><td>"+j+"</td><td>"
-                         +noticeData[i].notice
-                         +"</td><td><button type='button' class='btn btn-info active' onclick='getNoticeId("+i+")' " +
-                 		"data-toggle='modal' data-target='#deleteNoticeModal'>Delete</button></td><tr>"; */
-                 		
-                 		
+						 dataSet[i][2]=noticeData[i].publishedDate;
+						 dataSet[i][3]=txt;		
 					}
-				
-				/* $("#myTable").append("<tbody id='tablebody'>"+string+"</tbody>"); */
-				/* if(string!=""){
-				$("#myTable").append("<tbody id='tablebody'>"+string+"</tbody>");
-				}else{
-					$("#myTable thead").hide();
-					$("#table-div").html("No notice available");
-				} */
-				
+					
 				$('#notice_table').DataTable({
            	        data: dataSet,
            	   "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]],
@@ -178,6 +204,7 @@ function setNotice(){
             
            	            { title: "Sn #" },
            	            { title: "Notices","orderable": false },
+           	         	{ title: "Published Date"},
            	            { title: "Action","orderable": false }
            	             
                      ]
@@ -203,6 +230,7 @@ function setNotice(){
   
 	
 </script>	
+
 
 
 
