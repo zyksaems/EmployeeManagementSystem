@@ -202,9 +202,7 @@ function getAllLeavesOfEmployee(){
 
 </div>
 
-
-
-<div class="abtlikebox" style="right: -268px;">
+<!-- <div class="abtlikebox" style="right: -268px;">
       <button id="fixed1" >Productivity info </button>
      <div>
      user : Admin,EMS<br />
@@ -213,7 +211,7 @@ function getAllLeavesOfEmployee(){
      
      </div>  
  </div>
- 
+  -->
 
 			<!-- Modal -->
 			<div class="modal fade" id="confirmLeaveModal" role="dialog">

@@ -45,7 +45,7 @@
 			<div class="col-sm-2">
 			
 				 <div class="dropdown">
-				 <span id="notification_count">3</span>
+				 <span id="notification_count"></span>
 				 <div id="notificationContainer">
                       <div id="notificationTitle">Notifications</div>
                                <div id="notificationsBody" class="notifications">

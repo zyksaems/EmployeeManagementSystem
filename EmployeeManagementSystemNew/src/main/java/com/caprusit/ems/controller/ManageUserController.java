@@ -233,9 +233,9 @@ public class ManageUserController {
 	
 	}
 	@RequestMapping(value="/updateNotice")
-	public String updateNotice(){
+	public String updateNotice(HttpServletRequest request){
 		
-		return "NoticeBoard";
+		return (HttpSessionUtility.verifySession(request,"adminId")) ? "NoticeBoard" : "EmsHomePage";
 	}
 	
 	@RequestMapping(value = "/allNotices")

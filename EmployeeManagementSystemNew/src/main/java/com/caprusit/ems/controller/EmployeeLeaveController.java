@@ -74,9 +74,9 @@ public class EmployeeLeaveController {
 		 */
 
 		@RequestMapping(value = "/applyForLeave",method = RequestMethod.GET)
-		public String applyForLeave(){
+		public String applyForLeave(HttpServletRequest request){
 			
-			return "ApplyLeaveForEmployee";
+			return (HttpSessionUtility.verifySession(request,"employeeId")) ? "ApplyLeaveForEmployee": "EmsHomePage";
 		}
 		
 		@RequestMapping(value = "/applyLeave",method = RequestMethod.POST)
@@ -106,9 +106,9 @@ public class EmployeeLeaveController {
 		}
 		
 		@RequestMapping(value = "/getEmployeeLeaveView",method = RequestMethod.GET)
-		public String getEmployeeLeaveDetailsView(){
+		public String getEmployeeLeaveDetailsView(HttpServletRequest request){
 			
-			return "AllEmployeeLeaveDetails";
+			return (HttpSessionUtility.verifySession(request,"adminId")) ? "AllEmployeeLeaveDetails" : "EmsHomePage";
 			
 		}
 		
