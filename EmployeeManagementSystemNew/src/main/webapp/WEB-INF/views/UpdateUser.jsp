@@ -74,9 +74,9 @@
 			<div class="col-sm-2">
 				<div class="dropdown">
 				<span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;
-					<span class="glyphicon glyphicon-cog icon-setting"
+					<span class="glyphicon glyphicon-cog icon-setting dropdown-toggle"
 						data-toggle="dropdown"></span>
-					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
+					<ul class="dropdown-menu" id="dropdown">
 						<li><a href="/EmployeeManagementSystemNew/getChangePasswordPage.do">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>

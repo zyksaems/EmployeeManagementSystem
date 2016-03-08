@@ -44,16 +44,42 @@
 			</div>
 			<div class="col-sm-2">
 			
-				<div class="dropdown">
-				<span class="glyphicon glyphicon-bell"></span>&nbsp;&nbsp;
-					<span class="glyphicon glyphicon-cog icon-setting"
+				 <div class="dropdown">
+				 <span id="notification_count">3</span>
+				 <div id="notificationContainer">
+                      <div id="notificationTitle">Notifications</div>
+                               <div id="notificationsBody" class="notifications">
+                         </div>
+                                <div id="notificationFooter"><a href="#">See All</a></div>
+                            </div>
+				<a href="#"><span class="glyphicon glyphicon-bell"  id="notificationLink"></span></a>&nbsp;&nbsp;
+					<span class="glyphicon glyphicon-cog icon-setting dropdown-toggle"
 						data-toggle="dropdown"></span>
-					<ul class="dropdown-menu dropdown-menu-right" id="dropdown">
+					<ul class="dropdown-menu" id="dropdown">
 						<!-- <li><a href="#" id="admin-profile-link">Profile</a></li> -->
 						<li><a href="/EmployeeManagementSystemNew/getChangePasswordPage.do">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>
 					</ul>
-				</div>
+				</div> 
+				
+				
+				 <!-- <ul id="nav">
+                                <li><a href="#">Link1</a></li>
+                             <li><a href="#">Link2</a></li>
+                              <li><a href="#">Link2</a></li>
+                                    <li id="notification_li">
+                              <span id="notification_count">3</span>
+                                  <a href="#" id="notificationLink">Notifications</a>
+                                           <div id="notificationContainer">
+                                        <div id="notificationTitle">Notifications</div>
+                                       <div id="notificationsBody" class="notifications">
+                                         </div>
+                                         <div id="notificationFooter"><a href="#">See All</a></div>
+                                        </div>
+
+</li>
+<li><a href="#">Link3</a></li>
+</ul> -->
 				
 				<div class="modal fade" id="myAlertModel" role="dialog">
 			<div class="modal-dialog">

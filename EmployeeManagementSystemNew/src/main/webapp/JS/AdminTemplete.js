@@ -76,5 +76,25 @@
 		/*function call to apply auto complete functionality to employee id text field*/ 
 		autoFillDataToTextField("#id",2);
 		
+		
+		      $("#notificationLink").click(function()
+				{
+				$("#notificationContainer").fadeToggle(250);
+				$("#notification_count").fadeOut("slow");
+				return false;
+				});
+
+				//Document Click
+				$(document).click(function()
+				{
+				$("#notificationContainer").hide();
+				});
+				//Popup Click
+				$("#notificationContainer").click(function()
+				{
+				return false
+				});
+		
+		
 	});// END -- $(document).ready(function())
 	

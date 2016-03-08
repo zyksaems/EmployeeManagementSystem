@@ -35,11 +35,10 @@ span:HOVER {
 	color: hotpink;
 }
 
-#dropdown {
+ #dropdown {
 	max-width: 160px;
 	min-width: 100px;
 	top: 88px;
-	right : 10px;
 	width: 250px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -107,13 +106,13 @@ th {
 
 input {
 	font-size: 15px;
-	width: 160px;
+	width: 220px;
 	height: 32px;
 	border-radius: 5px;
 }
 
-select {
-	width: 125px;
+#select {
+	width: 120px;
 	height: 32px;
 	border-radius: 5px;
 }
@@ -150,6 +149,7 @@ select {
         cursor: pointer;
     }
     .glyphicon-bell{
+    color:white;
     font-size:25px;
     top: 60px;
     }
@@ -159,4 +159,63 @@ select {
 
 #grap_div{
 	padding-left: 40px;
+}
+
+#notificationContainer {
+background-color: #fff;
+border: 1px solid rgba(100, 100, 100, .4);
+-webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+overflow: visible;
+position: absolute;
+top: 90px;
+ margin-left: -140px;
+width: 300px;
+z-index: -1;
+display: none;
+}
+#notificationContainer:before {
+content: '';
+display: block;
+position: absolute;
+width: 0;
+height: 0;
+color: transparent;
+border: 10px solid black;
+border-color: transparent transparent white;
+margin-top: -20px;
+margin-left: 188px;
+}
+#notificationTitle {
+z-index: 1000;
+font-weight: bold;
+padding: 8px;
+font-size: 13px;
+background-color: #ffffff;
+width: 297px;
+border-bottom: 1px solid #dddddd;
+}
+#notificationsBody {
+padding: 33px 0px 0px 0px !important;
+min-height:300px;
+}
+#notificationFooter {
+background-color: #e9eaed;
+text-align: center;
+font-weight: bold;
+padding: 8px;
+font-size: 12px;
+border-top: 1px solid #dddddd;
+}
+
+#notification_count {
+padding: 3px 7px 3px 7px;
+background: #FF8C00;
+color: #ffffff;
+font-weight: bold;
+border-radius: 9px;
+position: absolute;
+ font-size:25px;
+ left:16px;
+    top: 50px;
+font-size: 11px;
 }

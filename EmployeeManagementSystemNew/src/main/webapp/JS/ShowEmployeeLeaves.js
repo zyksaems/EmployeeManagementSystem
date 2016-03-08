@@ -107,8 +107,8 @@ $("document").ready(
                 	$("#res").hide();
                 	$("#all_leave_table").hide();
                 	var month=$("#month_leaves_input").val();
-                	/*if(monthleave==0)
-            		{*/
+                	if(month!="")
+            		{
             	 var request = $.ajax({
        			  url: "/EmployeeManagementSystemNew/getLoggedEmployeeMonthleaveDates.do",
        			  method: "POST",
@@ -153,10 +153,11 @@ $("document").ready(
        				$("#res").show();
        				document.getElementById("res").innerHTML="INTERNAL PROBLEM PLEASE TRY AGAIN.";
        			});
-            		/*}
+            		}
             	else{
-            		$("#month_leave_table").show();
-            	}*/
+            		$("#res").show();
+       				document.getElementById("res").innerHTML="Month Field is Required.";
+            	}
                 	
                 });
                 

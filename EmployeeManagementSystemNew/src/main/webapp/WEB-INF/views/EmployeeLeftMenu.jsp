@@ -50,7 +50,7 @@
 				<div class="employee_dropdown">
 					<span class="logged_out_name_css"
 						data-toggle="dropdown"><p id="loggedout_employee-name" class="glyphicon glyphicon-collapse-down"></p></span>
-					<ul class="dropdown-menu dropdown-menu-right" id="dropdown_emp">
+					<ul class="dropdown-menu" id="dropdown_emp">
 						<!-- <li><a href="#" id="admin-profile-link">Profile</a></li> -->
 						<li><a href="/EmployeeManagementSystemNew/getEmployeeChangePasswordPage.do">Change password</a></li>
 						<li><a href="#" id="admin-logout-link">Logout</a></li>

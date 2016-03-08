@@ -55,7 +55,6 @@ span:HOVER {
 	max-width: 160px;
 	min-width: 100px;
 	top: 88px;
-	right : 10px;
 	width: 250px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -109,11 +108,11 @@ input {
 	border-radius: 5px;
 }
 
-select {
-	width: 250px;
-	height: 35px;
+ select {
+	width: 60px;
+	height: 25px;
 	border-radius: 5px;
-}
+} 
 .table-responsive{
  padding-left: 20px;
  padding-right:1px;
