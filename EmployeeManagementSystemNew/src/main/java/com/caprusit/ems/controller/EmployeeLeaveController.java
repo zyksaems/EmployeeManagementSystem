@@ -44,7 +44,13 @@ public class EmployeeLeaveController {
 			return (HttpSessionUtility.verifySession(request,"employeeId")) ? "EmployeeViewLeaveStatus": "EmsHomePage";
 			
 		}
-		
+		/**
+		 * 
+		 * @param request servlet request to verify session 
+		 * @param appliedMonth month in which applied for leave EX: 2016-04
+		 * @param empId employee id 
+		 * @return JSON object array of leave details
+		 */
 		@RequestMapping(value="/verifyEmployeeLeaveStatus",method = RequestMethod.POST)
 		public @ResponseBody String verifyEmployeeLeaveStatus(HttpServletRequest request,@RequestParam("leaveAppliedMonth") String appliedMonth,
 				                           @RequestParam("employeeId") Integer empId){
