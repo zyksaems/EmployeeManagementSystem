@@ -19,7 +19,7 @@ $("document").ready(function(){
       
       /*variables to diaplay success/error messages*/
       var notExcelFileMsg="Not a Excel file, Please select Excel file";
-      var excelErrorMsg="some internal pro=blem occured";
+      var excelErrorMsg="some internal problem occured";
       var uploadSuccessMsg="File uploadesd successfully";
       var excelWaitMsg="please wait ...";
       var plsSelectFile_msg="Please select File";

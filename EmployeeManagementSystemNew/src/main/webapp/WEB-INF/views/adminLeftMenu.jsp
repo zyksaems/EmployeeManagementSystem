@@ -85,7 +85,7 @@
  										</button>
  									</div>
  								</div>
- 			</div>
+ 			    </div>
  			</div>
  		</div>
 
@@ -111,8 +111,17 @@
 			<div>
 			<ul>
 			<li>
-			   <a href="#" id="employee-leave-details-link">Employee Leave Details</a>
-			</li>		
+			   <a href="#" id="employee-leave-details-link">All Leaves</a>
+			</li>	
+			<li>
+			   <a href="#" id="employee-pending-leave-details-link">Pending Leaves</a>
+			</li>
+			<li>
+			   <a href="#" id="employee-approved-leave-details-link">Approved Leaves</a>
+			</li>	
+			<li>
+			   <a href="#" id="employee-disapproved-leave-details-link">Disapproved Leaves</a>
+			</li>	
 			</ul>
 			</div>
 			<h3>Reports</h3>
@@ -131,7 +140,7 @@
 			<div>
 			<ul>
 			<li>
-			 <a  href="#" id="admin-view-today-attendance-link">Daily Attendance</a></li>
+			 <a  href="#" id="admin-view-today-attendance-link">Today Attendance</a></li>
 			</ul>
 			</div>
 			<h3>Productivity</h3>

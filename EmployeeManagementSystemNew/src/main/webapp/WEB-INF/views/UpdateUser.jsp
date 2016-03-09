@@ -141,13 +141,12 @@
 			</div> 
 		</div>
 		<div class="col-sm-10">
-		<div class="row">
-		<div  class="table-responsive">
-			<div class="empdetail" align="center">
-				<h2>Employee Details</h2>
+		  <div class="row">		
+			    <div class="empdetail" align="center">
+				  <h2>Employee Details</h2>
 				</div>
 				<hr>
-				
+				<div class="row">
 				<nav  role="navigation" title="Search">
 				<div class="wrapper" >
 					<div class="col-sm-4" id="search_div" align="left">
@@ -164,15 +163,14 @@
 						</form>
 					</div>
 					<div align="right" id="pagination_div">
-				<span class="pagination pagination-lg" id="myPager"></span>
+				     <span class="pagination pagination-lg" id="myPager"></span>
+				     </div>
 				</div>
-					</div>
 				</nav> 
-				
-				
-				
-				<div id="printTable">
-				<table id="table"  border="1"  class="tablesorter ws_data_table table table-hover" >
+				</div>
+				<div class="row">	
+				    <div id="printTable" class="table-responsive">
+				    <table id="table"  border="1"  class="table table-hover" > <!-- class="tablesorter ws_data_table table table-hover"  -->
 					<thead  style="color:black" align="left">
 						<tr>
 							<th height="50">EMPLOYEE ID</th>
@@ -187,10 +185,11 @@
 							<th height="50" data-sorter="false">DEPARTMENT</th>
 							<th height="50" data-sorter="false">ACTION</th>
 						</tr>
-					</thead>
-				</table>
+					  </thead>
+				    </table>
 				</div>
-				<div align="center">
+				</div>
+				<div class="row" align="center">
 				<button id="printButton" class="btn btn-default btn-info active">Print</button>
 				</div>
 				
@@ -200,7 +199,7 @@
 				
 			</div>
 		
-
+       </div>
 
 
 			<!-- Modal -->
@@ -424,9 +423,9 @@
 
 				</div>
 			</div>
-			</div>
+			
 
-           </div>
+           
 		</div>
 
 		<!-- footer -->

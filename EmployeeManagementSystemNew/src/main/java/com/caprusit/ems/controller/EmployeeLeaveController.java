@@ -166,7 +166,13 @@ public class EmployeeLeaveController {
 				    return "-1";
 						
 		}
-		
+		/**
+		 * this method is to approve/disapprove employee leave request
+		 * @param request to verify session
+		 * @param leaveId  leave  Id primary key
+		 * @param status status 1 for approving, 0 for disapproving
+		 * @return 1 if success, -1 if session expires,0 if fails
+		 */
 		@RequestMapping(value = "/updateEmployeeLeaveStatus",method = RequestMethod.POST)
 		public @ResponseBody int doApproveLeaves(HttpServletRequest request,@RequestParam("leaveId") int leaveId,@RequestParam("status") int status){						
 			logger.info("employeeLeaveId :"+leaveId +"   status received: "+status);			

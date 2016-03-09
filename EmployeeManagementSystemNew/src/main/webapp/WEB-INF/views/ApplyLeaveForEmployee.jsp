@@ -19,9 +19,11 @@
                     <div class="col-sm-2"></div>             	                                  	
                 	<div class="col-sm-8">
                          <div class="form-group">
+                              <label><b>Subject:</b></label>
       						  <input type="text" class="form-control" id="leave-subject" placeholder="Add a Subject">
    						 </div> 
    						  <div class="form-group">
+   						     <label><b>Message:</b></label>
       						 <textarea class="form-control" rows="10" id="text-for-leave" placeholder="Text Here"></textarea><br />
       						 
       						 <div align="left">

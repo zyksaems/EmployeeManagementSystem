@@ -9,9 +9,8 @@
 </div>
 <hr>
 
-
-<div class="row" id="leaves-table-division">
-	<table id="admin-leaves-table"></table>
+<div id="leaves-table-division" class="table-responsive">
+	<table id="admin-leaves-table" class="table table-hover"></table>
 </div>
 <div class="row" id="nodata-leave-message-div">
      <div class="col-sm-5"></div>

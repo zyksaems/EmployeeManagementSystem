@@ -39,22 +39,7 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 	
 	public Employee findById(int id) {
 	
-		Employee result = null;
-		try {
-			String hql = "From Employee u where u.employeeId=:id";
-			Query query = HibernateSessionUtility.getHibernateSession().createQuery(hql);
-			query.setParameter("id", id);
-			logger.info("Searching id= " + id);
-			List<Employee> results = query.list();
-			result = results.get(0);
-			logger.info("Object of id =" + result);
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		
-		return result;
+		return (Employee) HibernateSessionUtility.getHibernateSession().get(Employee.class, id);
 	}
 	
 	/**

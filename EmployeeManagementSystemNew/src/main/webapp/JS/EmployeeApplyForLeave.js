@@ -39,7 +39,7 @@
  	   var showCalendarDays=60;
  	   
  	  /* variables to store success/error messages*/
- 	   var shortSubject_msg="Please enter proper subject for leaave";
+ 	   var shortSubject_msg="Please enter proper subject for leave";
  	   var shortText_msg="Please enter proper leave message";
  	   var selectDates_msg="Please select leave dates";
  	   var internalProblem_msg="Some problem occured try again !";

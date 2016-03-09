@@ -5,10 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -31,22 +27,8 @@ public class ValidationDAOImpl implements ValidationDAO {
 	public List<Object> getAllEmploeeIds() {
 		
 		logger.info("inside ValidationDAOImpl getAllEmploeeIds()");
-
-		Criteria allEmployeeIdsCriteria = HibernateSessionUtility.getHibernateSession().createCriteria(Employee.class);
-
-		allEmployeeIdsCriteria.add(Restrictions.eq("status", "1"));
-		Projection allEmployeeIdsProjection1 = Projections.property("employeeId");
-		Projection allEmployeeIdsProjection2 = Projections.property("firstName");
-		Projection allEmployeeIdsProjection3 = Projections.property("lastName");
-
-		ProjectionList validationProjectionList = Projections.projectionList();
-		validationProjectionList.add(allEmployeeIdsProjection1);
-		validationProjectionList.add(allEmployeeIdsProjection2);
-		validationProjectionList.add(allEmployeeIdsProjection3);
-
-		allEmployeeIdsCriteria.setProjection(validationProjectionList);
-
-		List<Object> allEmpData = allEmployeeIdsCriteria.list();
+		List<Object> allEmpData = HibernateSessionUtility.getHibernateSession().createCriteria(Employee.class).add(Restrictions.eq("status", "1")).setProjection(Projections.projectionList()
+				                   .add(Projections.property("employeeId")).add(Projections.property("firstName")).add(Projections.property("lastName"))).list();
 		
 		logger.info("inside ValidationDAOImpl getAllEmploeeIds(): all emploee ids size: "+allEmpData.size());
 
@@ -73,8 +55,7 @@ public class ValidationDAOImpl implements ValidationDAO {
 	public List<Object> getLoggedOutEmoloyeeIds() {
 		
 		logger.info("inside ValidationDAOImpl getLoggedOutEmoloyeeIds()");
-		/*to get logged-out emploee IDs we have to pass 1 */
-		
+		/*to get logged-out employee IDs we have to pass 1 */		
 		return executeCriteria(1);
 	}
 	
@@ -94,43 +75,19 @@ public class ValidationDAOImpl implements ValidationDAO {
 	@SuppressWarnings("unchecked")
 	private List<Object> executeCriteria(int type){
 		
-
-		Criteria employeeIdsCriteria = HibernateSessionUtility.getHibernateSession().createCriteria(Attendance.class);
-
-		Projection employeeIdsProjection = Projections.property("employeeId");
-
-		Date today= getTodayDate();
-		
-		Criterion criterion_toady = Restrictions.eq("attendanceDate", today);
-		double workingHours=0;
-		Criterion criterion_workingHours = (type == 1) ? Restrictions.gt("workingHours",workingHours): Restrictions.eq("workingHours",workingHours);
-		
-		Criterion conditon=Restrictions.and(criterion_toady,criterion_workingHours);
-		ProjectionList employeeIdsProjectionList = Projections.projectionList();
-		employeeIdsProjectionList.add(employeeIdsProjection);
-
-		employeeIdsCriteria.setProjection(employeeIdsProjectionList);
-		employeeIdsCriteria.add(conditon);
-
-		List<Object> loggedInList = employeeIdsCriteria.list();
-		
-		return loggedInList;
-		
+		return HibernateSessionUtility.getHibernateSession().createCriteria(Attendance.class).add(Restrictions.and(Restrictions.eq("attendanceDate",getTodayDate())
+				,(type == 1) ? Restrictions.isNotNull("endTime")  :  Restrictions.isNull("endTime"))).setProjection(Projections.property("employeeId")).list();
 	}
 
 	/**
 	 * This method returns all role ids and role name
-	 */
-	
+	 */	
 	@SuppressWarnings("unchecked")
 	public List<Object> getRoleIds() {
 		
-		Criteria roleIdCriteria=HibernateSessionUtility.getHibernateSession().createCriteria(Role.class);
-		
-		List<Object> roleIdList=roleIdCriteria.list();
+		List<Object> roleIdList=HibernateSessionUtility.getHibernateSession().createCriteria(Role.class).list();
 		
 		logger.info("role IDs list in dao : "+roleIdList);
-
 		
 		return roleIdList;
 	}
@@ -142,9 +99,7 @@ public class ValidationDAOImpl implements ValidationDAO {
 	@SuppressWarnings("unchecked")
 	public List<Object> getDeptIds() {
 		
-		Criteria deptIdCriteria=HibernateSessionUtility.getHibernateSession().createCriteria(Department.class);
-		
-		List<Object> deptIdList=deptIdCriteria.list();
+		List<Object> deptIdList=HibernateSessionUtility.getHibernateSession().createCriteria(Department.class).list();
 		
 		logger.info("dept IDs list in dao : "+deptIdList);
 		

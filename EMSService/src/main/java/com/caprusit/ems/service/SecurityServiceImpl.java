@@ -53,6 +53,8 @@ public class SecurityServiceImpl implements ISecurityService {
 		int status=-1;
 		Employee e=manageUsaerDAO.findById(admin.getAdminId());
 		logger.info("emplotyee :"+e);		
+		if(e == null)
+			return -1;
 		if(e.getStatus().equals("1")){
 			EncryptedEmployee encEmployee = securityDAO.getEmployeeCurrentPassword(admin.getAdminId());
 			 

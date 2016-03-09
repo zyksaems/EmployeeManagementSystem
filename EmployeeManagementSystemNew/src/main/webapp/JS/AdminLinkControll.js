@@ -10,7 +10,9 @@
 	   var adminAddEmployee_link_id="#admin-add-employee-link";	   
 	   var adminViewEmployee_link_id="#admin-view-update-emp-link";	   
 	   var adminAddNotice_link_id="#notice-add-link";
+	   
 	   var employee_leave_details_link_id="#employee-leave-details-link";
+	   var employeePendingLeaves_link_id="#employee-pending-leave-details-link";
 	   
 	   var adminDailyReport_link_id="#admin-view-daily-report-link";
 	   var adminWeeklyReport_link_id="#admin-view-weekly-report-link";

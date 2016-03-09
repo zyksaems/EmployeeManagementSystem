@@ -151,7 +151,7 @@ public class EmployeeLeaveDAOImpl implements IEmployeeLeaveDAO{
 	 */
 	public int updateLeaveStatus(int employeeLeaveId,String leaveStatus){				
 		
-         return HibernateSessionUtility.getHibernateSession().createQuery("update EmployeeLeave set isApproved=:approve where leaveId=:id")
+         return HibernateSessionUtility.getHibernateSession().createQuery("update EmployeeLeave set isApproved=:approve,notifyStatus=1 where leaveId=:id")
         		 .setParameter("approve", leaveStatus).setParameter("id", employeeLeaveId).executeUpdate();
 		
 	}
