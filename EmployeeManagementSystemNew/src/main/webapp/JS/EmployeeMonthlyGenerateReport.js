@@ -25,7 +25,7 @@ $('document').ready(function(){
 	   var invalidMonth_msg="Invalid month";
 	   var internalProblem_msg="Some problem occured try again";
 	   var wait_msg="Please wait..";
-	   var absent_msg="you are absent .. ";
+	   var absent_msg="You are absent .. ";
 	   var onLeave_msg="You are on leave";
 	   var noReports_msg="No records found";
 	   

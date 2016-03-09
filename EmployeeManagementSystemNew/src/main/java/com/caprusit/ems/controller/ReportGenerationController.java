@@ -374,7 +374,7 @@ public class ReportGenerationController {
 		}
 	 
 		/**
-		 * getAllEmployeeReportForWeekByWeekDate(-) method takes month as a
+		 * getAllEmployeeReportForWeekByWeekDate(-) method takes week as a
 		 * inputs and displays all employees working details during given period of
 		 * time.
 		 * @throws Exception 

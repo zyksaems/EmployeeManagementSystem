@@ -4,7 +4,6 @@ import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -390,7 +389,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	 	
     /**
      * This method is to calculate individual employee 
-     * monthly productivity based on given year
+     * annual productivity based on given year
      */
 	 @Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getEmployeeAnnualProductivity(int employeeId, int year) {
@@ -404,7 +403,10 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
         calendar.set(year, 11,31);
         Date yearEndDate=calendar.getTime();
         int endIndex=verifyEndDateAndMeasureEndIndex(yearEndDate, 2);
+        
+        yearEndDate=(endIndex == -1)?yearEndDate:Calendar.getInstance().getTime();	
 		endIndex =( endIndex == -1 )? 12 : endIndex;
+		
 		double [] workingHoursArray=new double[endIndex];
 		double [] nonWorkingHoursArray=new double[endIndex];
         int listSize;
@@ -439,7 +441,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	
 	/**
      * This method is to calculate All employee 
-     * monthly productivity based on given year
+     * annual productivity based on given year
      */
 	 @Transactional(rollbackFor=HibernateException.class,readOnly=true)
 	public String getAllEmployeeAnnualProductivity(int year) {
@@ -455,7 +457,10 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 	     Date yearEndDate=calendar.getTime();	  
 	     
 	     int endIndex=verifyEndDateAndMeasureEndIndex(yearEndDate, 2);
+	     
+	     yearEndDate =(endIndex == -1)?yearEndDate:Calendar.getInstance().getTime();		
 		 endIndex =( endIndex == -1 )? 12 : endIndex;
+		 
 		 double [] workingHoursArray=new double[endIndex];
 		 double [] nonWorkingHoursArray=new double[endIndex];
 	     List<Attendance> allEmployeeMonthlyData= reportGenerationDAO.getEmployeesReportBetweenDates(yearstartDate,yearEndDate);
@@ -484,8 +489,10 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		for(int i=0;i<listSize;i++){
         	attendanceObj=attendanceDetailsList.get(i);
         	calendar.setTime(attendanceObj.getAttendanceDate());
-        	if(typeOfCalculation == 1)      
-        		workedHoursArray[calendar.get(Calendar.DAY_OF_WEEK)-1]+=attendanceObj.getWorkingHours();        		        	
+        	logger.info("date  : "+ calendar.getTime());
+        	if(typeOfCalculation == 1)      {
+        		workedHoursArray[calendar.get(Calendar.DAY_OF_WEEK)-1]+=attendanceObj.getWorkingHours();     
+        	}
         	else if(typeOfCalculation == 2)      		
         	   workedHoursArray[calendar.get(Calendar.MONTH)]+=attendanceObj.getWorkingHours();      
         }
@@ -772,6 +779,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		weekStartDate= dateValues.get("startDate");
 		weekEndDate=dateValues.get("endDate");
 		int endIndex=verifyEndDateAndMeasureEndIndex(weekEndDate, 1);
+		weekEndDate=( endIndex == -1) ? weekEndDate : Calendar.getInstance().getTime();		
 		endIndex =( endIndex == -1 )? 7 : endIndex;
 		double [] weekWorkedHours=new double[endIndex];
 		double [] weekNonWorkedHours=new double[endIndex];
@@ -811,12 +819,12 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		Date startDate=null, endDate=null;
 		Map<String,Date> dateValues= getFromDateAndToDateFromWeekDate(weekDate);
 		startDate= dateValues.get("startDate");
-		endDate=dateValues.get("endDate");
+		endDate= dateValues.get("endDate");
 		int endIndex=verifyEndDateAndMeasureEndIndex(endDate, 1);
+		endDate=( endIndex == -1) ? endDate : Calendar.getInstance().getTime();		
 		endIndex =( endIndex == -1 )? 7 : endIndex;
 		 double [] weekWorkedHours=new double[endIndex];
 		 double [] weekNonWorkedHours=new double[endIndex];
-		 logger.info("index calculated:   end index: "+endIndex);
 		String dayNames[] = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
 
 		logger.info(" start date of week: "+startDate+"    end date of week "+endDate);
@@ -828,7 +836,7 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 		List<Attendance> workingDetails=reportGenerationDAO.getEmployeesReportBetweenDates(startDate, endDate);
 		double actualWorkHours=(double) employeeCount * EmsConditions.WORKING_HOURS_PER_DAY ;		
 		
-		 //calculate working hours  pass 2 as parameter for month wise calculation
+		 //calculate working hours  pass 1 as parameter for week wise calculation
 	     calculateWorkingHours(weekWorkedHours, workingDetails,1);
 	     // calculate non working hours
 		 calculateNonWorkingHours(weekNonWorkedHours,actualWorkHours , weekWorkedHours);		   
@@ -1007,13 +1015,13 @@ public class ReportGenerationServiceImpl implements IReportGenerationService {
 			return -1;
 	}
 	/**
-	 * This method is to verify end date is greater than current date,if true find outs array index of days/months array
+	 * This method is to verify end date is greater than current date,if true find outs array index of week/months array
 	 * based on given date
-	 * @param typeOfIndex type if index we want to calculate  for days array pass 1
+	 * @param typeOfIndex type if index we want to calculate  for week array pass 1
 	 *         and for months array pass 2
 	 * @param endDate date,from which we can get index(if given endDate is > current date).
 	 * @return index of given end date,based on given typeOfIndex 1/2. if we pass other than 1/2 for typeOfIndex 
-	 *     returns -2 and if endDate is lessthan current date returns -1 
+	 *     returns -2 and if endDate is less than current date returns -1 
 	 */
     private int verifyEndDateAndMeasureEndIndex(Date endDate,int typeOfIndex){
 	     Calendar cal=Calendar.getInstance();
