@@ -53,6 +53,9 @@ public class EmployeeLeave implements Serializable{
 	@Column(name="message")
 	private String message;
 	
+	@Column(name="NOTIFY_STATUS")
+	private int notifyStatus;
+	
 	@OneToMany
 	@Fetch(FetchMode.SUBSELECT)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -125,16 +128,12 @@ public class EmployeeLeave implements Serializable{
 		this.setOfLeaveDates = setOfLeaveDates;
 	}
 
-	/*@Override
-	public String toString() {
-		return "EmployeeLeave [leaveId=" + leaveId + ", employeeId=" + employeeId + ", name=" + name
-				+ ", date_of_apply=" + date_of_apply + ", isApproved=" + isApproved + ", subject=" + subject
-				+ ", message=" + message + "]";
+	public int getNotifyStatus() {
+		return notifyStatus;
 	}
 
-	*/
-	
-	
-	
+	public void setNotifyStatus(int notifyStatus) {
+		this.notifyStatus = notifyStatus;
+	}
 
 }

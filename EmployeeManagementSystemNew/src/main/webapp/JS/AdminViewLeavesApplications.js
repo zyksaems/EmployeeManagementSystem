@@ -287,7 +287,7 @@ $('document').ready(function() {
 	   /**
 	    *  function to get leave dates in ascending order
 	    */
-	   function getLeaveDatesInAscendinOrder(leaveDatesArray){
+	   function getLeaveDatesInAscendinOrder(leaveDatesArray){	
 		   var datesArray;
 		   var sortedArray=[];
 		   var stringDate;
@@ -299,7 +299,7 @@ $('document').ready(function() {
 	       datesArray.sort(function (a,b){ return (a > b) ? 1 : -1;});
 	       
 	       for(var j=0;j< leaveDatesArray.length;j++){
-	    	    stringDate=datesArray[j].getDate()+"/"+(datesArray[j].getMonth()+1)+"/"+datesArray[j].getFullYear();
+	    	    stringDate=datesArray[j].getDate()+"/"+(datesArray[j].getMonth()+1)+"/"+datesArray[j].getFullYear(); new Date().g
 	    	   //leaveDetails [i][4][j]=(datesArray[j]+"").substring(0,15);
 	    	    sortedArray.push(stringDate);
 	       }

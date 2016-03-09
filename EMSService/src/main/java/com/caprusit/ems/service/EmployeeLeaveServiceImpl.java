@@ -83,8 +83,8 @@ public class EmployeeLeaveServiceImpl implements IEmployeeLeaveService{
 		     }
 		     // logger.info("employee leave dates et :  "+leaveDatesSet);
 		     employeeLeave.setSetOfLeaveDates(leaveDatesSet);		     
-		     
-			return employeeLeaveDao.applyLeave(employeeLeave);
+		     employeeLeave.setNotifyStatus(0);
+			 return employeeLeaveDao.applyLeave(employeeLeave);
 		}
 		
 	   @Transactional(rollbackFor=HibernateException.class)
