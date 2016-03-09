@@ -168,8 +168,8 @@ border: 1px solid rgba(100, 100, 100, .4);
 /* overflow: visible; */
 position: absolute;
 top: 90px;
- margin-left: -140px;
-width: 300px;
+ margin-left: -185px;
+width: 350px;
 z-index: 1;
 display: none;
 }
@@ -191,11 +191,12 @@ font-weight: bold;
 padding: 8px;
 font-size: 13px;
 background-color: #ffffff;
-width: 297px;
+width: 347px;
 border-bottom: 1px solid #dddddd;
 }
 #notificationsBody {
-padding: 33px 0px 0px 0px !important;
+	color:black;
+padding: 23px 10px 10px 10px !important;
 min-height:300px;
 }
 #notificationFooter {

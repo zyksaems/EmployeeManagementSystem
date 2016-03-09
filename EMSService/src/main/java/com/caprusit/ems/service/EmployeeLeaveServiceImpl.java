@@ -167,6 +167,23 @@ public class EmployeeLeaveServiceImpl implements IEmployeeLeaveService{
 			return JsonUtility.convertToJson(list);
 		}
 		
+		@Transactional(rollbackFor=HibernateException.class)
+		public int getNewNotificationCount() {
+			
+		Long notification_count=employeeLeaveDao.getNewNotificationCount();
+		//Integer i = (int) (long) theLong;
+		int count=notification_count.intValue();
+			 return count;
+		}
+		
+		@Transactional(rollbackFor=HibernateException.class)
+		public String getNewNotificationData() {
+			List<EmployeeLeave> list=employeeLeaveDao.getNewNotificationData();
+			
+			return JsonUtility.convertToJson(list);
+		}
+		
+		
 		
 
 }

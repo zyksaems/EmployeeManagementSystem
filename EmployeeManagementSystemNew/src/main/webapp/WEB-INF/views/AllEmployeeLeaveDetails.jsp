@@ -22,7 +22,7 @@
 
 
 
-<div class="abtlikebox" style="right: -268px;">
+<!-- <div class="abtlikebox" style="right: -268px;">
 	<button id="fixed1">Productivity info</button>
 	<div>
 		user : Admin,EMS<br /> Company total Worked Hours: <span
@@ -30,7 +30,7 @@
 			id="emp_work_hours"></span> hr
 
 	</div>
-</div>
+</div> -->
 
 
 <!-- Modal -->

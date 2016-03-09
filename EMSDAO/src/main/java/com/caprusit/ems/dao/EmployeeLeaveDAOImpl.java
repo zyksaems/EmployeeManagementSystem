@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -180,6 +181,37 @@ public class EmployeeLeaveDAOImpl implements IEmployeeLeaveDAO{
 		
 		return (EmployeeLeave)HibernateSessionUtility.getHibernateSession().get(EmployeeLeave.class, leaveId);
 	}
+	
+	public Long getNewNotificationCount() {
+        
+        logger.info("In dao getNewNotificationCount()");
+        //Long notification_count=(long) 0;
+    Session session = HibernateSessionUtility.getHibernateSession();
+	Criteria crit = session.createCriteria(EmployeeLeave.class);
+	crit.add( Restrictions.eq("notifyStatus",0));
+	crit.setProjection(Projections.rowCount());
+	Long notification_count = (Long) crit.uniqueResult();
+	System.out.println("New Notification count  :" +notification_count);
+	
+  
+	return notification_count;
+	
+}
+
+public List<EmployeeLeave> getNewNotificationData() {
+	
+	 Session session = HibernateSessionUtility.getHibernateSession();
+	 Criteria criteria=session.createCriteria(EmployeeLeave.class);
+		criteria.add(Restrictions.like("isApproved", "Pending", MatchMode.EXACT));
+		criteria.addOrder(Order.desc("leaveId"));
+		
+		List<EmployeeLeave> list =criteria.list();
+		logger.info(" in dao: "+list);
+	 
+	 SQLQuery qry=session.createSQLQuery("UPDATE PRAKASH.EMPLOYEE_LEAVE_TABLE SET NOTIFY_STATUS = 1 WHERE NOTIFY_STATUS= 0");                                    	
+       int res=qry.executeUpdate();
+	return list;
+}
 	
 
 

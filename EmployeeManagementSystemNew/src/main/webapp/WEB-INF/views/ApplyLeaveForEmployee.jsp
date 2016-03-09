@@ -16,7 +16,7 @@
           		</p>
           		<p></p>
             <div class="row" ><!--  id="ApplyLeavePadding" -->
-                    <div class="col-sm-2"></div>             	                                  	
+                    <div class="col-sm-1"></div>             	                                  	
                 	<div class="col-sm-8">
                          <div class="form-group">
                               <label><b>Subject:</b></label>

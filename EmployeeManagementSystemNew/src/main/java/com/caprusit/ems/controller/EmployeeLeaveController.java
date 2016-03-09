@@ -181,6 +181,21 @@ public class EmployeeLeaveController {
 			else
 				return -1;
 		}
+		
+		@RequestMapping(value = "/getNewNotificationCount",method = RequestMethod.POST)
+		public @ResponseBody int getNotificationCount(){						
+			logger.info("loading count .............");
+			//Long l=4L;
+				//return employeeLeaveService.getNewNotificationCount();
+			int count=employeeLeaveService.getNewNotificationCount();
+			
+			return count;
+		}
+		
+		@RequestMapping(value = "/getNotificationData", method = RequestMethod.POST)
+		public @ResponseBody String getNewNotificationData() {
+			return employeeLeaveService.getNewNotificationData();
+		}
 				
 		
 }

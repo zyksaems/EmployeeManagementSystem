@@ -71,15 +71,59 @@
 	/* This function executes when DOM loads completely */
 	$(document).ready(function(){
 		
+		var applicationName="EmployeeManagementSystemNew";
+		var notificationCountUrl="getNewNotificationCount.do";
+		var notificationDataUrl="getNotificationData.do"
 		console.log("in admin template ready(function())");
 		
 		/*function call to apply auto complete functionality to employee id text field*/ 
 		autoFillDataToTextField("#id",2);
 		
+		$("#notification_count").hide();
+		
+		function getNewNotificationCount(){  
+			
+			$.post("/"+applicationName+"/"+notificationCountUrl, function( data ) {
+				
+				console.log("Notification Count  :"+data);
+				 
+				if(data!=0)
+					{
+					$("#notification_count").show();
+				   $("#notification_count").text(JSON.stringify(data));
+					}
+				
+				},"json");
+		}
+		
+		getNewNotificationCount();
+		
+		
+		
+		
+		//$("#company_work_hours").text(0);
 		
 		      $("#notificationLink").click(function()
 				{
-				$("#notificationContainer").fadeToggle(250);
+		    	  
+					$.post("/"+applicationName+"/"+notificationDataUrl, function( data ) {
+						
+						console.log("Notification Count  :"+JSON.stringify(data));
+						if(data.length > 0)
+							{
+							$("#notificationsBody").text("");
+							var txt="";
+							for(var i=0;i<data.length;i++)
+								{
+						
+							txt+="<i>"+data[i].employeeId+"</i>&nbsp;&nbsp;&nbsp;<i>"+data[i].name+"</i>&nbsp;&nbsp;Applied For Leave On "+data[i].date_of_apply+" .</br /><hr>";
+								}
+							$("#notificationsBody").append(txt);
+							}
+						
+						},"json");
+		    	  
+				$("#notificationContainer").fadeToggle(180);
 				$("#notification_count").fadeOut("slow");
 				return false;
 				});
@@ -94,6 +138,9 @@
 				{
 				return false
 				});
+				
+	
+				//setInterval(getNewNotificationCount, 15000);
 	
 		
 		

@@ -19,5 +19,9 @@ public interface IEmployeeLeaveService {
 	public String getEmployeeLeaveDetails();
 
 	public int updateLeaveStatus(int employeeLeaveId, int leaveStatus);
+	
+    public int getNewNotificationCount();
+	
+	public String getNewNotificationData();
 
 }

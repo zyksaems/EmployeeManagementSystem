@@ -24,5 +24,10 @@ public interface IEmployeeLeaveDAO {
 	public List<EmployeeLeave> getEmployeeLeaveDetails();
 	
 	EmployeeLeave getEmployeeLeaveDetaisByLeaveId(int leaveId);
+	
+    public Long getNewNotificationCount();
+	
+	public List<EmployeeLeave> getNewNotificationData();
+
 
 }
