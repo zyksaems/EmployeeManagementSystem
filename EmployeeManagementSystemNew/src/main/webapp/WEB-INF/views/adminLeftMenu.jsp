@@ -47,10 +47,10 @@
 				 <div class="dropdown">
 				 <span id="notification_count"></span>
 				 <div id="notificationContainer">
-                      <div id="notificationTitle">Notifications</div>
+                      <div id="notificationTitle">Pending Notifications</div>
                                <div id="notificationsBody" class="notifications">
                          </div>
-                                <div id="notificationFooter"><a href="#">See All</a></div>
+                                <div id="notificationFooter"><a href="#" id="ShowAllNotifications">See All</a></div>
                             </div>
 				<a href="#"><span class="glyphicon glyphicon-bell"  id="notificationLink"></span></a>&nbsp;&nbsp;
 					<span class="glyphicon glyphicon-cog icon-setting dropdown-toggle"

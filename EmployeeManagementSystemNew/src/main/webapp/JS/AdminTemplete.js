@@ -71,6 +71,9 @@
 	/* This function executes when DOM loads completely */
 	$(document).ready(function(){
 		
+		var notificationData=[];
+		var seeAllCount=0;
+		
 		var applicationName="EmployeeManagementSystemNew";
 		var notificationCountUrl="getNewNotificationCount.do";
 		var notificationDataUrl="getNotificationData.do"
@@ -85,7 +88,7 @@
 			
 			$.post("/"+applicationName+"/"+notificationCountUrl, function( data ) {
 				
-				console.log("Notification Count  :"+data);
+				//console.log("Notification Count  :"+data);
 				 
 				if(data!=0)
 					{
@@ -102,24 +105,45 @@
 		
 		
 		//$("#company_work_hours").text(0);
+		var txt="";
 		
 		      $("#notificationLink").click(function()
 				{
+		    	        seeAllCount=0;
 		    	  
 					$.post("/"+applicationName+"/"+notificationDataUrl, function( data ) {
-						
+						notificationData=data;
 						console.log("Notification Count  :"+JSON.stringify(data));
 						if(data.length > 0)
 							{
+							
 							$("#notificationsBody").text("");
-							var txt="";
+							
+							txt="";
+							if(data.length <= 4)
+								{
 							for(var i=0;i<data.length;i++)
 								{
 						
 							txt+="<i>"+data[i].employeeId+"</i>&nbsp;&nbsp;&nbsp;<i>"+data[i].name+"</i>&nbsp;&nbsp;Applied For Leave On "+data[i].date_of_apply+" .</br /><hr>";
 								}
+								}
+							else
+								{
+								
+								for(var i=0;i<4;i++)
+								{
+						
+							txt+="<i>"+data[i].employeeId+"</i>&nbsp;&nbsp;&nbsp;<i>"+data[i].name+"</i>&nbsp;&nbsp;Applied For Leave On "+data[i].date_of_apply+" .</br /><hr>";
+								}
+								
+								}
+							
 							$("#notificationsBody").append(txt);
 							}
+						else{
+							$("#notificationsBody").text("");
+						}
 						
 						},"json");
 		    	  
@@ -139,6 +163,27 @@
 				return false
 				});
 				
+				
+				
+				$("#ShowAllNotifications").click(function()
+						{
+					if(notificationData.length >4 && seeAllCount==0)
+						{
+					BindAllNotificationToBody(4);
+					seeAllCount=1;
+						}
+						});
+				
+				function BindAllNotificationToBody(index)
+				{
+					var txt1="";
+					for(var i=index;i<notificationData.length;i++)
+					{
+				txt1+="<i>"+notificationData[i].employeeId+"</i>&nbsp;&nbsp;&nbsp;<i>"+notificationData[i].name+"</i>&nbsp;&nbsp;Applied For Leave On "+notificationData[i].date_of_apply+" .</br /><hr>";
+					}
+					$("#notificationsBody").append(txt1);
+					
+				};
 	
 				//setInterval(getNewNotificationCount, 15000);
 	

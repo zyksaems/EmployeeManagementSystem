@@ -150,7 +150,7 @@ input {
     }
     .glyphicon-bell{
     color:white;
-    font-size:25px;
+    font-size:22px;
     top: 60px;
     }
 .generatereport_align{
@@ -189,15 +189,17 @@ margin-left: 188px;
 z-index: 1000;
 font-weight: bold;
 padding: 8px;
-font-size: 13px;
+font-size: 14px;
+color : black; 
 background-color: #ffffff;
 width: 347px;
 border-bottom: 1px solid #dddddd;
 }
 #notificationsBody {
 	color:black;
-padding: 23px 10px 10px 10px !important;
+padding: 23px 10px 0px 10px !important;
 min-height:300px;
+margin-bottom: -43px;
 }
 #notificationFooter {
 background-color: #e9eaed;
