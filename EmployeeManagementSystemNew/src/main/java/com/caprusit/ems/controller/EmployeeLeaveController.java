@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.EmployeeLeave;
 import com.caprusit.ems.service.IEmployeeLeaveService;
@@ -147,12 +148,8 @@ public class EmployeeLeaveController {
 		@RequestMapping(value = "/employeeApplyForLeave",method = RequestMethod.POST)
 		public  @ResponseBody int applyLeave(HttpServletRequest request,@ModelAttribute EmployeeLeave employeeLeave,@RequestParam("leaveDates") String leaveDates){
 			if(HttpSessionUtility.verifySession(request, "employeeId")){
-				
-				final String  not_approved="Not Approved";
-				final String  approved="Approved";
-				final String  pending="Pending";
 				employeeLeave.setDate_of_apply(new Date());
-				employeeLeave.setIsApproved(pending);
+				employeeLeave.setIsApproved(EmsConditions.EMPLOYEE_LEAVE_PENDING);
 				System.out.println("============="+employeeLeave);
 				
 				logger.info("leqave dates received: "+leaveDates);
