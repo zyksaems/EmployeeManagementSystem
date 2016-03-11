@@ -15,11 +15,13 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.dao.utility.HibernateSessionUtility;
 import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.EmployeeLeave;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class EmployeeLeaveDAOImpl implements IEmployeeLeaveDAO{
 
 	
@@ -181,6 +183,46 @@ public class EmployeeLeaveDAOImpl implements IEmployeeLeaveDAO{
 		
 		return (EmployeeLeave)HibernateSessionUtility.getHibernateSession().get(EmployeeLeave.class, leaveId);
 	}
+
+	/**
+	 * Method to get all pending leaves
+	 */
+	public List<EmployeeLeave> getAllPendingLeaves() {
+		
+		return HibernateSessionUtility.getHibernateSession().createCriteria(EmployeeLeave.class)
+				.add(Restrictions.ilike("isApproved", EmsConditions.EMPLOYEE_LEAVE_PENDING)).list();
+	}
+
+	/**
+	 * This method is to get all employee approved leaves between given dates
+	 * @param startDate start date for searching
+	 * @param endDate  end date for searching
+	 * @return list of approved leave details between given dates
+	 */
+	public List<Object> getAllEmployeeApprovedLeaves(Date startDate,Date endDate) {
+		
+		return HibernateSessionUtility.getHibernateSession().createQuery("select l.employeeId,l.name,dates.leaveDate  from EmployeeLeave l join l.setOfLeaveDates as dates where l.isApproved = :status and dates.leaveDate between :startDate and :endDate")
+				       .setParameter("status", EmsConditions.EMPLOYEE_LEAVE_APPROVED).setParameter("startDate", startDate).setParameter("endDate", endDate).list();
+	}
+    /**
+     *  This method is to return list of  all disapproved leave details. 
+     */
+	public List<EmployeeLeave> getAllDisapprovedLeaveDetails() {
+		return HibernateSessionUtility.getHibernateSession().createCriteria(EmployeeLeave.class)
+				.add(Restrictions.ilike("isApproved", EmsConditions.EMPLOYEE_LEAVE_DIS_APPROVED)).addOrder(Order.desc("date_of_apply")).list();
+	}
+
+	/**
+	 * This method is to return list of employee leave class objects which are applied between given dates
+	 * @param startDate start date for searching
+	 * @param endDate end date for searching
+	 * @return returns list of employee leave class objects which are applied between given dates
+	 */
+	public List<EmployeeLeave> getLeaveDetailsBetweenDates(Date startDate,Date endDate) {
+		
+		return HibernateSessionUtility.getHibernateSession().createCriteria(EmployeeLeave.class)
+				.add(Restrictions.between("date_of_apply", startDate, endDate)).addOrder(Order.desc("date_of_apply")).list();
+	}
 	
 	public Long getNewNotificationCount() {
         
@@ -212,6 +254,7 @@ public List<EmployeeLeave> getNewNotificationData() {
        int res=qry.executeUpdate();
 	return list;
 }
+	
 	
 
 

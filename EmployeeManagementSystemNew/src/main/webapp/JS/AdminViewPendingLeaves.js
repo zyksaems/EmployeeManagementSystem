@@ -1,10 +1,12 @@
+   
 
-/*  This file name:  AdminViewLeavesApplications.js */
+   /*This file name: AdminViewPendingLeaves.js */
 
      var  totalLeaveData;
      var leaveDatesArray;
      var currentIndex;
      
+     /* variables to store ids of fields */
      var leaveSubject_id="#subject-of-employee";
      var leaveMessage_id="#message-of-employee";
      var employeeName_id="#employee-name-id";
@@ -14,100 +16,111 @@
 	 var disApproveLeaveButton_id="#disapprove-leave-button";
 	 var approveLeaveMessage_id="#admin-approve-leave-message";
 	 var leaveStatus_id="#employee-leave-status";
-     
-     var approved="Approved";
-     var pending="Pending";
-     var disapproved="Disapproved";
-     
-    /**
-     * This function is to get given index details 
-     */
-     function getRowAtIndex(index){
-    	 currentIndex=index;
-    	 showLeaveConfirmModal(index);
-    	   
-     }; // END -- getRowAtIndex(index)
-     
+	 
+	   /**
+	     * This function is to get given index details 
+	     */
+	     function getRowAtIndex(index){
+	    	 currentIndex=index;
+	    	 showLeaveConfirmModal(index);
+	    	   
+	     }; // END -- getRowAtIndex(index)
+	 
      /**
 	   *  function to set modal details to confirm leave
 	   */
 	   function showLeaveConfirmModal(index){
-		   
-		   var approvedStatus=totalLeaveData[index].isApproved;
-		   console.log("selected leave status: "+approvedStatus);
- 	    
- 	    if(approvedStatus== pending ){
- 	    	$(disApproveLeaveButton_id).show();
- 	    	$(approveLeaveButton_id).show();
- 		}else if (approvedStatus== approved){
- 			hideApproveButton(true);			
- 		}
- 		else{
- 			hideApproveButton(false);
- 		}
- 	    $(approveLeaveMessage_id).text("");
- 		$(leaveSubject_id).html(totalLeaveData[index].subject);
- 		$(leaveMessage_id).html(totalLeaveData[index].message);
- 		$(employeeName_id).html(totalLeaveData[index].name);
- 		$(employeeId_id).html(totalLeaveData[index].employeeId);
+		   		  
+	    $(approveLeaveMessage_id).text("");
+		$(leaveSubject_id).html(totalLeaveData[index].subject);
+		$(leaveMessage_id).html(totalLeaveData[index].message);
+		$(employeeName_id).html(totalLeaveData[index].name);
+		$(employeeId_id).html(totalLeaveData[index].employeeId);
 
- 		var details="<br><b> Number of days: </b><mark class='text-danger'><strong> "+totalLeaveData[index].setOfLeaveDates.length
- 		                       +"</strong></mark><br><br><b>Leave dates:</b><mark class='text-danger'><strong> "+leaveDatesArray[index]+"</strong></mark>";
- 		$(leaveDatesSection_id).html(details);
- 		$(leaveStatus_id).html("<b>Leave Status: </b><mark class='text-danger'><strong>"+approvedStatus+"</strong></mark>");
+		var details="<br><b> Number of days: </b><mark class='text-danger'><strong> "+totalLeaveData[index].setOfLeaveDates.length
+		                       +"</strong></mark><br><br><b>Leave dates:</b><mark class='text-danger'><strong> "+leaveDatesArray[index]+"</strong></mark>";
+		$(leaveDatesSection_id).html(details);
+		$(leaveStatus_id).html("<b>Leave Status: </b><mark class='text-danger'><strong> Pending </strong></mark>");
 		   
 	   };// END -- showLeaveConfirmModal(index)
+  /**
+    *  fucntion executes when page is loaded
+    */
+   $('document').ready(function(){
 	   
-	   /**
-	    *  function to hide and show approve or disapprove buttons
-	    *  pass true to hide approve button,and to show disapprove button
-	    *  pass false to show approve button,and to hide disapprove button
-	    */
-	   function hideApproveButton(flag){
-		   if(flag){
-			   $(approveLeaveButton_id).hide();
-			   $(disApproveLeaveButton_id).show();
-		   }
-		   else{
-			   $(disApproveLeaveButton_id).hide();
-			   $(approveLeaveButton_id).show();
-			   
-		   }
-	   }; // END -- hideApproveButton(flag)
-
-$('document').ready(function() {
-	
-	/*variables to store requests*/
+	   /*variables to store requests*/
 	   var urlPattern=".do";
 	   var applicationName="/EmployeeManagementSystemNew";
-	   var viewLeavesRequest="/getAllLeave"+urlPattern;
+	   var allPendingLeavesRequest="/getAllPendingLeaves"+urlPattern;
 	   var homePageRequest="/home"+urlPattern;
-	   var updateLeaveStatusRequest="/updateEmployeeLeaveStatus"+urlPattern;
+       var updateLeaveStatusRequest="/updateEmployeeLeaveStatus"+urlPattern;
 	   
 	   var leaveId_param="leaveId";
 	   var status_param="status";
 	   
-	   /*variables to store ids of fields*/
-	   var leavesTable_id="#admin-leaves-table";	 
-	   var leavesTableDiv_id="#leaves-table-division";
-	   var noLeavesDiv_id="#nodata-leave-message-div";
-	  
-	   /*variables to store success or error messages*/
+	   /* variables to store ids of fields */
+	   var pendingLeavesTable_id="#pending-leaves-table";
+	   var pendingLeavesDivision_id="#pending-leaves-division";
+	   var noPendingLeavesDivision_id="#no-pending-leaves-division";
+	   var noPendingLeavesMessage_id="#no-pending-leaves-message";
+	   var successModal_id="#update-success-modal";
+	   var confirmLeaveModal_id="#confirmLeaveModal";
+	   
+	   /* variables to store success.error messages */
+	   var noPendingLeaves_msg="No pending leaves !";
 	   var approveSuccess_msg="Leave success fully approved !";
 	   var disapproveSuccess_msg="Leave success fully Disapproved !";	  
 	   var disApproveError_msg="Problem occured try again ";
-	   
+	  
+	   var pendingLeavesTable;
 	   var tableDrawnCount=0;
-	   var LeavesDataTable; 
-	  
-	   $(noLeavesDiv_id).hide();
-	   makeAjaxCallForEmployeeLeave(); 
-	  
+	   
 	   // set accordion
 	   $("#accordion").accordion({
 			 active: 1
 		});
 	   	   
+	   
+	   makeAjaxCallTogetPendingLeaves();
+	   
+	   /**
+	    *  this function is to update leave status as approved or dis-approved
+	    */
+	   function makeAjaxCallTogetPendingLeaves(){
+		   console.log("now making call  to get pending leaves");
+		   var request = $.ajax({
+				  url: applicationName + allPendingLeavesRequest,
+				  method: "post",
+				  dataType: "json"
+				});
+		   request.done(function(data){
+			   console.log("data returned fromm server: "+data);
+			   console.log("data returned fromm server:(str) "+JSON.stringify(data));
+			   if(data == -1){
+				   console.log("session expired!!");
+				  window.location.href= applicationName + homePageRequest;
+				   		   
+			   }
+			   else if (data.length > 0){
+				   console.log("");
+				   totalLeaveData=data;
+				   setDataToDataTable(data);
+			   }
+			   else{
+				   $(noPendingLeavesDivision_id).show();
+				   $(pendingLeavesDivision_id).hide();
+				   $(noPendingLeavesMessage_id).text(noPendingLeaves_msg);
+			   }
+			   
+				  
+		   });
+		   request.fail(function( jqXHR, textStatus ) {
+			   console.log("internal problem occured");
+		   });
+		   
+	   };// END -- makeAjaxCallToUpdateLeaveStatus(leaveStatus)
+	   
+	 
 	   
 	   /**
 	    *  function to approve leave
@@ -145,23 +158,22 @@ $('document').ready(function() {
 				   console.log("leave status successfully updated");	
 				   if(leaveStatus == 1 ){
 					   printMessage(approveSuccess_msg);
-					   hideApproveButton(true);
-					   totalLeaveData[currentIndex].isApproved=approved;
-					   setDataToDataTable(totalLeaveData);
-					   $(leaveStatus_id).html(">");
-					   $(leaveStatus_id).html("<b>Leave Status: </b><mark class='text-danger'><strong>"+approved+"</strong></mark>");
+					   $(leaveStatus_id).html("");
+					   $(leaveStatus_id).html("<b>Leave Status: </b><mark class='text-danger'><strong>Approved</strong></mark>");
+					   makeAjaxCallTogetPendingLeaves();
+					   showSuccessModal();
 				   }else{
 					   printMessage(disapproveSuccess_msg);
-					   hideApproveButton(false);
-					   totalLeaveData[currentIndex].isApproved=disapproved;
-					   setDataToDataTable(totalLeaveData);
 					   $(leaveStatus_id).html("");
-					   $(leaveStatus_id).html("<b>Leave Status: </b><mark class='text-danger'><strong>"+disapproved+"</strong></mark>");
+					   $(leaveStatus_id).html("<b>Leave Status: </b><mark class='text-danger'><strong>Disapproved</strong></mark>");
+					   makeAjaxCallTogetPendingLeaves();
+					   showSuccessModal();
 				   }  
 				   				   
 			   }
 			   else if(data == -1){
 				   console.log("session expired!!");
+				   window.location.href= applicationName + homePageRequest;
 			   }
 			   else {
 				   console.log("problem occured ");
@@ -174,6 +186,15 @@ $('document').ready(function() {
 		   });
 		   
 	   };// END -- makeAjaxCallToUpdateLeaveStatus(leaveStatus)
+	   /**
+	    *  function to show success modal
+	    */
+	   function showSuccessModal(){
+		   
+		   $(confirmLeaveModal_id).modal('hide');
+		   $(successModal_id).modal('show');
+		   
+	   }; // END -- showSuccessModal()
 	   
 	   /**
 	    *  function to print error or success message
@@ -184,56 +205,9 @@ $('document').ready(function() {
 		   $(approveLeaveMessage_id).text(msg);
 		   
 	   }; // END -- printMessage(msg)
-	   
-	   
-   	/**
-   	 *  Function to make call to back-end and to get employee leaves based on
-   	 *  
-   	 */
-   	function makeAjaxCallForEmployeeLeave(){
-   		   
-   		   console.log("==================in makeAjaxCallForEmployeeLeaveStatus()=================");
-   			  var request = $.ajax({
-   				  url: applicationName + viewLeavesRequest,
-   				  method: "post",
-   				  dataType: "json"
-   				});
-   				 
-   				request.done(function(data){
-   					
-   					console.log("data returned from server: "+data);
-   					console.log("data returned from server: "+JSON.stringify(data));
-   					if(data == -1){
-   						window.location.href= applicationName + homePageRequest ;
-   					}
-   					if(data.length > 0){
-   						$(noLeavesDiv_id).hide();
-   						$(leavesTableDiv_id).show();
-   						totalLeaveData=data;
-   					   // function call to set data to table
-   	   					setDataToDataTable(data);   	   		
-   					}
-   					else{
-   					    console.log("no leave details found ");
-   					    $(noLeavesDiv_id).show();
-						$(leavesTableDiv_id).hide();
-   					}
-   					
-   					
-   				});
-   				 
-   				request.fail(function( jqXHR, textStatus ) {
-   				  //alert("failed all");
-   					console.log("problem occured !!");
-   					
-   				});
-   		   
-   		   
-   	   }; // END -- makeAjaxCallForEmployeeLeave()
-   	   
    	   
 	   /**
-	    *  function to set data to data table
+	    *  function to set data to datatable
 	    */
 	   function setDataToDataTable(data){
 		   //employeeId name
@@ -257,7 +231,7 @@ $('document').ready(function() {
 		   }// EDN -- for 
 		   if(tableDrawnCount == 0){
 			   
-			    LeavesDataTable=$(leavesTable_id).DataTable({
+			   pendingLeavesTable=$(pendingLeavesTable_id).DataTable({
                     data: leaveDetails,
                     "lengthMenu": [[5,-1], [5, "All"]],
                     columns: [
@@ -277,10 +251,9 @@ $('document').ready(function() {
 			    tableDrawnCount ++;
 		   }
 		   else{
-			   LeavesDataTable.clear().draw();
-			   LeavesDataTable.rows.add(leaveDetails).draw();
-		   }
-		
+			   pendingLeavesTable.clear().draw();
+			   pendingLeavesTable.rows.add(leaveDetails).draw();
+		   }		
 		   
 	   }; // END -- setDataToDataTable(data)
 	   
@@ -308,4 +281,5 @@ $('document').ready(function() {
 	       
 	   }; // END --  getLeaveDatesInAscendinOrder(leaveDatesArray)
 
-});// END -- $('document').ready(function)
+	   
+   }); // END -- $('document').ready(function())

@@ -1,40 +1,26 @@
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="adminLeftMenu.jsp"></jsp:include>
 
-<script src="./JS/AdminViewLeavesApplications.js"></script>
-
-<div class="alert alert-info text-center"> 
-	<b><span style="font-size: 200%">Employee Leave Details</span></b>
-</div>
-<hr>
-
-<div id="leaves-table-division" class="table-responsive">
-	<table id="admin-leaves-table" class="table table-hover"></table>
-</div>
-<div class="row" id="nodata-leave-message-div">
-     <div class="col-sm-5"></div>
-     <div class="col-sm-4">
-          <h2 class="text-danger">No leaves found</h2>
-     </div>
-     
-</div>
-
-
-
-<!-- <div class="abtlikebox" style="right: -268px;">
-	<button id="fixed1">Productivity info</button>
-	<div>
-		user : Admin,EMS<br /> Company total Worked Hours: <span
-			id="company_work_hours"></span> hr<br /> Employee Worked Hours : <span
-			id="emp_work_hours"></span> hr
-
-	</div>
-</div> -->
-
-
-<!-- Modal -->
-<div class="modal fade" id="confirmLeaveModal" role="dialog">
+        <script src="./JS/AdminViewDisapprovedLeaves.js"></script>
+        
+       <!--  <div class="row"> -->
+            <div class="row" id="disapproved-leaves-division">
+               <div class="col-sm-11 col-sm-offset-1">
+                   <div class="alert alert-info text-center"><h3>All Disapproved leaves</h3></div>
+                   <div class="table-responsive">
+                         <table id="disapproved-leaves-table" class="table table-hover"></table>
+                   </div> 
+                </div>                 
+            </div>
+            <div class="row" id="no-disapproves-leaves-division">
+                  <br><br>
+                   <h2 class="text-center text-danger">No disapproved leaves</h2>
+            </div>
+        
+      <!--   </div> -->
+             <div class="modal fade" id="confirmLeaveModal" role="dialog">
 	<div class="modal-dialog">
 
 		<div class="modal-content">
@@ -72,9 +58,6 @@
 					<button class="btn btn-default  btn-success active" id="approve-leave-button">
 						<span class="glyphicon glyphicon-ok"></span>Approve
 					</button>
-					<button type="submit" class="btn btn-default  btn-danger active" id="disapprove-leave-button">
-						<span class="glyphicon glyphicon-remove"></span>Disapprove
-					</button>
 					<button type="submit" class="btn btn-default btn-warning active"
 						data-dismiss="modal">
 						<span class="glyphicon"></span>Back
@@ -86,7 +69,23 @@
 
 	</div>
 </div>
+      
+<!-- Modal to approve/disapprove leave-->
+<div class="modal fade" id="update-success-modal" role="dialog">
+	<div class="modal-dialog">
 
+		<div class="modal-content">
+			<div class="modal-header" ><!--  style="padding: 35px 50px;" -->			  
+				<button type="button" class="close text-danger" data-dismiss="modal">&times;</button>
+				<br>
+				<h4 class="modal-title text-center">
+					Operation successful
+				</h4>
+				<br>
+			</div>
+		</div>
 
+	</div>
+</div>
 
 <jsp:include page="footer.jsp"></jsp:include>

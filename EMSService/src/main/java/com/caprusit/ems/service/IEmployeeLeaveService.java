@@ -20,6 +20,14 @@ public interface IEmployeeLeaveService {
 
 	public int updateLeaveStatus(int employeeLeaveId, int leaveStatus);
 	
+	String getAllPendingLeaves();
+
+	String getApprovedLeavesByMonth(String month);
+
+	String getAllDisapprovedLeaves();
+
+	String getLeavesDetailsByGivenMonth(String month);
+	
     public int getNewNotificationCount();
 	
 	public String getNewNotificationData();

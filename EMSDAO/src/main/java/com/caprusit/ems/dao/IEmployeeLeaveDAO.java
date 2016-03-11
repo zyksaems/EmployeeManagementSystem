@@ -25,6 +25,14 @@ public interface IEmployeeLeaveDAO {
 	
 	EmployeeLeave getEmployeeLeaveDetaisByLeaveId(int leaveId);
 	
+	List<EmployeeLeave> getAllPendingLeaves();
+	
+	List<Object> getAllEmployeeApprovedLeaves(Date startDate,Date endDate);
+
+	List<EmployeeLeave> getAllDisapprovedLeaveDetails();
+	
+	List<EmployeeLeave> getLeaveDetailsBetweenDates(Date startDate,Date endDate);
+	
     public Long getNewNotificationCount();
 	
 	public List<EmployeeLeave> getNewNotificationData();

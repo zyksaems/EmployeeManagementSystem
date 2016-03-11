@@ -166,6 +166,67 @@ public class EmployeeLeaveServiceImpl implements IEmployeeLeaveService{
 			logger.info("employee leave details list size: "+list.size());
 			return JsonUtility.convertToJson(list);
 		}
+		/**
+		 *  This method is to get all pending leaves in JSON object array format 
+		 */
+		@Transactional(readOnly=true)
+		public String getAllPendingLeaves() {
+			return JsonUtility.convertToJson(employeeLeaveDao.getAllPendingLeaves());
+			
+		}
+		/**
+		 * This method is to get approved leaves for given month
+		 * @param month month in string format  example: 2015-05
+		 * @return list of employee leave details(like employeeId,employee name, leave date)
+		 */
+		@Transactional(rollbackFor=HibernateException.class)
+		public String getApprovedLeavesByMonth(String month) {
+			Date startDate,endDate;
+			Date [] dates=getFirstAndLastDateOfMonth(month);
+			startDate=dates[0];
+			endDate=dates[1];
+			logger.info("start date: "+startDate+"    end date: "+endDate);
+			return JsonUtility.convertToJson(employeeLeaveDao.getAllEmployeeApprovedLeaves(startDate, endDate));
+		}
+		
+		/**
+		 *  This method is to return all disapproved leave details in JSON object array format
+		 */
+		@Transactional(readOnly=true,rollbackFor=HibernateException.class)
+		public String getAllDisapprovedLeaves() {
+			
+			return JsonUtility.convertToJson(employeeLeaveDao.getAllDisapprovedLeaveDetails());
+		}
+		
+		/**
+		 *  This method is to return all  leave details for given month in JSON object array format
+		 */
+		@Transactional(readOnly=true,rollbackFor=HibernateException.class)
+		public String getLeavesDetailsByGivenMonth(String month) {
+			Date startDate,endDate;
+			Date [] dates=getFirstAndLastDateOfMonth(month);
+			startDate=dates[0];
+			endDate=dates[1];
+			logger.info("calculated  first day of month : "+startDate+"  and last date of month: "+endDate);
+			return JsonUtility.convertToJson(employeeLeaveDao.getLeaveDetailsBetweenDates(startDate, endDate));
+		}
+		/**
+		 * This method is to find out first and last date of given month
+		 * @param month  month in string format (example: 2015-05)
+		 * @return date array contains first day of month and last day of month
+		 *          index 0 contains first date, index 1 contains last day of month
+		 */
+		private Date[] getFirstAndLastDateOfMonth(String month){
+			String [] monthArray=month.split("-");
+			Date[] dateArray=new Date[2];
+			Calendar cal=Calendar.getInstance();
+			cal.set(Integer.parseInt(monthArray[0]), Integer.parseInt(monthArray[1])-1, cal.getActualMinimum(Calendar.DAY_OF_MONTH));					
+			dateArray[0]= cal.getTime();					
+		    cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+		    dateArray[1]= cal.getTime();
+		    return dateArray;		
+				
+		}
 		
 		@Transactional(rollbackFor=HibernateException.class)
 		public int getNewNotificationCount() {

@@ -13,6 +13,8 @@
 	   
 	   var employee_leave_details_link_id="#employee-leave-details-link";
 	   var employeePendingLeaves_link_id="#employee-pending-leave-details-link";
+	   var approvedLeaves_link_id="#employee-approved-leave-details-link";
+	   var disApprovedLeaves_link_id="#employee-disapproved-leave-details-link";
 	   
 	   var adminDailyReport_link_id="#admin-view-daily-report-link";
 	   var adminWeeklyReport_link_id="#admin-view-weekly-report-link";
@@ -32,7 +34,11 @@
 	   var adminAddEmployeeRequest="/getAddEmployeePage"+urlPattern;
 	   var adminViewEmployeeRequest="/ViewUser"+urlPattern;	   
 	   var adminAddNoticeRequest="/updateNotice"+urlPattern;
+	   
 	   var adminAllLeaveRequest="/getEmployeeLeaveView"+urlPattern;
+	   var adminPendingLeaveRequest="/getPendingLeavesPage"+urlPattern; 
+	   var adminApprovedLeaveRequest="/getApprovedLeavesPage"+urlPattern; 
+	   var adminDisApprovedLeaveRequest="/getDisApprovedLeavesPage"+urlPattern;
 	   
 	   var adminDailyReportRequest="/getDailyReportGenerationPage"+urlPattern;
 	   var adminWeeklyReportRequest="/getWeeklyReportGenerationPage"+urlPattern;	   
@@ -45,8 +51,43 @@
 	   var adminMonthlyProductivityRequest="/getMonthlyProductivityPage"+urlPattern;
 	   var adminAnnualProductivityRequest="/getAnnualProductivityPage"+urlPattern;
 	   
-	   
 	   /**
+	      * This function executes on click
+	      */
+	     $(disApprovedLeaves_link_id).click(function(){
+	    	 console.log("admin approved leaves clicked");
+	    	 // function call This function is in MakeLinkAsActive.js file
+	    	 setActiveLinkInLocalStorage(disApprovedLeaves_link_id);
+	    	 
+	    	 window.location.href=applicationName + adminDisApprovedLeaveRequest;
+	    	 
+	     });
+	   
+	    /**
+	      * This function executes on click
+	      */
+	     $(approvedLeaves_link_id).click(function(){
+	    	 console.log("admin approved leaves clicked");
+	    	 // function call This function is in MakeLinkAsActive.js file
+	    	 setActiveLinkInLocalStorage(approvedLeaves_link_id);
+	    	 
+	    	 window.location.href=applicationName + adminApprovedLeaveRequest;
+	    	 
+	     });
+	     
+	    /**
+	      * This function executes on click
+	      */
+	     $(employeePendingLeaves_link_id).click(function(){
+	    	 console.log("admin pending leaves clicked");
+	    	 // function call This function is in MakeLinkAsActive.js file
+	    	 setActiveLinkInLocalStorage(employeePendingLeaves_link_id);
+	    	 
+	    	 window.location.href=applicationName + adminPendingLeaveRequest;
+	    	 
+	     });
+	   
+	    /**
 	      * This function executes on click
 	      */
 	     $(adminAnnualProductivity_link_id).click(function(){

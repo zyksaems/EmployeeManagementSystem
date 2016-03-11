@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -201,9 +202,8 @@ public class ManageUserController {
 			File file = null;
 			
 			if(file== null){
-				ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-				logger.info("ClassLoader :"+classloader);
-				file = new File(classloader.getResource(EXCEL_REFERENCE_TEMPLATE_FILE).getFile());
+				
+				file = new ClassPathResource(EXCEL_REFERENCE_TEMPLATE_FILE).getFile();
 				logger.info("File name:"+file);
 			}
 			

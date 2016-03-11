@@ -44,6 +44,33 @@ public class EmployeeLeaveController {
 			return (HttpSessionUtility.verifySession(request,"employeeId")) ? "EmployeeViewLeaveStatus": "EmsHomePage";
 			
 		}
+		/* Method to return view pending leaves page */
+		@RequestMapping(value="/getPendingLeavesPage",method = RequestMethod.GET)
+		public String viewPendingLeavesPage(HttpServletRequest request ) {
+
+			logger.info("Employee Attendance controller viewApprovedLeavesPage()");
+			
+			return (HttpSessionUtility.verifySession(request,"adminId")) ? "AdminViewPendingLeaves": "EmsHomePage";
+			
+		}
+		/* Method to return view disapproved leaves page */
+		@RequestMapping(value="/getDisApprovedLeavesPage",method = RequestMethod.GET)
+		public String viewDisApprovedLeavesPage(HttpServletRequest request ) {
+
+			logger.info("Employee Attendance controller viewDisApprovedLeavesPage()");
+			
+			return (HttpSessionUtility.verifySession(request,"adminId")) ? "AdminViewDisapprovedLeaves": "EmsHomePage";
+			
+		}
+		/* Method to return view approved leaves page */
+		@RequestMapping(value="/getApprovedLeavesPage",method = RequestMethod.GET)
+		public String viewApprovedLeavesPage(HttpServletRequest request ) {
+
+			logger.info("Employee Attendance controller viewApprovedLeavesPage()");
+			
+			return (HttpSessionUtility.verifySession(request,"adminId")) ? "AdminViewApprovedLeaves": "EmsHomePage";
+			
+		}
 		/**
 		 * 
 		 * @param request servlet request to verify session 
@@ -152,7 +179,7 @@ public class EmployeeLeaveController {
 		@RequestMapping(value = "/getEmployeeLeaveView",method = RequestMethod.GET)
 		public String getEmployeeLeaveDetailsView(HttpServletRequest request){
 			
-			return (HttpSessionUtility.verifySession(request, "adminId"))? "AllEmployeeLeaveDetails" : "EmsHomePage" ; 
+			return (HttpSessionUtility.verifySession(request, "adminId"))? "AdminViewAllLeaves" : "EmsHomePage" ; 
 			
 		}
 		
@@ -163,9 +190,9 @@ public class EmployeeLeaveController {
 				    return employeeLeaveService.getEmployeeLeaveDetails();
 			     }
 			     else
-				    return "-1";
-						
+				    return "-1";						
 		}
+		
 		/**
 		 * this method is to approve/disapprove employee leave request
 		 * @param request to verify session
@@ -174,12 +201,53 @@ public class EmployeeLeaveController {
 		 * @return 1 if success, -1 if session expires,0 if fails
 		 */
 		@RequestMapping(value = "/updateEmployeeLeaveStatus",method = RequestMethod.POST)
-		public @ResponseBody int doApproveLeaves(HttpServletRequest request,@RequestParam("leaveId") int leaveId,@RequestParam("status") int status){						
+		public @ResponseBody int updateLeaveStatus(HttpServletRequest request,@RequestParam("leaveId") int leaveId,@RequestParam("status") int status){						
 			logger.info("employeeLeaveId :"+leaveId +"   status received: "+status);			
 			if(HttpSessionUtility.verifySession(request, "adminId"))
-				return employeeLeaveService.updateLeaveStatus(leaveId,status);
+				return employeeLeaveService.updateLeaveStatus(leaveId,status); 
 			else
 				return -1;
+		}
+		/*method to get all pending leave details*/
+		@RequestMapping(value = "/getAllPendingLeaves",method = RequestMethod.POST)
+		public @ResponseBody String getAllPendingLeaves(HttpServletRequest request){						
+			
+			if(HttpSessionUtility.verifySession(request, "adminId"))
+				return employeeLeaveService.getAllPendingLeaves();
+			else
+				return "-1";
+		}
+		
+		/* method to get approved leave details  based on given month  Example moth format: 2016-03 */
+		@RequestMapping(value = "/getApprovedLeavesByMonth",method = RequestMethod.POST)
+		public @ResponseBody String getApprovedLeavesByMonth(HttpServletRequest request,@RequestParam("month") String month){			
+			 logger.info("month received: "+month);
+			if(HttpSessionUtility.verifySession(request, "adminId")){				
+				return employeeLeaveService.getApprovedLeavesByMonth(month);
+			}				
+			else
+				return "-1";
+		}
+		
+		/* method to get all disapproved leave details */
+		@RequestMapping(value = "/getAllDisapprovedLeaves",method = RequestMethod.POST)
+		public @ResponseBody String getAllDisApprovedLeaves(HttpServletRequest request){			
+			if(HttpSessionUtility.verifySession(request, "adminId")){				
+				return employeeLeaveService.getAllDisapprovedLeaves();
+			}				
+			else
+				return "-1";
+		}
+		
+		/* method to get all leave details for a given month*/
+		@RequestMapping(value = "/getAllLeavesforMonth",method = RequestMethod.POST)
+		public @ResponseBody String getAllLeavesByGivenMonth(HttpServletRequest request,@RequestParam("month") String month){			
+			 logger.info("month received: "+month);
+			if(HttpSessionUtility.verifySession(request, "adminId")){				
+				return employeeLeaveService.getLeavesDetailsByGivenMonth(month);
+			}				
+			else
+				return "-1";
 		}
 		
 		@RequestMapping(value = "/getNewNotificationCount",method = RequestMethod.POST)
@@ -197,5 +265,4 @@ public class EmployeeLeaveController {
 			return employeeLeaveService.getNewNotificationData();
 		}
 				
-		
 }

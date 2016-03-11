@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,8 +26,7 @@ public class EmployeeLeaveDates implements Serializable{
 	private int serialNumber;
 	
 	@Temporal(TemporalType.DATE)
-	private Date leaveDate;
-	
+	private Date leaveDate;	
 	
 	// default constructor
 	public EmployeeLeaveDates (){
@@ -54,13 +55,10 @@ public class EmployeeLeaveDates implements Serializable{
 		this.leaveDate = leaveDate;
 	}
 	
-	
 	@Override
 	public String toString() {
 		return "EmployeeLeaveDates [serialNumber=" + serialNumber
 				+ ", leaveDate=" + leaveDate + "]";
 	}
 
-	
-	
 }
