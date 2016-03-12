@@ -15,10 +15,14 @@ public class EncryptedEmployee implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	int employeeId;
+	private int employeeId;
 	
 	@Column(name="password")
-	byte[] encryptedPassword;
+	private byte[] encryptedPassword;
+	
+	private int locked;
+	
+	private  int attemptCount;
 
 	public int getEmployeeId() {
 		return employeeId;
@@ -36,10 +40,31 @@ public class EncryptedEmployee implements Serializable{
 		this.encryptedPassword = encryptedPassword;
 	}
 
+	public int getLocked() {
+		return locked;
+	}
+
+	public void setLocked(int locked) {
+		this.locked = locked;
+	}
+
+	public int getAttemptCount() {
+		return attemptCount;
+	}
+
+	public void setAttemptCount(int attemptCount) {
+		this.attemptCount = attemptCount;
+	}
+
 	@Override
 	public String toString() {
-		return "EncryptedEmployee [employeeId=" + employeeId + ", encryptedPassword="
-				+ Arrays.toString(encryptedPassword) + "]";
+		return "EncryptedEmployee [employeeId=" + employeeId
+				+ ", encryptedPassword=" + Arrays.toString(encryptedPassword)
+				+ ", locked=" + locked + ", attemptCount=" + attemptCount
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
+
+	
 	
 }

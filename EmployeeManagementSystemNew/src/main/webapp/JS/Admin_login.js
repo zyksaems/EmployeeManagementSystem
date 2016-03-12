@@ -247,6 +247,10 @@ $("document").ready(function(){
 	        	/*$(adminLoginModal_id).hide();*/
 	        	alert("sorry your account is blocked due to three wrong attempts . please check your mail .");
 	        	}
+		        else if(result == 3){
+		        	$(admin_login_errorMsg_id).text("Your account is blocked! Please select forgot password to activate your account.");
+		        	console.log("account blocked  please reset passowrd !");
+		        }
 		        else{
 		        	$(admin_login_errorMsg_id).text(invalidAdminId_msg);
 		        	/*function call to set default values*/

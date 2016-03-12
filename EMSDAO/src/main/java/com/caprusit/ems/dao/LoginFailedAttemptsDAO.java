@@ -7,4 +7,5 @@ public interface LoginFailedAttemptsDAO {
 	int LockUser(int adminId);
 	int setDefualtAttemptCount(int adminId);
 	String[] getMailID(int adminId);
+	int isEmployeeBlocked(int employeeId);
 }

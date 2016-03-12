@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SQLQuery;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
 import com.caprusit.ems.dao.utility.HibernateSessionUtility;
+import com.caprusit.ems.domain.EncryptedEmployee;
 
 @Repository
 public class LoginFailedDAOImple implements LoginFailedAttemptsDAO{
@@ -74,6 +77,13 @@ public class LoginFailedDAOImple implements LoginFailedAttemptsDAO{
 		logger.info("mail ====================" +res);
 		
 		return res;
+	}
+
+	@Override
+	public int isEmployeeBlocked(int employeeId) {
+		
+		return (int) HibernateSessionUtility.getHibernateSession().createCriteria(EncryptedEmployee.class)
+				.add(Restrictions.eq("employeeId", employeeId)).setProjection(Projections.property("locked")).list().get(0);
 	}
 
 }

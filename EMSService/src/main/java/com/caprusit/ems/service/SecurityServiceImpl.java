@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.dao.IManageUserDAO;
 import com.caprusit.ems.dao.ISecurityDAO;
+import com.caprusit.ems.dao.LoginFailedAttemptsDAO;
 import com.caprusit.ems.domain.Admin;
 import com.caprusit.ems.domain.ChangePasswordRequest;
 import com.caprusit.ems.domain.Employee;
@@ -25,6 +26,9 @@ public class SecurityServiceImpl implements ISecurityService {
 
 	@Autowired
 	private ISecurityDAO securityDAO;
+	
+	@Autowired
+	private LoginFailedAttemptsDAO loginFailedDAO;
 	
 	@Autowired
 	IManageUserDAO manageUsaerDAO;
@@ -46,21 +50,45 @@ public class SecurityServiceImpl implements ISecurityService {
 	 */
 	@Transactional(rollbackFor=SQLException.class)
 	public int login(Admin admin) {
-
-		String currentPassword=null;
-		List<Integer> adminRoleList=securityDAO.getAdminRoleId();
-		logger.info("Admin role ids list: "+adminRoleList);
+       
+		String currentPassword=null;		
 		int status=-1;
 		Employee e=manageUsaerDAO.findById(admin.getAdminId());
 		logger.info("emplotyee :"+e);		
 		if(e == null)
-			return -1;
-		if(e.getStatus().equals("1")){
+			return status;
+		List<Integer> adminRoleList=securityDAO.getAdminRoleId();
+		logger.info("Admin role ids list: "+adminRoleList);
+		int blockedStatus=loginFailedDAO.isEmployeeBlocked(admin.getAdminId());
+		logger.info(" is user blocked value: "+blockedStatus);
+		if(blockedStatus  == 1)
+			return 3;// means user account is blocked
+		else if(e.getStatus().equals("1")){
+			
 			EncryptedEmployee encEmployee = securityDAO.getEmployeeCurrentPassword(admin.getAdminId());
 			 
 			 if(encEmployee != null ){			
 				 currentPassword=EncryptionUtility.decryptPassword(admin.getPassword(), encEmployee.getEncryptedPassword());
-				 status = (currentPassword != null) ? 1 : 0;
+				 if(currentPassword != null){
+					 status=1;
+					 loginFailedDAO.setDefualtAttemptCount(admin.getAdminId());
+				 }
+				 else{
+					 status = 0;
+					 if(loginFailedDAO.checkAttemptsCount(admin.getAdminId()) < 3 ){
+						 loginFailedDAO.incrementAttemptCount(admin.getAdminId());
+					 }
+					 else{
+						 loginFailedDAO.LockUser(admin.getAdminId());
+						 String [] details=loginFailedDAO.getMailID(admin.getAdminId());
+						 String message="\n\n\n \t Your  Account is blocked due to three wrong password attempts. " + " \n\n \t Please select forgot password link in login to activate your account.\n ";
+						 logger.info("mail details: "+details[2]+"   "+ details[0] + " " + details[1]+"Account blocked");
+                         emailUtility.sendMail(details[2], message, details[0] + " " + details[1],"Account blocked");
+                         return 2;// to say that your account blocked and check mails
+					 }
+					 
+				 }
+				 
 			 }
 			 status=(status == 1 && adminRoleList.contains(e.getRollId()))? 10 : status;
 		     logger.info("login status for admin/employee: " + status);

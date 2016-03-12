@@ -22,7 +22,6 @@ import com.caprusit.ems.conditions.EmsConditions;
 import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Admin;
 import com.caprusit.ems.domain.ChangePasswordRequest;
-import com.caprusit.ems.service.ILoginFailedAttemptsService;
 import com.caprusit.ems.service.ISecurityService;
 import com.caprusit.ems.utility.JsonUtility;
 
@@ -31,10 +30,6 @@ public class SecurityController {
 
 	@Autowired
 	private ISecurityService securityService;
-	
-	
-	@Autowired
-	private ILoginFailedAttemptsService service;
 	
 	private Set<Integer> resetPasswordAdminSet=new HashSet<Integer>();
 	
@@ -54,29 +49,15 @@ public class SecurityController {
 	Integer adminLogin(@RequestBody Admin admin, HttpServletRequest request) {
 
 		logger.info("in admin security controller");
-		int status = securityService.login(admin);
-		String url="";
-		if (status == 1 || status == 10)
-		{
-			int updateRes=service.setDefualtAttemptCount(admin.getAdminId());
-			if(status == 10 )
-				request.getSession().setAttribute("adminId", admin.getAdminId());
-			else
-				request.getSession().setAttribute("employeeId", admin.getAdminId());
-		}
-		else if(status==0){
-      	  int res=service.checkAttemptsCount(admin.getAdminId());
-    		if(res<maxloginattempts)
-    		{
-    			service.incrementAttemptCount(admin.getAdminId());
-    			status=0;
-    		}
-    		else{
-    		int updateres=service.LockUser(admin.getAdminId(),url);
-    		status=2;
-    		}
-        }
+		int status=securityService.login(admin);
+		if(status == 10 )
+			request.getSession().setAttribute("adminId", admin.getAdminId());
+		else if(status == 1)
+			request.getSession().setAttribute("employeeId", admin.getAdminId());
+		
 		return status;
+	
+
 	}
 	
 	/**
