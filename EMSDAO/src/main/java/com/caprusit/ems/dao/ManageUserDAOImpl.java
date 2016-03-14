@@ -17,6 +17,8 @@ import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EmployeeForDate;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.Notice;
+import com.caprusit.ems.domain.ProfileImage;
+import com.caprusit.ems.domain.SetProfileImage;
 
 @Repository
 public class ManageUserDAOImpl implements IManageUserDAO{
@@ -182,6 +184,33 @@ public class ManageUserDAOImpl implements IManageUserDAO{
 		
 	
 	}
+	public void setPic(ProfileImage profileImage,SetProfileImage setProfileImage){
+		logger.info("In dao setPic()");
+		
+		int id=profileImage.getEmployeeId();
+		byte[] img=profileImage.getImageString().getBytes();
+		
+		setProfileImage.setEmployeeId(id);
+		setProfileImage.setImagebytes(img);
+		
+		
+		HibernateSessionUtility.getHibernateSession().saveOrUpdate(setProfileImage);
+		
+	
+	}
+	public  SetProfileImage getPic(int employeeId){
+		
+		String sql="from SetProfileImage s where s.id=:id";
+		Query query=HibernateSessionUtility.getHibernateSession().createQuery(sql);
+		query.setParameter("id", employeeId);
+		
+		List<SetProfileImage> result=query.list();
+		
+		return result.get(0);
+		
+		
+	}
+	
 	
 	
 }

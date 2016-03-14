@@ -104,6 +104,7 @@
 	    	        	loggedEmployeeId=data.empId;
 	    	        	$(employeeName_id).append(loggedInEmployeeName);
 	    	        	 localStorage.setItem("loggedEmployeeName", data.empName);
+	    	        	 localStorage.setItem("loggedEmployeeID", loggedEmployeeId);
 	    	        	if(employeeReport.length==0){
 	    	        		//console.log("today employee is not logged in");
 	    	        		$(employeeLofginTime_id).text(todayNotLoggedIn_msg);

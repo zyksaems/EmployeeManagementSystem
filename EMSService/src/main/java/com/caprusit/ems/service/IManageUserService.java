@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.JsonEmployee;
 import com.caprusit.ems.domain.Notice;
+import com.caprusit.ems.domain.ProfileImage;
+import com.caprusit.ems.domain.SetProfileImage;
 
 @Service("UserService")
 @Transactional
@@ -41,5 +43,9 @@ public interface IManageUserService {
 	public void deleteNotice(Notice notice);
 	
 	public void setNotice(Notice notice);
+	
+	public void setPic(ProfileImage profileImage,SetProfileImage setProfileImage);
+	
+	public  SetProfileImage getPic(int employeeId);
 
 }

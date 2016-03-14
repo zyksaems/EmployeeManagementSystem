@@ -3,6 +3,36 @@
   
 $("document").ready(function(){
 	
+	getProPic();
+	
+	
+	function getProPic(){
+		
+		var id=localStorage.getItem('loggedEmployeeID');
+		  var request = $.ajax({
+			  url: "/EmployeeManagementSystemNew/getProPic.do"+"?eid="+id,
+			  method: "GET",
+			 
+			});
+			 
+			request.done(function(data) {
+				console.log(data.employeeId);
+				console.log(data.imageString);
+				document.getElementById('p-image').setAttribute('src',data.imageString);
+           	 	
+				});
+			
+			request.fail(function(jqXHR, textStatus ) {
+				 
+				
+				});	
+		
+			
+		
+	}
+	
+	
+	
 	function getNameOfLoggedEmployee(){
 	var employeename=localStorage.getItem("loggedEmployeeName");
 	$("#loggedout_employee-name").text(employeename);

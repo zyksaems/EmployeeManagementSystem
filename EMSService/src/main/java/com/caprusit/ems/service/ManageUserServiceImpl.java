@@ -24,6 +24,8 @@ import com.caprusit.ems.domain.EmployeeForDate;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.JsonEmployee;
 import com.caprusit.ems.domain.Notice;
+import com.caprusit.ems.domain.ProfileImage;
+import com.caprusit.ems.domain.SetProfileImage;
 import com.caprusit.ems.utility.EncryptionUtility;
 import com.caprusit.ems.utility.JsonUtility;
 import com.caprusit.ems.utility.UploadExcelFileUtility;
@@ -203,6 +205,19 @@ public class ManageUserServiceImpl implements IManageUserService {
 	public void setNotice(Notice data){
 		logger.info("In homeService");
 		manageUserDAO.setNotice(data);
+		
+	}
+	@Transactional(rollbackFor=SQLException.class)
+	public void setPic(ProfileImage profileImage,SetProfileImage setProfileImage){
+		
+		byte[] bb=profileImage.getImageString().getBytes();
+		System.out.println("The bytes"+bb);
+		
+		manageUserDAO.setPic(profileImage,setProfileImage);
+	}
+	public  SetProfileImage getPic(int employeeId){
+		
+		return manageUserDAO.getPic(employeeId);
 		
 	}
 

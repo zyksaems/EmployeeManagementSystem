@@ -36,6 +36,8 @@ import com.caprusit.ems.controller.utility.HttpSessionUtility;
 import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.JsonEmployee;
 import com.caprusit.ems.domain.Notice;
+import com.caprusit.ems.domain.ProfileImage;
+import com.caprusit.ems.domain.SetProfileImage;
 import com.caprusit.ems.service.IManageUserService;
 
 @Controller
@@ -262,6 +264,31 @@ public class ManageUserController {
 		
 		System.out.println("in home controller"+noticeData.getNotice());
 		manageUserService.setNotice(noticeData);
+		
+	}
+	@RequestMapping(value = "/setProfilePic",method = RequestMethod.POST)
+	public @ResponseBody void setPic(@ModelAttribute ProfileImage profileImage,SetProfileImage setProfileImage){
+		
+		System.out.println("The pic is "+profileImage);
+		
+		manageUserService.setPic(profileImage,setProfileImage);
+		
+	}
+	@RequestMapping(value = "/getProPic",method = RequestMethod.GET)
+	public @ResponseBody ProfileImage getPic(@RequestParam("eid")String eid,ProfileImage profileImage){
+		
+		int employeeId=Integer.parseInt(eid);
+		System.out.println("eid="+employeeId);
+		
+		SetProfileImage setProfileImage=manageUserService.getPic(employeeId);
+		
+		byte[] imageBtes=setProfileImage.getImagebytes();
+		String imgString=new String(imageBtes);
+		
+		profileImage.setEmployeeId(setProfileImage.getEmployeeId());
+		profileImage.setImageString(imgString);
+		
+		return profileImage;
 		
 	}
 

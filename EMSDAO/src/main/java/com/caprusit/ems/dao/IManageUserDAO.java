@@ -6,6 +6,8 @@ import com.caprusit.ems.domain.Employee;
 import com.caprusit.ems.domain.EmployeeForDate;
 import com.caprusit.ems.domain.EncryptedEmployee;
 import com.caprusit.ems.domain.Notice;
+import com.caprusit.ems.domain.ProfileImage;
+import com.caprusit.ems.domain.SetProfileImage;
 
 public interface IManageUserDAO {
 	
@@ -31,5 +33,9 @@ public interface IManageUserDAO {
 	public void deleteNotice(Notice notice);
 	
 	public void setNotice(Notice notice);
+	
+public void setPic(ProfileImage profileImage,SetProfileImage setProfileImage);
+	
+	public  SetProfileImage getPic(int employeeId);
 
 }
