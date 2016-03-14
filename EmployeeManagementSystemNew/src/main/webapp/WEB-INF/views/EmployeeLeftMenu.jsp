@@ -87,7 +87,7 @@
 			<div class="col-sm-3" id="loggedout_div">
 				<div class="employee_dropdown">
 				<a href="#">
-					<img id="p-image" class="img-circle" width="50" height="50" data-toggle="modal" data-target="#myModal" id="profile-img"><!-- src="./images/boy-02.jpg" -->
+					<img id="p-image" class="img-circle" width="50" height="50" data-toggle="modal" data-target="#myModal" id="profile-img" alt="Profile pic">
 				</a>
 				<br> 
 					<span class="logged_out_name_css"

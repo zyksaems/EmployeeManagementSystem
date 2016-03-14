@@ -189,6 +189,10 @@ $("document").ready(function(){
       var employeeRole="";
       var employeeDept="";
       
+      var idsString= localStorage.getItem("employeeidsarray");
+      //console.log("employee ids string from local: "+idsString);
+      var idsArray=idsString.split(",");
+      //console.log("array length: "+idsArray.length);
       
       
       /*variables to store success or error messages*/
@@ -196,6 +200,7 @@ $("document").ready(function(){
       var invalidDobMsg="Invalid Date of Birth";
       var invalidEmailMsg="Invalid Email ID";
       var inavalidEmployeeDetailsMsg="Invalid employee details";
+      var employeeIdExist_msg="This employee id already exists try anorher ID";
       
       var sessionExpired_msg="Your Session Expired..";
 	  var employeeAddedSuccess_msg="Employee Successfully Added!";
@@ -254,8 +259,14 @@ $("document").ready(function(){
 		 * This functuion is to validate  employee details 
 		 */
 		function validateEmployeeDetails(){
-		      
-		    if(employeeDob.length < 6 || new Date(employeeDob) > new Date()){
+			 
+			console.log("alredy employee id test: "+idsArray.indexOf(employeeId));
+			
+		     if(idsArray.indexOf(employeeId) != -1) {
+		    	 //console.log("alredy employee id exists try another!!");
+		    	 $(addEmployeeSuccessMsg_id).text(employeeIdExist_msg); 
+		     }
+		    else if(employeeDob.length < 6 || new Date(employeeDob) > new Date()){
 		    	
 				$(addEmployeeSuccessMsg_id).text(invalidDobMsg); 
 			}  
@@ -286,7 +297,6 @@ $("document").ready(function(){
 				$(addEmployeeSuccessMsg_id).text(inavalidEmployeeDetailsMsg); 
 				
 			}
-			
 			
 			
 		};// END -- validateEmployeeDetails()
@@ -321,6 +331,7 @@ $("document").ready(function(){
     	        	console.log("data returned from server for add single emoloyee:"+ data);
     	        	if(data == 1){
     	        		$(addEmployeeSuccessMsg_id).text(employeeAddedSuccess_msg);
+    	        		idsArray.push(employeeObj.employeeId);
     	        		employeeDefaultDetails();
     	        	}
     	        	else if(data == -1){

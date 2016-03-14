@@ -123,12 +123,14 @@
                                <div class="row">
                                   <button type="submit" class="btn btn-primary" id="add-employee-submit-button">Save Employee</button> 
                                </div>                                 
-                               <div class="row">
-                                  <p class="ManualEmployeeSuccessMsg text-danger"  id="add-employee-success-message"></p>   
-                                </div>                
+                                            
                              </div>             
                              <div class="col-sm-3"></div>    
-                          </div>            
+                          </div>    
+                           <div class="row text-center">
+                                  <br>
+                                  <p class="ManualEmployeeSuccessMsg text-danger"  id="add-employee-success-message"></p>   
+                           </div>          
                     </div>  <!--  END -- Add employee manual division -->       
                 </div> <!-- END -- add employee main division -->
                 
