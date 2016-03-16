@@ -2,10 +2,13 @@
 /*Admin logout functionality*/
   
 $("document").ready(function(){
-	
-	getProPic();
-	
-	
+
+	/*function call to getProPic() function after 500 ms*/
+	 setTimeout(getProPic,500);
+	 
+ 	 /**
+  	   * This function is to display profile picture of  logged in employee id
+  	   */
 	function getProPic(){
 		
 		var id=localStorage.getItem('loggedEmployeeID');
@@ -17,20 +20,14 @@ $("document").ready(function(){
 			 
 			request.done(function(data) {
 				console.log(data.employeeId);
-				console.log(data.imageString);
+			/*	console.log(data.imageString);*/
 				document.getElementById('p-image').setAttribute('src',data.imageString);
            	 	
 				});
 			
 			request.fail(function(jqXHR, textStatus ) {
-				 
-				
 				});	
-		
-			
-		
 	}
-	
 	
 	
 	function getNameOfLoggedEmployee(){
@@ -38,9 +35,9 @@ $("document").ready(function(){
 	$("#loggedout_employee-name").text(employeename);
 	}
 	
-	 setTimeout(getNameOfLoggedEmployee,200);
+	 setTimeout(getNameOfLoggedEmployee,500);
 	
-	// apply accordian to accordian
+	// apply accordion to accordion
 	$("#accordion").accordion();
 	
     var adminLogout_link_id="#admin-logout-link";
