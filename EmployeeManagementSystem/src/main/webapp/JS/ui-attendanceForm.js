@@ -1675,10 +1675,18 @@ app.config(function($translateProvider) {
 			  
 			  
 			  /* functions for sorting */
-			  
+			  $scope.reverse=false;
+			  $scope.sortKey="employeeId";
+			  var previouesSortKey="employeeId";
 			  $scope.sort = function(keyname){
 			      $scope.sortKey = keyname;   //set the sortKey to the param passed
-			      $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+			      if(keyname == previouesSortKey)
+			          $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+			      else
+			    	  $scope.reverse=false;
+			      previouesSortKey = keyname;
+			      //console.log("sort key received: "+$scope.sortKey);
+			      //console.log("reverse value: "+$scope.reverse);
 			  };
 			  
 			  

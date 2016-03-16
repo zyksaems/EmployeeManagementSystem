@@ -2,6 +2,8 @@
 <html ng-app="ui.ems.app">
  <head>
  
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+  
   <!-- AngularJS main script(library) file -->
   <script src="./angularJs/angular.js"></script>
   <script src="./angularJs/angular-animate.js"></script>
@@ -476,56 +478,55 @@
        
         </div>        
     </div>
-    <div class="table-responsive" id="viewEmployeeDetails">
+    <div id="viewEmployeeDetails">
+    <div class="table-responsive">
     <table  class="table row-border table-bordered table-hover">
     <thead>
     <tr>
-          <th ng-click="sort('id')">Emp Id <span
-      class="glyphicon sort-icon" ng-show="sortKey=='id'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+          <th ng-click="sort('employeeId')" class="hand"  title="click to sort">Emp Id <span class="glyphicon" ng-show="sortKey=='employeeId'" ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
-     <th ng-click="sort('first_name')" >First Name <span
-      class="glyphicon sort-icon" ng-show="sortKey=='first_name'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+     <th title="click to sort" ng-click="sort('firstName')" class="hand" >First Name <span
+      class="glyphicon" ng-show="sortKey=='firstName'"
+      ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
-     <th ng-click="sort('last_name')" >Last Name <span
-      class="glyphicon sort-icon" ng-show="sortKey=='last_name'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+     <th ng-click="sort('lastName')" class="hand"  title="click to sort">Last Name <span
+      class="glyphicon" ng-show="sortKey=='lastName'"
+      ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
-     <th ng-click="sort('dob')">Date Of Birth <span
-      class="glyphicon sort-icon" ng-show="sortKey=='dob'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+     <th ng-click="sort('dob')" class="hand"  title="click to sort" >Date Of Birth <span
+      class="glyphicon" ng-show="sortKey=='dob'"
+      ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
-     <th ng-click="sort('mob')">Mobile No <span
-      class="glyphicon sort-icon" ng-show="sortKey=='mob'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+     <th>Mobile No <!-- ng-click="sort('mobileNo')"  -->
+     <span class="glyphicon" ng-show="sortKey=='mobileNo'"
+      ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
-     <th ng-click="sort('email')">Email Id <span
-      class="glyphicon sort-icon" ng-show="sortKey=='email'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+     <th >Email Id <!-- ng-click="sort('emailId')" -->
+     <span class="glyphicon" ng-show="sortKey=='emailId'"
+      ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
-     <th ng-click="sort('des')" >Designation <span
-      class="glyphicon sort-icon" ng-show="sortKey=='des'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+     <th ng-click="sort('designation')" class="hand"  title="click to sort">Designation <span
+      class="glyphicon sort-icon" ng-show="sortKey=='designation'"
+      ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
-     <th ng-click="sort('role')" >Role Id <span
-      class="glyphicon sort-icon" ng-show="sortKey=='role'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+     <th ng-click="sort('rollId')" class="hand"  title="click to sort">Role Id <span
+      class="glyphicon" ng-show="sortKey=='rollId'"
+      ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
-     <th ng-click="sort('status')" >Status <span
-      class="glyphicon sort-icon" ng-show="sortKey=='status'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+     <th ng-click="sort('status')" class="hand"  title="click to sort">Status <span
+      class="glyphicon" ng-show="sortKey=='status'"
+      ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
-     <th ng-click="sort('dept')" >Dept Id <span
-      class="glyphicon sort-icon" ng-show="sortKey=='dept'"
-      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+     <th ng-click="sort('deptId')" class="hand"  title="click to sort">Dept Id <span
+      class="glyphicon" ng-show="sortKey=='deptId'"
+      ng-class="{'glyphicon-sort-by-attributes-alt':reverse,'glyphicon-sort-by-attributes':!reverse}"></span>
      </th>
      <th>edit/save</th>
     </tr>
     </thead>
     <tbody>
  
-   <tr  ng-class-even="'success'" ng-class-odd="'active'" ng- ng-repeat="employee in AllEmployees | filter:search	| orderBy:sortKey:reverse"> 
+   <tr  ng-class-even="'success'" ng-class-odd="'active'" ng- ng-repeat="employee in AllEmployees | orderBy:sortKey:reverse | filter:search "> 
        
          <td> {{ employee.employeeId }}<input type="text" ng-hide="true" ng-model="editEmp[$index].employeeId"></td>
          <td ng-hide="showdecisonArray[$index]">{{ employee.firstName }}</td> <td ng-hide="!showdecisonArray[$index]">
@@ -556,8 +557,9 @@
           </td> 
     
        </tbody>
-    
+      
     </table>
+    </div>
     <!-- This division for print  view employee division -->
     <div ng-hide="true" id="print-view-employee-div"> 
              
@@ -595,7 +597,6 @@
      </table>
       <p align="right" ng-if="numberOfPaginationPages <= 1">page 1 0f 1 </p>
       <p align="right" ng-if="numberOfPaginationPages > 1">page {{currentPaginationPage}} 0f {{numberOfPaginationPages}} </p>     
-      
     </div> <!--  END -- print view employee div -->
 
 </div>
@@ -604,9 +605,9 @@
     
    <!--  <div class="col-sm-5"> <button class="btn btn-primary btn-sm custom-width" ng-click="showExcelView()" >excel view</button>  translate='Excel_View'</div> -->
  
-    <div class="col-sm-7">
+    <div class="text-center">
     					<!-- <button class="btn btn-primary btn-sm custom-width" ng-click="showExcel()" translate='Excel_View'></button> -->
-                       <button class="btn btn-primary btn-sm custom-width" ng-click="printViewEmployeeDiv('print-view-employee-div')" translate="PRINT"></button>
+                       <button class="btn btn-primary btn-md custom-width" ng-click="printViewEmployeeDiv('print-view-employee-div')" ><span class="glyphicon glyphicon-print"> {{"PRINT" | translate}}</span></button>
                        <!-- <button class="btn btn-primary btn-sm custom-width" ng-click="showExcelView()" translate='Excel_View'></button> -->
        
     </div>
