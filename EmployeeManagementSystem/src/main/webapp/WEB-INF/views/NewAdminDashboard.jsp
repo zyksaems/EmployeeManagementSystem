@@ -1,8 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html ng-app="ui.ems.app">
- <head>
- 
+<html lang="en" ng-app="ui.ems.app">
+<head>
+  <title>EMS </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+  <link rel="shortcut icon" type="image/x-icon" href="./images/caprus logo.png" />
   
   <!-- AngularJS main script(library) file -->
   <script src="./angularJs/angular.js"></script>
