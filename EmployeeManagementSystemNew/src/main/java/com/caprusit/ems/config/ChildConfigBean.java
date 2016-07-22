@@ -61,7 +61,7 @@ public class ChildConfigBean extends WebMvcConfigurerAdapter {
    */
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-
+    // interceptor comment added
     LoggerInterceptor loggerInterceptor = new LoggerInterceptor();
 
     registry.addInterceptor(loggerInterceptor).addPathPatterns("/*");
