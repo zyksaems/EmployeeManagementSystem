@@ -2,11 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.caprusit</groupId>
+	
 	<artifactId>EmployeeManagementSystem</artifactId>
 	<name>EmployeeManagementSystem</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+
+    <!-- parent  -->
+	<parent>
+		<groupId>com.caprusit</groupId>
+		<artifactId>EMS_All</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
 	<properties>
 		<java-version>1.7</java-version>
 		<org.springframework-version>4.2.1.RELEASE</org.springframework-version>
@@ -22,7 +29,7 @@
 		<!-- my project jar files dependency(service) -->
 
 		<dependency>
-			<groupId>com.caprus</groupId>
+			<groupId>com.caprusit</groupId>
 			<artifactId>EMSService</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
@@ -60,8 +67,8 @@
 			<artifactId>poi</artifactId>
 			<version>3.10-FINAL</version>
 		</dependency>
-	
-	<!-- log 4j jar file -->
+
+		<!-- log 4j jar file -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

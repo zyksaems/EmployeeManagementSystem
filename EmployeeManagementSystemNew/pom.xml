@@ -2,11 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.caprusit</groupId>
+
 	<artifactId>EmployeeManagementSystemNew</artifactId>
 	<name>EmployeeManagementSystemNew</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+
+
+	<!-- parent -->
+	<parent>
+		<groupId>com.caprusit</groupId>
+		<artifactId>EMS_All</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
 	<properties>
 		<java-version>1.7</java-version>
 		<org.springframework-version>4.2.6.RELEASE</org.springframework-version>
@@ -20,7 +28,7 @@
 		<!-- my project jar files dependency(service) -->
 
 		<dependency>
-			<groupId>com.caprus</groupId>
+			<groupId>com.caprusit</groupId>
 			<artifactId>EMSService</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
@@ -154,12 +162,12 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
-				    <!-- for pivotal tc server -->
+					<!-- for pivotal tc server -->
 					<!-- <packagingExcludes>WEB-INF/lib/javax.servlet-api-3.0.1.jar,WEB-INF/lib/commons-logging-1.2.jar,WEB-INF/lib/commons-codec-1.5.jar</packagingExcludes> -->
-					
+
 					<!-- for apache tomcat server -->
 					<packagingExcludes>WEB-INF/lib/javax.servlet-api-3.0.1.jar</packagingExcludes>
-					
+
 				</configuration>
 			</plugin>
 		</plugins>

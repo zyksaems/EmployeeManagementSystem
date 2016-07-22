@@ -2,12 +2,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.caprus</groupId>
 	<artifactId>EMSService</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>EMSService</name>
 	<url>http://maven.apache.org</url>
+
+	<!-- parent -->
+	<parent>
+		<groupId>com.caprusit</groupId>
+		<artifactId>EMS_All</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,15 +42,15 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
+
 		<!-- EMS dao jar file -->
 		<dependency>
-			<groupId>com.caprus</groupId>
+			<groupId>com.caprusit</groupId>
 			<artifactId>EMSDAO</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- gson jar file for json support -->
-
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -101,7 +106,7 @@
 		</dependency>
 
 		<!-- Apache POI for Reading MS Ofiice files -->
-		
+
 		<!-- <dependency> <groupId>org.apache.poi</groupId> <artifactId>poi-ooxml</artifactId> 
 			<version>3.13</version> </dependency> -->
 
