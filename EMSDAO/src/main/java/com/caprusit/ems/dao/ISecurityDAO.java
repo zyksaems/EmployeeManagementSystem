@@ -6,13 +6,12 @@ import com.caprusit.ems.domain.EncryptedEmployee;
 
 public interface ISecurityDAO {
 
-	public List<Object> forgotPassword(int adminId);
+  public List<Object> forgotPassword(int adminId);
 
-	public int changeEmployeePassword(EncryptedEmployee encryptedEmployee);
+  public int changeEmployeePassword(EncryptedEmployee encryptedEmployee);
 
-	public EncryptedEmployee getEmployeeCurrentPassword(int employeeId);
-	
-	public List<Integer> getAdminRoleId();
+  public EncryptedEmployee getEmployeeCurrentPassword(int employeeId);
 
+  public List<Integer> getAdminRoleId();
 
 }

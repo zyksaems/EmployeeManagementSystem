@@ -15,78 +15,76 @@ import com.caprusit.ems.utility.JsonUtility;
 
 @Service
 public class ValidationServiceImpl implements ValidationService {
-	
-	@Autowired
-	private ValidationDAO validationDAO;
 
-	private  Logger logger = Logger.getLogger(ValidationServiceImpl.class);
+  @Autowired
+  private ValidationDAO validationDAO;
 
-	@Transactional(readOnly=true)
-	public String getAllEmployeeIds() {
+  private Logger logger = Logger.getLogger(ValidationServiceImpl.class);
 
-		logger.info("inside ValidationServiceImpl getAllEmployeeIds()");
-		List<Object> allEmpData = validationDAO.getAllEmploeeIds();
+  @Transactional(readOnly = true)
+  public String getAllEmployeeIds() {
 
-		List<EmployeeData> listOfAllEmpIds = new ArrayList<EmployeeData>();
+    logger.info("inside ValidationServiceImpl getAllEmployeeIds()");
+    List<Object> allEmpData = validationDAO.getAllEmploeeIds();
 
-		for (Object data : allEmpData) {
+    List<EmployeeData> listOfAllEmpIds = new ArrayList<EmployeeData>();
 
-			Object[] array = (Object[]) data;
-			EmployeeData emp = new EmployeeData();
-			emp.setEmpId((Integer) array[0]);
-			emp.setEmpName((String) array[1] + " " + (String) array[2]);
-			listOfAllEmpIds.add(emp);
+    for (Object data : allEmpData) {
 
-		}
-	
-		return JsonUtility.convertToJson(listOfAllEmpIds);
+      Object[] array = (Object[]) data;
+      EmployeeData emp = new EmployeeData();
+      emp.setEmpId((Integer) array[0]);
+      emp.setEmpName((String) array[1] + " " + (String) array[2]);
+      listOfAllEmpIds.add(emp);
 
-	}
+    }
 
-	@Transactional(readOnly=true)
-	public String getLoggedInEmoloyeeIds() {
+    return JsonUtility.convertToJson(listOfAllEmpIds);
 
-		logger.info("inside ValidationServiceImpl getLoggedInEmoloyeeIds()");
+  }
 
-		List<Object> loggedInList = validationDAO.getLoggedInEmployeeIds();
-		logger.info("list size loggedinemp" + loggedInList.size());
+  @Transactional(readOnly = true)
+  public String getLoggedInEmoloyeeIds() {
 
-		return JsonUtility.convertToJson(loggedInList);
-	}
+    logger.info("inside ValidationServiceImpl getLoggedInEmoloyeeIds()");
 
-	@Transactional(readOnly=true)
-	public String getLoggedOutEmployeeIds() {
+    List<Object> loggedInList = validationDAO.getLoggedInEmployeeIds();
+    logger.info("list size loggedinemp" + loggedInList.size());
 
-		logger.info("inside ValidationServiceImpl getLoggedOutEmployeeIds()");
+    return JsonUtility.convertToJson(loggedInList);
+  }
 
-		List<Object> loggedOutList = validationDAO.getLoggedOutEmoloyeeIds();
-		logger.info("list size logged out emp" + loggedOutList.size());
+  @Transactional(readOnly = true)
+  public String getLoggedOutEmployeeIds() {
 
-		return JsonUtility.convertToJson(loggedOutList);
-		
-	}
+    logger.info("inside ValidationServiceImpl getLoggedOutEmployeeIds()");
 
-	@Transactional(readOnly=true)
-	public String getRoleIds() {
-		
-		logger.info("inside ValidationServiceImpl getRoleIds()");
+    List<Object> loggedOutList = validationDAO.getLoggedOutEmoloyeeIds();
+    logger.info("list size logged out emp" + loggedOutList.size());
 
-		List<Object> roleIdsList = validationDAO.getRoleIds();
-		logger.info("list size  of role Ids list" + roleIdsList.size());
+    return JsonUtility.convertToJson(loggedOutList);
 
-		return JsonUtility.convertToJson(roleIdsList);
-	}
+  }
 
-	@Transactional(readOnly=true)
-	public String getDeptIds() {
-		logger.info("inside ValidationServiceImpl getDeptIds()");
+  @Transactional(readOnly = true)
+  public String getRoleIds() {
 
-		List<Object> deptIdsList = validationDAO.getDeptIds();
-		logger.info("list size of dept IDs list:" + deptIdsList.size());
+    logger.info("inside ValidationServiceImpl getRoleIds()");
 
-		return JsonUtility.convertToJson(deptIdsList);
-	}
+    List<Object> roleIdsList = validationDAO.getRoleIds();
+    logger.info("list size  of role Ids list" + roleIdsList.size());
 
+    return JsonUtility.convertToJson(roleIdsList);
+  }
 
-	
+  @Transactional(readOnly = true)
+  public String getDeptIds() {
+    logger.info("inside ValidationServiceImpl getDeptIds()");
+
+    List<Object> deptIdsList = validationDAO.getDeptIds();
+    logger.info("list size of dept IDs list:" + deptIdsList.size());
+
+    return JsonUtility.convertToJson(deptIdsList);
+  }
+
 }

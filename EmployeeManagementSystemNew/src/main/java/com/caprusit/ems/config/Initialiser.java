@@ -10,25 +10,26 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class Initialiser implements WebApplicationInitializer {
 
-	@Override
-	public void onStartup(ServletContext servletContext) {
-		// Create the dispatcher servlet's Spring application context(parent container)
-	       AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-		   //dispatcherContext.register(ParentConfigBean.class);
-		   
-		   // Create the 'root' Spring application context(child container)
-		   AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		   rootContext.register(ChildConfigBean.class);
-		   rootContext.setServletContext(servletContext);
+  @Override
+  public void onStartup(ServletContext servletContext) {
+    // Create the dispatcher servlet's Spring application context(parent container)
+    AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
+    // dispatcherContext.register(ParentConfigBean.class);
 
-		   // Manage the lifecycle of the root application context
-		   servletContext.addListener(new ContextLoaderListener(rootContext));
+    // Create the 'root' Spring application context(child container)
+    AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+    rootContext.register(ChildConfigBean.class);
+    rootContext.setServletContext(servletContext);
 
-			// Register and map the dispatcher servlet
-			ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
-			dispatcher.setLoadOnStartup(1);
-			dispatcher.addMapping("*.do");
-			servletContext.addListener(new SessionListener());
-	}
+    // Manage the lifecycle of the root application context
+    servletContext.addListener(new ContextLoaderListener(rootContext));
+
+    // Register and map the dispatcher servlet
+    ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher",
+        new DispatcherServlet(dispatcherContext));
+    dispatcher.setLoadOnStartup(1);
+    dispatcher.addMapping("*.do");
+    servletContext.addListener(new SessionListener());
+  }
 
 }

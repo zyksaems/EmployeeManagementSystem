@@ -8,38 +8,36 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PRAKASH.PROFILE_IMAGE_TABLE")
+@Table(name = "PRAKASH.PROFILE_IMAGE_TABLE")
 public class SetProfileImage {
 
-	@Id
-	@Column(name="employeeid")
-	private int employeeId;
-	
-	@Column(name="image")
-	private byte[] imagebytes;
+  @Id
+  @Column(name = "employeeid")
+  private int employeeId;
 
-	public int getEmployeeId() {
-		return employeeId;
-	}
+  @Column(name = "image")
+  private byte[] imagebytes;
 
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
+  public int getEmployeeId() {
+    return employeeId;
+  }
 
-	public byte[] getImagebytes() {
-		return imagebytes;
-	}
+  public void setEmployeeId(int employeeId) {
+    this.employeeId = employeeId;
+  }
 
-	public void setImagebytes(byte[] imagebytes) {
-		this.imagebytes = imagebytes;
-	}
+  public byte[] getImagebytes() {
+    return imagebytes;
+  }
 
-	@Override
-	public String toString() {
-		return "SetProfileImage [employeeId=" + employeeId + ", imagebytes=" + Arrays.toString(imagebytes) + "]";
-	}
+  public void setImagebytes(byte[] imagebytes) {
+    this.imagebytes = imagebytes;
+  }
 
-	
-	
-	
+  @Override
+  public String toString() {
+    return "SetProfileImage [employeeId=" + employeeId + ", imagebytes="
+        + Arrays.toString(imagebytes) + "]";
+  }
+
 }

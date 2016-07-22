@@ -10,61 +10,58 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PRAKASH.employeePassword_table")
-public class EncryptedEmployee implements Serializable{
+public class EncryptedEmployee implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	private int employeeId;
-	
-	@Column(name="password")
-	private byte[] encryptedPassword;
-	
-	private int locked;
-	
-	private  int attemptCount;
+  @Id
+  private int employeeId;
 
-	public int getEmployeeId() {
-		return employeeId;
-	}
+  @Column(name = "password")
+  private byte[] encryptedPassword;
 
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
+  private int locked;
 
-	public byte[] getEncryptedPassword() {
-		return encryptedPassword;
-	}
+  private int attemptCount;
 
-	public void setEncryptedPassword(byte[] encryptedPassword) {
-		this.encryptedPassword = encryptedPassword;
-	}
+  public int getEmployeeId() {
+    return employeeId;
+  }
 
-	public int getLocked() {
-		return locked;
-	}
+  public void setEmployeeId(int employeeId) {
+    this.employeeId = employeeId;
+  }
 
-	public void setLocked(int locked) {
-		this.locked = locked;
-	}
+  public byte[] getEncryptedPassword() {
+    return encryptedPassword;
+  }
 
-	public int getAttemptCount() {
-		return attemptCount;
-	}
+  public void setEncryptedPassword(byte[] encryptedPassword) {
+    this.encryptedPassword = encryptedPassword;
+  }
 
-	public void setAttemptCount(int attemptCount) {
-		this.attemptCount = attemptCount;
-	}
+  public int getLocked() {
+    return locked;
+  }
 
-	@Override
-	public String toString() {
-		return "EncryptedEmployee [employeeId=" + employeeId
-				+ ", encryptedPassword=" + Arrays.toString(encryptedPassword)
-				+ ", locked=" + locked + ", attemptCount=" + attemptCount
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
-	}
+  public void setLocked(int locked) {
+    this.locked = locked;
+  }
 
-	
-	
+  public int getAttemptCount() {
+    return attemptCount;
+  }
+
+  public void setAttemptCount(int attemptCount) {
+    this.attemptCount = attemptCount;
+  }
+
+  @Override
+  public String toString() {
+    return "EncryptedEmployee [employeeId=" + employeeId + ", encryptedPassword="
+        + Arrays.toString(encryptedPassword) + ", locked=" + locked + ", attemptCount="
+        + attemptCount + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+        + ", toString()=" + super.toString() + "]";
+  }
+
 }

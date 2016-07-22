@@ -12,51 +12,47 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="PRAKASH.NOTICE_TABLE")
-public class Notice implements Serializable{
+@Table(name = "PRAKASH.NOTICE_TABLE")
+public class Notice implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
-	@Column(name="ID")
-	@GenericGenerator(name="increment" , strategy="increment")
-	@GeneratedValue(generator="increment")
-	private int id;
-	
-	@Column(name="NOTICES")
-	private String notice;
-	
-	@Column(name="PUBLISHED_DATE")
-	private Date publishedDate;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+  @Id
+  @Column(name = "ID")
+  @GenericGenerator(name = "increment", strategy = "increment")
+  @GeneratedValue(generator = "increment")
+  private int id;
 
-	public int getId() {
-		return id;
-	}
+  @Column(name = "NOTICES")
+  private String notice;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  @Column(name = "PUBLISHED_DATE")
+  private Date publishedDate;
 
-	public String getNotice() {
-		return notice;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public void setNotice(String notice) {
-		this.notice = notice;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public Date getPublishedDate() {
-		return publishedDate;
-	}
+  public String getNotice() {
+    return notice;
+  }
 
-	public void setPublishedDate(Date publishedDate) {
-		this.publishedDate = publishedDate;
-	}
+  public void setNotice(String notice) {
+    this.notice = notice;
+  }
 
-	
-	
+  public Date getPublishedDate() {
+    return publishedDate;
+  }
 
+  public void setPublishedDate(Date publishedDate) {
+    this.publishedDate = publishedDate;
+  }
 
 }

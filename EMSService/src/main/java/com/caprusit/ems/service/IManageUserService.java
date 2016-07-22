@@ -17,35 +17,34 @@ import com.caprusit.ems.domain.SetProfileImage;
 @Transactional
 public interface IManageUserService {
 
-	public String getEmployees();
+  public String getEmployees();
 
-	public List<Employee> getAllEmployee();
+  public List<Employee> getAllEmployee();
 
-	Employee findById(int id);
+  Employee findById(int id);
 
-	void updateUser(Employee employee);
+  void updateUser(Employee employee);
 
-	List<Employee> findAllUsers();
+  List<Employee> findAllUsers();
 
-	public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream,
-			String fileName);
+  public String uploadEmployeeDetailsExcelFile(InputStream excelInputStream, String fileName);
 
-	public int addSingleEmployee(Employee emp, String milliseconds);
+  public int addSingleEmployee(Employee emp, String milliseconds);
 
-	public int updateEmployee(Employee employee);
+  public int updateEmployee(Employee employee);
 
-	public List<JsonEmployee> getAllEmployeesData();
+  public List<JsonEmployee> getAllEmployeesData();
 
-	public String updateEmployeeData(Employee e);
-	
-	public List<Notice> getNotice();
-	
-	public void deleteNotice(Notice notice);
-	
-	public void setNotice(Notice notice);
-	
-	public void setPic(ProfileImage profileImage,SetProfileImage setProfileImage);
-	
-	public  SetProfileImage getPic(int employeeId);
+  public String updateEmployeeData(Employee e);
+
+  public List<Notice> getNotice();
+
+  public void deleteNotice(Notice notice);
+
+  public void setNotice(Notice notice);
+
+  public void setPic(ProfileImage profileImage, SetProfileImage setProfileImage);
+
+  public SetProfileImage getPic(int employeeId);
 
 }

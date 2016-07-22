@@ -1,14 +1,14 @@
 package com.caprusit.ems.service;
 
 public interface ValidationService {
-	
-	public String getAllEmployeeIds();
 
-	public String getLoggedInEmoloyeeIds();
+  public String getAllEmployeeIds();
 
-	public String getLoggedOutEmployeeIds();
+  public String getLoggedInEmoloyeeIds();
 
-	public String getRoleIds();
+  public String getLoggedOutEmployeeIds();
 
-	public String getDeptIds();
+  public String getRoleIds();
+
+  public String getDeptIds();
 }

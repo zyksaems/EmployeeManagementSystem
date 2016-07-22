@@ -10,32 +10,32 @@ import com.caprusit.ems.domain.ProfileImage;
 import com.caprusit.ems.domain.SetProfileImage;
 
 public interface IManageUserDAO {
-	
-	public List<Employee> getEmployees();
 
-	/* public List<Employee> getEmployees() ; */
-	public Employee findById(int id);
+  public List<Employee> getEmployees();
 
-	/*public void updateUser(Employee user);*/
+  /* public List<Employee> getEmployees() ; */
+  public Employee findById(int id);
 
-	int saveEmployee(Employee employee);
+  /* public void updateUser(Employee user); */
 
-	public int updateEmployee(Employee emp);
-	
-	public List<EmployeeForDate> getAllEmployeesData();
-	
-	public Integer updateEmployeeData(Employee e);
-	
-	int saveEncryptedEmployee(EncryptedEmployee encEmp);
-	
-	public List<Notice> getNotice();
-	
-	public void deleteNotice(Notice notice);
-	
-	public void setNotice(Notice notice);
-	
-public void setPic(ProfileImage profileImage,SetProfileImage setProfileImage);
-	
-	public  SetProfileImage getPic(int employeeId);
+  int saveEmployee(Employee employee);
+
+  public int updateEmployee(Employee emp);
+
+  public List<EmployeeForDate> getAllEmployeesData();
+
+  public Integer updateEmployeeData(Employee e);
+
+  int saveEncryptedEmployee(EncryptedEmployee encEmp);
+
+  public List<Notice> getNotice();
+
+  public void deleteNotice(Notice notice);
+
+  public void setNotice(Notice notice);
+
+  public void setPic(ProfileImage profileImage, SetProfileImage setProfileImage);
+
+  public SetProfileImage getPic(int employeeId);
 
 }

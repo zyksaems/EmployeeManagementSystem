@@ -19,50 +19,53 @@ import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 @ComponentScan(basePackages = "com.caprusit.ems")
 public class ChildConfigBean extends WebMvcConfigurerAdapter {
 
-	@Bean
-	public ResourceBundleViewResolver resourceBundleViewResolver() {
-		ResourceBundleViewResolver resolver = new ResourceBundleViewResolver();
-		resolver.setOrder(1);
-		resolver.setBasename("properties/excelView");
+  /**
+   * For view Resourcebundle resolver.
+   * @return {@link ResourceBundleViewResolver}
+   */
+  @Bean
+  public ResourceBundleViewResolver resourceBundleViewResolver() {
+    ResourceBundleViewResolver resolver = new ResourceBundleViewResolver();
+    resolver.setOrder(1);
+    resolver.setBasename("properties/excelView");
 
-		return resolver;
-	}
-	
-	/**
-	 * Bean for view resolver
-	 * */
-	@Bean
-	public ViewResolver configureViewResolver() {
-		InternalResourceViewResolver viewResolve = new InternalResourceViewResolver();
-		viewResolve.setOrder(2);
-		viewResolve.setPrefix("/WEB-INF/views/");
-		viewResolve.setSuffix(".jsp");
+    return resolver;
+  }
 
-		return viewResolve;
-	}
-	
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations(
-				"/resources/");
-	}
+  /**
+   * Bean for view normal resolver.
+   * @return {@link ViewResolver}
+   */
+  @Bean
+  public ViewResolver configureViewResolver() {
+    InternalResourceViewResolver viewResolve = new InternalResourceViewResolver();
+    viewResolve.setOrder(2);
+    viewResolve.setPrefix("/WEB-INF/views/");
+    viewResolve.setSuffix(".jsp");
 
-	@Override
-	public void configureDefaultServletHandling(
-			DefaultServletHandlerConfigurer configurer) {   
-		configurer.enable();
-	}
-	/**
-	 * This methos is to add interceptors to application
-	 */
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		
-		LoggerInterceptor loggerInterceptor=new LoggerInterceptor();
-		
-		registry.addInterceptor(loggerInterceptor).addPathPatterns("/*");
-		
-	}
-	
+    return viewResolve;
+  }
+
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+  }
+
+  @Override
+  public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+    configurer.enable();
+  }
+
+  /**
+   * This methos is to add interceptors to application.
+   */
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+
+    LoggerInterceptor loggerInterceptor = new LoggerInterceptor();
+
+    registry.addInterceptor(loggerInterceptor).addPathPatterns("/*");
+
+  }
 
 }

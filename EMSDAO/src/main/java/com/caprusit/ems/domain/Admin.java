@@ -7,34 +7,31 @@ import javax.persistence.Table;
 
 public class Admin implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	private int adminId;
-  
-	
-	private String password;
+  private static final long serialVersionUID = 1L;
 
-	public int getAdminId() {
-		return adminId;
-	}
+  private int adminId;
 
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
-	}
+  private String password;
 
-	public String getPassword() {
-		return password;
-	}
+  public int getAdminId() {
+    return adminId;
+  }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+  public void setAdminId(int adminId) {
+    this.adminId = adminId;
+  }
 
-	@Override
-	public String toString() {
-		return "Admin [adminId=" + adminId + ", password=" + password + "]";
-	}
+  public String getPassword() {
+    return password;
+  }
 
-	
-	
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  @Override
+  public String toString() {
+    return "Admin [adminId=" + adminId + ", password=" + password + "]";
+  }
+
 }

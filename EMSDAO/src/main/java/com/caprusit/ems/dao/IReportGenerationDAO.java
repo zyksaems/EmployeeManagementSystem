@@ -7,41 +7,41 @@ import java.util.Map;
 import com.caprusit.ems.domain.Attendance;
 
 public interface IReportGenerationDAO {
-	
-	public List<Attendance> getEmployeeWorkingDetailsById(int employeeId);
-	
-	List<Attendance> getEmployeeWorkingDetailsByIdAndDate(int employeeId, Date attendanceDate);
 
-	List<Attendance> getEmployeeWorkingDetailsByDates(int employeeId, Date fromDate, Date toDate);
+  public List<Attendance> getEmployeeWorkingDetailsById(int employeeId);
 
-	List<Attendance> getAllEmployeesWorkingDetails();
+  List<Attendance> getEmployeeWorkingDetailsByIdAndDate(int employeeId, Date attendanceDate);
 
-	List<Object> getSingleEmployeeDetailsById(int employeeId);
+  List<Attendance> getEmployeeWorkingDetailsByDates(int employeeId, Date fromDate, Date toDate);
 
-	List<Attendance> getAllEmployeesReportByDate(Date attendanceDate);
+  List<Attendance> getAllEmployeesWorkingDetails();
 
-	List<Attendance> getEmployeesReportBetweenDates(Date fromDate, Date toDate);
+  List<Object> getSingleEmployeeDetailsById(int employeeId);
 
-	List<Object> getSingleEmployeeDetailsByEmpName(String firstName, String lastName);
+  List<Attendance> getAllEmployeesReportByDate(Date attendanceDate);
 
-	List<Attendance> getReportByName(int empId);
+  List<Attendance> getEmployeesReportBetweenDates(Date fromDate, Date toDate);
 
-	List<Attendance> getReportByDay(int employeeId, Date attendanceDate);
+  List<Object> getSingleEmployeeDetailsByEmpName(String firstName, String lastName);
 
-	List<Attendance> getReportByNameDates(int employeeId, Date fromDate, Date toDate);
+  List<Attendance> getReportByName(int empId);
 
-	List<Integer> getAutoCompleteInfo(int employeeId);
+  List<Attendance> getReportByDay(int employeeId, Date attendanceDate);
 
-	List<String> getAutoCompleteInfo(String employeeId);
-	
-    List<Attendance> getTodayPresentAttendance();
-    
-    List<Attendance> getTodayLeaveAttendance();
-    
-    int getNumberOfEmployees();
-    
-    int getNumberOfActiveEmployees();
-    
-    Map<String,Object> getDailyReportOfIndividual(int employeeId, Date attendanceDate);
+  List<Attendance> getReportByNameDates(int employeeId, Date fromDate, Date toDate);
+
+  List<Integer> getAutoCompleteInfo(int employeeId);
+
+  List<String> getAutoCompleteInfo(String employeeId);
+
+  List<Attendance> getTodayPresentAttendance();
+
+  List<Attendance> getTodayLeaveAttendance();
+
+  int getNumberOfEmployees();
+
+  int getNumberOfActiveEmployees();
+
+  Map<String, Object> getDailyReportOfIndividual(int employeeId, Date attendanceDate);
 
 }

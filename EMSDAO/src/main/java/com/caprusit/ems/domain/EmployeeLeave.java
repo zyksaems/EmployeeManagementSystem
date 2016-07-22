@@ -23,117 +23,116 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
-@Table(name="PRAKASH.EMPLOYEE_LEAVE_TABLE")
-public class EmployeeLeave implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+@Table(name = "PRAKASH.EMPLOYEE_LEAVE_TABLE")
+public class EmployeeLeave implements Serializable {
 
-	@Id
-	@Column(name="leaveid")
-	@GenericGenerator(name="leaveGeneric" , strategy="increment")
-	@GeneratedValue(generator="leaveGeneric")
-	private int leaveId;
-	
-	@Column(name="employeeid")
-	private int employeeId;
-	
-	@Column(name="employeename")
-	private String name;
-	
-	@Column(name="date_of_apply")
-	@Temporal(TemporalType.DATE)
-	private Date date_of_apply;
-	
-	@Column(name="isapproved")
-	private String isApproved;
-	
-	@Column(name="subject")
-	private String subject;
-	
-	@Column(name="message")
-	private String message;
-	
-	@Column(name="NOTIFY_STATUS")
-	private int notifyStatus;
-	
-	@OneToMany
-	@Fetch(FetchMode.SUBSELECT)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@Cascade(CascadeType.ALL)
-	@JoinColumn(name="leaveId_fk")
-    private Set<EmployeeLeaveDates> setOfLeaveDates;
-	
-	public int getLeaveId() {
-		return leaveId;
-	}
+  private static final long serialVersionUID = 1L;
 
-	public void setLeaveId(int leaveId) {
-		this.leaveId = leaveId;
-	}
+  @Id
+  @Column(name = "leaveid")
+  @GenericGenerator(name = "leaveGeneric", strategy = "increment")
+  @GeneratedValue(generator = "leaveGeneric")
+  private int leaveId;
 
-	public int getEmployeeId() {
-		return employeeId;
-	}
+  @Column(name = "employeeid")
+  private int employeeId;
 
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
+  @Column(name = "employeename")
+  private String name;
 
-	public String getName() {
-		return name;
-	}
+  @Column(name = "date_of_apply")
+  @Temporal(TemporalType.DATE)
+  private Date date_of_apply;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  @Column(name = "isapproved")
+  private String isApproved;
 
-	public Date getDate_of_apply() {
-		return date_of_apply;
-	}
+  @Column(name = "subject")
+  private String subject;
 
-	public void setDate_of_apply(Date date_of_apply) {
-		this.date_of_apply = date_of_apply;
-	}
+  @Column(name = "message")
+  private String message;
 
-	public String getIsApproved() {
-		return isApproved;
-	}
+  @Column(name = "NOTIFY_STATUS")
+  private int notifyStatus;
 
-	public void setIsApproved(String isApproved) {
-		this.isApproved = isApproved;
-	}
+  @OneToMany
+  @Fetch(FetchMode.SUBSELECT)
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @Cascade(CascadeType.ALL)
+  @JoinColumn(name = "leaveId_fk")
+  private Set<EmployeeLeaveDates> setOfLeaveDates;
 
-	public String getSubject() {
-		return subject;
-	}
+  public int getLeaveId() {
+    return leaveId;
+  }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+  public void setLeaveId(int leaveId) {
+    this.leaveId = leaveId;
+  }
 
-	public String getMessage() {
-		return message;
-	}
+  public int getEmployeeId() {
+    return employeeId;
+  }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
+  public void setEmployeeId(int employeeId) {
+    this.employeeId = employeeId;
+  }
 
-	public Set<EmployeeLeaveDates> getSetOfLeaveDates() {
-		return setOfLeaveDates;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setSetOfLeaveDates(Set<EmployeeLeaveDates> setOfLeaveDates) {
-		this.setOfLeaveDates = setOfLeaveDates;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public int getNotifyStatus() {
-		return notifyStatus;
-	}
+  public Date getDate_of_apply() {
+    return date_of_apply;
+  }
 
-	public void setNotifyStatus(int notifyStatus) {
-		this.notifyStatus = notifyStatus;
-	}
+  public void setDate_of_apply(Date date_of_apply) {
+    this.date_of_apply = date_of_apply;
+  }
+
+  public String getIsApproved() {
+    return isApproved;
+  }
+
+  public void setIsApproved(String isApproved) {
+    this.isApproved = isApproved;
+  }
+
+  public String getSubject() {
+    return subject;
+  }
+
+  public void setSubject(String subject) {
+    this.subject = subject;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
+  public Set<EmployeeLeaveDates> getSetOfLeaveDates() {
+    return setOfLeaveDates;
+  }
+
+  public void setSetOfLeaveDates(Set<EmployeeLeaveDates> setOfLeaveDates) {
+    this.setOfLeaveDates = setOfLeaveDates;
+  }
+
+  public int getNotifyStatus() {
+    return notifyStatus;
+  }
+
+  public void setNotifyStatus(int notifyStatus) {
+    this.notifyStatus = notifyStatus;
+  }
 
 }

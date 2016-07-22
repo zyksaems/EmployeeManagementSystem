@@ -12,64 +12,64 @@ import javax.persistence.Table;
 @Table(name = "PRAKASH.ADMINISTRATOREMS_TABLE")
 public class EncryptedAdmin implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "adminid")
-	private int adminId;
+  @Id
+  @Column(name = "adminid")
+  private int adminId;
 
-	@Column(name = "password")
-	private byte[] password;
-	
-	@Column
-	private int locked;
-	public int getLocked() {
-		return locked;
-	}
+  @Column(name = "password")
+  private byte[] password;
 
-	public void setLocked(int locked) {
-		this.locked = locked;
-	}
+  @Column
+  private int locked;
 
-	public int getAttemptcount() {
-		return attemptcount;
-	}
+  public int getLocked() {
+    return locked;
+  }
 
-	public void setAttemptcount(int attemptcount) {
-		this.attemptcount = attemptcount;
-	}
+  public void setLocked(int locked) {
+    this.locked = locked;
+  }
 
-	@Column
-	private int attemptcount;
-	
-	public EncryptedAdmin(){}
+  public int getAttemptcount() {
+    return attemptcount;
+  }
 
-	public EncryptedAdmin(int adminId) {
-		super();
-		this.adminId = adminId;
-	}
+  public void setAttemptcount(int attemptcount) {
+    this.attemptcount = attemptcount;
+  }
 
-	public int getAdminId() {
-		return adminId;
-	}
+  @Column
+  private int attemptcount;
 
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
-	}
+  public EncryptedAdmin() {
+  }
 
-	public byte[] getPassword() {
-		return password;
-	}
+  public EncryptedAdmin(int adminId) {
+    super();
+    this.adminId = adminId;
+  }
 
-	public void setPassword(byte[] password) {
-		this.password = password;
-	}
+  public int getAdminId() {
+    return adminId;
+  }
 
-	@Override
-	public String toString() {
-		return "EncryptedAdmin [adminId=" + adminId + ", password="
-				+ Arrays.toString(password) + "]";
-	};
+  public void setAdminId(int adminId) {
+    this.adminId = adminId;
+  }
 
-	
+  public byte[] getPassword() {
+    return password;
+  }
+
+  public void setPassword(byte[] password) {
+    this.password = password;
+  }
+
+  @Override
+  public String toString() {
+    return "EncryptedAdmin [adminId=" + adminId + ", password=" + Arrays.toString(password) + "]";
+  };
+
 }

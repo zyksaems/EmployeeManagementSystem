@@ -1,6 +1,5 @@
 package com.caprusit.ems.dao;
 
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,123 +18,125 @@ import com.caprusit.ems.domain.User;
 
 @Repository
 public class AttendanceDAOImpl implements IAttendanceDAO {
-	
-	private Logger logger= Logger.getLogger(AttendanceDAOImpl .class);
-	
-	/**
-	 * This method saves Attendance class object into database
-	 * */
-	public int inTime(Attendance attendance) {
-		HibernateSessionUtility.getHibernateSession().save(attendance);
-		return 1;
-	}
-	
-	/**
-	 * This method updates out time and working hours of employee into database
-	 * */
-	public int outTime(User user) {
-		Session session=HibernateSessionUtility.getHibernateSession();
-		Query updateEndTime = session.createQuery(
-				"update Attendance set endTime = :endtime where attendanceDate = :attendancedate and employeeId = :empId");
-		updateEndTime.setParameter("endtime", new Date());
-		updateEndTime.setParameter("attendancedate", getTodayDate());
-		updateEndTime.setParameter("empId", user.getEid());
 
-		Query updateWorkingHours = session.createQuery(
-				"update Attendance a set a.workingHours=(select (b.endTime - b.startTime)*24 from Attendance b where b.attendanceDate = ? and b.employeeId = ?) where a.attendanceDate = ? and a.employeeId = ?");
-		updateWorkingHours.setParameter(0, getTodayDate());
-		updateWorkingHours.setParameter(1, user.getEid());
-		updateWorkingHours.setParameter(2, getTodayDate());
-		updateWorkingHours.setParameter(3, user.getEid());
+  private Logger logger = Logger.getLogger(AttendanceDAOImpl.class);
 
-		int res = updateEndTime.executeUpdate();
-		int res2 = updateWorkingHours.executeUpdate();
+  /**
+   * This method saves Attendance class object into database
+   */
+  public int inTime(Attendance attendance) {
+    HibernateSessionUtility.getHibernateSession().save(attendance);
+    return 1;
+  }
 
-		logger.info("operation upate end time: " + res);
-		logger.info("hors worked: " + res2);
-		return res + res2;
-	}
-	/**
-	 * This method is to find out employees who are not logged out
-	 * after they completed their work hours
-	 */
-    public List<Integer> getStillWorkingEmployeeIds() {
+  /**
+   * This method updates out time and working hours of employee into database
+   */
+  public int outTime(User user) {
+    Session session = HibernateSessionUtility.getHibernateSession();
+    Query updateEndTime = session.createQuery(
+        "update Attendance set endTime = :endtime where attendanceDate = :attendancedate and employeeId = :empId");
+    updateEndTime.setParameter("endtime", new Date());
+    updateEndTime.setParameter("attendancedate", getTodayDate());
+    updateEndTime.setParameter("empId", user.getEid());
 
-		Date today = Calendar.getInstance().getTime();
+    Query updateWorkingHours = session.createQuery(
+        "update Attendance a set a.workingHours=(select (b.endTime - b.startTime)*24 from Attendance b where b.attendanceDate = ? and b.employeeId = ?) where a.attendanceDate = ? and a.employeeId = ?");
+    updateWorkingHours.setParameter(0, getTodayDate());
+    updateWorkingHours.setParameter(1, user.getEid());
+    updateWorkingHours.setParameter(2, getTodayDate());
+    updateWorkingHours.setParameter(3, user.getEid());
 
-		@SuppressWarnings("unchecked")
-		List<Integer> list = HibernateSessionUtility.getHibernateSession()
-				.createCriteria(Attendance.class)
-				.add(Restrictions.eq("attendanceDate", today))
-				.add(Restrictions.eqOrIsNull("endTime", null))
-				.add(Restrictions.le("startTime", getMinStartTime()))
-				.setProjection(
-						Projections.projectionList()
-								.add(Projections.property("employeeId"))).list();
+    int res = updateEndTime.executeUpdate();
+    int res2 = updateWorkingHours.executeUpdate();
 
-		return list;
-	}
-    
-    /**
-     * This method is to get absent employee details
-     * @return list of employee details who are absent
-     */
-    public List<Object> getAbsentEmployeeDetails() {
-		String absentQuery="select e.employeeId,e.firstName,e.lastName,e.emailId from Employee e where e.status='1'"
-				+ "and e.employeeId not in (select  a.employeeId from Attendance a where a.attendanceDate = :today ) order by e.employeeId";  	
-    
-		return HibernateSessionUtility.getHibernateSession().createQuery(absentQuery).setParameter("today", Calendar.getInstance().getTime()).list();
-	}
+    logger.info("operation upate end time: " + res);
+    logger.info("hors worked: " + res2);
+    return res + res2;
+  }
 
-	/**
-	 * This method is to set today date with 00:00:00 time
-	 * 
-	 */
-	private Date getMinStartTime() {
+  /**
+   * This method is to find out employees who are not logged out after they completed their work
+   * hours
+   */
+  public List<Integer> getStillWorkingEmployeeIds() {
 
-		Calendar cal = Calendar.getInstance();
-		int hour = cal.get(Calendar.HOUR_OF_DAY);
-		int minutes = cal.get(Calendar.MINUTE);
-		cal.set(Calendar.HOUR_OF_DAY, (hour - EmsConditions.WORKING_HOURS_PER_DAY));
-		cal.set(Calendar.MINUTE, minutes);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
+    Date today = Calendar.getInstance().getTime();
 
-		logger.info("min login time   :    "+cal.getTime());
-		return cal.getTime();
+    @SuppressWarnings("unchecked")
+    List<Integer> list = HibernateSessionUtility.getHibernateSession()
+        .createCriteria(Attendance.class).add(Restrictions.eq("attendanceDate", today))
+        .add(Restrictions.eqOrIsNull("endTime", null))
+        .add(Restrictions.le("startTime", getMinStartTime()))
+        .setProjection(Projections.projectionList().add(Projections.property("employeeId"))).list();
 
-	}
+    return list;
+  }
 
-	/**
-	 * This method is to set today date with 00:00:00 time
-	 * 
-	 */
-	private Date getTodayDate() {
+  /**
+   * This method is to get absent employee details
+   * 
+   * @return list of employee details who are absent
+   */
+  public List<Object> getAbsentEmployeeDetails() {
+    String absentQuery = "select e.employeeId,e.firstName,e.lastName,e.emailId from Employee e where e.status='1'"
+        + "and e.employeeId not in (select  a.employeeId from Attendance a where a.attendanceDate = :today ) order by e.employeeId";
 
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
+    return HibernateSessionUtility.getHibernateSession().createQuery(absentQuery)
+        .setParameter("today", Calendar.getInstance().getTime()).list();
+  }
 
-		return cal.getTime();
+  /**
+   * This method is to set today date with 00:00:00 time
+   * 
+   */
+  private Date getMinStartTime() {
 
-	}
+    Calendar cal = Calendar.getInstance();
+    int hour = cal.get(Calendar.HOUR_OF_DAY);
+    int minutes = cal.get(Calendar.MINUTE);
+    cal.set(Calendar.HOUR_OF_DAY, (hour - EmsConditions.WORKING_HOURS_PER_DAY));
+    cal.set(Calendar.MINUTE, minutes);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
 
-	/**
-	 * This method is to delete the row from attendance table  for given employeeId and attendance date
-	 * @param employeeId id of employee
-	 * @param attendanceDate date of attendance
-	 * @return returns 1 on successful delete
-	 */
-	public int deleteAttendanceByEmployeeIdAndDate(int employeeId,Date attendanceDate) {
-		
-		return HibernateSessionUtility.getHibernateSession()
-				.createQuery("delete from Attendance a where a.employeeId= :empId and a.attendanceDate= :attendanceDate ")
-				.setParameter("empId", employeeId).setParameter("attendanceDate", attendanceDate).executeUpdate();
-	}
+    logger.info("min login time   :    " + cal.getTime());
+    return cal.getTime();
 
-	
+  }
 
-	
+  /**
+   * This method is to set today date with 00:00:00 time
+   * 
+   */
+  private Date getTodayDate() {
+
+    Calendar cal = Calendar.getInstance();
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+
+    return cal.getTime();
+
+  }
+
+  /**
+   * This method is to delete the row from attendance table for given employeeId and attendance date
+   * 
+   * @param employeeId
+   *          id of employee
+   * @param attendanceDate
+   *          date of attendance
+   * @return returns 1 on successful delete
+   */
+  public int deleteAttendanceByEmployeeIdAndDate(int employeeId, Date attendanceDate) {
+
+    return HibernateSessionUtility.getHibernateSession()
+        .createQuery(
+            "delete from Attendance a where a.employeeId= :empId and a.attendanceDate= :attendanceDate ")
+        .setParameter("empId", employeeId).setParameter("attendanceDate", attendanceDate)
+        .executeUpdate();
+  }
+
 }

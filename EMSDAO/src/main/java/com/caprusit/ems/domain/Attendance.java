@@ -16,93 +16,93 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "PRAKASH.attendance_table")
 public class Attendance implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@GenericGenerator(name="increment" , strategy="increment")
-	@GeneratedValue(generator="increment")
-	private int attendanceId;
-	
-	private int employeeId;
+  @Id
+  @GenericGenerator(name = "increment", strategy = "increment")
+  @GeneratedValue(generator = "increment")
+  private int attendanceId;
 
-	@Temporal(TemporalType.DATE)
-	private Date attendanceDate;
+  private int employeeId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date startTime;
+  @Temporal(TemporalType.DATE)
+  private Date attendanceDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date endTime;
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date startTime;
 
-	private double workingHours;
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date endTime;
 
-	private int dayIndicator;
+  private double workingHours;
 
-	public int getAttendanceId() {
-		return attendanceId;
-	}
+  private int dayIndicator;
 
-	public void setAttendanceId(int attendanceId) {
-		this.attendanceId = attendanceId;
-	}
+  public int getAttendanceId() {
+    return attendanceId;
+  }
 
-	public int getEmployeeId() {
-		return employeeId;
-	}
+  public void setAttendanceId(int attendanceId) {
+    this.attendanceId = attendanceId;
+  }
 
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
+  public int getEmployeeId() {
+    return employeeId;
+  }
 
-	public Date getAttendanceDate() {
-		return attendanceDate;
-	}
+  public void setEmployeeId(int employeeId) {
+    this.employeeId = employeeId;
+  }
 
-	public void setAttendanceDate(Date attendanceDate) {
-		this.attendanceDate = attendanceDate;
-	}
+  public Date getAttendanceDate() {
+    return attendanceDate;
+  }
 
-	public Date getStartTime() {
-		return startTime;
-	}
+  public void setAttendanceDate(Date attendanceDate) {
+    this.attendanceDate = attendanceDate;
+  }
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
+  public Date getStartTime() {
+    return startTime;
+  }
 
-	public Date getEndTime() {
-		return endTime;
-	}
+  public void setStartTime(Date startTime) {
+    this.startTime = startTime;
+  }
 
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
+  public Date getEndTime() {
+    return endTime;
+  }
 
-	public double getWorkingHours() {
-		return workingHours;
-	}
+  public void setEndTime(Date endTime) {
+    this.endTime = endTime;
+  }
 
-	public void setWorkingHours(long workingHours) {
-		this.workingHours = workingHours;
-	}
+  public double getWorkingHours() {
+    return workingHours;
+  }
 
-	public int getDayIndicator() {
-		return dayIndicator;
-	}
+  public void setWorkingHours(long workingHours) {
+    this.workingHours = workingHours;
+  }
 
-	public void setDayIndicator(int dayIndicator) {
-		this.dayIndicator = dayIndicator;
-	}
+  public int getDayIndicator() {
+    return dayIndicator;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public void setDayIndicator(int dayIndicator) {
+    this.dayIndicator = dayIndicator;
+  }
 
-	@Override
-	public String toString() {
-		return "Attendance [attendanceId=" + attendanceId + ", employeeId=" + employeeId + ", attendanceDate="
-				+ attendanceDate + ", startTime=" + startTime + ", endTime=" + endTime + ", workingHours="
-				+ workingHours + ", dayIndicator=" + dayIndicator + "]";
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
+
+  @Override
+  public String toString() {
+    return "Attendance [attendanceId=" + attendanceId + ", employeeId=" + employeeId
+        + ", attendanceDate=" + attendanceDate + ", startTime=" + startTime + ", endTime=" + endTime
+        + ", workingHours=" + workingHours + ", dayIndicator=" + dayIndicator + "]";
+  }
 
 }

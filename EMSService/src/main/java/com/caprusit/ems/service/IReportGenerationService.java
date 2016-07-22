@@ -6,59 +6,60 @@ import java.util.List;
 
 public interface IReportGenerationService {
 
-	String getEmployeeWorkingDetailsById(int employeeId);
-	
-	String getEmployeeWorkingDetailsByIdAndDate(int employeeId, Date attendanceDate);
+  String getEmployeeWorkingDetailsById(int employeeId);
 
-	String getEmployeeWorkingDetailsByDates(int employeeId, Date fromDate, Date toDate);
+  String getEmployeeWorkingDetailsByIdAndDate(int employeeId, Date attendanceDate);
 
-	String getAllEmployeesWorkingDetails();
+  String getEmployeeWorkingDetailsByDates(int employeeId, Date fromDate, Date toDate);
 
-	String  getSingleEmployeeDetailsById(int employeeId);
+  String getAllEmployeesWorkingDetails();
 
-	String getAllEmployeesReportByDate(Date date);
+  String getSingleEmployeeDetailsById(int employeeId);
 
-	String getEmployeesReportBetweenDates(Date fromDate, Date toDate);
+  String getAllEmployeesReportByDate(Date date);
 
-	String getSingleEmployeeDetailsByEmpName(String employeeId);
+  String getEmployeesReportBetweenDates(Date fromDate, Date toDate);
 
-	String getReportByName(String employeeid);
+  String getSingleEmployeeDetailsByEmpName(String employeeId);
 
-	String getReportByDay(String employeeId, Date attendanceDate);
+  String getReportByName(String employeeid);
 
-	String getReportByNameDates(String employeeId, Date fromDate, Date toDate);
-	
-	String getTodayReport();
-	
-    String getDailyReportOfIndividual(int employeeId, Date attendanceDate) ;
-    
-    String getEmployeeAnnualProductivity(int employeeId,int year) ;
-    
-    String getAllEmployeeAnnualProductivity(int year) ;
-    
-	List<Integer> getAutoCompleteInfo(int empid);
+  String getReportByDay(String employeeId, Date attendanceDate);
 
-	List<String> getAutoCompleteInfo(String employeeId);
+  String getReportByNameDates(String employeeId, Date fromDate, Date toDate);
 
-	String getEmployeeReportForWeekByIdAndWeekDate(int employeeId, String weekDate) throws Exception;
-	
-	String getAllEmployeeReportForWeekByWeekDate(String weekDate) throws Exception;
+  String getTodayReport();
 
-	String getEmployeeReportForMonthByIdAndMonth(int employeeId, String month);
+  String getDailyReportOfIndividual(int employeeId, Date attendanceDate);
 
-	String getAllEmployeeReportForMonthByMonth(String month);
+  String getEmployeeAnnualProductivity(int employeeId, int year);
 
-	String getEmployeeReportForYearByIdAndYear(int employeeId, String year);
+  String getAllEmployeeAnnualProductivity(int year);
 
-	String getAllEmployeeReportForYearByYearDate(String yearDate);
+  List<Integer> getAutoCompleteInfo(int empid);
 
-	String getWeeklyProductivityOfEmployeeByIdAndWeek(int employeeId, String weekDate) throws ParseException;
+  List<String> getAutoCompleteInfo(String employeeId);
 
-	String getWeeklyProductivityOfAllEmployeeByWeek(String week);
+  String getEmployeeReportForWeekByIdAndWeekDate(int employeeId, String weekDate) throws Exception;
 
-	String getMonthlyProductivityOfEmployeeByIdAndMonth(int employeeId, String month);
+  String getAllEmployeeReportForWeekByWeekDate(String weekDate) throws Exception;
 
-	String getMonthlyProductivityOfAllEmployeeByMonth(String month);
-	
-	String getTodayAttendanceDetails();
+  String getEmployeeReportForMonthByIdAndMonth(int employeeId, String month);
+
+  String getAllEmployeeReportForMonthByMonth(String month);
+
+  String getEmployeeReportForYearByIdAndYear(int employeeId, String year);
+
+  String getAllEmployeeReportForYearByYearDate(String yearDate);
+
+  String getWeeklyProductivityOfEmployeeByIdAndWeek(int employeeId, String weekDate)
+      throws ParseException;
+
+  String getWeeklyProductivityOfAllEmployeeByWeek(String week);
+
+  String getMonthlyProductivityOfEmployeeByIdAndMonth(int employeeId, String month);
+
+  String getMonthlyProductivityOfAllEmployeeByMonth(String month);
+
+  String getTodayAttendanceDetails();
 }

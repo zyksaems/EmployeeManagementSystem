@@ -17,68 +17,68 @@ import com.caprusit.ems.service.ValidationService;
 @Controller
 public class ValidationController {
 
-	@Autowired
-	private ValidationService validationservice;
-	private Logger logger = Logger.getLogger(ValidationController.class);
+  @Autowired
+  private ValidationService validationservice;
+  private Logger logger = Logger.getLogger(ValidationController.class);
 
-	/**
-	 * This method returns all employee Ids along with first name and last name
-	 * in the json object array format
-	 * */
-	@RequestMapping(value = "/getAllEmpIds", method = RequestMethod.POST)
-	public @ResponseBody String getAllEmployeeIds() {
+  /**
+   * This method returns all employee Ids along with first name and last name in the json object
+   * array format.
+   */
+  @RequestMapping(value = "/getAllEmpIds", method = RequestMethod.POST)
+  public @ResponseBody String getAllEmployeeIds() {
 
-		logger.info("inside validationController getAllEmpIds()");
-		return validationservice.getAllEmployeeIds();
+    logger.info("inside validationController getAllEmpIds()");
+    return validationservice.getAllEmployeeIds();
 
-	}
+  }
 
-	/**
-	 * This method returns employee Ids of employees who are logged-in into application
-	 *in json  array format
-	 * */
-	@RequestMapping(value = "/getLoggedInEmpIds", method = RequestMethod.POST)
-	public @ResponseBody String getLoggedInEmployeeIds() {
+  /**
+   * This method returns employee Ids of employees who are logged-in into application in json array
+   * format.
+   */
+  @RequestMapping(value = "/getLoggedInEmpIds", method = RequestMethod.POST)
+  public @ResponseBody String getLoggedInEmployeeIds() {
 
-		logger.info("inside validationController getLoggedInEmployeeIds()");
-		return validationservice.getLoggedInEmoloyeeIds();
+    logger.info("inside validationController getLoggedInEmployeeIds()");
+    return validationservice.getLoggedInEmoloyeeIds();
 
-	}
+  }
 
-	/**
-	 * This method returns employee Ids of employees who are logged-out from application
-	 *in json  array format
-	 * */
-	@RequestMapping(value = "/getLoggedOutEmpIds", method = RequestMethod.POST)
-	public @ResponseBody String getLoggedOutEmployeeIds() {
+  /**
+   * This method returns employee Ids of employees who are logged-out from application in json array
+   * format.
+   */
+  @RequestMapping(value = "/getLoggedOutEmpIds", method = RequestMethod.POST)
+  public @ResponseBody String getLoggedOutEmployeeIds() {
 
-		logger.info("inside validationController getLoggedOutEmployeeIds()");
-		return validationservice.getLoggedOutEmployeeIds();
+    logger.info("inside validationController getLoggedOutEmployeeIds()");
+    return validationservice.getLoggedOutEmployeeIds();
 
-	}
-	
-	/**
-	 * This method returns all role Id and role names which are available in database
-	 *in json object  array format
-	 * */
-	@RequestMapping(value="/getRoleIds",method=RequestMethod.POST)
-	public @ResponseBody String getRoleIds(){
-		
-		logger.info("inside validationController getRoleIds()");			
-		return validationservice.getRoleIds();
-		
-	}
-	
-	/**
-	 * This method returns all department Id and department names which are available in database
-	 *in json object  array format
-	 * */
-	@RequestMapping(value="/getDeptIds",method=RequestMethod.POST)
-	public @ResponseBody String getDeptIds(){
-		
-		logger.info("inside validationController getDeptIds()");			
-		return validationservice.getDeptIds();
-		
-	}
+  }
+
+  /**
+   * This method returns all role Id and role names which are available in database in json object
+   * array format.
+   */
+  @RequestMapping(value = "/getRoleIds", method = RequestMethod.POST)
+  public @ResponseBody String getRoleIds() {
+
+    logger.info("inside validationController getRoleIds()");
+    return validationservice.getRoleIds();
+
+  }
+
+  /**
+   * This method returns all department Id and department names which are available in database in
+   * json object array format.
+   */
+  @RequestMapping(value = "/getDeptIds", method = RequestMethod.POST)
+  public @ResponseBody String getDeptIds() {
+
+    logger.info("inside validationController getDeptIds()");
+    return validationservice.getDeptIds();
+
+  }
 
 }

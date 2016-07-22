@@ -7,14 +7,14 @@ import com.caprusit.ems.domain.Attendance;
 import com.caprusit.ems.domain.User;
 
 public interface IAttendanceDAO {
-	
-	public int inTime(Attendance attendance);
 
-	public int outTime(User user);
-	
-	List<Integer> getStillWorkingEmployeeIds();
-	
-	List<Object> getAbsentEmployeeDetails();
+  public int inTime(Attendance attendance);
 
-	int deleteAttendanceByEmployeeIdAndDate(int employeeId,Date attendanceDate);
+  public int outTime(User user);
+
+  List<Integer> getStillWorkingEmployeeIds();
+
+  List<Object> getAbsentEmployeeDetails();
+
+  int deleteAttendanceByEmployeeIdAndDate(int employeeId, Date attendanceDate);
 }

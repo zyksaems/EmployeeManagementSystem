@@ -4,14 +4,14 @@ import java.util.List;
 
 public interface ValidationDAO {
 
-	public List<Object> getAllEmploeeIds();
+  public List<Object> getAllEmploeeIds();
 
-	public List<Object> getLoggedInEmployeeIds();
+  public List<Object> getLoggedInEmployeeIds();
 
-	public List<Object> getLoggedOutEmoloyeeIds();
+  public List<Object> getLoggedOutEmoloyeeIds();
 
-	public List<Object> getRoleIds();
+  public List<Object> getRoleIds();
 
-	public List<Object> getDeptIds();
+  public List<Object> getDeptIds();
 
 }

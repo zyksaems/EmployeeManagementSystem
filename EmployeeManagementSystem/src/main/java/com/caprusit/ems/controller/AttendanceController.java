@@ -13,37 +13,35 @@ import com.caprusit.ems.service.IAttendanceService;
 
 @Controller
 public class AttendanceController {
-	
-	@Autowired
-	private IAttendanceService attendanceService;
-	
-	private static Logger logger=Logger.getLogger(AttendanceController.class);
-	
-	/**
-	 * This method will receive login or logout request from front-end with LoginTest Object as request body
-	 * This method is for inserting and updating employee attendance 
-	 * */
-	@RequestMapping(value="/login",method = RequestMethod.POST)
-	public @ResponseBody Integer login(@RequestBody EmployeeAttendanceRequest test) {
-		
-		logger.info("inside attendance controller login()");
 
-		return attendanceService.logInOrLogOut(test);
-		
+  @Autowired
+  private IAttendanceService attendanceService;
 
-	}
-	
-	/**
-	 * This method will return our application home page to the browser
-	 * */
-	@RequestMapping(value="/login",method = RequestMethod.GET)
-	public String getHomePage( ) {
+  private static Logger logger = Logger.getLogger(AttendanceController.class);
 
-		logger.info("inside attendance controlller init()");
-		
-		return "NewAdminDashboard";
-		
-	}
+  /**
+   * This method will receive login or logout request from front-end with LoginTest Object as
+   * request body This method is for inserting and updating employee attendance.
+   */
+  @RequestMapping(value = "/login", method = RequestMethod.POST)
+  public @ResponseBody Integer login(@RequestBody EmployeeAttendanceRequest test) {
 
-	
+    logger.info("inside attendance controller login()");
+
+    return attendanceService.logInOrLogOut(test);
+
+  }
+
+  /**
+   * This method will return our application home page to the browser.
+   */
+  @RequestMapping(value = "/login", method = RequestMethod.GET)
+  public String getHomePage() {
+
+    logger.info("inside attendance controlller init()");
+
+    return "NewAdminDashboard";
+
+  }
+
 }

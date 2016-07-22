@@ -19,75 +19,73 @@ import com.caprusit.ems.utility.ValidatePasswordUtility;
 
 @Service
 public class AttendanceServiceImpl implements IAttendanceService {
-	
-	@Autowired
-	private IAttendanceDAO attendanceDAO;
-	
-	@Autowired
-	private ISecurityDAO securityDao;
-	
-	private Logger logger=Logger.getLogger(AttendanceServiceImpl.class);
-	
-	/**
-	 * This method is for 
-	 */
-	@Transactional(rollbackFor=SQLException.class)
-	public int logInOrLogOut(EmployeeAttendanceRequest test) {
-		User user = new User();
-		user.setEid(test.getId());
 
-		if (test.getType().equalsIgnoreCase("login")) {
+  @Autowired
+  private IAttendanceDAO attendanceDAO;
 
-			logger.info("login executing ");
-			Attendance att =setAttendanceDetails(user.getEid());
-			return attendanceDAO.inTime(att);
-		} else
-			return attendanceDAO.outTime(user);
-	}
+  @Autowired
+  private ISecurityDAO securityDao;
 
-	@Transactional(rollbackFor=SQLException.class)
-	public int EmployeeLogInOrLogOut(EmployeeAttendanceRequest test) {
-		User user = new User();
-		user.setEid(test.getId());
-		
-		EncryptedEmployee encryptedEmployee=securityDao.getEmployeeCurrentPassword(test.getId());
-		byte [] currentPassword=(encryptedEmployee != null )?encryptedEmployee.getEncryptedPassword(): null;
-		if(!ValidatePasswordUtility.validatePassword(test.getPassword(),currentPassword)){
-			logger.info("returnning 0 to controller -- employeee password mismatch");
-			return 0;
-		}
-		else if (test.getType().equalsIgnoreCase("login")) {
+  private Logger logger = Logger.getLogger(AttendanceServiceImpl.class);
 
-			logger.info("attendance login executing(service) ");
+  /**
+   * This method is for
+   */
+  @Transactional(rollbackFor = SQLException.class)
+  public int logInOrLogOut(EmployeeAttendanceRequest test) {
+    User user = new User();
+    user.setEid(test.getId());
 
-			Attendance attendance = setAttendanceDetails(user.getEid());
+    if (test.getType().equalsIgnoreCase("login")) {
 
-			return attendanceDAO.inTime(attendance);
+      logger.info("login executing ");
+      Attendance att = setAttendanceDetails(user.getEid());
+      return attendanceDAO.inTime(att);
+    } else
+      return attendanceDAO.outTime(user);
+  }
 
-		} else{
+  @Transactional(rollbackFor = SQLException.class)
+  public int EmployeeLogInOrLogOut(EmployeeAttendanceRequest test) {
+    User user = new User();
+    user.setEid(test.getId());
 
-			logger.info("attendance logout executing(service) ");
-			return attendanceDAO.outTime(user);
-		}
-		
-	}
-	/**
-	 * This method sets attendance details to attendance class
-	 * returns attendance class object
-	 */
-	private Attendance setAttendanceDetails(int employeeeId){
-		
-		Attendance attendance = new Attendance();
-		Date date = new Date();
-		attendance.setAttendanceDate(date);
-		attendance.setAttendanceId(34);
-		attendance.setDayIndicator(EmsConditions.EMPLOYEE_PRESENT_STATUS);
-		attendance.setStartTime(date);
-		attendance.setWorkingHours(0);
-		attendance.setEmployeeId(employeeeId);		
-		return attendance;
-	}
-	
-	
+    EncryptedEmployee encryptedEmployee = securityDao.getEmployeeCurrentPassword(test.getId());
+    byte[] currentPassword = (encryptedEmployee != null) ? encryptedEmployee.getEncryptedPassword()
+        : null;
+    if (!ValidatePasswordUtility.validatePassword(test.getPassword(), currentPassword)) {
+      logger.info("returnning 0 to controller -- employeee password mismatch");
+      return 0;
+    } else if (test.getType().equalsIgnoreCase("login")) {
+
+      logger.info("attendance login executing(service) ");
+
+      Attendance attendance = setAttendanceDetails(user.getEid());
+
+      return attendanceDAO.inTime(attendance);
+
+    } else {
+
+      logger.info("attendance logout executing(service) ");
+      return attendanceDAO.outTime(user);
+    }
+
+  }
+
+  /**
+   * This method sets attendance details to attendance class returns attendance class object
+   */
+  private Attendance setAttendanceDetails(int employeeeId) {
+
+    Attendance attendance = new Attendance();
+    Date date = new Date();
+    attendance.setAttendanceDate(date);
+    attendance.setAttendanceId(34);
+    attendance.setDayIndicator(EmsConditions.EMPLOYEE_PRESENT_STATUS);
+    attendance.setStartTime(date);
+    attendance.setWorkingHours(0);
+    attendance.setEmployeeId(employeeeId);
+    return attendance;
+  }
 
 }

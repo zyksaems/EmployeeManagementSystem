@@ -27,83 +27,82 @@ import com.caprusit.ems.service.IManageUserService;
 @Controller
 public class ManageUserController {
 
-	@Autowired
-	private IManageUserService manageUserService;
-	
-	private Logger logger=Logger.getLogger(ManageUserController.class);
-	
-	/**
-	 * This method is to send all employee details to 
-	 * front-end in json object array format
-	 * */
-	@RequestMapping(value="/getAllEmployeeDetails",method=RequestMethod.GET)
-	public @ResponseBody String getAllEmployeeDetails(){
-		logger.info("inside ManageUserController getAllEmployee()");	
-		return manageUserService.getEmployees();
-	}
-	
-	
-	@RequestMapping(value = "/getExcel", method = RequestMethod.GET)
-	public ModelAndView getExcel(HttpServletRequest request,
-	   HttpServletResponse response) throws Exception {
-	  logger.info("Calling generateExcel()...");
-	  List<Employee> employees =manageUserService.getAllEmployee();	  
-	  logger.info("in controller employee list : "+ employees);
-	  ModelAndView modelAndView = new ModelAndView("excelView", "employees",employees);
-	  logger.info("modelAndView   "+ modelAndView);
-	  return modelAndView;
-	}
-	
-	/**
-	 * This method is for handling upload excel file(Employee details excel file )  request
-	 * returns  success or error details to front-end
-	 * */
-	@RequestMapping(value = "/uploadEmployeeDetailsExcelFile", method = RequestMethod.POST, consumes = "multipart/form-data")
-	public @ResponseBody String uploadEmployeeDetailsExcelFile(MultipartHttpServletRequest request) {
+  @Autowired
+  private IManageUserService manageUserService;
 
-		logger.info("inside uploadEmployeeDetailsExcelFile()");
-		Iterator<String> itr = request.getFileNames();
-		MultipartFile file = request.getFile(itr.next());
-		String result = "";
-		try {
-			result = manageUserService.uploadEmployeeDetailsExcelFile(file.getInputStream(), file.getOriginalFilename());
-		} catch (IOException e) {
+  private Logger logger = Logger.getLogger(ManageUserController.class);
 
-			e.printStackTrace();
-		}
-		;
-		logger.info("result : " + result);
-		return result;
-	}
-	
-	/**
-	 * This method is to add single employee 
-	 * Takes employee object as request body
-	 * If session expired returns -1*/
-	@RequestMapping(value = "/addSingleEmployee", method = RequestMethod.POST)
-	public @ResponseBody Integer addSingleEmployee(HttpServletRequest request,@RequestBody Employee emp,
-			@RequestParam("dob") String milliSeconds) {
+  /**
+   * This method is to send all employee details to front-end in json object array format.
+   */
+  @RequestMapping(value = "/getAllEmployeeDetails", method = RequestMethod.GET)
+  public @ResponseBody String getAllEmployeeDetails() {
+    logger.info("inside ManageUserController getAllEmployee()");
+    return manageUserService.getEmployees();
+  }
 
-		if(!HttpSessionUtility.verifySession(request))
-			return -1;
-		else
-		    return manageUserService.addSingleEmployee(emp, milliSeconds);
+  @RequestMapping(value = "/getExcel", method = RequestMethod.GET)
+  public ModelAndView getExcel(HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
+    logger.info("Calling generateExcel()...");
+    List<Employee> employees = manageUserService.getAllEmployee();
+    logger.info("in controller employee list : " + employees);
+    ModelAndView modelAndView = new ModelAndView("excelView", "employees", employees);
+    logger.info("modelAndView   " + modelAndView);
+    return modelAndView;
+  }
 
-	}
-	
-	/**
-	 * This method is to update employee details
-	 * Takes employee object as request body
-	 * returns 1 on successful update
-	 * */
-	@RequestMapping(value="/updateEmployee" , method=RequestMethod.POST)
-	public @ResponseBody int updateEmployee(@RequestBody Employee emp,@RequestParam("dob") String dobMillisecods){
-		
-		logger.info("inside manageUser controller updateEmployee()");
-		emp.setDob(new Date(Long.parseLong(dobMillisecods)));
-		logger.info("employee object received for update: "+emp);
-		
-		return manageUserService.updateEmployee(emp);
-	}
-	
+  /**
+   * This method is for handling upload excel file(Employee details excel file ) request returns
+   * success or error details to front-end.
+   */
+  @RequestMapping(value = "/uploadEmployeeDetailsExcelFile", method = RequestMethod.POST, consumes = "multipart/form-data")
+  public @ResponseBody String uploadEmployeeDetailsExcelFile(MultipartHttpServletRequest request) {
+
+    logger.info("inside uploadEmployeeDetailsExcelFile()");
+    Iterator<String> itr = request.getFileNames();
+    MultipartFile file = request.getFile(itr.next());
+    String result = "";
+    try {
+      result = manageUserService.uploadEmployeeDetailsExcelFile(file.getInputStream(),
+          file.getOriginalFilename());
+    } catch (IOException exception) {
+
+      exception.printStackTrace();
+    }
+    ;
+    logger.info("result : " + result);
+    return result;
+  }
+
+  /**
+   * This method is to add single employee Takes employee object as request body If session expired.
+   * returns -1
+   */
+  @RequestMapping(value = "/addSingleEmployee", method = RequestMethod.POST)
+  public @ResponseBody Integer addSingleEmployee(HttpServletRequest request,
+      @RequestBody Employee emp, @RequestParam("dob") String milliSeconds) {
+
+    if (!HttpSessionUtility.verifySession(request))
+      return -1;
+    else
+      return manageUserService.addSingleEmployee(emp, milliSeconds);
+
+  }
+
+  /**
+   * This method is to update employee details Takes employee object as request body returns 1 on
+   * successful update.
+   */
+  @RequestMapping(value = "/updateEmployee", method = RequestMethod.POST)
+  public @ResponseBody int updateEmployee(@RequestBody Employee emp,
+      @RequestParam("dob") String dobMillisecods) {
+
+    logger.info("inside manageUser controller updateEmployee()");
+    emp.setDob(new Date(Long.parseLong(dobMillisecods)));
+    logger.info("employee object received for update: " + emp);
+
+    return manageUserService.updateEmployee(emp);
+  }
+
 }
