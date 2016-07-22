@@ -14,46 +14,42 @@ import com.caprusit.ems.service.ILoginFailedAttemptsService;
 
 @Controller
 public class AttendanceController {
-	
-	@Autowired
-	private IAttendanceService attendanceService;
-	
-	@Autowired
-	private ILoginFailedAttemptsService service;
-	
-	private static int maxloginattempts=3; 
-	
-	private static Logger logger=Logger.getLogger(AttendanceController.class);
 
-	
-	/**
-	 * This method will return our application home page to the browser
-	 * */
-	@RequestMapping(value="/home",method = RequestMethod.GET)
-	public String getHomePage( ) {
+  @Autowired
+  private IAttendanceService attendanceService;
 
-		logger.info("inside attendance controlller getHomePage()");
-		
-		return "EmsHomePage";
-		
-	}
-	
-	/**
-	 * This method takes attendance request
-	 * returns 1 on successful login/logout
-	 * returns 0 if password is wrong
-	 * returns -1 if any problem occurs 
-	 * */
-	@RequestMapping(value="/secureLogin",method = RequestMethod.POST)
-	public @ResponseBody int postEmployeeAttendance(@RequestBody  EmployeeAttendanceRequest attendanceRequest) {
+  @Autowired
+  private ILoginFailedAttemptsService service;
 
-		logger.info("inside attendance controlller -- postEmployeeAttendance()");
-		logger.info("attendance request received: "+attendanceRequest);
-		
-		return	 attendanceService.EmployeeLogInOrLogOut(attendanceRequest);
-		
-	}
+  private static int maxloginattempts = 3;
 
+  private static Logger logger = Logger.getLogger(AttendanceController.class);
 
-	
+  /**
+   * This method will return our application home page to the browser.
+   */
+  @RequestMapping(value = "/home", method = RequestMethod.GET)
+  public String getHomePage() {
+
+    logger.info("inside attendance controlller getHomePage()");
+
+    return "EmsHomePage";
+
+  }
+
+  /**
+   * This method takes attendance request returns 1 on successful login/logout returns 0 if password
+   * is wrong returns -1 if any problem occurs.
+   */
+  @RequestMapping(value = "/secureLogin", method = RequestMethod.POST)
+  public @ResponseBody int postEmployeeAttendance(
+      @RequestBody EmployeeAttendanceRequest attendanceRequest) {
+
+    logger.info("inside attendance controlller -- postEmployeeAttendance()");
+    logger.info("attendance request received: " + attendanceRequest);
+
+    return attendanceService.EmployeeLogInOrLogOut(attendanceRequest);
+
+  }
+
 }
