@@ -13,4 +13,26 @@
 		<module>EMSDAO</module>
 	</modules>
 
+	<properties>
+		<org.springframework-version>4.2.6.RELEASE</org.springframework-version>
+		<hibernate-version>4.3.11.Final</hibernate-version>
+		<java-version>1.7</java-version>
+		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<quartz.version>2.2.2</quartz.version>
+		<commons-fileupload-version>1.3</commons-fileupload-version>
+		<poi-ooxml-version>3.9</poi-ooxml-version>
+		<javax.servelt-version>3.0.1</javax.servelt-version>
+		<gson-version>2.2.2</gson-version>
+	</properties>
+
+	<dependencies>
+		<!-- log 4j jar file -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+	</dependencies>
+
 </project>
